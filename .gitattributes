@@ -1,0 +1,50 @@
+# =============================================================================
+# Computational-Immuno-oncology — .gitattributes
+# =============================================================================
+# Normalise text line endings so the repo stays consistent regardless of the
+# editor or OS a student/TA uses.
+* text=auto eol=lf
+
+# -----------------------------------------------------------------------------
+# Teaching assets that are large or self-contained: never munge line endings.
+# The roadmap HTML is a pandoc export with CRLF endings and ~12 base64-embedded
+# PNGs; treating it as binary keeps git from rewriting it on every checkout.
+# -----------------------------------------------------------------------------
+WES/ref/*.html   -text -diff
+WES/ref/*.pdf    -text -diff
+*.pdf            -text -diff
+
+# -----------------------------------------------------------------------------
+# Images
+# -----------------------------------------------------------------------------
+*.png  -text -diff
+*.jpg  -text -diff
+*.jpeg -text -diff
+*.gif  -text -diff
+*.svg  text
+
+# -----------------------------------------------------------------------------
+# Scientific / tabular formats — diffable as text where it helps
+# -----------------------------------------------------------------------------
+*.bed  text
+*.fa   text
+*.fasta text
+*.vcf  text
+*.csv  text
+*.tsv  text
+*.tab  text
+
+# -----------------------------------------------------------------------------
+# Shell & config: force LF so scripts run identically on Linux HPC nodes
+# -----------------------------------------------------------------------------
+*.sh    text eol=lf
+*.slurm text eol=lf
+*.bash  text eol=lf
+*.sbatch text eol=lf
+Dockerfile text eol=lf
+Makefile   text eol=lf
+
+# -----------------------------------------------------------------------------
+# Notebooks: don't try to diff the JSON blob, and keep outputs out of diffs
+# -----------------------------------------------------------------------------
+*.ipynb  -diff linguist-documentation
