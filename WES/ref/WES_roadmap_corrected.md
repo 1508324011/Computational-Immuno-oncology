@@ -1301,8 +1301,7 @@ Each issue: **where** (roadmap section), **what** (symptom), **evidence** (measu
 - CollectHsMetrics wants a Picard interval_list (run BedToIntervalList on the BED
   first) and the dictionary is `hg38.dict`, not `hg38.fa.dict`.
 
-### A12. The teacher's reference result deviates from the printed roadmap — **Major
-(for comparability; not a crash)**
+### A12. The teacher's reference result deviates from the printed roadmap — Major (comparability)
 
 - Where: `analysis_full/2_vairant_call` (the reference everyone diffs against).
 - Evidence (read from the VCF headers and the files themselves):
