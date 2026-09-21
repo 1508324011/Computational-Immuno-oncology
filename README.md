@@ -17,10 +17,14 @@
         ├── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
         ├── WES_roadmap_english_embedded.html # 英文版 (图片内嵌)
         ├── WES_roadmap_corrected.html        # 矫正增强版：两轮实跑对照 + 逐坑修复说明
-        └── WES_roadmap_corrected.pdf         # 同一文档的 PDF 版
+        ├── WES_roadmap_corrected.pdf         # 同一文档的 PDF 版
+        ├── WES_roadmap_corrected_zh.html     # 同一矫正版的中文版 (正文全中文, 命令原样)
+        ├── WES_roadmap_corrected_zh.pdf      # 中文版 PDF
+        └── build.sh                           # pandoc+typst 构建脚本 (带表格/断行后处理与重叠自检)
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
+> **中文版（WES_roadmap_corrected_zh）**：与英文矫正版内容一致、互为对照；正文全中文，命令/路径/参数原样保留，数字逐一对拍核验。构建：`./build.sh WES_roadmap_corrected_zh.md "WES 全流程分析路线图 · 矫正增强版（中文版）"`（英文版：`./build.sh`）。
 
 ## WES 路线图内容一览 / What the roadmap covers
 

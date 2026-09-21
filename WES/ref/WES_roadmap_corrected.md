@@ -44,7 +44,7 @@ The full detailed registry is in the **Appendix A** section at the end of this d
 | 4 | **Major** | §10 | `cnvkit.py batch -m amplicon` on a **hybrid-capture** panel (SureSelect V6) — wrong mode; also no gene names in BED, no access file | Ran, but produces genome-wide nonsense segments on demo (cn up to 6345) |
 | 5 | Medium | §9 | Mutect2 lacks a **Panel of Normals** (one exists on the cluster: `1000g_pon.hg38.vcf.gz`); germline resource uses 1000G high-conf instead of gnomAD AF-only | Runs, reduced filtering power |
 | 6 | Medium | §0.2/§12 | Data path confusion: README points to `OC_WES` (deprecated downsample), new roadmap points to `data_new`; old roadmap pointed to an **empty** directory | Three inconsistent references; this edition fixes them |
-| 7 | Medium | §3 | Literal roadmap writes a 33 GB SAM to disk before sorting — works, but wastes ~33 GB/sample and an extra hour | We piped `bwa | sort` in the full round (documented deviation) |
+| 7 | Medium | §3 | Literal roadmap writes a 33 GB SAM to disk before sorting — works, but wastes ~33 GB/sample and an extra hour | We piped `bwa \| sort` in the full round (documented deviation) |
 | 8 | Minor | §9 | TMB counts PASS variants from `somatic.filtered.vcf.gz` while §9.2 separately writes `somatic.pass.vcf.gz` (never used) | Cosmetic inconsistency |
 | 9 | Minor | §4/§11 | No on-target depth metric anywhere (flagstat is genome-wide) — the checklist asks "is coverage sufficient?" but no command measures it | This edition adds `CollectHsMetrics` (§11) — measured: OC 54.6×, PBMC 91.3×, demo 0.3×/0.5× |
 | 10 | Minor | naming | `PBMC` vs `blood` naming mixed (RG `SM:blood`, dirs `PBMC`); teacher's own output dir is spelled `2_vairant_call` | Consistent-but-confusing; noted |
@@ -111,7 +111,7 @@ matters twice: as `-L` intervals and as the TMB denominator in §9.3).
 hg38 (`hg38.fa`), pre-indexed for BWA and GATK. **Check before you compute** (we verified
 all of these exist — a missing `.idx` is the single most common "first job fails" cause):
 
-```
+```text
 hg38.fa  hg38.fa.fai  hg38.dict
 hg38.fa.{amb,ann,bwt,pac,sa}          # BWA index
 dbsnp_138.hg38.vcf{,.idx}             # also needed by HaplotypeCaller -D

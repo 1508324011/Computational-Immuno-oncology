@@ -609,7 +609,7 @@ old roadmap pointed to an <strong>empty</strong> directory</td>
 <td>§3</td>
 <td>Literal roadmap writes a 33 GB SAM to disk before sorting — works,
 but wastes ~33 GB/sample and an extra hour</td>
-<td>We piped <code>bwa | sort</code> in the full round (documented
+<td>We piped <code>bwa \| sort</code> in the full round (documented
 deviation)</td>
 </tr>
 <tr>
@@ -776,7 +776,7 @@ totaling <strong>60.51 Mb</strong> (this number matters twice: as
 <strong>Check before you compute</strong> (we verified all of these
 exist — a missing <code>.idx</code> is the single most common “first job
 fails” cause):</p>
-<pre><code>hg38.fa  hg38.fa.fai  hg38.dict
+<pre class="text"><code>hg38.fa  hg38.fa.fai  hg38.dict
 hg38.fa.{amb,ann,bwt,pac,sa}          # BWA index
 dbsnp_138.hg38.vcf{,.idx}             # also needed by HaplotypeCaller -D
 Mills_and_1000G_gold_standard.indels.hg38.vcf{,.idx}

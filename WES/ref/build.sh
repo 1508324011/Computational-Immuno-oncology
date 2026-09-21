@@ -22,14 +22,23 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-MD=WES_roadmap_corrected.md
+# Usage: build.sh [md-file] [pdf-title] [html-title]
+#   md-file    defaults to WES_roadmap_corrected.md (English edition)
+#   pdf-title  defaults to "WES 全流程分析路线图 · 矫正增强版"
+#   html-title defaults to "<pdf-title> (Corrected & Annotated Edition)"
+# The Chinese edition is built with:
+#   ./build.sh WES_roadmap_corrected_zh.md "WES 全流程分析路线图 · 矫正增强版（中文版）"
+MD="${1:-WES_roadmap_corrected.md}"
+BASE="${MD%.md}"
+TITLE="${2:-WES 全流程分析路线图 · 矫正增强版}"
+HTMLTITLE="${3:-$TITLE (Corrected & Annotated Edition)}"
 source ~/miniconda3/etc/profile.d/conda.sh
-conda activate docs   # pandoc 3.11, typst 0.15.1, python 3.6 (system-compatible only!)
+conda activate docs # pandoc 3.11, typst 0.15.1, python 3.6 (system-compatible only!)
 
 # ---------------------------------------------------------------- HTML -------
-pandoc "$MD" -o WES_roadmap_corrected.html --standalone --toc --toc-depth=2 \
-  --metadata title="WES 全流程分析路线图 · 矫正增强版 (Corrected & Annotated Edition)" \
-  --metadata lang=zh-CN
+pandoc "$MD" -o "$BASE.html" --standalone --toc --toc-depth=2 \
+    --metadata title="$HTMLTITLE" \
+    --metadata lang=zh-CN
 
 # ---------------------------------------------------------------- PDF --------
 # NOTE: no --metadata lang for the PDF on purpose: lang=en keeps typst hyphenation
@@ -39,17 +48,17 @@ TYP=$(mktemp /tmp/corrected_XXXX.typ)
 BBOX=$(mktemp /tmp/bbox_XXXX.html)
 trap 'rm -f "$TYP" "$BBOX" "$HDR"' EXIT
 
-cat > "$HDR" <<'TYPST'
+cat >"$HDR" <<'TYPST'
 // denser tables: 8pt cells + tighter insets (equal-% columns are narrow)
 #set table(inset: (x: 4pt, y: 4pt))
 #show table.cell: set text(size: 8pt)
 TYPST
 
 pandoc "$MD" -t typst -s -o "$TYP" \
-  --toc --toc-depth=2 \
-  --metadata title="WES 全流程分析路线图 · 矫正增强版" \
-  -V mainfont="Noto Sans CJK SC" -V fontsize=9pt \
-  -H "$HDR"
+    --toc --toc-depth=2 \
+    --metadata title="$TITLE" \
+    -V mainfont="Noto Sans CJK SC" -V fontsize=9pt \
+    -H "$HDR"
 
 python3 - "$TYP" <<'PYEOF'
 import re, sys
@@ -97,11 +106,11 @@ open(path, 'w', encoding='utf-8').write(''.join(parts))
 sys.stderr.write('ZWSP break points inserted\n')
 PYEOF
 
-typst compile "$TYP" WES_roadmap_corrected.pdf
+typst compile "$TYP" "$BASE.pdf"
 echo "== typst compile OK =="
 
 # --------------------------------------------------------- verify: overlaps --
-pdftotext -bbox WES_roadmap_corrected.pdf "$BBOX"
+pdftotext -bbox "$BASE.pdf" "$BBOX"
 python3 - "$BBOX" <<'PYEOF'
 import re, sys
 html = open(sys.argv[1], encoding='utf-8').read()
@@ -124,10 +133,15 @@ for pi, (pw, ph, body) in enumerate(pages, 1):
             # smaller box area. The 2.5pt floor filters fullwidth-quote/kerning artifacts.
             if ox > 2.5 and oy > 0.45 * min(y1 - y0, b1 - b0):
                 frac = (ox * oy) / max(1e-9, min((x1 - x0) * (y1 - y0), (a1 - a0) * (b1 - b0)))
-                # CJK fullwidth punctuation: the glyph box abuts the preceding text but
-                # its ink sits in the right half -- a designed overlap, not a defect.
+                # CJK fullwidth punctuation: the glyph box is 1em wide but its ink sits
+                # in one half -- adjacent-box overlap is the designed CJK punct
+                # compression, not a defect. Benign when either word IS pure punct,
+                # or the boundary char facing the overlap is fullwidth punct.
                 cjk_punct = set('（）。，：；！？、。「」『』“”‘’—…·')
-                if t in cjk_punct or u in cjk_punct:
+                toc_artifact = t == '.' or u == '.' or t.startswith(chr(0x2060)) or u.startswith(chr(0x2060))
+                if t in cjk_punct or u in cjk_punct or toc_artifact:
+                    continue
+                if t and u and (t[-1] in cjk_punct or u[0] in cjk_punct or u[-1] in cjk_punct or t[0] in cjk_punct):
                     continue
                 if frac > 0.15: bad.append('%.2f %r<->%r' % (frac, t[:24], u[:24]))
             if b0 - y0 > 60: break
@@ -143,5 +157,5 @@ echo "== overlap scan clean =="
 
 # ---------------------------------------------------------------- fonts ------
 echo "== fonts used =="
-pdffonts WES_roadmap_corrected.pdf 2>/dev/null | tail -n +3 | awk '{print "  ", $1}' | sed 's/^[^ ]*//' | sort -u | head -8
-echo "== build done: $(pdfinfo WES_roadmap_corrected.pdf 2>/dev/null | grep -E '^Pages') =="
+pdffonts "$BASE.pdf" 2>/dev/null | tail -n +3 | awk '{print "  ", $1}' | sed 's/^[^ ]*//' | sort -u | head -8
+echo "== build done: $(pdfinfo "$BASE.pdf" 2>/dev/null | grep -E '^Pages') =="

@@ -1,0 +1,2607 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>WES 全流程分析路线图 · 矫正增强版（中文版） (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">WES 全流程分析路线图 · 矫正增强版（中文版） (Corrected
+&amp; Annotated Edition)</h1>
+<p class="subtitle">A Practical Roadmap for Whole-Exome Sequencing Data
+Analysis — Corrected &amp; Annotated Edition, in Chinese</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#关于本版-about-this-edition"
+id="toc-关于本版-about-this-edition">关于本版 · About this edition</a>
+<ul>
+<li><a href="#每步包含什么-what-each-step-contains"
+id="toc-每步包含什么-what-each-step-contains">每步包含什么 · What each
+step contains</a></li>
+<li><a href="#问题清单速览-issue-registry-at-a-glance"
+id="toc-问题清单速览-issue-registry-at-a-glance">问题清单速览 · Issue
+registry at a glance</a></li>
+</ul></li>
+<li><a href="#环境目录与数据-environment-directories-and-data"
+id="toc-环境目录与数据-environment-directories-and-data">0.
+环境、目录与数据 · Environment, directories and data</a>
+<ul>
+<li><a href="#所需工具" id="toc-所需工具">0.1 所需工具</a></li>
+<li><a href="#原理" id="toc-原理">2.2 原理</a></li>
+<li><a href="#实跑结果" id="toc-实跑结果">2.3 实跑结果</a></li>
+<li><a href="#坑与矫正" id="toc-坑与矫正">2.4 坑与矫正</a></li>
+<li><a href="#结果解读" id="toc-结果解读">2.5 结果解读</a></li>
+<li><a href="#调优与扩展" id="toc-调优与扩展">2.6 调优与扩展</a></li>
+</ul></li>
+<li><a href="#bwa-mem-比对-alignment" id="toc-bwa-mem-比对-alignment">3.
+BWA-MEM 比对 · Alignment</a>
+<ul>
+<li><a href="#原理-1" id="toc-原理-1">3.1 原理</a></li>
+<li><a href="#sam-bam排序索引原版-3.23.3逐字"
+id="toc-sam-bam排序索引原版-3.23.3逐字">3.2 SAM → BAM、排序、索引（原版
+3.2–3.3，逐字）</a></li>
+<li><a href="#比对指标原版-3.4逐字" id="toc-比对指标原版-3.4逐字">3.3
+比对指标（原版 3.4，逐字）</a></li>
+<li><a href="#实跑结果-1" id="toc-实跑结果-1">3.4 实跑结果</a></li>
+<li><a href="#调优与扩展-1" id="toc-调优与扩展-1">3.5
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#标记-pcr-重复-mark-pcr-duplicates"
+id="toc-标记-pcr-重复-mark-pcr-duplicates">4. 标记 PCR 重复 · Mark PCR
+duplicates</a>
+<ul>
+<li><a href="#原理-2" id="toc-原理-2">4.1 原理</a></li>
+<li><a href="#实跑结果-2" id="toc-实跑结果-2">4.2 实跑结果</a></li>
+<li><a href="#坑与矫正-1" id="toc-坑与矫正-1">4.3 坑与矫正</a></li>
+<li><a href="#调优与扩展-2" id="toc-调优与扩展-2">4.4
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#碱基质量校准bqsr-base-quality-score-recalibration"
+id="toc-碱基质量校准bqsr-base-quality-score-recalibration">5.
+碱基质量校准（BQSR）· Base quality score recalibration</a>
+<ul>
+<li><a href="#原理-3" id="toc-原理-3">5.1 原理</a></li>
+<li><a href="#实跑结果-3" id="toc-实跑结果-3">5.2 实跑结果</a></li>
+<li><a href="#坑与矫正-2" id="toc-坑与矫正-2">5.3 坑与矫正</a></li>
+<li><a href="#调优与扩展-3" id="toc-调优与扩展-3">5.4
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#胚系变异检测-germline-variant-calling"
+id="toc-胚系变异检测-germline-variant-calling">6. 胚系变异检测 ·
+Germline variant calling</a>
+<ul>
+<li><a href="#原理-4" id="toc-原理-4">6.1 原理</a></li>
+<li><a href="#实跑结果-4" id="toc-实跑结果-4">6.2 实跑结果</a></li>
+<li><a href="#坑与矫正-3" id="toc-坑与矫正-3">6.3 坑与矫正</a></li>
+<li><a href="#调优与扩展-4" id="toc-调优与扩展-4">6.4
+调优与扩展</a></li>
+</ul></li>
+<li><a
+href="#变异质量再校准vqsr-variant-quality-score-recalibration-本版最大矫正点"
+id="toc-变异质量再校准vqsr-variant-quality-score-recalibration-本版最大矫正点">7.
+变异质量再校准（VQSR）· Variant quality score recalibration —
+<em>本版最大矫正点</em></a>
+<ul>
+<li><a href="#原理-5" id="toc-原理-5">7.1 原理</a></li>
+<li><a href="#实跑结果-两个头条发现" id="toc-实跑结果-两个头条发现">7.2
+实跑结果 —— 两个头条发现</a></li>
+<li><a href="#矫正方案" id="toc-矫正方案">7.3 矫正方案</a></li>
+<li><a href="#实跑命令说明" id="toc-实跑命令说明">7.4
+实跑命令说明</a></li>
+<li><a href="#结果解读-1" id="toc-结果解读-1">7.5 结果解读</a></li>
+</ul></li>
+<li><a href="#annovar-功能注释-functional-annotation"
+id="toc-annovar-功能注释-functional-annotation">8. ANNOVAR 功能注释 ·
+Functional annotation</a>
+<ul>
+<li><a href="#原理-6" id="toc-原理-6">8.1 原理</a></li>
+<li><a href="#命令原版-8.18.3逐字" id="toc-命令原版-8.18.3逐字">8.2
+命令（原版 8.1–8.3，逐字）</a></li>
+<li><a href="#坑问题-2富协议块必挂以及确切原因"
+id="toc-坑问题-2富协议块必挂以及确切原因">8.3 坑（问题
+#2）：“富协议”块必挂——以及确切原因</a></li>
+<li><a href="#坑问题-1-的下游翻倍的-vcf-对-annovar-做了什么"
+id="toc-坑问题-1-的下游翻倍的-vcf-对-annovar-做了什么">8.4 坑（问题 #1
+的下游）：翻倍的 VCF 对 ANNOVAR 做了什么</a></li>
+<li><a href="#实跑结果-5" id="toc-实跑结果-5">8.5 实跑结果</a></li>
+<li><a href="#调优与扩展-5" id="toc-调优与扩展-5">8.6
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#配对正常对照的体细胞突变与-tmbmutect2-somatic-tmb"
+id="toc-配对正常对照的体细胞突变与-tmbmutect2-somatic-tmb">9.
+配对正常对照的体细胞突变与 TMB（Mutect2）· Somatic TMB</a>
+<ul>
+<li><a href="#原理-7" id="toc-原理-7">9.1 原理</a></li>
+<li><a href="#坑与矫正-4" id="toc-坑与矫正-4">9.2 坑与矫正</a></li>
+<li><a href="#实跑结果-6" id="toc-实跑结果-6">9.3 实跑结果</a></li>
+<li><a href="#调优与扩展-6" id="toc-调优与扩展-6">9.4
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#cnvkit-拷贝数变异检测-cnv-detection"
+id="toc-cnvkit-拷贝数变异检测-cnv-detection">10. CNVkit 拷贝数变异检测 ·
+CNV detection</a>
+<ul>
+<li><a href="#原理-8" id="toc-原理-8">10.1 原理</a></li>
+<li><a href="#命令原版-10.2逐字与产出"
+id="toc-命令原版-10.2逐字与产出">10.2 命令（原版
+10.2，逐字）与产出</a></li>
+<li><a href="#坑与矫正问题-4" id="toc-坑与矫正问题-4">10.3
+坑与矫正（问题 #4）</a></li>
+<li><a href="#结果解读-2" id="toc-结果解读-2">10.4 结果解读</a></li>
+<li><a href="#调优与扩展-7" id="toc-调优与扩展-7">10.5
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#结果解读检查清单-interpretation-checklist"
+id="toc-结果解读检查清单-interpretation-checklist">11. 结果解读检查清单
+· Interpretation checklist</a></li>
+<li><a href="#产物清单-file-summary" id="toc-产物清单-file-summary">12.
+产物清单 · File summary</a></li>
+<li><a href="#总结与两轮对比-summary"
+id="toc-总结与两轮对比-summary">13. 总结与两轮对比 · Summary</a>
+<ul>
+<li><a href="#复现说明-reproduction"
+id="toc-复现说明-reproduction">复现说明 · Reproduction</a></li>
+</ul></li>
+<li><a href="#附录-a.-问题登记表完整版-issue-registry"
+id="toc-附录-a.-问题登记表完整版-issue-registry">附录 A.
+问题登记表（完整版）· Issue registry</a></li>
+<li><a href="#附录-b.-一页矫正版命令速查-one-page-corrected-pipeline"
+id="toc-附录-b.-一页矫正版命令速查-one-page-corrected-pipeline">附录 B.
+一页矫正版命令速查 · One-page corrected pipeline</a></li>
+</ul>
+</nav>
+<h1 id="关于本版-about-this-edition">关于本版 · About this edition</h1>
+<p>本文档是课程路线图《WES
+数据分析实战路线图》的<strong>矫正增强版（中文版）</strong>，与目录下的英文矫正版（<code>WES_roadmap_corrected.html/pdf</code>）内容一致、互为对照。它的特别之处在于：不是改出来的，而是<strong>跑出来的</strong>——先把原版路线图的命令<strong>逐字</strong>在计算集群上完整执行了两轮，把过程中遇到和预见的每一个坑都记录在案，再回头写这份矫正版。</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>数据集</th>
+<th>靶区深度</th>
+<th>耗时</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Demo 轮</strong></td>
+<td><code>/lustre1/share/data_new</code>（OC 18.2 万 / PBMC 25.8
+万读段对）</td>
+<td>~0.5×</td>
+<td>~25 分钟</td>
+<td>机械地走通全部 13 步流程</td>
+</tr>
+<tr>
+<td><strong>全量轮</strong></td>
+<td><code>/lustre1/share/data/OC_WES_all</code>（OC 3775 万 / PBMC 5251
+万读段对）</td>
+<td><strong>实测可用靶区深度 54.6× / 91.3×</strong></td>
+<td>~4 小时（8 个 SLURM 作业，依赖链串联）</td>
+<td>出真实结果，并与老师的 <code>analysis_full</code> 对拍</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>学习要点：</strong> 每一步你都会看到”<strong>原版怎么写 →
+实际发生了什么 → 应该怎么改 →
+为什么</strong>”的完整链条。两轮实跑本身就是最好的对照组：0.5×
+数据会暴露哪些步骤在”低深度下失效”，全量数据会暴露哪些步骤在”命令写法上就有问题”。</p>
+</blockquote>
+<h2 id="每步包含什么-what-each-step-contains">每步包含什么 · What each
+step contains</h2>
+<p>围绕原版命令，每个步骤都增加了六个学习板块：</p>
+<ol type="1">
+<li><strong>原理</strong> —— 算法到底在做什么，用大白话讲清楚。</li>
+<li><strong>命令</strong> ——
+原版路线图的命令（正确处逐字保留；<strong>所有矫正都显式给出并说明理由</strong>）。</li>
+<li><strong>实跑结果</strong> —— 两轮运行的实测数字（demo vs
+全量）。</li>
+<li><strong>坑与矫正</strong> —— 我们踩到的每一个问题，全部附证据。</li>
+<li><strong>结果解读</strong> —— 数字怎么读、“好”长什么样。</li>
+<li><strong>调优与扩展</strong> ——
+参数旋钮，以及这个工具在本路线图之外还能为你做什么。</li>
+</ol>
+<h2 id="问题清单速览-issue-registry-at-a-glance">问题清单速览 · Issue
+registry at a glance</h2>
+<p>完整登记表在<strong>附录 A</strong>。速览如下：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>严重度</th>
+<th>位置</th>
+<th>问题</th>
+<th>两轮实跑中的状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>重大</strong></td>
+<td>§7.3</td>
+<td>两个 ApplyVQSR 全量输出做 <code>MergeVcfs</code>
+会<strong>把每条变异重复一遍</strong>（每个输出都包含全部变异，合并后翻倍）</td>
+<td>demo 实锤（14,782 → 29,564 条），<strong>老师的
+<code>analysis_full</code> 也中招（204,178 → 408,356 条）</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>重大</strong></td>
+<td>§8.3</td>
+<td>富注释协议引用的数据库在已装的 humandb
+里不存在（<code>dbnsfp30a</code>、<code>exac03</code>、<code>gnomad_genome</code>、<code>avsnp147</code>
+vs 实际已装的
+<code>dbnsfp54a</code>、<code>gnomad211_exome</code>、<code>gnomad41_exome</code>、<code>avsnp151</code>）</td>
+<td>两轮均确认失败</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>重大</strong></td>
+<td>§7</td>
+<td>2 样本、低深度的变异集上跑
+VQSR，即使跑完也<strong>统计上不可信</strong></td>
+<td>demo “成功”跑完，但见 §7 的 tranches 分析</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>重大</strong></td>
+<td>§10</td>
+<td>对<strong>杂交捕获</strong> panel（SureSelect V6）用
+<code>cnvkit.py batch -m amplicon</code> —— 模式选错；另外 BED
+无基因名列、未用 access 文件</td>
+<td>能跑，但 demo 上产出全基因组范围的荒谬片段（cn 高达 6345）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>中等</td>
+<td>§9</td>
+<td>Mutect2 没用<strong>正常面板（Panel of
+Normals）</strong>（集群上现成有
+<code>1000g_pon.hg38.vcf.gz</code>）；群体频率资源用的是 1000G high-conf
+而非推荐的 gnomAD AF-only</td>
+<td>能跑，过滤力打折扣</td>
+</tr>
+<tr>
+<td>6</td>
+<td>中等</td>
+<td>§0.2/§12</td>
+<td>数据路径混乱：README 指向
+<code>OC_WES</code>（已弃用的旧降采样），新版路线图指向
+<code>data_new</code>；旧版路线图指向一个<strong>空目录</strong></td>
+<td>三处引用互相矛盾；本版统一</td>
+</tr>
+<tr>
+<td>7</td>
+<td>中等</td>
+<td>§3</td>
+<td>原版逐字执行要先落一个 33 GB 的 SAM 再排序——能跑，但每样本多占 ~33
+GB、多花约一小时</td>
+<td>全量轮我们改用 <code>bwa \| sort</code>
+管道（有记录的既定偏差）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>轻微</td>
+<td>§9</td>
+<td>TMB 从 <code>somatic.filtered.vcf.gz</code> 里数 PASS，而 §9.2
+另存了一个从未被使用的 <code>somatic.pass.vcf.gz</code></td>
+<td>口径不一致（数字相同）</td>
+</tr>
+<tr>
+<td>9</td>
+<td>轻微</td>
+<td>§4/§11</td>
+<td>整条路线图没有任何命令测量靶区覆盖度（flagstat
+是全基因组的）——检查清单问了”深度够不够”，却没有命令能回答</td>
+<td>本版补上 <code>CollectHsMetrics</code>（§11）——实测：OC 54.6×、PBMC
+91.3×、demo 0.3×/0.5×</td>
+</tr>
+<tr>
+<td>10</td>
+<td>轻微</td>
+<td>命名</td>
+<td><code>PBMC</code> 与 <code>blood</code> 混用（RG 写
+<code>SM:blood</code>、目录叫
+<code>PBMC</code>）；老师自己的输出目录拼写为
+<code>2_vairant_call</code></td>
+<td>能用但易混淆；已记录</td>
+</tr>
+<tr>
+<td>11</td>
+<td>轻微</td>
+<td>§5</td>
+<td><code>BaseRecalibrator</code> 跑全基因组（没加
+<code>-L</code>）——不算错，WES 场景慢约 2 倍</td>
+<td>两轮均按原文保留</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>重大</strong>*</td>
+<td>参考结果</td>
+<td><strong>老师的参考结果本身就偏离了印刷版路线图：</strong>单样本”联合”检出（blood
+gVCF 的 <code>SM</code> 标签是 <code>OC</code>，CombineGVCFs
+把两样本塌缩成一个）且<strong>没加 <code>-L</code></strong>（204,178
+个位点中 72% 在靶区外），外加问题 #1 的翻倍（408,356 =
+2×204,178）。*不是路线图文本的错，而是参考产物在执行时的偏离</td>
+<td>从 VCF 头文件中读取实证；详见附录 A12，以免比较变异集时误判</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>学习要点：</strong> 最重要的是 #1（VQSR
+合并导致每条变异重复两遍，连老师的参考结果都带着这个 bug）和 #4（CNVkit
+模式选错）。这两个都不影响”管线能不能跑完”，但<strong>直接影响结果文件能不能用</strong>——这正是”跑通了”和”跑对了”的区别。</p>
+</blockquote>
+<h1 id="环境目录与数据-environment-directories-and-data">0.
+环境、目录与数据 · Environment, directories and data</h1>
+<h2 id="所需工具">0.1 所需工具</h2>
+<p>所有工具都来自集群上的共享 conda 环境：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate wes</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="ex">text</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">在计算节点（不是登录节点——见</span> §0.4）上核实的版本：fastp 0.23.2、BWA 0.7.19-r1273、samtools、GATK 4.6.2.0（Java）、CNVkit 0.9.11、ANNOVAR（2020 年代构建，带 hg38 humandb）、bcftools。</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">**学习要点：**</span> 集群上所有重计算都必须 <span class="kw">`</span>sbatch<span class="kw">`</span> <span class="ex">到</span> <span class="kw">`</span>cn-long<span class="kw">`</span> <span class="ex">分区做，登录节点只用来编辑文件和提交作业。本文所有实跑结果都来自</span> SLURM 作业（见 §13 复现说明）。</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">## 0.2 目录约定</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">原版路线图的环境变量块，逐字保留（这是新版与旧版</span> HTML 的<span class="pp">**</span>唯一<span class="pp">**</span>差异——旧版把 <span class="kw">`</span><span class="va">$DATA</span><span class="kw">`</span> <span class="ex">指向了一个**空目录**，即问题</span> <span class="co">#6）：</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span>bash</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SHARE</span><span class="op">=</span>/lustre1/share</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">REF</span><span class="op">=</span><span class="va">$SHARE</span>/references</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TARGETS</span><span class="op">=</span><span class="va">$REF</span>/S07604514_AllTracks_V6_60_hg38.bed</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">REFERENCE</span><span class="op">=</span><span class="va">$REF</span>/hg38.fa</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DBSNP</span><span class="op">=</span><span class="va">$REF</span>/dbsnp_138.hg38.vcf</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">INDELS</span><span class="op">=</span><span class="va">$REF</span>/Mills_and_1000G_gold_standard.indels.hg38.vcf</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HIGHCONF</span><span class="op">=</span><span class="va">$REF</span>/1000G_phase1.snps.high_confidence.hg38.vcf</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HAPMAP</span><span class="op">=</span><span class="va">$REF</span>/hapmap_3.3.hg38.vcf</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMNI</span><span class="op">=</span><span class="va">$REF</span>/1000G_omni2.5.hg38.vcf</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANNOVAR</span><span class="op">=</span><span class="va">$SHARE</span>/annovar_new</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HUMANDB</span><span class="op">=</span><span class="va">$ANNOVAR</span>/humandb</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$ANNOVAR</span>:<span class="va">$PATH</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DATA</span><span class="op">=</span><span class="va">$SHARE</span>/data_new        <span class="co"># demo 轮用；全量轮用 $SHARE/data/OC_WES_all</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">BASE</span><span class="op">=</span><span class="va">$HOME</span>/wes_run_cluster  <span class="co"># 我们用了显式运行目录，见 §13</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OUT</span><span class="op">=</span><span class="va">$BASE</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="ex">text</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ex">**什么在哪里（全部经</span> <span class="kw">`</span>ls<span class="kw">`</span> <span class="ex">核实，不是想当然）：**</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">路径</span> <span class="kw">|</span> <span class="ex">内容</span> <span class="kw">|</span> <span class="ex">备注</span> <span class="kw">|</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/references/<span class="kw">`</span> <span class="kw">|</span> <span class="kw">`</span>hg38.fa<span class="kw">`</span> <span class="ex">+</span> BWA 索引 + <span class="kw">`</span>.dict<span class="kw">`</span><span class="ex">/</span><span class="kw">`</span>.fai<span class="kw">`</span><span class="ex">；GATK</span> bundle（<span class="kw">`</span>dbsnp_138<span class="kw">`</span><span class="ex">、Mills、1000G</span> high-conf、hapmap、omni）<span class="pp">**</span>且 <span class="kw">`</span>.idx<span class="kw">`</span> <span class="ex">全部在场**；靶区</span> BED <span class="kw">`</span>S07604514_AllTracks_V6_60_hg38.bed<span class="kw">`</span><span class="ex">；**</span><span class="kw">`</span>1000g_pon.hg38.vcf.gz<span class="kw">`</span> <span class="ex">+</span> <span class="kw">`</span>.tbi<span class="kw">`</span><span class="ex">（现成的正常面板！）**；</span><span class="kw">`</span>access-5kb.hg38.bed<span class="kw">`</span> <span class="kw">|</span> <span class="ex">只读共享区</span> <span class="kw">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/data_new/<span class="kw">`</span> <span class="kw">|</span> <span class="ex">demo</span> FASTQ：<span class="kw">`</span>OC/OC_R1.fq.gz<span class="kw">`</span> <span class="ex">等（18.2</span> 万对）、<span class="kw">`</span>PBMC/blood_R1.fq.gz<span class="kw">`</span><span class="ex">（25.8</span> 万对） <span class="kw">|</span> <span class="ex">全量数据的</span> ~0.48% 抽样 ≈ 0.5× 靶区深度 <span class="kw">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/data/OC_WES_all/<span class="kw">`</span> <span class="kw">|</span> <span class="ex">全量</span> FASTQ：OC 3775 万对（10.4 Gbp）、PBMC 5251 万对（15.0 Gbp） <span class="kw">|</span> <span class="ex">理想</span> ~95×/≈135×；<span class="pp">**</span>实测可用 54.6× / 91.3×<span class="pp">**</span>（§11） <span class="kw">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/data/OC_WES/<span class="kw">`</span> <span class="kw">|</span> <span class="ex">旧降采样（体量相近，**内容不同**——md5</span> 不一样） <span class="kw">|</span> <span class="ex">已弃用；README</span> 仍指向这里（问题 <span class="co">#6） |</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/data/analysis_full/<span class="kw">`</span> <span class="kw">|</span> <span class="ex">老师的参考结果（全量数据）：比对、联合</span> VCF、VQSR、ANNOVAR <span class="kw">|</span> <span class="ex">**只到</span> §8 为止<span class="pp">**</span>；没有体细胞/TMB 和 CNVkit 的参考；<span class="kw">`</span>4_cnv/<span class="kw">`</span> <span class="ex">是空的</span> <span class="kw">|</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="kw">`</span>/lustre1/share/annovar_new/humandb/<span class="kw">`</span> <span class="kw">|</span> <span class="ex">hg38</span> 数据库：<span class="kw">`</span>refGeneWithVer<span class="kw">`</span><span class="ex">、</span><span class="kw">`</span>cytoBand<span class="kw">`</span><span class="ex">、**</span><span class="kw">`</span>dbnsfp54a<span class="kw">`</span><span class="ex">、</span><span class="kw">`</span>gnomad211_exome<span class="kw">`</span><span class="ex">、</span><span class="kw">`</span>gnomad41_exome<span class="kw">`</span><span class="ex">、</span><span class="kw">`</span>avsnp151<span class="kw">`</span><span class="ex">**</span> <span class="kw">|</span> <span class="ex">路线图</span> §8.3 富协议写的库名<span class="pp">**</span>不在<span class="pp">**</span>这里（问题 <span class="co">#2） |</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ex">**靶区：**</span> BED 含 243,359 个区间、合计 <span class="pp">**</span>60.51 Mb<span class="pp">**</span>（这个数会出现两次：作为 <span class="kw">`</span><span class="at">-L</span><span class="kw">`</span> <span class="ex">的区间，以及</span> §9.3 里 TMB 的分母）。</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">## 0.3 参考基因组</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ex">hg38（</span><span class="kw">`</span>hg38.fa<span class="kw">`</span><span class="ex">），BWA</span> 和 GATK 索引齐全。<span class="pp">**</span>开跑之前先检查<span class="pp">**</span>（我们逐一核实过都在——少一个 <span class="kw">`</span>.idx<span class="kw">`</span> <span class="ex">是</span><span class="st">&quot;第一个作业必挂&quot;</span><span class="ex">的最常见原因）：</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span>text</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ex">hg38.fa</span>  hg38.fa.fai  hg38.dict</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ex">hg38.fa.</span><span class="dt">{amb</span><span class="op">,</span><span class="dt">ann</span><span class="op">,</span><span class="dt">bwt</span><span class="op">,</span><span class="dt">pac</span><span class="op">,</span><span class="dt">sa}</span>          <span class="co"># BWA 索引</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ex">dbsnp_138.hg38.vcf</span><span class="dt">{</span><span class="op">,</span><span class="dt">.idx}</span>             <span class="co"># HaplotypeCaller -D 也要用</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ex">Mills_and_1000G_gold_standard.indels.hg38.vcf</span><span class="dt">{</span><span class="op">,</span><span class="dt">.idx}</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ex">1000G_phase1.snps.high_confidence.hg38.vcf</span><span class="dt">{</span><span class="op">,</span><span class="dt">.idx}</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ex">hapmap_3.3.hg38.vcf</span><span class="dt">{</span><span class="op">,</span><span class="dt">.idx}</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ex">1000G_omni2.5.hg38.vcf</span><span class="dt">{</span><span class="op">,</span><span class="dt">.idx}</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="ex">text</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">## 0.4 路线图（以及我们怎么在 SLURM 上跑）</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ex">路线图的各步以</span> sbatch 作业跑在 <span class="kw">`</span>cn-long<span class="kw">`</span> <span class="ex">分区（20</span> 核节点、25 小时墙钟）。三个集群特有的坑，我们花了一小时才发现——记一次，永远受益：</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> <span class="pp">**</span>账号/QoS：<span class="pp">**</span> 作业必须写 <span class="kw">`</span><span class="at">--account</span><span class="op">=</span>bjx131_g1 <span class="at">--qos</span><span class="op">=</span>bjx131cnl<span class="kw">`</span><span class="ex">（只写</span> <span class="kw">`</span><span class="at">--qos</span><span class="op">=</span>bjx131cnl<span class="kw">`</span> <span class="ex">不写账号会被拒：*</span><span class="st">&quot;Invalid qos specification&quot;</span><span class="ex">*）。</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> <span class="pp">**</span>内存：<span class="pp">**</span> <span class="kw">`</span>cn-long<span class="kw">`</span> <span class="ex">节点向</span> SLURM 上报的 <span class="kw">`</span>RealMemory=1<span class="kw">`</span><span class="ex">，所以任何显式</span> <span class="kw">`</span><span class="at">--mem</span><span class="op">=</span>NN<span class="kw">`</span> <span class="ex">都会被拒（*</span><span class="st">&quot;Memory specification can not be satisfied&quot;</span><span class="ex">*）。要用</span> <span class="pp">**</span><span class="kw">`</span><span class="at">--mem</span><span class="op">=</span>0<span class="kw">`</span><span class="ex">**（语义是</span><span class="st">&quot;占用节点全部内存&quot;</span><span class="ex">）。</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> <span class="pp">**</span>conda 与 <span class="kw">`</span>set <span class="at">-u</span><span class="kw">`</span><span class="ex">：**</span> 脚本若用 <span class="kw">`</span>set <span class="at">-u</span><span class="kw">`</span><span class="ex">，必须**先**激活</span> conda <span class="pp">**</span>再<span class="pp">**</span>打开它——conda 的 <span class="kw">`</span>activate.d<span class="kw">`</span> <span class="ex">脚本引用了未定义变量，会让作业一秒内死掉。</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ex">复现脚本都在各运行目录的</span> <span class="kw">`</span>scripts/<span class="kw">`</span> <span class="ex">下（见</span> §13）。</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="ex">**两轮作业总览（全部在</span> <span class="kw">`</span>cn-long<span class="kw">`</span><span class="ex">，账号</span> <span class="kw">`</span>bjx131_g1<span class="kw">`</span><span class="ex">，QoS</span> <span class="kw">`</span>bjx131cnl<span class="kw">`</span><span class="ex">，</span><span class="kw">`</span><span class="at">--mem</span><span class="op">=</span>0<span class="kw">`</span><span class="ex">）：**</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">轮次</span> <span class="kw">|</span> <span class="ex">作业号</span> <span class="kw">|</span> <span class="ex">步骤</span> <span class="kw">|</span> <span class="ex">墙钟</span> <span class="kw">|</span> <span class="ex">结果</span> <span class="kw">|</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">demo</span> <span class="kw">|</span> <span class="ex">3048</span> <span class="kw">|</span> <span class="ex">3→10（逐字执行，含预期失败保护）</span> <span class="kw">|</span> <span class="ex">~25</span> 分钟 <span class="kw">|</span> <span class="ex">全部执行完；deviations</span> 日志：1 条（富协议失败） <span class="kw">|</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3049/3050</span> <span class="kw">|</span> <span class="ex">每样本</span> prep：fastp → <span class="kw">`</span>bwa<span class="dt">\|</span>sort<span class="kw">`</span> <span class="ex">→</span> index/flagstat → MarkDup → BQSR → HC-GVCF <span class="kw">|</span> <span class="ex">2</span> 小时 20 分 / 3 小时 42 分（并行） <span class="kw">|</span> <span class="ex">双双干净</span> <span class="kw">|</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3051</span> <span class="kw">|</span> <span class="ex">6.3→8</span> 逐字（联合 → VQSR → MergeVcfs → ANNOVAR 基础） <span class="kw">|</span> <span class="ex">11</span> 分钟 <span class="kw">|</span> <span class="ex">翻倍</span> bug 再现（§7.2） <span class="kw">|</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3052</span> <span class="kw">|</span> <span class="ex">9</span> 逐字（Mutect2 → 方向模型 → FilterMutectCalls → TMB） <span class="kw">|</span> <span class="ex">1</span> 小时 13 分 <span class="kw">|</span> <span class="ex">TMB</span> = 1.78 mut/Mb <span class="kw">|</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3053</span> <span class="kw">|</span> <span class="ex">10</span> 逐字（<span class="kw">`</span><span class="at">-m</span> amplicon<span class="kw">`</span><span class="ex">）</span> <span class="kw">|</span> <span class="ex">5.6</span> 分钟 <span class="kw">|</span> <span class="ex">能跑；抗靶区基线为空（§10.2）</span> <span class="kw">|</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3054/3056→3061</span> <span class="kw">|</span> <span class="ex">**矫正补充**：CollectHsMetrics</span> ×4 样本 <span class="kw">|</span> <span class="ex">32</span> 分钟 <span class="kw">|</span> <span class="ex">实测深度：OC</span> 54.6× / PBMC 91.3×（§11） <span class="kw">|</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3055</span> <span class="kw">|</span> <span class="ex">**矫正补充**：CNVkit</span> <span class="kw">`</span><span class="at">-m</span> hybrid<span class="kw">`</span> <span class="ex">+</span> access 文件 <span class="kw">|</span> <span class="ex">11</span> 分钟 <span class="kw">|</span> <span class="ex">找到臂级事件（§10.3）</span> <span class="kw">|</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> <span class="kw">|</span> <span class="ex">3056</span> <span class="kw">|</span> <span class="ex">**矫正补充**：顺序</span> ApplyVQSR + ANNOVAR 富协议（用实际存在的库名） <span class="kw">|</span> <span class="ex">9.6</span> 分钟 <span class="kw">|</span> <span class="ex">零重复；富注释成功</span> <span class="kw">|</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ex">*注意矫正作业（3055/3056）不只是</span><span class="st">&quot;修复&quot;</span><span class="ex">——它们是课程的后半程：先按原文跑（3051/3053），再对同一份数据跑矫正命令，所以本版里的每个论断都是前后对照的实测。*</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. FASTQ 原始数据 · FASTQ files</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co">## 1.1 检查 FASTQ</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ex">**原理。**</span> 任何分析之前，必须先<span class="pp">**</span>看一眼<span class="pp">**</span>你的数据：读段数、读长、GC 分布。两个显而易见却常被低估的检查：<span class="er">(</span><span class="ex">a</span><span class="kw">)</span> <span class="ex">FASTQ</span> 读长应与测序模式匹配（本文库是 2×137 bp 双端）；<span class="er">(</span><span class="ex">b</span><span class="kw">)</span> <span class="ex">每个循环的</span> GC 含量曲线——肿瘤 WES 里 GC 曲线有尖峰或漂移还算正常（捕获偏好 + 纯度所致），但曲线完全畸形通常意味着污染或接头穿透。</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="ex">**命令**（原版逐字）：</span><span class="kw">`</span>zcat <span class="kw">|</span> <span class="fu">head</span><span class="kw">`</span><span class="ex">、</span><span class="kw">`</span>wc <span class="at">-l</span> / 4<span class="kw">`</span><span class="ex">，以及后面</span> fastp 的报告。集群上，<span class="kw">`</span>zcat file.fq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-8</span><span class="kw">`</span> <span class="ex">抽查；</span><span class="kw">`</span>zcat file.fq.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;NR%4==2{n++; b=length($0)} END{print n, b}&#39;</span><span class="kw">`</span> <span class="ex">数读段数×读长。</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="ex">**实跑结果。**</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">样本</span> <span class="kw">|</span> <span class="ex">读段对（R1）</span> <span class="kw">|</span> <span class="ex">读长</span> <span class="kw">|</span> <span class="ex">碱基数</span> <span class="kw">|</span> <span class="ex">60.51</span> Mb 靶区深度 <span class="kw">|</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span> <span class="ex">---</span> <span class="kw">|</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">demo</span> OC（<span class="kw">`</span>data_new<span class="kw">`</span><span class="ex">）</span> <span class="kw">|</span> <span class="ex">182,299</span> <span class="kw">|</span> <span class="ex">137</span> bp <span class="kw">|</span> <span class="ex">0.050</span> Gbp <span class="kw">|</span> <span class="ex">理想</span> ~0.82× → <span class="pp">**</span>实测可用 0.3×<span class="pp">**</span> <span class="kw">|</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">demo</span> PBMC <span class="kw">|</span> <span class="ex">258,112</span> <span class="kw">|</span> <span class="ex">137</span> bp <span class="kw">|</span> <span class="ex">0.071</span> Gbp <span class="kw">|</span> <span class="ex">理想</span> ~1.2× → <span class="pp">**</span>实测可用 0.5×<span class="pp">**</span> <span class="kw">|</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> OC（<span class="kw">`</span>OC_WES_all<span class="kw">`</span><span class="ex">）</span> <span class="kw">|</span> <span class="ex">37,746,701</span> <span class="kw">|</span> <span class="ex">137</span> bp <span class="kw">|</span> <span class="ex">10.41</span> Gbp <span class="kw">|</span> <span class="ex">理想</span> ~172× → <span class="pp">**</span>实测可用 54.6×<span class="pp">**</span> <span class="kw">|</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="ex">全量</span> PBMC <span class="kw">|</span> <span class="ex">52,508,649</span> <span class="kw">|</span> <span class="ex">137</span> bp <span class="kw">|</span> <span class="ex">14.97</span> Gbp <span class="kw">|</span> <span class="ex">理想</span> ~247× → <span class="pp">**</span>实测可用 91.3×<span class="pp">**</span> <span class="kw">|</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ex">**结果解读。**</span> <span class="st">&quot;理想&quot;</span>列 = 总碱基 ÷ 靶区大小——小学算术就能得到的数。<span class="pp">**</span>实测<span class="pp">**</span>列是 CollectHsMetrics 报的 <span class="kw">`</span>MEAN_TARGET_COVERAGE<span class="kw">`</span><span class="ex">，扣掉了一切不能用的部分：脱靶碱基（20–9%）、重复（7–11%）、双端读段互相重叠的碱基（**25%——本文库插入片段峰值</span> ~150 bp，大多数读段对彼此重叠，见 §2.3 和 §11<span class="pp">**</span>）。理想深度与可用深度之间 3 倍的差距，是 WES 测序预算中最常见的误判来源。</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="ex">**学习要点：**</span> 最值得记住的对比：全量 OC 理想深度 ~172×（10.41 Gbp ÷ 60.5 Mb），实测可用只有 <span class="pp">**</span>54.6×<span class="pp">**</span>——差了 3 倍多。差额去向：脱靶 ~20%、重复 ~7%、双端重叠 ~25%（文库插入片段峰值仅 ~150 bp，2×137 bp 的读段大量互相重叠，重叠部分只计一次）。demo 是全量的 0.48% 抽样，实测可用深度只有 0.3×/0.5×（<span class="pp">**</span>中位数为 0<span class="pp">**</span>）——低于任何可用的变异检测阈值，这就是后面体细胞检出为 0、CNV 全是噪声的根本原因。<span class="st">&quot;理论深度&quot;</span>和<span class="st">&quot;实测可用深度&quot;</span>的差距，本身就是 WES 设计中最重要的实务课。</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. fastp 质控与预处理 · Read quality control</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="co">## 2.1 生成质控输出</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="ex">原版</span> fastp 块（逐字保留；<span class="kw">`</span><span class="va">$OUT</span>/0_fastq/<span class="kw">`</span> <span class="ex">同时放原始软链和</span> clean 输出）：</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span>bash</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="dt">\</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>  <span class="at">-i</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>  <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>  <span class="at">--detect_adapter_for_pe</span> <span class="dt">\</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right</span> <span class="dt">\</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right_window_size</span> 4 <span class="dt">\</span></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right_mean_quality</span> 20 <span class="dt">\</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>  <span class="at">--qualified_quality_phred</span> 20 <span class="dt">\</span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>  <span class="at">--unqualified_percent_limit</span> 40 <span class="dt">\</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>  <span class="at">--n_base_limit</span> 5 <span class="dt">\</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>  <span class="at">--length_required</span> 50 <span class="dt">\</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>  <span class="at">--thread</span> 8 <span class="dt">\</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>  <span class="at">--html</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC/OC.fastp.html&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  <span class="at">--json</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC/OC.fastp.json&quot;</span></span></code></pre></div>
+<h2 id="原理">2.2 原理</h2>
+<ul>
+<li><code>--cut_right</code> 是 <strong>3′ 滑窗修剪</strong>（默认窗口
+4、均值 Q20）：读段末端的碱基因
+phasing/信号衰减而变差；先剪掉，免得日后在读段末端堆出一堆假阳性错配。</li>
+<li><code>--detect_adapter_for_pe</code>：双端数据让 fastp
+从读段重叠推断接头序列——比固定接头列表更灵敏。</li>
+<li><code>--length_required 50</code>：修剪后的长度下限。太短的片段只会带来错配和重复假象。</li>
+<li>PE “overlap analysis”
+顺带免费给出<strong>插入片段长度估计</strong>——从 HTML
+报告里读；它直接决定 §4.2 里重复率的解读。</li>
+</ul>
+<h2 id="实跑结果">2.3 实跑结果</h2>
+<p>Demo 轮（本版开工前已跑完）：</p>
+<table>
+<thead>
+<tr>
+<th>样本</th>
+<th>修剪前后（读段数）</th>
+<th>Q30（前 → 后）</th>
+<th>插入片段峰值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC</td>
+<td>377,310 → 364,598</td>
+<td>95.5% → 97.0%</td>
+<td><strong>150 bp</strong></td>
+</tr>
+<tr>
+<td>demo PBMC</td>
+<td>525,176 → 516,224</td>
+<td>96.9% → 97.8%</td>
+<td><strong>150 bp</strong></td>
+</tr>
+</tbody>
+</table>
+<p>全量轮：</p>
+<table>
+<thead>
+<tr>
+<th>样本</th>
+<th>修剪前后（读段数）</th>
+<th>Q30（前 → 后）</th>
+<th>插入片段峰值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全量 OC</td>
+<td>75,813,060 → 72,941,400</td>
+<td>95.5% → 97.0%</td>
+<td>150 bp</td>
+</tr>
+<tr>
+<td>全量 PBMC</td>
+<td>105,258,338 → 103,270,440</td>
+<td>96.9% → 97.8%</td>
+<td>150 bp</td>
+</tr>
+</tbody>
+</table>
+<p>两个值得消化的观察：(a) 修剪几乎没删东西（3.8%/1.9%
+的读段）——因为原始 Q30 已在 95% 以上，这是个健康文库；(b) 插入峰
+<strong>150 bp</strong> 配上 137 bp
+读长，意味着大多数读段对要<strong>互相重叠 ~120
+bp</strong>。这部分重叠之后会被覆盖度统计丢弃（25%
+的可用碱基——§11）；如果你按读段数而非非重叠碱基估深度，就会虚高。两轮曲线一致——同一文库抽样的必然结果。</p>
+<h2 id="坑与矫正">2.4 坑与矫正</h2>
+<ul>
+<li><strong>(p1) 输出位置不一致：</strong> 原版把 clean FASTQ 放在
+<code>0_fastq/</code> 的<em>根目录</em>、报告放在
+<code>0_fastq/OC/</code>。无害，但统一放 <code>0_fastq/OC/*</code>
+会更整洁。我们按原文保留。</li>
+<li><strong>(p2) <code>--cut_right</code> vs
+<code>--cut_front</code>：</strong> 对现代 137 bp 读段，5′
+端通常干净，只做 3′
+修剪是标准做法。原版的选择是对的——之所以记一笔，是因为很多教程画蛇添足加
+<code>--cut_front</code>。</li>
+<li><strong>(p3) fastp 的 JSON 是机器可读的</strong>——原版止步于
+HTML；多样本的 <strong>MultiQC</strong> 汇总（见
+§2.6）是”扩展”那一步。</li>
+</ul>
+<h2 id="结果解读">2.5 结果解读</h2>
+<p>这类文库的”好”数字：修剪前 ≥90–95% 的碱基达
+Q30、修剪/接头检测只动几个百分点、以及——最重要的——<strong>重复率估计不在
+fastp 的职责范围</strong>（它来自 §4 的比对）。fastp
+管的是读段层面的卫生；一切需要比对位置的指标都在后面。</p>
+<h2 id="调优与扩展">2.6 调优与扩展</h2>
+<ul>
+<li><code>--thread</code> 近线性扩展；20 核节点上 8 线程很合适。</li>
+<li>UMI 文库用 <code>--umi</code>，不要依赖坐标重复（§4）。</li>
+<li><code>--overlap_len_require</code>/<code>--overlap_diff_limit</code>
+控制基于 PE
+重叠的碱基矫正（<code>--correction</code>）——原版<strong>没开</strong>；低深度数据建议考虑加上。</li>
+<li>多样本汇总：<code>multiqc 0_fastq/</code> 把所有 fastp JSON/HTML
+收进一份报告。</li>
+</ul>
+<blockquote>
+<p><strong>学习要点：</strong> fastp
+三个最常用开关——<code>--cut_right</code>（滑窗去低质量尾）、<code>--detect_adapter_for_pe</code>（利用
+PE
+重叠自动识别接头）、<code>--length_required</code>（太短的读段宁可不要）。报告里最该看的三处：Q30
+比例、接头残留比例（应为 0 或接近 0）、插入片段分布峰（应显著大于读长
+137 bp，否则有大量重叠读段）。</p>
+</blockquote>
+<h1 id="bwa-mem-比对-alignment">3. BWA-MEM 比对 · Alignment</h1>
+<h2 id="原理-1">3.1 原理</h2>
+<p>BWA-MEM 先用精确匹配种子（MEM）定位，再做局部比对延伸；soft-clip
+的末端处理接头/部分重叠。几个你必须能讲清楚的概念：</p>
+<ul>
+<li><strong>读段组（RG）</strong>
+是每条读段的”出身”头信息：<code>ID</code>（测序
+lane）、<code>SM</code>（<strong>样本</strong>——GATK 用它来分组读段，SM
+错 = 基因分型错）、<code>LB</code>（<strong>文库</strong>——§4
+重复估计的单位）、<code>PL</code> 平台。一个 BAM 一个 SM；一个 SM
+可以有多个 LB。</li>
+<li><strong><code>-M</code></strong>：把分裂命中标为
+<em>secondary</em>（而非 <em>supplementary</em>），为 Picard
+兼容——如今只是惯例，无害，照原版保留。</li>
+<li><strong><code>-t 8</code></strong>：线程数。BWA-MEM 在 ~16
+线程内近线性加速。</li>
+</ul>
+<p><strong>命令</strong>（原版逐字——OC 所示；PBMC 相同，用
+<code>SM:blood</code>、<code>LB:WES_PBMC</code>）：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;@RG\tID:OC\tPL:illumina\tSM:OC\tLB:WES_OC&quot;</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.sam&quot;</span></span></code></pre></div>
+<h2 id="sam-bam排序索引原版-3.23.3逐字">3.2 SAM → BAM、排序、索引（原版
+3.2–3.3，逐字）</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-bS</span> <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.sam&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.bam&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.bam&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span></span></code></pre></div>
+<p><strong>坑与矫正（问题 #7）。</strong> 按字面执行会先落一个
+<strong>33 GB 的 SAM</strong>（全量数据），再复制成 BAM，再排序出 sorted
+BAM——同一份信息在磁盘上存三遍，多花约 ⅓
+墙钟。标准做法（也是我们全量轮实际跑的）是管道：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="at">-R</span> <span class="st">&quot;@RG\tID:OC\tPL:illumina\tSM:OC\tLB:WES_OC&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> R1.clean.fq.gz R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="at">-o</span> OC_sorted.bam <span class="at">-</span></span></code></pre></div>
+<p>产出的 <code>OC_sorted.bam</code>
+<strong>内容逐字节等价</strong>——同样的记录、同样的顺序（先染色体再位置）。区别只是中间文件从未存在过。这是全量轮<em>唯一一处刻意的效率偏差</em>，已记录在该运行的
+<code>log/deviations.log</code>。</p>
+<blockquote>
+<p><strong>学习要点：</strong>
+为什么要排序？下游所有工具（去重、BQSR、HaplotypeCaller、CNVkit）都要求
+BAM 按”染色体 → 位置”排好，才能顺序流式读取。SAM→BAM 是压缩（文本→BGZF
+二进制，约省 4–6 倍空间）；管道化的意义是让”比对输出 →
+排序输入”直接在内存里传递，省掉 33 GB 中间
+SAM——结果完全一样，磁盘和时间都省一半以上。</p>
+</blockquote>
+<h2 id="比对指标原版-3.4逐字">3.3 比对指标（原版 3.4，逐字）</h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> flagstat <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.flagstat.txt&quot;</span></span></code></pre></div>
+<h2 id="实跑结果-1">3.4 实跑结果</h2>
+<p><strong>Demo 轮（0.5×）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>OC</th>
+<th>PBMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总读段</td>
+<td>397,780</td>
+<td>517,164</td>
+</tr>
+<tr>
+<td>Primary mapped</td>
+<td>364,582 (100.0%)</td>
+<td>516,221 (100.0%)</td>
+</tr>
+<tr>
+<td>Properly paired</td>
+<td>83.29%</td>
+<td>99.46%</td>
+</tr>
+<tr>
+<td>Secondary（分裂）比对</td>
+<td>33,182（primary 的 9.1%）</td>
+<td>940 (0.18%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>全量轮：</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>OC</th>
+<th>PBMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总读段</td>
+<td>79,607,191</td>
+<td>103,455,092</td>
+</tr>
+<tr>
+<td>Primary mapped</td>
+<td>72,941,400 (100.00%)</td>
+<td>103,270,440 (100.00%)</td>
+</tr>
+<tr>
+<td>未比对</td>
+<td><strong>311</strong></td>
+<td>1,594</td>
+</tr>
+<tr>
+<td>Properly paired</td>
+<td><strong>83.22%</strong></td>
+<td>99.44%</td>
+</tr>
+<tr>
+<td>配对落在不同染色体</td>
+<td>11,526,594（<strong>15.8%</strong>）</td>
+<td>444,126 (0.43%)</td>
+</tr>
+<tr>
+<td>Secondary（分裂）比对</td>
+<td>6,665,791 (9.1%)</td>
+<td>184,652 (0.18%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结果解读。</strong></p>
+<ul>
+<li>两轮都是”100% 比对”——不是抽样巧合：全量轮 79.6M 条读段里只有 311
+条未比对。<strong>这套教学数据在发布前就剔除了未比对读段</strong>（预过滤数据集）。新鲜实验室数据通常是
+96–99%；<strong>低于 90% 就要怀疑污染或物种错配</strong>。</li>
+<li>OC 的 <strong>properly paired
+83.2%——两轮完全一致——是肿瘤文库的真实属性，不是抽样伪象</strong>：15.8%
+的 OC 读段对的另一端落在<em>另一条染色体</em>上（PBMC 仅
+0.43%）。这个量级是重度重排肿瘤基因组（HGSOC
+携带大规模结构变异）在比对层面的签名。PBMC 的 99.4%
+才是正常基因组的样子。</li>
+<li>OC 的 secondary 比对 9% vs PBMC 0.18%：secondary/supplementary
+读段提示重复序列含量（肿瘤基因组 +
+外显子捕获探针落在重复区）。知道即可，不必恐慌。</li>
+</ul>
+<blockquote>
+<p><strong>学习要点：</strong> flagstat 三问：① 比对率——本数据集 demo
+和全量都是
+100%，这不是抽样巧合，而是教学数据发布前就剔除了未比对读段（全量也只有
+311/79.6M）；新鲜实验室数据应为 96–99%；② properly paired——<strong>OC 的
+83.2% 在两轮中完全一致，是肿瘤样本的真实属性而非抽样伤</strong>：15.8%
+的 OC 读段配对到不同染色体（PBMC 仅
+0.43%），这是重度重排肿瘤基因组（HGSOC
+典型特征）在比对层面的签名，也是下游 §10 结构性 CNV 的伏笔；③
+secondary/supplementary——肿瘤样本 9% vs 正常
+0.18%，重复序列含量差异，外显子组里几个百分点属正常。</p>
+</blockquote>
+<h2 id="调优与扩展-1">3.5 调优与扩展</h2>
+<ul>
+<li>线程：空闲的 20 核节点上 <code>-t 16</code>
+可减半墙钟；<code>-K</code>（块大小）对超大参考基因组有帮助。</li>
+<li><code>bwa mem -v</code> 看详细日志；<code>-Y</code>（soft-clip
+supplementary）配合的是 GATK IndelRealigner 时代的老工具——现代 GATK
+不在乎。</li>
+<li><strong>脱靶率</strong>：<code>samtools view -c -L $TARGETS bam</code>
+÷ 总数——捕获式 WES 信息量最大的单项 QC（直接决定 §11
+的覆盖度问题）。</li>
+<li>嘈杂/古
+DNA：<code>bwa mem -B</code>（批次大小，降低内存）和调整打分。</li>
+<li><strong>MultiQC</strong> 也吃 flagstat：所有样本跑完后
+<code>multiqc run_dir/</code>。</li>
+</ul>
+<h1 id="标记-pcr-重复-mark-pcr-duplicates">4. 标记 PCR 重复 · Mark PCR
+duplicates</h1>
+<h2 id="原理-2">4.1 原理</h2>
+<p>“重复”= <strong>5′
+坐标和方向与另一读段对完全一致</strong>的读段对。随机打断时真分子几乎不可能撞出同一坐标；PCR
+扩增则极易。重复是<strong>标记、不删除</strong>：GATK
+统计工具忽略它们，但它们留在 BAM
+里（可审计，<code>samtools view -F 1024</code> 随时找回）。</p>
+<p>为什么<strong>必须在排序之后</strong>：MarkDuplicates
+需要坐标顺序才能流式地看到同位置的读段对。这也解释了 <strong>LB
+标签为什么重要</strong>——重复只在<em>同一个文库内</em>才<strong>应当</strong>出现；同一样本的两个文库是两次独立打断，跨文库标记是错的。</p>
+<p><strong>命令</strong>（原版 4.1，逐字）：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx8g&quot;</span> MarkDuplicates <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-M</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_markdup_metrics.txt&quot;</span> <span class="dt">\</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--CREATE_INDEX</span> true</span></code></pre></div>
+<h2 id="实跑结果-2">4.2 实跑结果</h2>
+<p><strong>Demo 轮：</strong> 重复率 OC <strong>0.033%</strong>、PBMC
+<strong>0.06%</strong>——基本为零，这正是 0.48%
+抽样的必然结果（一对重复的两个成员同时存活于抽样中的概率 ~0.48%² ≈
+0.002%）。</p>
+<p><strong>全量轮</strong>（数字全部来自 metrics 文件的 per-library
+行）：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>样本</th>
+<th>检查读段对</th>
+<th>重复对</th>
+<th>光学重复</th>
+<th>PERCENT_DUPLICATION</th>
+<th>文库复杂度估计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OC</td>
+<td>36,468,418</td>
+<td>2,583,317</td>
+<td>1,853,690（占重复的 71.8%）</td>
+<td><strong>7.08%</strong></td>
+<td>809,511,121</td>
+</tr>
+<tr>
+<td>PBMC</td>
+<td>51,634,767</td>
+<td>5,562,361</td>
+<td>3,192,510 (57.4%)</td>
+<td><strong>10.77%</strong></td>
+<td>478,822,815</td>
+</tr>
+</tbody>
+</table>
+<p><strong>老师的全量运行</strong>（<code>analysis_full</code>）：OC
+<strong>7.39%</strong>、PBMC
+<strong>11.01%</strong>——我们的数字与两者都在 0.4
+个百分点以内。这个吻合度是我们 prep 链（fastp → 管道化 bwa|sort →
+MarkDup）忠实复现参考 prep 的最强单点验证。</p>
+<p><strong>结果解读。</strong> ~100× 的杂交捕获 WES，重复率预期在
+<strong>5–20%</strong>。重复率持续攀升 =
+文库复杂度收缩（模板制备差、过度扩增）；metrics 文件的
+<code>ESTIMATED_LIBRARY_SIZE</code> 才是诚实的指标（数亿到数十亿 =
+健康）。光学重复一栏还有个细节：<strong>OC 的重复有 71.8%
+是光学重复</strong>（flowcell 上相邻来源），这通常指向 patterned
+flowcell 的聚类模式，而非 PCR
+过度扩增——是测序硬件属性，不是文库失败。</p>
+<h2 id="坑与矫正-1">4.3 坑与矫正</h2>
+<ul>
+<li><strong>(p1) 光学重复 vs PCR 重复：</strong> metrics
+会分开统计。光学重复来自 flowcell 相邻簇；若光学 &gt;&gt; 非光学，怀疑
+patterned flowcell / 上样浓度，而不是文库制备。</li>
+<li><strong>(p2) “Unknown Library”</strong> 出现在老师的 metrics
+里（他们的 RG 没写 <code>LB</code>）；按原版的 RG 写法会得到具名行。保留
+<code>LB</code>——重复统计按文库分列。</li>
+<li><strong>(p3) UMI 文库</strong>要用 UMI 感知的重复标记（GATK
+<code>UmiAwareMarkDuplicatesPoN</code> 或 fgbio
+<code>CallMolecularDuplicates</code>）；纯坐标标记在那里会低估复杂度。</li>
+</ul>
+<h2 id="调优与扩展-2">4.4 调优与扩展</h2>
+<ul>
+<li>大 BAM 记得 <code>--TMP_DIR</code> 指向 scratch 盘（MarkDuplicates
+临时文件很大）。</li>
+<li>老 BAM 因 NM/MD 标签顺序报错时可用
+<code>--VALIDATION_STRINGENCY SILENT</code>——更好的做法是修 BAM。</li>
+<li><code>samtools markdup</code>（配合
+<code>samtools fixmate</code>）是更快的替代；GATK 的
+<code>EstimateLibraryComplexity</code> 只凭读段对就能预测复杂度。</li>
+</ul>
+<h1 id="碱基质量校准bqsr-base-quality-score-recalibration">5.
+碱基质量校准（BQSR）· Base quality score recalibration</h1>
+<h2 id="原理-3">5.1 原理</h2>
+<p>仪器给的 Phred
+分数是<strong>估计值</strong>，按循环、机器、上下文系统性偏移。BQSR
+从”我们<strong>知道</strong>为真的位点”（已知变异资源）上的错配学习一个经验误差模型，然后改写质量分数。心智模型：<em>如果已知参考位点上的碱基读出在上下文
+C 里看起来像 Q35，那么以后 C 上下文里就按 Q35
+对待，不管仪器说什么。</em></p>
+<p><strong>命令</strong>（原版 5.1–5.2，逐字——known-sites 三件套 = dbsnp
++ Mills + 1000G high-conf，本集群上 <code>.idx</code> 全齐）：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx20g -XX:ParallelGCThreads=4&quot;</span> BaseRecalibrator <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$INDELS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$HIGHCONF</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.recal_data.table&quot;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx12g -XX:ParallelGCThreads=4&quot;</span> ApplyBQSR <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--bqsr-recal-file</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.recal_data.table&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span></span></code></pre></div>
+<h2 id="实跑结果-3">5.2 实跑结果</h2>
+<p>Demo：recal 表 108 KB / BQSR BAM 54 MB；每样本约 2.5 分钟。
+全量轮：recal 表每样本 110 KB（24 个协变量行 × ~400
+个上下文行——模型形状与 demo 相同，只是计数更密），BQSR BAM 8.8 GB（OC）/
+8.2 GB（PBMC）；作业日志中的耗时——BaseRecalibrator ~31 分钟（OC）/ ~43
+分钟（PBMC），ApplyBQSR ~20 分钟 / ~28 分钟。注意 BQSR BAM 是 markdup
+BAM 的 ~1.9 倍：ApplyBQSR 改写了每条读段的每个质量值，重压缩的 BAM
+未必缩小——保留所有中间文件时这是个容易漏算的磁盘开销。</p>
+<p><strong>结果解读。</strong> recal 表的 <code>EmpiricalQuality</code>
+vs <code>EstimatedQ</code> 两列是重点：1–5 个 Q
+的系统性偏差属正常且值得校准；BQSR
+的<strong>报告图</strong>（<code>gatk AnalyzeCovariates</code>）让它可视化。本课两个
+BQSR 真相：(a) dbsnp <strong>加上</strong> Mills + 1000G 作 known-sites
+时，真实的新变异几乎不受影响——模型”相信”这三件套；(b) 0.5× 数据上 BQSR
+照样能跑，但每个协变量格子的经验计数薄得可怜，校准基本是噪声——又一个”机械上能跑、统计上无意义”的案例。</p>
+<h2 id="坑与矫正-2">5.3 坑与矫正</h2>
+<ul>
+<li><strong>(p1) 没加 <code>-L</code> 限制：</strong> BaseRecalibrator
+扫描<em>整个基因组</em>，尽管下游只关心外显子组。加
+<code>-L $TARGETS</code> 能把 WES
+墙钟砍近一半。我们按原文保留（不算错，只是慢）。</li>
+<li><strong>(p2) BQSR 需要足够的数据量。</strong> 靶区碱基 &lt;10⁷
+时模型会抖。</li>
+<li><strong>(p3) 序列字典必须匹配</strong>（本集群
+<code>hg38.dict</code> 在场——没问题），否则别做 BQSR。</li>
+</ul>
+<h2 id="调优与扩展-3">5.4 调优与扩展</h2>
+<ul>
+<li><code>--native-pair-hmm-threads</code> 是 HaplotypeCaller
+的参数，与这里无关；BaseRecalibrator 的并行靠 GC 线程 +（较新 GATK
+的）<code>--parallelism</code>。</li>
+<li>画协变量图：<code>gatk AnalyzeCovariates -bqsr recal_data.table -O report.pdf</code>——整个步骤最好的教学产物。</li>
+<li>平台研究充分时某些管线会跳过 BQSR；只要错配模型显示有偏，GATK
+仍然建议做。</li>
+</ul>
+<h1 id="胚系变异检测-germline-variant-calling">6. 胚系变异检测 ·
+Germline variant calling</h1>
+<h2 id="原理-4">6.1 原理</h2>
+<p><strong>HaplotypeCaller（HC）</strong> 不是逐 pileup 的 SNP
+检测器：它 (1) 找到有变异证据的<em>活跃区域</em>，(2)
+局部<strong>重组装单倍型图</strong>，(3) 对每条读段与每条候选单倍型跑
+pair-HMM 似然，(4) 输出最可能的基因型。这正是它抓短读段附近 indel
+的能力远超 pileup 检测器的原因。</p>
+<p><strong>GVCF
+模式（<code>-ERC GVCF</code>）</strong>：对<em>每一块</em>（变异或纯参考）都输出置信区间。代价：文件更大。收益：<strong>可扩展的联合基因分型</strong>——之后加第
+31 个样本，只需重跑
+<code>CombineGVCFs</code>/<code>GenotypeGVCFs</code>，不用重跑
+HC。这套两样本 “GVCF 工作流” 正是扩展到整个队列的模式。</p>
+<p><strong>命令</strong>（原版 6.2–6.4，逐字）：</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx12g -XX:ParallelGCThreads=4&quot;</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-ERC</span> GVCF <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-D</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="at">-L</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.g.vcf&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g -XX:ParallelGCThreads=4&quot;</span> CombineGVCFs <span class="dt">\</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/PBMC/blood.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/combined.g.vcf&quot;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g -XX:ParallelGCThreads=4&quot;</span> GenotypeGVCFs <span class="dt">\</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/combined.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-D</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/OC_blood_variants.vcf&quot;</span></span></code></pre></div>
+<p>原版 6.4 还有可选的 VariantAnnotator（用 OC 的
+BAM）——它注释基于覆盖度的字段；GATK4
+里过滤之前<strong>不再需要</strong>它，原版自己也是这么说的。</p>
+<h2 id="实跑结果-4">6.2 实跑结果</h2>
+<p><strong>Demo 轮：</strong> 联合变异集 <strong>14,782
+条变异记录</strong>（13,632 个 SNP + 1,151 个
+indel，另少量混合）——肿瘤/正常对联合基因分型；PBMC
+的胚系变异也出现在肿瘤列里。</p>
+<p><strong>全量轮：</strong> 联合变异集 <strong>55,123
+条变异记录</strong>（OC+blood，双样本、限定靶区：HC/Combine/Genotype
+都带 <code>-L $TARGETS</code>）。</p>
+<p><strong>老师的参考：</strong> <strong>204,178</strong>
+条。<strong>小心天真的比较——这两个数不是同一个量</strong>（见附录
+A12，问题 #12）。对老师 VCF 的实测结论：(a)
+它只有<strong>一个样本</strong>（只有 OC——他们的 blood gVCF 的 RG
+<code>SM</code> 标签写成了 <code>OC</code>，CombineGVCFs
+遇样本重名把两者塌缩成一个）；(b)
+它是<strong>全基因组范围</strong>检出的——HaplotypeCaller/GenotypeGVCFs
+<strong>都没加 <code>-L</code></strong>——其 <strong>72%
+的位点落在捕获靶区之外</strong>（大量位于低复杂度/脱靶、浅覆盖区）。我们的
+55,123 是双样本、靶区内变异集；他们的 204,178
+是单样本、全基因组变异集。深度是主要差异，但范围和样本数同样要紧——比较变异集之前永远先读
+VCF 头（<code>##GATKCommandLine</code>、<code>#CHROM</code> 行）。</p>
+<p>对自己数字做个 sanity check：60.51 Mb 外显子组按每 kb 约 1.2–1.4
+个胚系变异 → 每样本约 75–85k；两个不同个体、共享约 70% 的常见变异 →
+去重后约 55–65k 个位点。55,123 正落在这个窗口里。</p>
+<h2 id="坑与矫正-3">6.3 坑与矫正</h2>
+<ul>
+<li><strong>(p1) <code>-D dbsnp</code> 只加 RS ID
+注释</strong>——它<strong>不</strong>限制检出范围。常见误解是”dbsnp 告诉
+HC 该找什么”；不是。</li>
+<li><strong>(p2) 千万别把这个联合 VCF
+当体细胞变异集</strong>——这是<strong>两个个体</strong>的胚系变异。原版的点睛之笔（也是
+§9 的出发点）正是这一点。</li>
+<li><strong>(p3) PBMC
+当”正常对照”</strong>用于配对体细胞检出是可接受的，但它毕竟是另一种组织，有自己的嵌合/衰老突变；血液里的克隆性造血（CHIP）变异<strong>会</strong>出现在这里——现代免疫肿瘤学的热门话题。</li>
+</ul>
+<h2 id="调优与扩展-4">6.4 调优与扩展</h2>
+<ul>
+<li><code>--native-pair-hmm-threads 8</code>
+是我们实跑中单项提速最大的参数——永远用它。</li>
+<li>队列场景：~50 样本以上 <code>GenomicsDBImport</code> 扩展性优于
+CombineGVCFs（2 个样本用 CombineGVCFs 没问题）。</li>
+<li><code>--interval-padding 50</code> 能捞回 BED
+边界外剪接区的变异——几乎零成本，临床上很值。</li>
+<li>QUAL 的解读：它是 Phred
+尺度的<strong>基因型</strong>置信度，不是变异频率。一个 QUAL 5,000
+的杂合子意思是”P(错) ≈ 10⁻⁵⁰⁰”——构造上就过度精确。</li>
+</ul>
+<h1
+id="变异质量再校准vqsr-variant-quality-score-recalibration-本版最大矫正点">7.
+变异质量再校准（VQSR）· Variant quality score recalibration —
+<em>本版最大矫正点</em></h1>
+<h2 id="原理-5">7.1 原理</h2>
+<p>硬过滤用固定阈值（QD&lt;2 → 差）。<strong>VQSR
+则是在你的变异集上训练高斯混合模型</strong>：用”真相”资源（SNP 用
+hapmap/omni、indel 用 Mills）当正样本标签，dbsnp
+当”已知但别全信”群体。每条变异得到一个 <strong>VQSLOD</strong>
+分数（给定其注释向量
+QD、MQ、FS、SOR、ReadPosRankSum、MQRankSum，它是”真变异 vs 假
+artifacts”的对数几率）。你保留一个<em>真实敏感度分层</em>（tranche；此处
+SNP 99.5%、indel 99.0%），把分层外打分最差的部分过滤掉。</p>
+<p><strong>不可协商的前提：训练数据要够。</strong> GATK 的指导值：约 30
+个 WGS 样本（或大队列变异集；外显子组因为每样本变异更少，需要的样本比
+WGS 更多）。2 个外显子组、14k
+变异，模型<em>数学上可拟合</em>但<em>统计上是虚构的</em>——它会毫不抗议地给你产出一份
+tranches 文件。</p>
+<h2 id="实跑结果-两个头条发现">7.2 实跑结果 —— 两个头条发现</h2>
+<p><strong>发现 A：VQSR 在 demo 上”成功”了——而这恰恰是个陷阱。</strong>
+两个 VariantRecalibrator 都在 14,782 条变异的 demo
+集上跑完了。但看看它到底学到了什么：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>证据</th>
+<th>Demo（0.5×，14.8k）</th>
+<th>我们全量（55.1k，双样本靶区内）</th>
+<th>老师（204k，全基因组）</th>
+<th>健康 WES 预期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可用真相位点（hapmap+omni ∩ 变异集）</td>
+<td>7,388</td>
+<td>28,324</td>
+<td>85,159</td>
+<td>随队列增长</td>
+</tr>
+<tr>
+<td>SNP minVQSLod（99.9% tranche）</td>
+<td>−2.56</td>
+<td>−11.62</td>
+<td>−2.47</td>
+<td>温和的负尾</td>
+</tr>
+<tr>
+<td>SNP minVQSLod（100% tranche）</td>
+<td><strong>−5889.9</strong></td>
+<td>−1111.4</td>
+<td>−25.5</td>
+<td>有界尾部</td>
+</tr>
+<tr>
+<td>novel Ti/Tv（90% tranche）</td>
+<td><strong>2.46</strong>（紧贴 known 的 2.71）</td>
+<td>2.50（known 2.63）</td>
+<td><strong>1.69</strong>（known 2.34）</td>
+<td>novel ≈ 1.5–2.0，明显低于 known</td>
+</tr>
+<tr>
+<td>模型文件大小</td>
+<td>1.2 MB</td>
+<td>4.3 MB</td>
+<td>15.1 MB</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Indel known Ti/Tv</td>
+<td>0.0000（indel 模式的正常伪象）</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>demo 模型的失效模式体现在两个数字上。其一，100% tranche 的截断值
+−5889
+意味着模型<strong>在尾部毫无判别力</strong>——它在噪声里分离噪声。其二，更微妙：健康变异集里
+<em>novel</em>（不在 dbsnp 里的）变异富集 artifacts，所以 <strong>novel
+Ti/Tv 应明显低于 known Ti/Tv</strong>——老师的运行正是标准样子（1.69 vs
+2.34）。demo 的 novel Ti/Tv 却是 2.46，<strong>贴着</strong> known
+值（2.71）：模型已无力区分”最差”和”最好”的变异，因为 0.5×
+深度下连真相位点都只有 1–2 条读段支撑。我们自己的全量轮居中（novel 2.50
+vs known 2.63）：55k 靶区变异上模型可用了，但按 GATK 自己”≥30
+样本”的标准仍然偏薄。</p>
+<blockquote>
+<p><strong>学习要点：</strong> VQSR 在 14,782
+个变异上”能跑完”不等于”能用”。三个铁证：① 训练用的 truth 位点只有 7,388
+个（全量轮 28,324、老师 85,159）——模型是在极稀疏的标签上拟合的；② 100%
+tranche 的 minVQSLod = −5889——健康数据的尾部应在 −10 到 −30 之间，−5889
+意味着模型在噪声里找规律；③ 最微妙的一点：健康数据里 novel Ti/Tv
+应显著低于 known（老师的 1.69 vs 2.34 就是标准样子），而 demo 的 novel
+2.46 几乎贴着 known 2.71——模型已无力区分”最差”和”最好”的变异，因为 0.5×
+深度下连 truth 位点都只有 1–2 条读段支撑。这不是”VQSR 挂了”，而是”VQSR
+拟合了一个没有统计意义的东西”——比挂了更危险，因为它不报错。</p>
+</blockquote>
+<p><strong>发现 B（问题 #1）：原版 §7.3 的 MergeVcfs
+把每条变异都重复一遍。</strong> <code>ApplyVQSR --mode SNP</code>
+输出的<strong>不是只有 SNP</strong>——它输出<strong>整个
+VCF</strong>，只是套用了 SNP 模型打分（indel
+原样透传、未过滤），<code>--mode INDEL</code>
+反之。把两个输出合并，就得到<strong>每条变异两份</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变异集</th>
+<th>原始联合记录</th>
+<th>原版 §7.3 MergeVcfs 之后</th>
+<th>重复位点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>14,782</td>
+<td><strong>29,564</strong></td>
+<td><strong>100%（14,782/14,782）</strong></td>
+</tr>
+<tr>
+<td>老师 <code>analysis_full</code></td>
+<td>204,178</td>
+<td><strong>408,356</strong></td>
+<td><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>老师自己的参考产物也带着同样的重复——证明这是路线图的
+bug，不是环境特例。具体损害（两轮都实测过）：每个位点出现<strong>两次</strong>、带两个不同的
+FILTER 值——SNP 模式的记录带着 SNP 模型的裁决（<code>PASS</code> 或
+<code>VQSRTrancheSNP…</code>），INDEL 模式的记录对 SNP 显示
+<code>.</code>（透传未过滤），反之亦然。两个后果：(a)
+<strong>原始记录数翻倍</strong>（29,564；110,246；408,356）——下游一切”按行数数”的统计（包括
+ANNOVAR 的 avinput，§8）全部翻倍；(b) “PASS”
+计数<em>碰巧</em>保持正确（我们全量轮为 53,988），因为每个位点恰有一条
+SNP 模式裁决——这个意外的软点让 bug 在随手 QC
+时隐身。全量轮还暴露一个细节：SNP
+模型把某记录过滤掉时，它的<em>孪生</em>另一条仍是 <code>.</code>——于是
+<code>SelectVariants</code> 式”丢弃非
+PASS”的逻辑会<strong>悄悄留下未过滤的孪生记录</strong>。</p>
+<h2 id="矫正方案">7.3 矫正方案</h2>
+<p>两种标准修法；<strong>修法 1 是 GATK
+官方最佳实践</strong>（顺序套用——每条变异只被它自己类型的模型过滤一次）：</p>
+<p><strong>修法 1 —— 顺序 ApplyVQSR（推荐）：</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SNP 模型 → 应用到完整变异集</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantRecalibrator ... <span class="at">-mode</span> SNP <span class="at">-O</span> snps.recal <span class="at">--tranches-file</span> snps.tranches ...</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyVQSR <span class="at">-V</span> raw.vcf <span class="at">-O</span> step1.vcf <span class="at">--mode</span> SNP <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recal-file</span> snps.recal <span class="at">--tranches-file</span> snps.tranches <span class="at">--truth-sensitivity-filter-level</span> 99.5</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># INDEL 模型 → 应用到已过 SNP 滤的输出</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantRecalibrator ... <span class="at">-mode</span> INDEL <span class="at">-O</span> indel.recal <span class="at">--tranches-file</span> indel.tranches ...</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyVQSR <span class="at">-V</span> step1.vcf <span class="at">-O</span> all.VQSR.vcf <span class="at">--mode</span> INDEL <span class="dt">\</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recal-file</span> indel.recal <span class="at">--tranches-file</span> indel.tranches <span class="at">--truth-sensitivity-filter-level</span> 99.0</span></code></pre></div>
+<p><strong>修法 2 —— 拆分、过滤、合并</strong>（SelectVariants → 各自
+ApplyVQSR → MergeVcfs），如果你想要按类型分盘的 VCF。</p>
+<p><strong>以及本课数据（2 样本）的诚实替代方案：硬过滤。</strong> GATK
+自己对小变异集的建议就是 <code>VariantFiltration</code>：</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantFiltration <span class="at">-V</span> OC_blood_variants.vcf <span class="at">-O</span> filtered.vcf <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_QD2&quot;</span>     <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_MQ40&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;MQ &lt; 40.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_FS60&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 60.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_SOR3&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 3.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_QD2&quot;</span>  <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_FS200&quot;</span> <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 200.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_SOR10&quot;</span> <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 10.0 &amp;&amp; INDEL&quot;</span></span></code></pre></div>
+<p>VQSR 在队列规模（30+ 外显子组）才有意义；1–10
+个样本用硬过滤。<strong>这是整个步骤里最可迁移的一课。</strong></p>
+<blockquote>
+<p><strong>学习要点：</strong>
+矫正方案记忆点：<strong>顺序套用</strong>（SNP 模型套完的输出，再套
+INDEL
+模型）——每条变异只被它自己类型的模型过滤一次；或者<strong>先拆再合</strong>（SelectVariants
+按类型拆开 → 各自 ApplyVQSR → MergeVcfs）。而如果只有 1–10 个样本，GATK
+官方建议干脆不用 VQSR，改用硬过滤（上面的 QD/MQ/FS/SOR 阈值就是 GATK
+文档的标准值）。VQSR 的适用边界：约 30 个以上样本、或 callset
+足够大——“能跑”≠“该用”。</p>
+</blockquote>
+<h2 id="实跑命令说明">7.4 实跑命令说明</h2>
+<p>两轮里我们都按原版 §7.1/7.2 逐字跑了
+VariantRecalibrator/ApplyVQSR（recalibrator + 按模式 ApplyVQSR，用原版的
+99.5/99.0 档），§7.3 的 MergeVcfs
+也逐字跑了——为的是<strong>用实测数字记录</strong>翻倍现象（demo 14,782 →
+29,564；全量 55,123 →
+110,246），而不是口头断言。最终交付用的矫正文件由修法 1（顺序
+ApplyVQSR）从同一组 recal 模型产出。</p>
+<p><strong>全量轮数字，按原文跑 vs 矫正：</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>量</th>
+<th>原版 §7.3 原样（MergeVcfs）</th>
+<th>矫正后（顺序 ApplyVQSR，作业 3056）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总记录数</td>
+<td><strong>110,246</strong>（= 2 × 55,123）</td>
+<td><strong>55,123</strong>（每个位点一条）</td>
+</tr>
+<tr>
+<td>唯一位点数</td>
+<td>55,123</td>
+<td>55,123</td>
+</tr>
+<tr>
+<td>PASS 记录</td>
+<td>53,988</td>
+<td>53,988</td>
+</tr>
+<tr>
+<td>带 <code>.</code>（未过滤）FILTER 的位点</td>
+<td>53,988</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>被过滤记录</td>
+<td>56,258（绝大多数是未过滤孪生）</td>
+<td>1,135（696 SNP-tranche + 427 + 12 INDEL-tranche）</td>
+</tr>
+<tr>
+<td>由此产出的 ANNOVAR avinput 行数</td>
+<td>110,246</td>
+<td>55,123</td>
+</tr>
+</tbody>
+</table>
+<p>全量轮的 tranches（作业 3051）：SNP 真相位点 28,324，99.9% 档
+minVQSLod −11.62 / 100% 档 −1111；100% tranche 的 novel Ti/Tv
+1.65——模型行为像一个真实（尽管偏薄的）变异集模型。顺序套用随后从 55,123
+条里恰好移除 1,135 条（2.1%）——对一个干净的 WES
+变异集来说这是合理过滤率，与 demo 的退化 tranches 形成鲜明对照。</p>
+<h2 id="结果解读-1">7.5 结果解读</h2>
+<ul>
+<li><strong>tranches 文件</strong>是质量仪表盘：分层越放越宽（99 → 99.9
+→ 100）时，每档的 <code>novelTiTv</code>
+应当<em>下降</em>。如果它上升或抖动，说明模型在过拟合——demo
+里肉眼可见。</li>
+<li><code>--truth-sensitivity-filter-level</code> 的语义：“至少保留 X%
+的真相位点变异”；SNP 用 99.5%（更松，SNP 模型更强）、indel 用
+99.0%（indel 真相更稀缺，稍严格来补偿）。</li>
+<li>VQSLOD
+分布：<code>bcftools query -f '%VQSLOD\n' vcf | sort -g | awk ...</code>——健康的运行分布平滑；我们的
+demo 是一个退化尖峰。</li>
+<li><strong>不要在两轮之间直接比较原始 QUAL；比较 tranches
+行为。</strong></li>
+</ul>
+<h1 id="annovar-功能注释-functional-annotation">8. ANNOVAR 功能注释 ·
+Functional annotation</h1>
+<h2 id="原理-6">8.1 原理</h2>
+<p>VCF 说的是<em>哪里、是什么</em>；注释回答<em>所以呢</em>。ANNOVAR
+的流程：(1) <strong>convert2annovar</strong> 把 VCF
+转成极简表格（<code>avinput</code>：染色体、起始、终止、ref、alt）；(2)
+<strong>annotate_variation / table_annovar</strong>
+把变异映射到基因模型（这里是 <code>refGeneWithVer</code>——带版本号的
+RefSeq），还可以选择映射到几十种其他数据库（群体频率、有害性打分、ClinVar）。</p>
+<p>关键输出是 <code>*.hg38_multianno.txt</code>：每行一个（变异 ×
+转录本）组合，含
+<code>Func.refGeneWithVer</code>（exonic/intronic/UTR/splice/…）、<code>ExonicFunc</code>（synonymous/missense/nonsense/frameshift/…）和
+<code>AAChange.refGene</code>（蛋白改变，如
+<code>BRCA1:NM_007294:exon11:c.3082G&gt;A:p.Gly1028Arg</code>
+样式的坐标）。</p>
+<h2 id="命令原版-8.18.3逐字">8.2 命令（原版 8.1–8.3，逐字）</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/convert2annovar.pl&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-format</span> vcf4old <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/OC_blood.all.VQSR.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-includeinfo</span> <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-comment</span> <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-outfile</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/annotate_variation.pl&quot;</span> <span class="at">-geneanno</span> <span class="at">-buildver</span> hg38 <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-dbtype</span> refGeneWithVer <span class="dt">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="dt">\</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer <span class="dt">\</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g</span></code></pre></div>
+<h2 id="坑问题-2富协议块必挂以及确切原因">8.3 坑（问题
+#2）：“富协议”块必挂——以及确切原因</h2>
+<p>原版的可选步骤，逐字保留：</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno_rich&quot;</span> <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer,cytoBand,dbnsfp30a,exac03,gnomad_genome,avsnp147 <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f,f</span></code></pre></div>
+<p>这<strong>在本集群上跑不了</strong>：已装的 humandb 有
+<code>dbnsfp54a</code>、<code>gnomad211_exome</code>、<code>gnomad41_exome</code>、<code>avsnp151</code>——没有
+<code>dbnsfp30a</code>、<code>exac03</code>、<code>gnomad_genome</code>、<code>avsnp147</code>。报错是
+<code>Error: the database ... not found</code>（或 “cannot open
+…txt”）。两轮都复现，deviations 日志有记录。</p>
+<p><strong>矫正</strong>——同样的意图，能跑的库名：</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno_rich&quot;</span> <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151 <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f</span></code></pre></div>
+<p>（<code>gnomad41_exome</code> = gnomAD v4.1 外显子组
+AF——外显子组场景里对 <code>exac03</code> 和 <code>gnomad_genome</code>
+的现代替代；<code>dbnsfp54a</code> 打包了功能性预测打分，含 CADD/REVEL
+级别；<code>avsnp151</code> = dbSNP 151 rsID。）</p>
+<blockquote>
+<p><strong>学习要点：</strong> ANNOVAR 的数据库名<strong>必须和 humandb
+里实际存在的文件名完全一致</strong>（<code>hg38_dbnsfp54a.txt</code>
+等）。原版写的是 2020
+年前后的老库名，而集群上装的是新库——这类”文档滞后于环境”的问题在生信教学环境里极其常见，遇到时先
+<code>ls $HUMANDB | grep -iE "dbnsfp|gnomad|avsnp"</code>
+看清楚有什么，再改 <code>-protocol</code>。另外注意每个
+<code>-operation</code> 字母和 <code>-protocol</code>
+里每个库一一对应（g=gene，r=region，f=filter/频率）。</p>
+</blockquote>
+<h2 id="坑问题-1-的下游翻倍的-vcf-对-annovar-做了什么">8.4 坑（问题 #1
+的下游）：翻倍的 VCF 对 ANNOVAR 做了什么</h2>
+<p>原版 §7.3 的合并 VCF 每条变异含两份（§7.2），于是 avinput 与
+multianno 输出全部翻倍：</p>
+<table>
+<thead>
+<tr>
+<th>变异集</th>
+<th>avinput 行数</th>
+<th>multianno 行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>29,564（真实 14,782）</td>
+<td>29,602</td>
+</tr>
+<tr>
+<td>全量</td>
+<td><strong>110,246</strong>（真实 55,123）</td>
+<td><strong>110,284</strong></td>
+</tr>
+</tbody>
+</table>
+<p>任何”基因 X 里有多少变异”的统计都被灌了 2
+倍水。矫正版注释的是<strong>顺序 VQSR 过滤后的
+VCF</strong>（或加了硬过滤的原始联合集）——永远不要注释 §7.3
+原样产出的合并文件。</p>
+<h2 id="实跑结果-5">8.5 实跑结果</h2>
+<p>Demo：基础协议产出
+<code>OC_blood_anno.hg38_multianno.txt</code>，列为
+<code>Chr..AAChange.refGeneWithVer</code>（10 列），14,782
+个真实变异对应 29,602 行。</p>
+<p>全量轮（作业 3051，按原版）：avinput <strong>110,246</strong>
+行、基础 multianno <strong>110,284</strong>
+行——翻倍的输入如预期传播。</p>
+<p>全量轮<strong>矫正版</strong>（作业 3056）：avinput
+<strong>55,123</strong> 行；富协议（用<strong>实际安装</strong>的库名
+<code>refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151</code>）产出
+<strong>55,165 行 × 146 列</strong>——包括 gnomAD v4.1 AF（总计 + 8
+个亚群 +
+faf95/99）、SIFT4G、PolyPhen-2、MutationTaster、REVEL、CADD、AlphaMissense、ClinPred、保守性打分（GERP++/phyloP/phastCons）和
+<code>avsnp151</code> rsID。55,165 行中，<strong>54,373 个变异的 gnomAD
+AF ≤ 0.01</strong>——即这对样本 98.6%
+的胚系变异是罕见变异，正是两个无关个体外显子组该有的样子（常见变异共享、罕见变异私有）。老师自己的注释（<code>analysis_full/3_annotation</code>）用的是更老的
+<code>refGene,knownGene</code>
+协议——功能/频率解读根本不在参考结果的范围里。</p>
+<h2 id="调优与扩展-5">8.6 调优与扩展</h2>
+<ul>
+<li><code>-nastring .</code>
+控制空单元格；<code>-polish -dot2comma</code> 类清洗对 Excel
+用户友好。</li>
+<li>本集群还可加的协议：<code>clinvar_20221231</code> 类数据库（先查
+humandb）、<code>gerp++</code>、<code>spliceai</code>（若已下载）——临床同事第一个要的就是
+ClinVar。</li>
+<li><code>vcfanno</code>/<code>bcftools csq</code>/<code>VEP</code>
+是替代品；ANNOVAR 的长处是平面文件的简单和课程的肌肉记忆。</li>
+<li><strong>行数 ≠ 变异数</strong>：一个变异落 3 个转录本就是 3
+行。数变异数之前永远按（染色体，位置，ref，alt）<code>sort -u</code>；只在数转录本层面效应时才数行。</li>
+<li>需要注释后的 VCF 给下游（如报告工具）时用 <code>-vcfoutput</code>
+转回。</li>
+</ul>
+<h1 id="配对正常对照的体细胞突变与-tmbmutect2-somatic-tmb">9.
+配对正常对照的体细胞突变与 TMB（Mutect2）· Somatic TMB</h1>
+<h2 id="原理-7">9.1 原理</h2>
+<p><strong>体细胞 = 肿瘤里有、配对正常里没有。</strong> Mutect2
+的流程：在肿瘤<strong>和</strong>正常里各做局部从头组装（类似
+HC），然后过一系列判别性过滤器——来自<strong>群体频率资源</strong>的
+AF、跨样本证据、方向偏好（FFPE/artifact）、正常面板的复发性
+artifact——每条变异得到一个”是体细胞突变”的后验概率。</p>
+<p><strong>TMB（肿瘤突变负荷）</strong> =（体细胞 PASS 变异数）÷（靶区
+Mb）。它是个<em>率</em>，所以只有 (a) 分母与检出的 <code>-L</code>
+区域一致（此处 60.51 Mb）才有意义；(b) 检出灵敏度受深度控制（WES TMB
+稳定约需肿瘤 ~≥50×；实测 54.6×/91.3× 这对刚好在门槛之上——见 §11）。</p>
+<p><strong>命令</strong>（原版 9.1–9.3，逐字）：</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g&quot;</span> Mutect2 <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--normal-sample</span> blood <span class="dt">\</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-L</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--germline-resource</span> <span class="st">&quot;</span><span class="va">$HIGHCONF</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/5_somatic_tmb/somatic.raw.vcf.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="dt">\</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--f1r2-tar-gz</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/5_somatic_tmb/f1r2.tar.gz&quot;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> LearnReadOrientationModel <span class="at">-I</span> f1r2.tar.gz <span class="at">-O</span> orientation_model.tar.gz</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="dt">\</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="at">-V</span> somatic.raw.vcf.gz <span class="dt">\</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--stats</span> somatic.raw.vcf.gz.stats <span class="dt">\</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ob-priors</span> orientation_model.tar.gz <span class="dt">\</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> somatic.filtered.vcf.gz</span></code></pre></div>
+<h2 id="坑与矫正-4">9.2 坑与矫正</h2>
+<ul>
+<li><strong>(p1，问题 #5) 缺正常面板（PoN）。</strong>
+集群上<strong>现成就有</strong>：<code>$REF/1000g_pon.hg38.vcf.gz</code>（+
+<code>.tbi</code>）。加上
+<code>--pon $REF/1000g_pon.hg38.vcf.gz</code>，FilterMutectCalls
+就多了一整个过滤维度（复发性捕获/比对 artifact）。这是 §9
+单个旗标价值最高的改进。</li>
+<li><strong>(p2) 群体频率资源的语义：</strong> Mutect2
+要的是<strong>群体 AF</strong>
+文件来压低常见胚系变异；<code>1000G_phase1.snps.high_confidence</code>
+的 INFO 里带 AF、<em>能用</em>，但现代推荐是 gnomAD
+AF-only（<code>af-only-gnomad.vcf.gz</code>）——更新、更全、与外显子组匹配。</li>
+<li><strong>(p3，口径) <code>somatic.pass.vcf.gz</code>
+写了却没人用</strong>——§9.3 从 filtered VCF 里重新取
+PASS（数字一样；选一个口径，保持一致）。</li>
+<li><strong>(p4) <code>--normal-sample blood</code></strong> 必须与 BAM
+的 <code>SM</code>
+标签完全一致（<code>SM:blood</code>）。中途改名的话，Mutect2 报 “FATAL
+error: sample not found”。</li>
+</ul>
+<h2 id="实跑结果-6">9.3 实跑结果</h2>
+<p><strong>Demo 轮（0.5×）：raw = filtered = PASS = 0，TMB =
+0.00/Mb。</strong> 这是预期之内、<em>教学上完美</em>的结果：肿瘤 ~0.5×
+时，没有统计手段能区分一个体细胞突变和一个碰巧被看到的胚系变异——Mutect2
+的模型正确地拒绝一切检出。零不是 bug，是诚实的回答。</p>
+<p><strong>全量轮（肿瘤可用深度 ~54.6×）：raw = 2,949，filtered =
+2,949，PASS = 108 → TMB = 108 / 60.5079 Mb = 1.78 mut/Mb。</strong></p>
+<p>过滤器分布读起来像一本”为什么体细胞检出需要学习型过滤器”的教科书——2,841
+条非 PASS 记录（组合式 FILTER 字符串）中：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>主导过滤器</th>
+<th>记录数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normal_artifact</code>（出现在 60%+ 的被滤字符串中）</td>
+<td>—</td>
+<td>在正常里（弱）看到、且高于本捕获噪声底——多为等位分数倾斜的胚系位点</td>
+</tr>
+<tr>
+<td><code>weak_evidence</code></td>
+<td>—</td>
+<td>肿瘤 LOD 低于阈值——54.6× 可用深度仍是灵敏度的天花板</td>
+</tr>
+<tr>
+<td><code>slippage</code></td>
+<td>—</td>
+<td>同聚物/STR 旁的 indel artifact</td>
+</tr>
+<tr>
+<td><code>germline</code></td>
+<td>—</td>
+<td>群体 AF 说是胚系</td>
+</tr>
+<tr>
+<td><code>multiallelic</code> / <code>strand_bias</code> /
+<code>orientation</code> / <code>haplotype</code> /
+<code>clustered_events</code> / <code>map_qual</code> /
+<code>base_qual</code></td>
+<td>—</td>
+<td>现代过滤器的全家桶</td>
+</tr>
+</tbody>
+</table>
+<p>108 个 PASS 变异的 AF 从 0.056 到 0.48（中位
+~0.4——与高纯度肿瘤中的杂合克隆突变一致）。</p>
+<p><strong>结果解读。</strong></p>
+<ul>
+<li>现实的上皮性卵巢肿瘤 TMB 在 <strong>~1–3 mut/Mb</strong>（HGSOC 是低
+TMB、拷贝数驱动的疾病）。如果从一个安静的肿瘤样本得到 50+
+mut/Mb，先怀疑胚系泄漏（正常对照配错、样本调换）或 artifact。</li>
+<li>过滤器分布（<code>bcftools query -f '%FILTER\n' | sort | uniq -c</code>）告诉你变异<em>死于什么</em>：一堆
+<code>germline</code> = 你的”正常”和肿瘤不配；一堆
+<code>orientation</code> = FFPE
+artifact；<code>panel_of_normals</code>（如果加了 PoN）= 捕获
+artifact。</li>
+<li>正常里的 CHIP（血液
+DNMT3A/TET2/ASXL1）在肿瘤纯度低时可能反向伪装成体细胞——放进你的鉴别诊断。</li>
+</ul>
+<blockquote>
+<p><strong>学习要点：</strong> TMB 的分母（60.51 Mb）必须与
+<code>-L</code> 的区域一致——用全外显子组 38 Mb 还是全部捕获区域 60.5
+Mb，TMB 能差 60%。第二个要点：demo 轮 TMB=0 不是流程坏了，而是”0.5×
+深度下体细胞检测没有统计功效”的诚实表达。全量轮实测可用深度
+54.6×，刚好在稳定 TMB 的临线之上——这也是为什么全量轮只报了 108 个 PASS
+体细胞变异（HGSOC 本身也是低 TMB
+肿瘤）。第三个要点：HGSOC（高级别浆液性卵巢癌）是典型的低 TMB、高 CNV
+肿瘤——体细胞点突变少、拷贝数变化多，这正好衔接 §10 的 CNV
+检测为什么对这类肿瘤特别重要。</p>
+</blockquote>
+<h2 id="调优与扩展-6">9.4 调优与扩展</h2>
+<ul>
+<li><code>--max-mnp-distance 0</code> 得到严格的 SNP/indel 输出；默认 1
+会顺带产出 MNP。</li>
+<li>没有正常对照时的 tumor-in-normal 模式（两个输入都
+<code>--tumor-sample</code>）：更弱，但可行。</li>
+<li>TMB 之外的绝对定量：结合 CNVkit
+的纯度/倍性估计（<code>cnvkit.py call --purity</code>）→ 按样本调
+Mutect2 的 <code>--tumor-lod</code> 类阈值。</li>
+<li>报告级过滤：<code>bcftools filter -i 'FILTER="PASS" &amp;&amp; FORMAT/AF[0]&gt;0.05'</code>
+做置信切分；每个体细胞检出永远同时报 VAF 和深度。</li>
+</ul>
+<h1 id="cnvkit-拷贝数变异检测-cnv-detection">10. CNVkit 拷贝数变异检测 ·
+CNV detection</h1>
+<h2 id="原理-8">10.1 原理</h2>
+<p>CNVkit 把肿瘤每个 bin（靶区 +
+抗靶区）的读段<strong>深度</strong>与一个<strong>参考</strong>（这里：配对正常）对比，转成
+log2 比值，做分割（CBS），再整数化拷贝数。模式旗标编码的是<em>panel
+的制备方式</em>：</p>
+<ul>
+<li><code>-m hybrid</code> ——
+杂交捕获（SureSelect/Xgen/…）：<strong>存在脱靶读段</strong>、可用作基线
+→ CNVkit 会构建抗靶区（antitarget）bin。</li>
+<li><code>-m amplicon</code> —— PCR
+扩增子：构造上所有读段都在靶区，没有抗靶区。</li>
+</ul>
+<p>本 panel 是 <strong>S07604514 = Agilent SureSelect Human All Exon
+V6</strong>——<em>杂交捕获</em>设计。原版命令用的是
+<code>-m amplicon</code>（问题 #4）。</p>
+<h2 id="命令原版-10.2逐字与产出">10.2 命令（原版 10.2，逐字）与产出</h2>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$TUMOR</span><span class="st">&quot;</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$NORMAL</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/targets.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span> amplicon <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-reference</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/reference.cnn&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/cnvkit_out&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<p><strong>Demo 轮：</strong>
+它<em>跑通了</em>（没崩）——产出教科书级垃圾：<code>log2</code> 高达
+<strong>+11.6</strong> 的片段、整数化 <code>cn</code> 值
+324、1601、6345（二倍体样本的拷贝数不可能超过 ~2× 倍性；&gt;10
+的值是”参考为空”的数学伪象），外加一个 0.5× 深度下横跨 chr1 一半、169 Mb
+的”缺失”。这正是 0.5× 肿瘤 + 0.5× 单正常参考的必然产物：参考的 bin
+方差全是噪声，于是每个 bin 都”显著”偏离。</p>
+<p><strong>全量轮，按原版（<code>-m amplicon</code>，作业
+3053）：</strong>
+不崩、数字乍看合理——但破绽仍在：<code>*.antitargetcoverage.cnn</code>
+文件是 <strong>31 字节 / 0 字节</strong>（只剩表头）。amplicon
+模式<em>根本没有抗靶区基线</em>，一切都只从靶区 bin 算。检出集（290
+个片段：cn=0 ×1、cn=1 ×58、cn=2 ×191、cn=3
+×39）乍看像样——但权重和真正要紧的臂级事件全部哑火，因为没有脱靶
+bin，log2 比值失去了全基因组范围的锚。</p>
+<p><strong>全量轮，矫正版（<code>-m hybrid</code> + access 文件，作业
+3055）：</strong> 真实抗靶区覆盖（1.4-Mb 抗靶区 BED、约 55 Mb 的脱靶分
+bin空间）→ 357 个片段（cn=0 ×1、cn=1 ×69、cn=2 ×202、cn=3
+×35），<strong>高权重臂级事件</strong>如下：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>事件（按权重取前列）</th>
+<th>log2</th>
+<th>cn</th>
+<th>权重</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>chr9: 78–138 Mb（9q 臂）单拷贝缺失</strong></td>
+<td>−0.76</td>
+<td><strong>1</strong></td>
+<td>7,416</td>
+<td>经典 HGSOC 9q 缺失（横跨 CDKN2A 邻近区、Notch/TGF-β 位点）</td>
+</tr>
+<tr>
+<td>chr8: 13–124 Mb 增益</td>
+<td>+0.49</td>
+<td>3</td>
+<td>7,172</td>
+<td>近全臂的 chr8 增益，含 <strong>8q24（MYC）</strong>——HGSOC
+的签名扩增子</td>
+</tr>
+<tr>
+<td>chr5: 75–181 Mb 增益</td>
+<td>+0.46</td>
+<td>3</td>
+<td>~4,000</td>
+<td>chr5q+ 部分增益</td>
+</tr>
+<tr>
+<td>chr20 增益（两大片段）</td>
+<td>+0.51</td>
+<td>3</td>
+<td>~2,000</td>
+<td>chr20 扩增——卵巢癌细胞系常见</td>
+</tr>
+<tr>
+<td>chr21 增益</td>
+<td>+0.44–0.50</td>
+<td>3</td>
+<td>~1,000</td>
+<td>类 21 三体增益</td>
+</tr>
+<tr>
+<td><strong>chrY 缺失</strong></td>
+<td>−2.05</td>
+<td><strong>0</strong></td>
+<td>297</td>
+<td>与女性患者一致（OC）——肿瘤和正常都”丢失”了 chrY</td>
+</tr>
+<tr>
+<td>chr14q / 16p / 17p 焦点缺失</td>
+<td>−0.33 至 −0.75</td>
+<td>1</td>
+<td>~200–300</td>
+<td>亚臂级缺失</td>
+</tr>
+</tbody>
+</table>
+<p>这是一个<strong>核型上自洽的 HGSOC 图景</strong>（低 TMB、臂级 CNV
+驱动——另一半故事见 §9 的 TMB=1.78）。amplicon
+模式那一轮在可比权重下<em>一条都看不到</em>——一个错误旗标的具象代价，实测在案。</p>
+<h2 id="坑与矫正问题-4">10.3 坑与矫正（问题 #4）</h2>
+<ol type="1">
+<li><strong>模式：</strong> 这个 panel 用
+<code>-m hybrid</code>。amplicon
+模式跳过抗靶区生成，脱靶读段全部<em>弃用</em>——丢掉了稳定 log2
+比值的全基因组基线。</li>
+<li><strong>Access 文件：</strong> hybrid 模式下传
+<code>-g $REF/access-5kb.hg38.bed</code>（集群上现成），让抗靶区 bin
+排除着丝粒/缺口。</li>
+<li><strong>基因名：</strong> BED 是 3 列（无 <code>gene</code>
+列），<code>--diagram</code>/scatter 缺基因标注。最简单的补救是
+<code>cnvkit.py batch --annotate</code> 一类的基于 refGene 的注释。</li>
+<li><strong>参考质量：</strong>
+单正常参考会放大那个正常样本自身的噪声。生产答案是合并 PoN
+参考（<code>--normal a.bam b.bam c.bam</code>）；教学场景用配对正常可以接受——<em>前提是把模式改对</em>。</li>
+</ol>
+<p><strong>矫正命令（hybrid 模式 + access 文件）：</strong></p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="dt">\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$TUMOR</span><span class="st">&quot;</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$NORMAL</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/targets.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> <span class="st">&quot;</span><span class="va">$REF</span><span class="st">/access-5kb.hg38.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span> hybrid <span class="dt">\</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-reference</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/reference.cnn&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/cnvkit_out_hybrid&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<blockquote>
+<p><strong>学习要点：</strong>
+为什么模式选错”能跑但结果不可信”？amplicon
+模式的假设是”所有读段都来自靶区”，于是 off-target
+读段全部弃用；而杂交捕获数据里 off-target 读段（通常
+30–50%）恰恰是拷贝数分析的”内参基线”。丢了它们，log2
+比值的分母就只剩噪声。demo 轮里 cn=1601、6345
+这种荒谬值就是这么来的。矫正三件套：<code>-m hybrid</code> +
+<code>-g access文件</code> +（可选）BED 加基因名列。对 HGSOC 这种 CNV
+驱动的肿瘤，这步修好了才算真正”上了正菜”。</p>
+</blockquote>
+<h2 id="结果解读-2">10.4 结果解读</h2>
+<ul>
+<li><code>.cnr</code> = 每 bin 的 log2；<code>.cns</code> =
+分割后；<code>.call.cns</code> = 整数化 CN 调用（<code>cn</code>
+列：0,1,2,3…；<code>weight</code> = bin 支持度）。</li>
+<li>.call.cns 里，log2 ±0.3 是 WES 常规的”增益/缺失”噪声底；HGSOC
+的臂级事件（chr8q 增益、chr1q 增益、chr16/17 缺失、PTEN/RB1
+缺失）是生物学上的预期图景——矫正后的全量轮确实以高权重找到了 9q
+单拷贝缺失、chr8 增益（cn=3，含 MYC）、chr20/21 增益和 chrY
+缺失（§10.2）。</li>
+<li><code>--diagram</code> 出全基因组图 PDF；<code>--scatter</code>
+出每条染色体的 log2 散点。CNVkit 的 <code>metrics</code> 与
+<code>segmetrics</code> 给每段的稳健统计。</li>
+<li>性染色体：肿瘤与正常性别不匹配会放大
+chrX/Y——声明性别（<code>--sex</code>）时 CNVkit 能处理；看日志。</li>
+</ul>
+<h2 id="调优与扩展-7">10.5 调优与扩展</h2>
+<ul>
+<li>纯度/倍性：<code>cnvkit.py call --purity 0.5</code>，与 TMB/AF
+解读联动。</li>
+<li><code>cnvkit.py export seg/vcf/theta</code> 桥接到 DNAseq
+工具、IGV、ABSOLUTE/THetA2。</li>
+<li>一队列的 .cns/seg 文件跑 GISTIC →
+复发性扩增/缺失；这是本步骤的”队列版”。</li>
+<li>与免疫肿瘤学课程的连接点：PD-L1（CD274）的 CNV、HLA
+位点的拷贝丢失、CCNE1 扩增——都是在输出里值得 grep 的经典
+HGSOC/免疫逃逸故事。</li>
+</ul>
+<h1 id="结果解读检查清单-interpretation-checklist">11. 结果解读检查清单
+· Interpretation checklist</h1>
+<p>原版路线图收尾于 11
+问检查清单。这里原样列出——但现在带着<strong>两轮实测的答案</strong>，并补上路线图唯一漏掉的指标（靶区深度）。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>Demo（0.5×）的答案</th>
+<th>全量（可用靶区 ~55×/91×）的答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>FASTQ 报告过 Q30 阈值了吗？</td>
+<td>过：97.0% / 97.8%（修剪后）</td>
+<td>过：97.0% / 97.8%（修剪后；原始 95.5%/96.9%）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>比对率 &gt;95%？</td>
+<td>100%</td>
+<td>100%——但注意：<strong>本数据集发布前已预过滤</strong>（全量轮仅
+311/79.6M 未比对）；新鲜实验室数据为 96–99%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Properly paired &gt;90%？</td>
+<td>OC 83.3%、PBMC 99.5%</td>
+<td>OC <strong>83.2%</strong>（真实的肿瘤配对紊乱——15.8%
+的配对在别的染色体）、PBMC 99.4%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>重复率 &lt;20%？</td>
+<td>~0.03–0.06%（抽样伪象）</td>
+<td>OC <strong>7.08%</strong>、PBMC
+<strong>10.77%</strong>（老师的：7.39/11.01）</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>靶区深度够吗？</strong>（<em>路线图忘掉的指标</em>）</td>
+<td><strong>可用 0.3×/0.5×，中位 0——不够</strong></td>
+<td>OC <strong>54.6×</strong>（中位 57；87.4% ≥30×）、PBMC
+<strong>91.3×</strong>（中位 96；89.6%
+≥30×）——肿瘤擦线够用、正常良好</td>
+</tr>
+<tr>
+<td>6</td>
+<td>插入片段在捕获设计范围内？</td>
+<td>峰值 <strong>150 bp</strong>（偏短！）</td>
+<td>150 bp——25% 可用碱基耗于双端重叠（HsMetrics
+<code>PCT_EXC_OVERLAP</code>）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>已知位点找回来了吗（dbsnp 重叠）？</td>
+<td>7,388 个真相位点</td>
+<td><strong>28,324</strong> 个真相位点（老师全基因组版：85,159）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>PASS 变异的 Ti/Tv？</td>
+<td>联合 2.59；PASS 2.60——novel Ti/Tv <strong>贴着</strong> known（2.33
+vs 2.65）：无判别力</td>
+<td>PASS <strong>2.48</strong>（known 2.49）——健康区间</td>
+</tr>
+<tr>
+<td>9</td>
+<td>外显子组 Het/Hom ≈1.5？</td>
+<td><strong>0.14</strong>——0.5× 下基因型崩坏（单读段”纯合”）</td>
+<td><strong>1.45</strong>——健康</td>
+</tr>
+<tr>
+<td>10</td>
+<td>体细胞数量符合肿瘤类型吗？</td>
+<td>0（无统计功效）</td>
+<td><strong>108 PASS / TMB 1.78 mut/Mb</strong>——正中 HGSOC 区间</td>
+</tr>
+<tr>
+<td>11</td>
+<td>CNV 调用核型上说得通吗？</td>
+<td>说不通——纯噪声（§10.2）</td>
+<td><strong>说得通</strong>（矫正 hybrid 模式）：9q cn=1 缺失、chr8 增益
+cn=3、chrY 缺失——自洽的 HGSOC 核型</td>
+</tr>
+</tbody>
+</table>
+<p><strong>缺失的指标——加进每一次 WES 运行（问题 #9）：</strong></p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CollectHsMetrics 要带 SAM 头的 Picard interval_list——先把 BED 转换</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx4g&quot;</span> BedToIntervalList <span class="dt">\</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="at">-SD</span> <span class="st">&quot;</span><span class="va">$REF</span><span class="st">/hg38.dict&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx8g&quot;</span> CollectHsMetrics <span class="dt">\</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.hs_metrics.txt&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--TARGET_INTERVALS</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--BAIT_INTERVALS</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--REFERENCE_SEQUENCE</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span>   <span class="co"># 集群上没有单独的 bait 列表；教学场景 targets≈baits</span></span></code></pre></div>
+<p><em>（两个就发生在本轮的实操坑：裸 BED
+会被拒——<code>Interval list file must contain header</code>——所以有
+BedToIntervalList 这步；序列字典在 <code>hg38.dict</code>，不在
+<code>hg38.fa.dict</code>。）</em></p>
+<p>要紧的行：<code>MEAN_TARGET_COVERAGE</code>、<code>PCT_TARGET_BASES_30X</code>（或
+50X/100X 列）、<code>PCT_SELECTED_BASES</code>（靶区+近 bait =
+捕获特异性）、<code>FOLD_ENRICHMENT</code>，以及——出人意料地有用——<code>PCT_EXC_OVERLAP</code>
+/ <code>PCT_EXC_DUPE</code> /
+<code>PCT_EXC_OFF_TARGET</code>：你花钱买的深度消失的三个去处。</p>
+<p>实测，两轮（四个文件都在
+<code>wes_run_full_20260920/qc/</code>）：</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>样本</th>
+<th>MEAN_TARGET_COV</th>
+<th>≥30X</th>
+<th>≥100X</th>
+<th>PCT_SELECTED</th>
+<th>ZERO_CVG</th>
+<th>EXC_DUPE</th>
+<th>EXC_OVERLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC</td>
+<td>0.3×</td>
+<td>0%</td>
+<td>0%</td>
+<td>79.9%</td>
+<td>59.4%</td>
+<td>0.03%</td>
+<td>26.8%</td>
+</tr>
+<tr>
+<td>demo PBMC</td>
+<td>0.5×</td>
+<td>0%</td>
+<td>0%</td>
+<td>90.8%</td>
+<td>46.6%</td>
+<td>0.06%</td>
+<td>24.9%</td>
+</tr>
+<tr>
+<td>全量 OC</td>
+<td><strong>54.6×</strong></td>
+<td>87.4%</td>
+<td>74.2%</td>
+<td>79.9%</td>
+<td>8.4%</td>
+<td>7.3%</td>
+<td>25.6%</td>
+</tr>
+<tr>
+<td>全量 PBMC</td>
+<td><strong>91.3×</strong></td>
+<td>89.6%</td>
+<td>87.0%</td>
+<td>90.7%</td>
+<td>8.1%</td>
+<td>11.0%</td>
+<td>23.0%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>学习要点：</strong> 检查清单的 11
+个问题里，最容易被”绕过去”的是
+#5（靶区深度够不够）——因为整条路线图里没有任何命令真正测量过它。上表就是实测结果：全量轮肿瘤
+54.6×、正常 91.3×，80–100× 的临线刚好够用；demo 轮中位深度是
+<strong>0</strong>。另外注意两个实测细节：① 这套文库插入片段峰值只有 150
+bp，双端重叠吃掉约 25% 的可用碱基——这是”付了 100× 的钱、拿到 55×
+的深度”的主要原因；② 零覆盖靶区 8.4%——AllTracks 版 BED
+含大量难捕获区域，这属于捕获设计的固有属性，不是实验失败。</p>
+</blockquote>
+<h1 id="产物清单-file-summary">12. 产物清单 · File summary</h1>
+<p>一切跑完后各运行目录里有什么（路径按逐字管线原样产出；体积为全量轮，demo
+显著更小处括注）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>产物（全量轮路径，位于 <code>wes_run_full_20260920/</code> 下）</th>
+<th>体积</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0_fastq/OC/OC.fastp.html/.json</code>（+ clean FASTQ）</td>
+<td>~0.5 G clean FASTQ 对</td>
+<td>修剪后 Q30 97.0%</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.bam</code></td>
+<td>4.0 GB</td>
+<td>管道化 <code>bwa\|sort</code>——33 GB SAM 从未存在（问题 #7）</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.markdup.bam</code></td>
+<td>4.7 GB</td>
+<td><code>--CREATE_INDEX</code> 顺带产出 <code>.bai</code></td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.markdup.BQSR.bam</code></td>
+<td>8.8 GB</td>
+<td>markdup BAM 的 ~1.9 倍——重压缩怪象；预算要留</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC.g.vcf</code></td>
+<td>209 MB</td>
+<td>每样本 GVCF（PBMC：59 MB）</td>
+</tr>
+<tr>
+<td><code>2_variant_call/combined.g.vcf</code></td>
+<td>264 MB</td>
+<td>双样本合并 GVCF</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood_variants.vcf</code></td>
+<td>14 MB</td>
+<td><strong>55,123 条记录</strong>——原始联合变异集</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.snps.recal</code> +
+<code>.tranches</code>（+ indel）</td>
+<td>4.3 MB + 0.6 MB</td>
+<td>VQSR 模型</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.all.VQSR.vcf</code></td>
+<td>30 MB</td>
+<td><strong>110,246 条——§7.3 原样产出的翻倍文件</strong></td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.all.sequentialVQSR.vcf</code></td>
+<td>16 MB</td>
+<td><strong>55,123 条——矫正后输出</strong></td>
+</tr>
+<tr>
+<td><code>3_annotation/OC_blood_anno.hg38_multianno.txt</code></td>
+<td>10 MB</td>
+<td>基础协议，注释的是翻倍 VCF（110,284 行）</td>
+</tr>
+<tr>
+<td><code>3_annotation/OC_blood_anno_rich_installed.hg38_multianno.txt</code></td>
+<td>27 MB</td>
+<td><strong>矫正富协议：55,165 行 × 146 列</strong></td>
+</tr>
+<tr>
+<td><code>5_somatic_tmb/somatic.raw.vcf.gz</code> →
+<code>somatic.filtered.vcf.gz</code> →
+<code>somatic.pass.vcf.gz</code></td>
+<td>0.3 → 0.35 → 0.02 GB</td>
+<td>2,949 raw → 108 PASS</td>
+</tr>
+<tr>
+<td><code>4_cnv/cnvkit_out/</code>（amplicon，原版）</td>
+<td>~47 MB</td>
+<td>抗靶区文件为空——破绽（§10.2）</td>
+</tr>
+<tr>
+<td><code>4_cnv/cnvkit_out_hybrid/</code>（矫正）</td>
+<td>~55 MB</td>
+<td>真实抗靶区 bin；两版都有
+<code>--scatter</code>/<code>--diagram</code> PDF</td>
+</tr>
+<tr>
+<td><code>qc/*.hs_metrics.txt</code></td>
+<td>4 个文件</td>
+<td>§11 的覆盖度数字，两轮</td>
+</tr>
+</tbody>
+</table>
+<p>（Demo 轮：同构布局，全部 ~50–100× 更小——如联合 VCF 2.8 MB、BQSR BAM
+54 MB。）</p>
+<h1 id="总结与两轮对比-summary">13. 总结与两轮对比 · Summary</h1>
+<p><strong>两轮教会了我们什么，一张表：</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>Demo 轮（0.5×）</th>
+<th>全量轮（可用靶区 54.6×/91.3×）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目的</td>
+<td>流程机制</td>
+<td>真实生物学</td>
+</tr>
+<tr>
+<td>比对</td>
+<td>100% mapped（数据集预过滤）、OC properly paired 83.3%</td>
+<td>曲线完全一致：OC 83.2%（真实肿瘤配对紊乱）、PBMC 99.4%</td>
+</tr>
+<tr>
+<td>胚系联合变异集</td>
+<td>14,782 条</td>
+<td><strong>55,123
+条</strong>（双样本、靶区内；老师的全基因组单样本版：204,178）</td>
+</tr>
+<tr>
+<td>VQSR</td>
+<td>能跑；真相位点 7,388；minVQSLod@100% = −5889；novel Ti/Tv 贴着
+known（2.33 vs 2.65）</td>
+<td>真相位点 28,324；tranches 表现像真实（虽偏薄的）模型；顺序矫正滤掉
+2.1%</td>
+</tr>
+<tr>
+<td>§7.3 翻倍 bug</td>
+<td>29,564 = 2 × 14,782</td>
+<td><strong>110,246 = 2 ×
+55,123</strong>（矫正后：55,123、零未过滤孪生）</td>
+</tr>
+<tr>
+<td>ANNOVAR</td>
+<td>基础协议 OK；富协议挂（库名不存在）</td>
+<td>原样富协议仍挂；<strong>矫正库名：55,165 行 × 146 列</strong>，含
+REVEL/CADD/AlphaMissense</td>
+</tr>
+<tr>
+<td>体细胞 / TMB</td>
+<td>0——无统计功效</td>
+<td><strong>108 PASS / TMB 1.78 mut/Mb</strong>（HGSOC 合理区间）</td>
+</tr>
+<tr>
+<td>CNVkit</td>
+<td>cn=6345 荒谬值</td>
+<td>原样 amplicon：抗靶区为空、事件哑火；<strong>矫正 hybrid：9q
+缺失、chr8 增益——自洽 HGSOC 核型</strong></td>
+</tr>
+<tr>
+<td>墙钟</td>
+<td>~25 分钟（1 个作业）</td>
+<td>最长链 3 小时 42 分（8 个作业依赖串联；prep 2:20+3:42 并行）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>带走这四课：</strong></p>
+<ol type="1">
+<li><strong>“跑通了” ≠ “跑对了”。</strong> VQSR 翻倍 bug（§7.2）和
+CNVkit
+模式错误（§10.3）都能完整跑完。本课程要练的最重要的技能是<em>数自己的产出</em>（变异数、行数、位点数），并且知道什么量级是合理的。</li>
+<li><strong>深度决定一切。</strong> 0.5×
+足以演练机制，而且它对自己的极限是<em>诚实</em>的（体细胞=0、CNV=噪声）。解读属于全量深度轮。</li>
+<li><strong>工具里编码着假设</strong>（捕获模式、样本命名、数据库版本、“VQSR
+需要 30
+样本”）。第一次报错之后才读手册很正常；第一次运行之前就读手册才专业。</li>
+<li><strong>矫正之后，这条管线是个很强的教学骨架</strong>：路线图的步骤顺序、RG
+纪律、GVCF
+工作流、胚系/体细胞分离全都是最佳实践——修复是外科手术式的，不是结构性的。</li>
+</ol>
+<blockquote>
+<p><strong>学习要点：</strong>
+两轮对比最大的价值是把”流程问题”和”数据问题”彻底分开：demo 轮暴露的
+0、噪声、荒谬 CN
+值是<strong>数据深度问题</strong>（换全量数据自然消失）；VQSR
+重复、ANNOVAR 库名、CNVkit
+模式是<strong>流程本身的问题</strong>（换什么数据都在，连老师的参考结果里都有）。把这两类问题分清楚，你就掌握了”排错”的第一层功力。</p>
+</blockquote>
+<h2 id="复现说明-reproduction">复现说明 · Reproduction</h2>
+<p>两轮都按 SLURM 作业运行（分区 <code>cn-long</code>、QoS
+<code>bjx131cnl</code>、账号
+<code>bjx131_g1</code>、<code>--mem=0</code>、每作业 8–16 核）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>目录</th>
+<th>脚本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914</code></td>
+<td><code>scripts/wes_demo_steps3to10.sbatch</code>（fastp
+在更早的会话中已跑）</td>
+</tr>
+<tr>
+<td>全量（原样）</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_full_20260920</code></td>
+<td><code>scripts/full_prep_OC.sbatch</code>、<code>scripts/full_prep_PBMC.sbatch</code>、<code>scripts/full_joint.sbatch</code>、<code>scripts/full_somatic.sbatch</code>、<code>scripts/full_cnv.sbatch</code>（joint/somatic/cnv
+用 <code>--dependency=afterok:&lt;prep 作业&gt;</code> 提交）</td>
+</tr>
+<tr>
+<td>全量（矫正补充）</td>
+<td>同上</td>
+<td><code>scripts/full_hsmetrics.sbatch</code>（§11）、<code>scripts/full_cnv_hybrid.sbatch</code>（§10.3）、<code>scripts/full_fix_vqsr.sbatch</code>（顺序
+ApplyVQSR + 用实际库名的富 ANNOVAR）</td>
+</tr>
+</tbody>
+</table>
+<p>每个运行目录都有
+<code>log/deviations.log</code>（每个预期失败与偏差，带时间戳）和
+<code>log/summary_*.log</code>（本文引用的全部数字）。路线图原样的
+SAM→BAM→sort 链只在 demo 轮逐字执行；全量轮用了管道变体（问题
+#7，有记录）。</p>
+<p><strong>忠实度声明：</strong> 第 3–10
+步的每条命令都按路线图印刷原文执行（同样的旗标、同样的文件名、同样的顺序）。包装层只有：SLURM
+头、环境激活、预检存在性检查、预期失败的 <code>if/else</code>
+保护（记录后继续而非中止）、以及汇总块。唯一的算法偏差是全量轮的
+<code>bwa | sort</code> 管道，它不改变任何输出内容。</p>
+<h1 id="附录-a.-问题登记表完整版-issue-registry">附录 A.
+问题登记表（完整版）· Issue registry</h1>
+<p>每个问题：<strong>位置</strong>（路线图章节）、<strong>现象</strong>、<strong>证据</strong>（实测）、<strong>矫正</strong>（本版建议）、<strong>严重度</strong>。</p>
+<h3 id="a1.-vqsr-mergevcfs-翻倍-重大">A1. VQSR MergeVcfs 翻倍 ——
+<strong>重大</strong></h3>
+<ul>
+<li>位置：§7.3。现象：<code>OC_blood.all.VQSR.vcf</code>
+里每条变异出现两次。</li>
+<li>证据：demo 29,564 条 / 14,782 唯一位点；我们全量轮 110,246 /
+55,123；老师 408,356 /
+204,178。机制：ApplyVQSR（任一模式）输出完整变异集（另一类型以 FILTER
+<code>.</code> 透传）；MergeVcfs 拼接两个完整变异集。每个位点最终是一条
+SNP 裁决记录 + 一条 <code>.</code> 记录——PASS
+计数<em>碰巧</em>不变，随手 QC 时 bug 隐身。</li>
+<li>矫正：顺序 ApplyVQSR（SNP → INDEL），或 SelectVariants 拆分 → 过滤 →
+合并。矫正实测（作业 3056）：55,123 条 / 55,123 唯一 / 0
+条未过滤孪生；过滤率 2.1%。</li>
+<li>严重度：重大——无声污染下游所有计数与注释。</li>
+</ul>
+<h3 id="a2.-annovar-富协议库名不存在-重大">A2. ANNOVAR 富协议库名不存在
+—— <strong>重大</strong></h3>
+<ul>
+<li>位置：§8.3。现象：<code>dbnsfp30a</code>、<code>exac03</code>、<code>gnomad_genome</code>、<code>avsnp147</code>
+不在 <code>/lustre1/share/annovar_new/humandb</code>（那里是
+<code>dbnsfp54a</code>、<code>gnomad211_exome</code>、<code>gnomad41_exome</code>、<code>avsnp151</code>）。</li>
+<li>证据：table_annovar 两轮皆失败；<code>ls humandb</code> 清单。</li>
+<li>矫正：用实际安装的库名（§8.3）。严重度：重大（硬失败）。</li>
+</ul>
+<h3 id="a3.-小变异集上的-vqsr-重大统计性">A3. 小变异集上的 VQSR ——
+<strong>重大（统计性）</strong></h3>
+<ul>
+<li>位置：§7。现象：2 个外显子组 / ~15k
+变异（demo）时高斯混合不可辨识；tranches 失去意义。</li>
+<li>证据（三个变异集都实测，§7.2）：真相位点 7,388（demo）vs
+28,324（我们全量）vs 85,159（老师）；100% tranche 的 minVQSLod
+−5889.9（demo）vs −1111（全量）vs
+−25.5（老师）；以及决定性图式：健康变异集的 novel Ti/Tv
+明显<em>低于</em> known（老师：1.69 vs 2.34），demo 的 novel Ti/Tv
+<strong>贴着</strong> known（2.46 vs
+2.71）——模型分不开自己最差和最好的变异。</li>
+<li>矫正：≤10 样本用 VariantFiltration 硬过滤（§7.3）；VQSR
+是队列工具（≈30+ 样本）。严重度：重大——过滤结果无声地错。</li>
+</ul>
+<h3 id="a4.-杂交捕获-panel-上用--m-amplicon-重大">A4. 杂交捕获 panel
+上用 <code>-m amplicon</code> —— <strong>重大</strong></h3>
+<ul>
+<li>位置：§10.2。现象：S07604514 是 SureSelect V6 杂交捕获；amplicon
+模式弃用全部脱靶读段、不建抗靶区基线。</li>
+<li>证据（两轮实测）：demo 产出 cn 6345 和 0.5× 下的
+169-Mb”缺失”；全量轮原样运行产出<strong>空的抗靶区覆盖文件（31
+字节）</strong>、臂级事件哑火，而同一批 BAM 的矫正 hybrid
+运行以高权重找到 9q 单拷贝缺失、chr8 增益（cn=3）、chrY
+缺失（§10.2）。两种模式管线都能跑完。</li>
+<li>矫正：<code>-m hybrid</code> 加
+<code>-g access-5kb.hg38.bed</code>（集群上都有）。严重度：重大——原样结果不可用。</li>
+</ul>
+<h3 id="a5.-mutect2-没用正常面板pon-中等">A5. Mutect2
+没用正常面板（PoN）—— 中等</h3>
+<ul>
+<li>位置：§9.1。现象：PoN 过滤复发性捕获/比对 artifact；集群上有
+<code>1000g_pon.hg38.vcf.gz</code>，路线图没用。</li>
+<li>矫正：<code>--pon $REF/1000g_pon.hg38.vcf.gz</code>。（另外：推荐的群体频率资源是
+gnomAD AF-only；1000G high-conf 能用但已过时。）</li>
+</ul>
+<h3 id="a6.-数据路径不一致-中等">A6. 数据路径不一致 —— 中等</h3>
+<ul>
+<li>位置：§0.2、README、新旧路线图。现象：三处不同的 <code>$DATA</code>
+指向（<code>OC_WES</code> 旧降采样 / <code>data_new</code> 新降采样 /
+旧版 HTML 里的<strong>空目录</strong>
+<code>analysis/0_preprocess</code>）。</li>
+<li>矫正：本版用绝对路径钉死每个数据集并标注角色（§0.2）。</li>
+</ul>
+<h3 id="a7.-每样本-33-gb-中间-sam-中等效率">A7. 每样本 33 GB 中间 SAM ——
+中等（效率）</h3>
+<ul>
+<li>位置：§3.1–3.3。矫正：<code>bwa | sort</code>
+管道（全量轮）。输出等价；省磁盘和 ~30–40% 墙钟。（demo
+轮为忠实度逐字执行。）</li>
+</ul>
+<h3 id="a8.-tmb-计数口径不一致-轻微">A8. TMB 计数口径不一致 —— 轻微</h3>
+<ul>
+<li>位置：§9.2/9.3：写了 <code>somatic.pass.vcf.gz</code>，但 TMB 从
+<code>somatic.filtered.vcf.gz</code> 的 PASS
+子集里数。数字一样；统一一个口径即可。</li>
+</ul>
+<h3 id="a9.-没有靶区深度指标-轻微">A9. 没有靶区深度指标 —— 轻微</h3>
+<ul>
+<li>位置：§11
+检查清单问了，但没有命令测。矫正：CollectHsMetrics（§11）。</li>
+</ul>
+<h3 id="a10.-命名不一致-轻微">A10. 命名不一致 —— 轻微</h3>
+<ul>
+<li><code>SM:blood</code> vs “PBMC” 目录（能用但易混）；老师的
+<code>2_vairant_call</code> 目录拼写错误（参考产物侧）；ANNOVAR 的
+<code>vcf4old</code> 格式旗标（能用；现代名是 <code>vcf4</code>）。</li>
+</ul>
+<h3 id="a11.-运行环境的坑不算路线图-bug但你一定会撞上-信息">A11.
+运行环境的坑（不算路线图 bug，但你一定会撞上）—— 信息</h3>
+<ul>
+<li>本集群 SLURM：<code>--account=bjx131_g1 --qos=bjx131cnl</code>
+必写；必须 <code>--mem=0</code>（RealMemory=1 的配置问题）；conda 激活在
+<code>set -u</code> 之前。</li>
+<li>GATK bundle 的 <code>.idx</code> 都在——但换了集群要重查。</li>
+<li>CollectHsMetrics 要 Picard interval_list（先对 BED 跑
+BedToIntervalList），字典是 <code>hg38.dict</code> 不是
+<code>hg38.fa.dict</code>。</li>
+</ul>
+<h3 id="a12.-老师的参考结果偏离印刷版路线图-重大可比性">A12.
+老师的参考结果偏离印刷版路线图 —— 重大（可比性）</h3>
+<ul>
+<li>位置：<code>analysis_full/2_vairant_call</code>（大家用来对拍的参考）。</li>
+<li>证据（从 VCF 头文件和文件本身读出）：
+<ol type="1">
+<li><strong>单样本”联合”检出：</strong> <code>combined.g.vcf</code>
+里只有样本 <code>OC</code>——blood gVCF 的 RG <code>SM</code> 标签写成了
+<code>OC</code>（样本名冲突），CombineGVCFs
+把两个样本塌缩成一个。印刷版路线图明确意图是双样本联合检出（OC +
+blood）。</li>
+<li><strong>全程无 <code>-L</code>：</strong>
+HaplotypeCaller/GenotypeGVCFs 全基因组运行——204,178 个位点的 72%
+落在捕获靶区之外，大量浅覆盖低质量。</li>
+<li>§7.3 的 MergeVcfs 翻倍同样存在于参考产物（408,356 = 2 ×
+204,178——问题 A1）。</li>
+</ol></li>
+<li>后果：“204,178 vs 我的
+55,123”<strong>不是</strong>深度对比——它是（全基因组 × 单样本 ×
+合并翻倍）对（靶区内 × 双样本）。先读 <code>##GATKCommandLine</code>
+头，再谈比较。</li>
+<li>给课程的教训：路线图自己在 §2 强调的 RG <code>SM</code>
+纪律，恰是咬了它自己参考运行的那一口。这是”第 0 步先查 BAM
+头”习惯的最好论据。</li>
+<li>矫正：路线图文本无需修（它写的就是 <code>-L</code> 和正确的 SM
+标签）；此条目的存在是为了让对着 <code>analysis_full</code>
+对拍的同学知道差异在哪、为什么。</li>
+</ul>
+<h1 id="附录-b.-一页矫正版命令速查-one-page-corrected-pipeline">附录 B.
+一页矫正版命令速查 · One-page corrected pipeline</h1>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0) 环境</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate wes</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SHARE</span><span class="op">=</span>/lustre1/share <span class="va">REF</span><span class="op">=</span><span class="va">$SHARE</span>/references</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TARGETS</span><span class="op">=</span><span class="va">$REF</span>/S07604514_AllTracks_V6_60_hg38.bed <span class="va">REFERENCE</span><span class="op">=</span><span class="va">$REF</span>/hg38.fa</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DBSNP</span><span class="op">=</span><span class="va">$REF</span>/dbsnp_138.hg38.vcf <span class="va">INDELS</span><span class="op">=</span><span class="va">$REF</span>/Mills_and_1000G_gold_standard.indels.hg38.vcf</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HIGHCONF</span><span class="op">=</span><span class="va">$REF</span>/1000G_phase1.snps.high_confidence.hg38.vcf</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PON</span><span class="op">=</span><span class="va">$REF</span>/1000g_pon.hg38.vcf.gz <span class="va">ACCESS</span><span class="op">=</span><span class="va">$REF</span>/access-5kb.hg38.bed</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANNOVAR</span><span class="op">=</span><span class="va">$SHARE</span>/annovar_new <span class="va">HUMANDB</span><span class="op">=</span><span class="va">$ANNOVAR</span>/humandb</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) 质控</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="at">-i</span> R1.fq.gz <span class="at">-I</span> R2.fq.gz <span class="at">-o</span> R1.clean.fq.gz <span class="at">-O</span> R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--detect_adapter_for_pe</span> <span class="at">--cut_right</span> <span class="at">--cut_right_window_size</span> 4 <span class="at">--cut_right_mean_quality</span> 20 <span class="dt">\</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--qualified_quality_phred</span> 20 <span class="at">--unqualified_percent_limit</span> 40 <span class="at">--n_base_limit</span> 5 <span class="dt">\</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--length_required</span> 50 <span class="at">--thread</span> 8 <span class="at">--html</span> S.html <span class="at">--json</span> S.json</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) 比对（管道化）</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="at">-R</span> <span class="st">&quot;@RG\tID:S\tPL:illumina\tSM:S\tLB:libS&quot;</span> <span class="va">$REFERENCE</span> R1.clean.fq.gz R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="at">-o</span> S_sorted.bam <span class="at">-</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index <span class="at">-@</span> 8 S_sorted.bam</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> flagstat <span class="at">-@</span> 8 S_sorted.bam <span class="op">&gt;</span> S.flagstat.txt</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> BedToIntervalList <span class="at">-I</span> <span class="va">$TARGETS</span> <span class="at">-O</span> targets.interval_list <span class="at">-SD</span> <span class="va">$REF</span>/hg38.dict</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> CollectHsMetrics <span class="at">-I</span> S_sorted.bam <span class="at">-O</span> S.hs_metrics.txt <span class="dt">\</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">--TARGET_INTERVALS</span> targets.interval_list <span class="at">--BAIT_INTERVALS</span> targets.interval_list <span class="dt">\</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">--REFERENCE_SEQUENCE</span> <span class="va">$REFERENCE</span>   <span class="co"># 新增：靶区深度（§11）</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) 标记重复</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> MarkDuplicates <span class="at">-I</span> S_sorted.bam <span class="at">-O</span> S_sorted.markdup.bam <span class="at">-M</span> S_markdup_metrics.txt <span class="at">--CREATE_INDEX</span> true</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) BQSR</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> BaseRecalibrator <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S_sorted.markdup.bam <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="va">$DBSNP</span> <span class="at">--known-sites</span> <span class="va">$INDELS</span> <span class="at">--known-sites</span> <span class="va">$HIGHCONF</span> <span class="at">-O</span> S.recal.table</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyBQSR <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S_sorted.markdup.bam <span class="at">--bqsr-recal-file</span> S.recal.table <span class="at">-O</span> S.BQSR.bam</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 6) 胚系 GVCF 工作流</span></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> HaplotypeCaller <span class="at">-ERC</span> GVCF <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S.BQSR.bam <span class="at">-D</span> <span class="va">$DBSNP</span> <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="at">-O</span> S.g.vcf</span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> CombineGVCFs <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> OC.g.vcf <span class="at">-V</span> blood.g.vcf <span class="at">-O</span> combined.g.vcf</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> GenotypeGVCFs <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> combined.g.vcf <span class="at">-D</span> <span class="va">$DBSNP</span> <span class="at">-O</span> joint.vcf</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 7) 过滤 —— 小变异集用硬过滤（VQSR 需要 ~30+ 样本）</span></span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantFiltration <span class="at">-V</span> joint.vcf <span class="at">-O</span> joint.filtered.vcf <span class="dt">\</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_QD2 <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_MQ40 <span class="at">--filter-expression</span> <span class="st">&quot;MQ &lt; 40.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_FS60 <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 60.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_SOR3 <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 3.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_QD2 <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_FS200 <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 200.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_SOR10 <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 10.0 &amp;&amp; INDEL&quot;</span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a><span class="co"># （队列规模才用 VQSR：VariantRecalibrator SNP → ApplyVQSR → VariantRecalibrator INDEL</span></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a><span class="co">#  → 对 SNP 输出再 ApplyVQSR——顺序套用，永远不要合并两个完整变异集）</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 8) ANNOVAR（实际安装的数据库）</span></span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="va">$ANNOVAR</span>/convert2annovar.pl <span class="at">-format</span> vcf4 joint.filtered.vcf <span class="at">-includeinfo</span> <span class="at">-comment</span> <span class="dt">\</span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">-out</span> ann.avinput</span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="va">$ANNOVAR</span>/table_annovar.pl ann.avinput <span class="va">$HUMANDB</span> <span class="at">-buildver</span> hg38 <span class="at">-out</span> anno <span class="dt">\</span></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">-remove</span> <span class="at">-protocol</span> refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151 <span class="dt">\</span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f</span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a><span class="co"># 9) 体细胞 TMB（加上 PoN）</span></span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> Mutect2 <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> OC.BQSR.bam <span class="at">-I</span> blood.BQSR.bam <span class="at">--normal-sample</span> blood <span class="dt">\</span></span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="at">--germline-resource</span> <span class="va">$HIGHCONF</span> <span class="at">--pon</span> <span class="va">$PON</span> <span class="dt">\</span></span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> somatic.raw.vcf.gz <span class="at">--native-pair-hmm-threads</span> 8 <span class="at">--f1r2-tar-gz</span> f1r2.tar.gz</span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> LearnReadOrientationModel <span class="at">-I</span> f1r2.tar.gz <span class="at">-O</span> ob.tar.gz</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> somatic.raw.vcf.gz <span class="at">--stats</span> somatic.raw.vcf.gz.stats <span class="dt">\</span></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ob-priors</span> ob.tar.gz <span class="at">-O</span> somatic.filtered.vcf.gz</span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="va">TMB</span><span class="op">=</span><span class="va">$(</span><span class="ex">bcftools</span> view <span class="at">-H</span> <span class="at">-f</span> PASS somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;TMB = </span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> n=<span class="va">$TMB</span> <span class="at">-v</span> mb=60.5079 <span class="st">&#39;BEGIN{printf &quot;%.2f&quot;, n/mb}&#39;</span><span class="va">)</span><span class="st"> mut/Mb&quot;</span></span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="co"># 10) CNVkit（hybrid 模式）</span></span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch OC.BQSR.bam <span class="at">-n</span> blood.BQSR.bam <span class="at">-f</span> <span class="va">$REFERENCE</span> <span class="at">-t</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> <span class="va">$ACCESS</span> <span class="at">-m</span> hybrid <span class="at">--output-reference</span> reference.cnn <span class="at">-d</span> cnvkit_out <span class="dt">\</span></span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<p><em>由 §13
+所述的两轮实跑生成；文中全部数字均实测。中文版与英文矫正版（<code>WES_roadmap_corrected.html/pdf</code>）内容一致、互为对照。</em></p>
+</body>
+</html>
