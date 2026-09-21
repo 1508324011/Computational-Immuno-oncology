@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>WES 全流程分析路线图 · 矫正增强版 (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      font-family: Noto Sans CJK SC;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">WES 全流程分析路线图 · 矫正增强版 (Corrected &amp;
+Annotated Edition)</h1>
+<p class="subtitle">WES 数据分析实战路线图 · 矫正与增强版</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#about-this-edition-关于本版"
+id="toc-about-this-edition-关于本版">About this edition · 关于本版</a>
+<ul>
+<li><a href="#what-each-step-contains-每步包含什么"
+id="toc-what-each-step-contains-每步包含什么">What each step contains ·
+每步包含什么</a></li>
+<li><a href="#issue-registry-at-a-glance-问题清单速览"
+id="toc-issue-registry-at-a-glance-问题清单速览">Issue registry at a
+glance · 问题清单速览</a></li>
+</ul></li>
+<li><a href="#environment-directories-and-data-环境与数据"
+id="toc-environment-directories-and-data-环境与数据">0. Environment,
+directories and data · 环境与数据</a>
+<ul>
+<li><a href="#required-tools" id="toc-required-tools">0.1 Required
+tools</a></li>
+<li><a href="#directory-convention" id="toc-directory-convention">0.2
+Directory convention</a></li>
+<li><a href="#reference-genome" id="toc-reference-genome">0.3 Reference
+genome</a></li>
+<li><a href="#roadmap-and-how-we-ran-it-on-slurm"
+id="toc-roadmap-and-how-we-ran-it-on-slurm">0.4 Roadmap (and how we ran
+it on SLURM)</a></li>
+</ul></li>
+<li><a href="#fastq-files-原始数据" id="toc-fastq-files-原始数据">1.
+FASTQ files · 原始数据</a>
+<ul>
+<li><a href="#inspect-fastq" id="toc-inspect-fastq">1.1 Inspect
+FASTQ</a></li>
+</ul></li>
+<li><a href="#read-quality-control-with-fastp-质控与预处理"
+id="toc-read-quality-control-with-fastp-质控与预处理">2. Read quality
+control with fastp · 质控与预处理</a>
+<ul>
+<li><a href="#create-qc-output" id="toc-create-qc-output">2.1 Create QC
+output</a></li>
+<li><a href="#principle-原理" id="toc-principle-原理">2.2 Principle
+原理</a></li>
+<li><a href="#what-happened-实跑结果"
+id="toc-what-happened-实跑结果">2.3 What happened 实跑结果</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正"
+id="toc-pitfalls-fixes-坑与矫正">2.4 Pitfalls &amp; fixes
+坑与矫正</a></li>
+<li><a href="#interpretation-结果解读"
+id="toc-interpretation-结果解读">2.5 Interpretation 结果解读</a></li>
+<li><a href="#tuning-beyond-调优与扩展"
+id="toc-tuning-beyond-调优与扩展">2.6 Tuning &amp; beyond
+调优与扩展</a></li>
+<li><a href="#principle-原理-1" id="toc-principle-原理-1">3.1 Principle
+原理</a></li>
+<li><a href="#sam-bam-sort-index-roadmap-3.23.3-verbatim"
+id="toc-sam-bam-sort-index-roadmap-3.23.3-verbatim">3.2 SAM → BAM, sort,
+index (roadmap 3.2–3.3, verbatim)</a></li>
+<li><a href="#alignment-metrics-roadmap-3.4-verbatim"
+id="toc-alignment-metrics-roadmap-3.4-verbatim">3.3 Alignment metrics
+(roadmap 3.4, verbatim)</a></li>
+<li><a href="#what-happened-实跑结果-1"
+id="toc-what-happened-实跑结果-1">3.4 What happened 实跑结果</a></li>
+<li><a href="#tuning-beyond-调优与扩展-1"
+id="toc-tuning-beyond-调优与扩展-1">3.5 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#mark-pcr-duplicates-标记重复"
+id="toc-mark-pcr-duplicates-标记重复">4. Mark PCR duplicates ·
+标记重复</a>
+<ul>
+<li><a href="#principle-原理-2" id="toc-principle-原理-2">4.1 Principle
+原理</a></li>
+<li><a href="#what-happened-实跑结果-2"
+id="toc-what-happened-实跑结果-2">4.2 What happened 实跑结果</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正-1"
+id="toc-pitfalls-fixes-坑与矫正-1">4.3 Pitfalls &amp; fixes
+坑与矫正</a></li>
+<li><a href="#tuning-beyond-调优与扩展-2"
+id="toc-tuning-beyond-调优与扩展-2">4.4 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#base-quality-score-recalibration-bqsr-碱基质量校准"
+id="toc-base-quality-score-recalibration-bqsr-碱基质量校准">5. Base
+quality score recalibration (BQSR) · 碱基质量校准</a>
+<ul>
+<li><a href="#principle-原理-3" id="toc-principle-原理-3">5.1 Principle
+原理</a></li>
+<li><a href="#what-happened-实跑结果-3"
+id="toc-what-happened-实跑结果-3">5.2 What happened 实跑结果</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正-2"
+id="toc-pitfalls-fixes-坑与矫正-2">5.3 Pitfalls &amp; fixes
+坑与矫正</a></li>
+<li><a href="#tuning-beyond-调优与扩展-3"
+id="toc-tuning-beyond-调优与扩展-3">5.4 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#germline-variant-calling-胚系变异检测"
+id="toc-germline-variant-calling-胚系变异检测">6. Germline variant
+calling · 胚系变异检测</a>
+<ul>
+<li><a href="#principle-原理-4" id="toc-principle-原理-4">6.1 Principle
+原理</a></li>
+<li><a href="#what-happened-实跑结果-4"
+id="toc-what-happened-实跑结果-4">6.2 What happened 实跑结果</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正-3"
+id="toc-pitfalls-fixes-坑与矫正-3">6.3 Pitfalls &amp; fixes
+坑与矫正</a></li>
+<li><a href="#tuning-beyond-调优与扩展-4"
+id="toc-tuning-beyond-调优与扩展-4">6.4 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a
+href="#variant-quality-score-recalibration-vqsr-变异质量再校准-the-big-correction"
+id="toc-variant-quality-score-recalibration-vqsr-变异质量再校准-the-big-correction">7.
+Variant quality score recalibration (VQSR) · 变异质量再校准 — <em>the
+big correction</em></a>
+<ul>
+<li><a href="#principle-原理-5" id="toc-principle-原理-5">7.1 Principle
+原理</a></li>
+<li><a href="#what-happened-实跑结果-the-two-headline-findings"
+id="toc-what-happened-实跑结果-the-two-headline-findings">7.2 What
+happened 实跑结果 — the two headline findings</a></li>
+<li><a href="#the-corrected-workflow-矫正方案"
+id="toc-the-corrected-workflow-矫正方案">7.3 The corrected workflow
+矫正方案</a></li>
+<li><a href="#commands-as-we-ran-them-实跑命令说明"
+id="toc-commands-as-we-ran-them-实跑命令说明">7.4 Commands as we ran
+them 实跑命令说明</a></li>
+<li><a href="#interpretation-结果解读-1"
+id="toc-interpretation-结果解读-1">7.5 Interpretation 结果解读</a></li>
+</ul></li>
+<li><a href="#functional-annotation-with-annovar-功能注释"
+id="toc-functional-annotation-with-annovar-功能注释">8. Functional
+annotation with ANNOVAR · 功能注释</a>
+<ul>
+<li><a href="#principle-原理-6" id="toc-principle-原理-6">8.1 Principle
+原理</a></li>
+<li><a href="#commands-roadmap-8.18.3-verbatim"
+id="toc-commands-roadmap-8.18.3-verbatim">8.2 Commands (roadmap 8.1–8.3,
+verbatim)</a></li>
+<li><a
+href="#pitfall-issue-2-the-richer-protocol-block-fails-and-exactly-why"
+id="toc-pitfall-issue-2-the-richer-protocol-block-fails-and-exactly-why">8.3
+Pitfall (issue #2): the “richer protocol” block fails — and exactly
+why</a></li>
+<li><a
+href="#pitfall-issue-1-downstream-what-the-duplicated-vcf-does-to-annovar"
+id="toc-pitfall-issue-1-downstream-what-the-duplicated-vcf-does-to-annovar">8.4
+Pitfall (issue #1 downstream): what the duplicated VCF does to
+ANNOVAR</a></li>
+<li><a href="#what-happened-实跑结果-5"
+id="toc-what-happened-实跑结果-5">8.5 What happened 实跑结果</a></li>
+<li><a href="#tuning-beyond-调优与扩展-5"
+id="toc-tuning-beyond-调优与扩展-5">8.6 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#somatic-tmb-with-matched-normal-mutect2-体细胞突变与-tmb"
+id="toc-somatic-tmb-with-matched-normal-mutect2-体细胞突变与-tmb">9.
+Somatic TMB with matched normal (Mutect2) · 体细胞突变与 TMB</a>
+<ul>
+<li><a href="#principle-原理-7" id="toc-principle-原理-7">9.1 Principle
+原理</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正-4"
+id="toc-pitfalls-fixes-坑与矫正-4">9.2 Pitfalls &amp; fixes
+坑与矫正</a></li>
+<li><a href="#what-happened-实跑结果-6"
+id="toc-what-happened-实跑结果-6">9.3 What happened 实跑结果</a></li>
+<li><a href="#tuning-beyond-调优与扩展-6"
+id="toc-tuning-beyond-调优与扩展-6">9.4 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#cnv-detection-with-cnvkit-拷贝数变异"
+id="toc-cnv-detection-with-cnvkit-拷贝数变异">10. CNV detection with
+CNVkit · 拷贝数变异</a>
+<ul>
+<li><a href="#principle-原理-8" id="toc-principle-原理-8">10.1 Principle
+原理</a></li>
+<li><a href="#commands-roadmap-10.2-verbatim-and-what-it-produced"
+id="toc-commands-roadmap-10.2-verbatim-and-what-it-produced">10.2
+Commands (roadmap 10.2, verbatim) and what it produced</a></li>
+<li><a href="#pitfalls-fixes-坑与矫正-issue-4"
+id="toc-pitfalls-fixes-坑与矫正-issue-4">10.3 Pitfalls &amp; fixes
+坑与矫正 (issue #4)</a></li>
+<li><a href="#interpretation-结果解读-2"
+id="toc-interpretation-结果解读-2">10.4 Interpretation 结果解读</a></li>
+<li><a href="#tuning-beyond-调优与扩展-7"
+id="toc-tuning-beyond-调优与扩展-7">10.5 Tuning &amp; beyond
+调优与扩展</a></li>
+</ul></li>
+<li><a href="#interpretation-checklist-结果解读检查清单"
+id="toc-interpretation-checklist-结果解读检查清单">11. Interpretation
+checklist · 结果解读检查清单</a></li>
+<li><a href="#file-summary-产物清单" id="toc-file-summary-产物清单">12.
+File summary · 产物清单</a></li>
+<li><a href="#summary-总结与两轮对比"
+id="toc-summary-总结与两轮对比">13. Summary · 总结与两轮对比</a>
+<ul>
+<li><a href="#reproduction-复现说明"
+id="toc-reproduction-复现说明">Reproduction · 复现说明</a></li>
+</ul></li>
+<li><a href="#appendix-a.-issue-registry-问题清单完整版"
+id="toc-appendix-a.-issue-registry-问题清单完整版">Appendix A. Issue
+registry · 问题清单（完整版）</a></li>
+<li><a
+href="#appendix-b.-one-page-corrected-pipeline-一页矫正版命令速查"
+id="toc-appendix-b.-one-page-corrected-pipeline-一页矫正版命令速查">Appendix
+B. One-page corrected pipeline · 一页矫正版命令速查</a></li>
+</ul>
+</nav>
+<h1 id="about-this-edition-关于本版">About this edition · 关于本版</h1>
+<p>This document is a <strong>corrected and heavily annotated
+edition</strong> of the course roadmap <em>“A Practical Roadmap for
+Whole-Exome Sequencing Data”</em> (the original HTML/PDF remain in this
+directory for cross-reference). It was produced by <strong>actually
+executing the original roadmap, command by command</strong>, on a
+compute cluster — twice:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Dataset</th>
+<th>Depth over targets</th>
+<th>Runtime</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Demo</strong></td>
+<td><code>/lustre1/share/data_new</code> (18.2k / 25.8k read pairs, OC /
+PBMC)</td>
+<td>~0.5×</td>
+<td>~25 min</td>
+<td>Exercise the full 13-step pipeline mechanically</td>
+</tr>
+<tr>
+<td><strong>Full</strong></td>
+<td><code>/lustre1/share/data/OC_WES_all</code> (37.7M / 52.5M read
+pairs)</td>
+<td><strong>measured 54.6× / 91.3×</strong> usable on-target</td>
+<td>~4 h (8 SLURM jobs, dependency-linked)</td>
+<td>Produce real results, compare with the teacher’s
+<code>analysis_full</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>中文批注：</strong>
+本版路线图的做法是——先把原版命令<strong>原样</strong>在集群上跑两轮（一轮
+0.5×
+降采样教学数据、一轮全量数据），把过程中遇到/发现的<strong>每一个坑都记录在案</strong>，再回头写这份矫正版。所以每个步骤里你都会看到”<strong>原版怎么写
+→ 实际发生了什么 → 应该怎么改 →
+为什么</strong>”的完整链条。两轮实跑本身就是最好的对照组：0.5×
+数据会暴露哪些步骤在”低深度下失效”，全量数据会暴露哪些步骤在”命令写法上就有问题”。</p>
+</blockquote>
+<h2 id="what-each-step-contains-每步包含什么">What each step contains ·
+每步包含什么</h2>
+<p>For every pipeline step, this edition adds six learning blocks around
+the original commands:</p>
+<ol type="1">
+<li><strong>Principle 原理</strong> — what the algorithm actually does,
+in plain language.</li>
+<li><strong>Commands</strong> — the original roadmap commands (kept
+verbatim where they are correct; <strong>corrections are shown
+explicitly and always justified</strong>).</li>
+<li><strong>What happened 实跑结果</strong> — measured outputs from both
+runs (demo vs full).</li>
+<li><strong>Pitfalls &amp; fixes 坑与矫正</strong> — every problem we
+hit, with evidence.</li>
+<li><strong>Result interpretation 结果解读</strong> — how to read the
+numbers; what “good” looks like.</li>
+<li><strong>Tuning &amp; beyond 调优与扩展</strong> — parameter knobs,
+and what else the tool can do for you beyond this roadmap.</li>
+</ol>
+<h2 id="issue-registry-at-a-glance-问题清单速览">Issue registry at a
+glance · 问题清单速览</h2>
+<p>The full detailed registry is in the <strong>Appendix A</strong>
+section at the end of this document. Summary:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Severity</th>
+<th>Where</th>
+<th>Issue</th>
+<th>Status in our runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Major</strong></td>
+<td>§7.3</td>
+<td><code>MergeVcfs</code> of two full ApplyVQSR outputs
+<strong>duplicates every variant</strong> (each output contains
+<em>all</em> variants; merging them doubles the callset)</td>
+<td>Confirmed in demo (14,782 → 29,564 records) <strong>and in the
+teacher’s own <code>analysis_full</code> output (204,178 → 408,356
+records)</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Major</strong></td>
+<td>§8.3</td>
+<td>Rich ANNOVAR protocol references databases that do not exist in the
+installed humandb (<code>dbnsfp30a</code>, <code>exac03</code>,
+<code>gnomad_genome</code>, <code>avsnp147</code> vs installed
+<code>dbnsfp54a</code>, <code>gnomad211_exome</code>,
+<code>gnomad41_exome</code>, <code>avsnp151</code>)</td>
+<td>Confirmed failure in both runs</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Major</strong></td>
+<td>§7</td>
+<td>VQSR on a 2-sample, low-depth callset is statistically unreliable
+even when it runs to completion</td>
+<td>Ran “successfully” on demo, but see the tranches analysis in §7</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Major</strong></td>
+<td>§10</td>
+<td><code>cnvkit.py batch -m amplicon</code> on a
+<strong>hybrid-capture</strong> panel (SureSelect V6) — wrong mode; also
+no gene names in BED, no access file</td>
+<td>Ran, but produces genome-wide nonsense segments on demo (cn up to
+6345)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Medium</td>
+<td>§9</td>
+<td>Mutect2 lacks a <strong>Panel of Normals</strong> (one exists on the
+cluster: <code>1000g_pon.hg38.vcf.gz</code>); germline resource uses
+1000G high-conf instead of gnomAD AF-only</td>
+<td>Runs, reduced filtering power</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Medium</td>
+<td>§0.2/§12</td>
+<td>Data path confusion: README points to <code>OC_WES</code>
+(deprecated downsample), new roadmap points to <code>data_new</code>;
+old roadmap pointed to an <strong>empty</strong> directory</td>
+<td>Three inconsistent references; this edition fixes them</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Medium</td>
+<td>§3</td>
+<td>Literal roadmap writes a 33 GB SAM to disk before sorting — works,
+but wastes ~33 GB/sample and an extra hour</td>
+<td>We piped <code>bwa | sort</code> in the full round (documented
+deviation)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Minor</td>
+<td>§9</td>
+<td>TMB counts PASS variants from <code>somatic.filtered.vcf.gz</code>
+while §9.2 separately writes <code>somatic.pass.vcf.gz</code> (never
+used)</td>
+<td>Cosmetic inconsistency</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Minor</td>
+<td>§4/§11</td>
+<td>No on-target depth metric anywhere (flagstat is genome-wide) — the
+checklist asks “is coverage sufficient?” but no command measures it</td>
+<td>This edition adds <code>CollectHsMetrics</code> (§11) — measured: OC
+54.6×, PBMC 91.3×, demo 0.3×/0.5×</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Minor</td>
+<td>naming</td>
+<td><code>PBMC</code> vs <code>blood</code> naming mixed (RG
+<code>SM:blood</code>, dirs <code>PBMC</code>); teacher’s own output dir
+is spelled <code>2_vairant_call</code></td>
+<td>Consistent-but-confusing; noted</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Minor</td>
+<td>§5</td>
+<td><code>BaseRecalibrator</code> runs whole-genome (no <code>-L</code>)
+— not wrong, ~2× slower for WES</td>
+<td>Kept verbatim in both rounds</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Major</strong>*</td>
+<td>reference</td>
+<td><strong>The teacher’s reference result itself deviates from the
+printed roadmap:</strong> single-sample “joint” call (blood gVCF’s
+<code>SM</code> tag = <code>OC</code>, so CombineGVCFs collapsed the
+pair) and <strong>no <code>-L</code></strong> (72% of its 204,178 sites
+are off-target), plus issue #1’s duplication (408,356 = 2×204,178). *Not
+a roadmap-text bug — an execution deviation in the reference
+artifacts</td>
+<td>Read from the VCF headers; documented in Appendix A12 so callset
+comparisons are interpreted correctly</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>中文批注：</strong> 最重要的是 #1（VQSR
+合并导致每条变异重复两遍，连老师的参考结果都带着这个 bug）和 #4（CNVkit
+模式选错）。这两个都不影响”管线能不能跑完”，但<strong>直接影响结果文件能不能用</strong>——这正是”跑通了”和”跑对了”的区别。</p>
+</blockquote>
+<h1 id="environment-directories-and-data-环境与数据">0. Environment,
+directories and data · 环境与数据</h1>
+<h2 id="required-tools">0.1 Required tools</h2>
+<p>Everything runs from the shared conda environment on the cluster:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate wes</span></code></pre></div>
+<p>Tool versions verified on a compute node (not the login node — see
+§0.4): fastp 0.23.2, BWA 0.7.19-r1273, samtools, GATK 4.6.2.0 (Java),
+CNVkit 0.9.11, ANNOVAR (2020s build with hg38 humandb), bcftools.</p>
+<blockquote>
+<p><strong>中文批注：</strong> 集群上所有重计算都必须
+<code>sbatch</code> 到 <code>cn-long</code>
+分区做，登录节点只用来编辑文件和提交作业。本文所有实跑结果都来自 SLURM
+作业（见 §13 复现说明）。</p>
+</blockquote>
+<h2 id="directory-convention">0.2 Directory convention</h2>
+<p>The roadmap’s environment block, kept verbatim (this is the
+<em>new</em> version’s only difference from the old one, which pointed
+<code>$DATA</code> at an <strong>empty</strong> directory — see issue
+#6):</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SHARE</span><span class="op">=</span>/lustre1/share</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">REF</span><span class="op">=</span><span class="va">$SHARE</span>/references</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TARGETS</span><span class="op">=</span><span class="va">$REF</span>/S07604514_AllTracks_V6_60_hg38.bed</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">REFERENCE</span><span class="op">=</span><span class="va">$REF</span>/hg38.fa</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DBSNP</span><span class="op">=</span><span class="va">$REF</span>/dbsnp_138.hg38.vcf</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">INDELS</span><span class="op">=</span><span class="va">$REF</span>/Mills_and_1000G_gold_standard.indels.hg38.vcf</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HIGHCONF</span><span class="op">=</span><span class="va">$REF</span>/1000G_phase1.snps.high_confidence.hg38.vcf</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HAPMAP</span><span class="op">=</span><span class="va">$REF</span>/hapmap_3.3.hg38.vcf</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OMNI</span><span class="op">=</span><span class="va">$REF</span>/1000G_omni2.5.hg38.vcf</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANNOVAR</span><span class="op">=</span><span class="va">$SHARE</span>/annovar_new</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HUMANDB</span><span class="op">=</span><span class="va">$ANNOVAR</span>/humandb</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="va">$ANNOVAR</span>:<span class="va">$PATH</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DATA</span><span class="op">=</span><span class="va">$SHARE</span>/data_new        <span class="co"># demo round; full round uses $SHARE/data/OC_WES_all</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">BASE</span><span class="op">=</span><span class="va">$HOME</span>/wes_run_cluster  <span class="co"># we used explicit run dirs, see §13</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OUT</span><span class="op">=</span><span class="va">$BASE</span></span></code></pre></div>
+<p><strong>What lives where (verified by <code>ls</code>, not
+assumed):</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Path</th>
+<th>Content</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lustre1/share/references/</code></td>
+<td><code>hg38.fa</code> + BWA index +
+<code>.dict</code>/<code>.fai</code>; GATK bundle
+(<code>dbsnp_138</code>, Mills, 1000G high-conf, hapmap, omni)
+<strong>with <code>.idx</code> present</strong>; target BED
+<code>S07604514_AllTracks_V6_60_hg38.bed</code>;
+<strong><code>1000g_pon.hg38.vcf.gz</code> + <code>.tbi</code></strong>
+(a ready-made Panel of Normals!); <code>access-5kb.hg38.bed</code></td>
+<td>read-only share</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/data_new/</code></td>
+<td>demo FASTQs: <code>OC/OC_R1.fq.gz</code> etc. (182k pairs),
+<code>PBMC/blood_R1.fq.gz</code> (258k pairs)</td>
+<td>~0.48% subsample of the full data ≈ 0.5× over targets</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/data/OC_WES_all/</code></td>
+<td>full FASTQs: OC 37.7M pairs (10.4 Gbp), PBMC 52.5M pairs (15.0
+Gbp)</td>
+<td>ideal ≈95×/≈135×; <strong>measured usable 54.6× / 91.3×</strong>
+(§11)</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/data/OC_WES/</code></td>
+<td>older downsample (same size, <strong>different content</strong> —
+different md5)</td>
+<td>deprecated; README still points here (issue #6)</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/data/analysis_full/</code></td>
+<td>teacher’s reference results (full data): alignment, joint VCF, VQSR,
+ANNOVAR</td>
+<td><strong>only up to §8</strong>; no somatic/TMB or CNVkit reference;
+<code>4_cnv/</code> is empty</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/annovar_new/humandb/</code></td>
+<td>hg38 databases: <code>refGeneWithVer</code>, <code>cytoBand</code>,
+<strong><code>dbnsfp54a</code>, <code>gnomad211_exome</code>,
+<code>gnomad41_exome</code>, <code>avsnp151</code></strong></td>
+<td>the rich-protocol names in §8.3 of the roadmap are
+<strong>not</strong> here (issue #2)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Target region:</strong> the BED contains 243,359 intervals
+totaling <strong>60.51 Mb</strong> (this number matters twice: as
+<code>-L</code> intervals and as the TMB denominator in §9.3).</p>
+<h2 id="reference-genome">0.3 Reference genome</h2>
+<p>hg38 (<code>hg38.fa</code>), pre-indexed for BWA and GATK.
+<strong>Check before you compute</strong> (we verified all of these
+exist — a missing <code>.idx</code> is the single most common “first job
+fails” cause):</p>
+<pre><code>hg38.fa  hg38.fa.fai  hg38.dict
+hg38.fa.{amb,ann,bwt,pac,sa}          # BWA index
+dbsnp_138.hg38.vcf{,.idx}             # also needed by HaplotypeCaller -D
+Mills_and_1000G_gold_standard.indels.hg38.vcf{,.idx}
+1000G_phase1.snps.high_confidence.hg38.vcf{,.idx}
+hapmap_3.3.hg38.vcf{,.idx}
+1000G_omni2.5.hg38.vcf{,.idx}</code></pre>
+<h2 id="roadmap-and-how-we-ran-it-on-slurm">0.4 Roadmap (and how we ran
+it on SLURM)</h2>
+<p>The roadmap’s steps were executed as sbatch jobs on the
+<code>cn-long</code> partition (20-core nodes, 25 h wall limit). Three
+cluster-specific facts that cost us an hour to discover — record them
+once, reuse forever:</p>
+<ol type="1">
+<li><strong>Account/QoS:</strong> jobs must specify
+<code>--account=bjx131_g1 --qos=bjx131cnl</code> (plain
+<code>--qos=bjx131cnl</code> without the account is rejected:
+<em>“Invalid qos specification”</em>).</li>
+<li><strong>Memory:</strong> the <code>cn-long</code> nodes report
+<code>RealMemory=1</code> to SLURM, so any explicit
+<code>--mem=NN</code> is rejected (<em>“Memory specification can not be
+satisfied”</em>). Use <strong><code>--mem=0</code></strong> (“take the
+whole node’s memory”).</li>
+<li><strong>conda + <code>set -u</code>:</strong> if your script uses
+<code>set -u</code>, activate conda <strong>before</strong> turning it
+on — conda’s <code>activate.d</code> scripts reference unbound variables
+and will kill the job in one second.</li>
+</ol>
+<p>All reproduction scripts are in <code>scripts/</code> of each run
+directory (see §13).</p>
+<p><strong>The two rounds at a glance (all jobs on <code>cn-long</code>,
+account <code>bjx131_g1</code>, QoS <code>bjx131cnl</code>,
+<code>--mem=0</code>):</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Job(s)</th>
+<th>Steps</th>
+<th>Wall time</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>3048</td>
+<td>3→10 (verbatim, incl. expected-failure guards)</td>
+<td>~25 min</td>
+<td>all steps executed; deviations log: 1 (rich-protocol fail)</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3049/3050</td>
+<td>prep per sample: fastp → <code>bwa\|sort</code> → index/flagstat →
+MarkDup → BQSR → HC-GVCF</td>
+<td>2 h 20 m / 3 h 42 m (parallel)</td>
+<td>both clean</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3051</td>
+<td>6.3→8 verbatim (joint → VQSR → MergeVcfs → ANNOVAR basic)</td>
+<td>11 min</td>
+<td>duplication bug reproduced (§7.2)</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3052</td>
+<td>9 verbatim (Mutect2 → orientation model → FilterMutectCalls →
+TMB)</td>
+<td>1 h 13 m</td>
+<td>TMB = 1.78 mut/Mb</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3053</td>
+<td>10 verbatim (<code>-m amplicon</code>)</td>
+<td>5.6 min</td>
+<td>runs; empty antitarget baseline (§10.2)</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3054/3056→3061</td>
+<td><strong>corrected extras</strong>: CollectHsMetrics ×4 samples</td>
+<td>32 min</td>
+<td>measured depths: OC 54.6× / PBMC 91.3× (§11)</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3055</td>
+<td><strong>corrected extra</strong>: CNVkit <code>-m hybrid</code> +
+access file</td>
+<td>11 min</td>
+<td>arm-level events found (§10.3)</td>
+</tr>
+<tr>
+<td>full</td>
+<td>3056</td>
+<td><strong>corrected extra</strong>: sequential ApplyVQSR + ANNOVAR
+rich (installed names)</td>
+<td>9.6 min</td>
+<td>zero duplication; rich annotation OK</td>
+</tr>
+</tbody>
+</table>
+<p><em>Note how the corrected jobs (3055/3056) are not just “fixed” —
+they are the second half of the course: the roadmap-as-written is run
+first (3051/3053), then the corrected command on the same data, so every
+claim in this edition is a before/after measurement.</em></p>
+<h1 id="fastq-files-原始数据">1. FASTQ files · 原始数据</h1>
+<h2 id="inspect-fastq">1.1 Inspect FASTQ</h2>
+<p><strong>Principle 原理.</strong> Before any analysis, you must
+<em>look</em> at your data: read counts, read length, GC profile. Two
+obvious-but-underestimated checks: (a) FASTQ read length should match
+the sequencer mode (this library is 2×137 bp paired-end); (b) GC content
+profile per cycle — a spiked or drifting GC curve in <em>tumor</em> WES
+is normal-ish (capture bias + purity), but a wildly abnormal curve means
+contamination or adapter read-through.</p>
+<p><strong>Commands</strong> (verbatim from the roadmap):
+<code>zcat | head</code>, <code>wc -l / 4</code>, and
+<code>fastp</code>’s reports later. On the cluster,
+<code>zcat file.fq.gz | head -8</code> for a peek,
+<code>zcat file.fq.gz | awk 'NR%4==2{n++; b=length($0)} END{print n, b}'</code>
+for count × length.</p>
+<p><strong>What happened 实跑结果.</strong></p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Pairs (R1)</th>
+<th>Read length</th>
+<th>Bases</th>
+<th>Depth over 60.51 Mb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC (<code>data_new</code>)</td>
+<td>182,299</td>
+<td>137 bp</td>
+<td>0.050 Gbp</td>
+<td>ideal ~0.82× → <strong>measured on-target 0.3×</strong>
+(usable)</td>
+</tr>
+<tr>
+<td>demo PBMC</td>
+<td>258,112</td>
+<td>137 bp</td>
+<td>0.071 Gbp</td>
+<td>ideal ~1.2× → <strong>measured on-target 0.5×</strong></td>
+</tr>
+<tr>
+<td>full OC (<code>OC_WES_all</code>)</td>
+<td>37,746,701</td>
+<td>137 bp</td>
+<td>10.41 Gbp</td>
+<td>ideal ~172× → <strong>measured on-target 54.6×</strong></td>
+</tr>
+<tr>
+<td>full PBMC</td>
+<td>52,508,649</td>
+<td>137 bp</td>
+<td>14.97 Gbp</td>
+<td>ideal ~247× → <strong>measured on-target 91.3×</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation 结果解读.</strong> The “ideal” column is total
+bases ÷ target size — the number you get from naive arithmetic. The
+<strong>measured</strong> column is what CollectHsMetrics reports as
+<code>MEAN_TARGET_COVERAGE</code> <em>after</em> subtracting everything
+that cannot be used: off-target bases (20–9%), duplicates (7–11%),
+overlapping mate bases (**25% — this library’s inserts peak at ~150 bp,
+so most read pairs overlap each other; see §2.3 and §11). The 3× gap
+between ideal and usable depth is the single most common mis-estimation
+in WES planning — budget your sequencing accordingly.</p>
+<blockquote>
+<p><strong>中文批注：</strong> 这里最值得记住的对比是：全量 OC 理想深度
+~172×（10.41 Gbp ÷ 60.5 Mb），但实测可用靶区深度只有
+<strong>54.6×</strong>——差了 3 倍多！差额去向：off-target ~20%、重复
+~7%、双端重叠 ~25%（这个文库插入片段峰值只有 ~150bp，2×137bp
+的读段大量互相重叠，重叠部分只算一次）。demo 数据是全量的 0.48%
+抽样，实测可用深度只有 0.3×/0.5×（中位数是
+<strong>0</strong>）——低于任何可用的变异检测阈值，这就是后面体细胞检测为
+0、CNV 全是噪声的根本原因。“理论深度” 和 “实测可用深度” 的差距本身就是
+WES 设计中最重要的实务课。</p>
+</blockquote>
+<h1 id="read-quality-control-with-fastp-质控与预处理">2. Read quality
+control with fastp · 质控与预处理</h1>
+<h2 id="create-qc-output">2.1 Create QC output</h2>
+<p>The roadmap’s fastp block (kept verbatim; <code>$OUT/0_fastq/</code>
+used for both raw symlinks and clean outputs):</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-i</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--detect_adapter_for_pe</span> <span class="dt">\</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right</span> <span class="dt">\</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right_window_size</span> 4 <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--cut_right_mean_quality</span> 20 <span class="dt">\</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--qualified_quality_phred</span> 20 <span class="dt">\</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--unqualified_percent_limit</span> 40 <span class="dt">\</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--n_base_limit</span> 5 <span class="dt">\</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--length_required</span> 50 <span class="dt">\</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--thread</span> 8 <span class="dt">\</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--html</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC/OC.fastp.html&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--json</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC/OC.fastp.json&quot;</span></span></code></pre></div>
+<h2 id="principle-原理">2.2 Principle 原理</h2>
+<ul>
+<li><code>--cut_right</code> is <strong>3′ sliding-window
+trimming</strong> (default window 4, mean Q20): bases at read ends
+degrade because of phasing/signal decay; trimming them prevents piles of
+false-positive mismatches at read ends later.</li>
+<li><code>--detect_adapter_for_pe</code>: paired-end data lets fastp
+infer adapter sequences from read overlap — more sensitive than a fixed
+adapter list.</li>
+<li><code>--length_required 50</code>: post-trim length floor. Short
+fragments contribute misalignments and duplicate artifacts.</li>
+<li>PE “overlap analysis” also gives you <strong>insert-size
+estimation</strong> for free — read it from the HTML report; it feeds
+directly into duplicate interpretation in §4.2.</li>
+</ul>
+<h2 id="what-happened-实跑结果">2.3 What happened 实跑结果</h2>
+<p>Demo round (already run before this edition started):</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Before → after (reads)</th>
+<th>Q30 (before → after)</th>
+<th>Insert size (peak)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC</td>
+<td>377,310 → 364,598</td>
+<td>95.5% → 97.0%</td>
+<td><strong>150 bp</strong></td>
+</tr>
+<tr>
+<td>demo PBMC</td>
+<td>525,176 → 516,224</td>
+<td>96.9% → 97.8%</td>
+<td><strong>150 bp</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Full round:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Before → after (reads)</th>
+<th>Q30 (before → after)</th>
+<th>Insert size (peak)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>full OC</td>
+<td>75,813,060 → 72,941,400</td>
+<td>95.5% → 97.0%</td>
+<td>150 bp</td>
+</tr>
+<tr>
+<td>full PBMC</td>
+<td>105,258,338 → 103,270,440</td>
+<td>96.9% → 97.8%</td>
+<td>150 bp</td>
+</tr>
+</tbody>
+</table>
+<p>Two observations worth internalizing: (a) trimming barely removes
+anything (3.8%/1.9% of reads) because the raw Q30 is already 95%+ — this
+is a healthy library; (b) the insert peak at <strong>150 bp</strong>
+with 137 bp reads means most read pairs <strong>overlap each
+other</strong> by ~120 bp. That overlap is later discarded by coverage
+counters (25% of usable bases — §11), and it inflates apparent depth if
+you count reads instead of non-overlapping bases. Both rounds show the
+identical profile, as expected for a subsample of the same library.</p>
+<h2 id="pitfalls-fixes-坑与矫正">2.4 Pitfalls &amp; fixes 坑与矫正</h2>
+<ul>
+<li><strong>(p1) Output placement inconsistency:</strong> the roadmap
+puts clean FASTQs at the <em>root</em> of <code>0_fastq/</code> but
+reports in <code>0_fastq/OC/</code>. Harmless, but a consistent layout
+(<code>0_fastq/OC/*</code>) would have been cleaner. We kept it
+verbatim.</li>
+<li><strong>(p2) <code>--cut_right</code> vs
+<code>--cut_front</code>:</strong> for modern 137 bp reads, 5′ ends are
+usually clean; only 3′ trimming is standard. The roadmap’s choice is
+correct — noted because many tutorials add unnecessary
+<code>--cut_front</code>.</li>
+<li><strong>(p3) fastp’s JSON is machine-readable</strong> — the roadmap
+stops at the HTML; a multi-sample <strong>MultiQC</strong> aggregation
+(see §2.6) is the “beyond” step.</li>
+</ul>
+<h2 id="interpretation-结果解读">2.5 Interpretation 结果解读</h2>
+<p>“Good” numbers for this library type: ≥90–95% bases ≥Q30 before
+trimming, a few % of reads trimmed/adapter-detected, and — most
+importantly — the <strong>duplication estimate is NOT in fastp’s
+scope</strong> (it comes from alignment in §4). fastp is about
+read-level hygiene; anything requiring mapping positions comes
+later.</p>
+<h2 id="tuning-beyond-调优与扩展">2.6 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>--thread</code> scales nearly linearly; 8 is fine on a 20-core
+node alongside other work.</li>
+<li>For UMI libraries use <code>--umi</code> instead of relying on
+coordinate duplicates (§4).</li>
+<li><code>--overlap_len_require</code>/<code>--overlap_diff_limit</code>
+control the PE overlap-based correction (<code>--correction</code>),
+which the roadmap does <strong>not</strong> enable — consider adding it
+for low-depth data.</li>
+<li>Aggregate many samples: <code>multiqc 0_fastq/</code> collects fastp
+JSON/HTML into one report.</li>
+</ul>
+<blockquote>
+<p><strong>中文批注：</strong> fastp
+三个最常用开关——<code>--cut_right</code>（滑窗去低质量尾）、<code>--detect_adapter_for_pe</code>（利用
+PE
+重叠自动识别接头）、<code>--length_required</code>（太短的读段宁可不要）。报告里最该看的三处：Q30
+比例、接头残留比例（应为 0 或接近 0）、插入片段分布峰（应显著大于读长
+137bp，否则有大量重叠读段）。</p>
+<h1 id="alignment-with-bwa-mem-比对">3. Alignment with BWA-MEM ·
+比对</h1>
+</blockquote>
+<h2 id="principle-原理-1">3.1 Principle 原理</h2>
+<p>BWA-MEM seeds exact matches (MEMs) and extends them with local
+alignment; soft-clipped ends handle adapter/partial overlaps. Key ideas
+you should be able to explain:</p>
+<ul>
+<li><strong>Read groups (RG)</strong> are the provenance header of every
+read: <code>ID</code> (sequencing lane), <code>SM</code>
+(<strong>sample</strong> — the identity that GATK uses to group reads;
+wrong SM = wrong genotyping), <code>LB</code> (<strong>library</strong>
+— the unit for duplicate estimation in §4), <code>PL</code> platform.
+One BAM = one SM; multiple LBs allowed per SM.</li>
+<li><strong><code>-M</code></strong>: marks split hits as
+<em>secondary</em> (instead of <em>supplementary</em>) for Picard
+compatibility — cosmetic today, harmless, kept from the roadmap.</li>
+<li><strong><code>-t 8</code></strong>: threads. BWA-MEM scales
+near-linearly up to ~16 threads.</li>
+</ul>
+<p><strong>Commands</strong> (roadmap, verbatim — OC shown; PBMC
+identical with <code>SM:blood</code>, <code>LB:WES_PBMC</code>):</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;@RG\tID:OC\tPL:illumina\tSM:OC\tLB:WES_OC&quot;</span> <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R1.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/0_fastq/OC_R2.clean.fq.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.sam&quot;</span></span></code></pre></div>
+<h2 id="sam-bam-sort-index-roadmap-3.23.3-verbatim">3.2 SAM → BAM, sort,
+index (roadmap 3.2–3.3, verbatim)</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-bS</span> <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.sam&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.bam&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.bam&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span></span></code></pre></div>
+<p><strong>Pitfall &amp; fix (issue #7).</strong> The literal chain
+writes a <strong>33 GB SAM</strong> (full data), then a BAM copy, then
+the sorted BAM — three full copies of the same information on disk, and
+~⅓ extra wall time. The standard practice (and what we ran for the full
+round) is a pipe:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="at">-R</span> <span class="st">&quot;@RG\tID:OC\tPL:illumina\tSM:OC\tLB:WES_OC&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> R1.clean.fq.gz R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="at">-o</span> OC_sorted.bam <span class="at">-</span></span></code></pre></div>
+<p>The resulting <code>OC_sorted.bam</code> is <strong>byte-for-byte
+equivalent in content</strong> — same records, same order (chromosomal,
+then position). Only the intermediate files never exist. This is the
+<em>one deliberate efficiency deviation</em> we took in the full round;
+it is logged in the run’s <code>log/deviations.log</code>.</p>
+<blockquote>
+<p><strong>中文批注：</strong>
+为什么要排序？因为下游所有工具（去重、BQSR、HaplotypeCaller、CNVkit）都要求
+BAM 按”染色体 → 位置”排好，这样才能顺序流式读取整个外显子组。SAM→BAM
+是压缩（文本→BGZF 二进制，约省 4–6 倍空间）；管道化的意义是让”比对输出 →
+排序输入”直接在内存/缓冲区里传递，省掉 33 GB 的中间 SAM
+文件——结果完全一样，磁盘和时间都省一半以上。</p>
+</blockquote>
+<h2 id="alignment-metrics-roadmap-3.4-verbatim">3.3 Alignment metrics
+(roadmap 3.4, verbatim)</h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> flagstat <span class="at">-@</span> 8 <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.flagstat.txt&quot;</span></span></code></pre></div>
+<h2 id="what-happened-实跑结果-1">3.4 What happened 实跑结果</h2>
+<p><strong>Demo round (0.5×):</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Metric</th>
+<th>OC</th>
+<th>PBMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total reads</td>
+<td>397,780</td>
+<td>517,164</td>
+</tr>
+<tr>
+<td>Primary mapped</td>
+<td>364,582 (100.0%)</td>
+<td>516,221 (100.0%)</td>
+</tr>
+<tr>
+<td>Properly paired</td>
+<td>83.29%</td>
+<td>99.46%</td>
+</tr>
+<tr>
+<td>Secondary (split) alignments</td>
+<td>33,182 (9.1% of primary)</td>
+<td>940 (0.18%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Full round:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Metric</th>
+<th>OC</th>
+<th>PBMC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total reads</td>
+<td>79,607,191</td>
+<td>103,455,092</td>
+</tr>
+<tr>
+<td>Primary mapped</td>
+<td>72,941,400 (100.00%)</td>
+<td>103,270,440 (100.00%)</td>
+</tr>
+<tr>
+<td>Unmapped</td>
+<td><strong>311</strong></td>
+<td>1,594</td>
+</tr>
+<tr>
+<td>Properly paired</td>
+<td><strong>83.22%</strong></td>
+<td>99.44%</td>
+</tr>
+<tr>
+<td>Mate mapped to a different chr</td>
+<td>11,526,594 (<strong>15.8%</strong>)</td>
+<td>444,126 (0.43%)</td>
+</tr>
+<tr>
+<td>Secondary (split) alignments</td>
+<td>6,665,791 (9.1%)</td>
+<td>184,652 (0.18%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation 结果解读.</strong></p>
+<ul>
+<li>“100% mapped” in <strong>both</strong> rounds — not a subsampling
+effect: the full round has only 311 unmapped reads out of 79.6M. This
+<strong>dataset ships with unmapped reads already removed</strong> (a
+pre-filtered teaching dataset). In a fresh lab BAM, 96–99% mapped is
+typical, and <strong>&lt;90% means contamination or species
+mismatch</strong>.</li>
+<li>OC’s <strong>83.2% properly paired — identical in both rounds — is a
+real property of the tumor library, not an artifact</strong>: 15.8% of
+OC read pairs have their mate on a <em>different chromosome</em> (vs
+0.4% in PBMC). At this scale that is the alignment signature of a
+heavily rearranged tumor genome (HGSOC typically carries massive
+structural variation). PBMC’s 99.4% is what a normal genome looks
+like.</li>
+<li>9% secondary alignments in OC vs 0.18% in PBMC:
+secondary/supplementary reads indicate repetitive content (tumor genome
++ exome bait in repetitive regions). Watch it, don’t panic over it.</li>
+</ul>
+<blockquote>
+<p><strong>中文批注：</strong> flagstat 三问：① 比对率——本数据集 demo
+和全量都是
+100%，这不是抽样巧合，而是这套教学数据在发布前就把未比对读段剔除过了（全量也只有
+311/79.6M 未比对）；新鲜实验室数据应为 96–99%；② properly
+paired——<strong>OC 的 83.2%
+在两轮中完全一致，是肿瘤样本的真实属性而非抽样伤</strong>：15.8% 的 OC
+读段配对到不同染色体（PBMC 仅 0.43%），这是重度重排肿瘤基因组（HGSOC
+典型特征）在比对层面的签名，也是下游 §10 结构性 CNV 的伏笔；③
+secondary/supplementary——肿瘤样本 9% vs 正常
+0.18%，重复序列含量差异，外显子组里几个百分点属正常。</p>
+</blockquote>
+<h2 id="tuning-beyond-调优与扩展-1">3.5 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li>Threads: <code>-t 16</code> halves wall time on an idle 20-core
+node; <code>-K</code> (chunk size) can help huge references.</li>
+<li><code>bwa mem -v</code> for verbose logs; <code>-Y</code> (soft-clip
+supplementary) pairs better with GATK Indel realignment era tools —
+modern GATK doesn’t care.</li>
+<li><strong>On-target %</strong>:
+<code>samtools view -c -L $TARGETS bam</code> ÷ total — the single most
+informative QC number for capture-based WES (feeds §11’s coverage
+question).</li>
+<li>For noisy/ancient DNA: <code>bwa mem -B</code> (batch size, lower
+memory) and adjusted scoring.</li>
+<li><strong>MultiQC</strong> eats flagstats too:
+<code>multiqc run_dir/</code> after all samples finish.</li>
+</ul>
+<h1 id="mark-pcr-duplicates-标记重复">4. Mark PCR duplicates ·
+标记重复</h1>
+<h2 id="principle-原理-2">4.1 Principle 原理</h2>
+<p>A “duplicate” = a read pair whose <strong>5′ coordinates and
+orientation match another pair exactly</strong>. Random shearing makes
+this vanishingly unlikely for true molecules; PCR amplification makes it
+common. Duplicates are <strong>marked, not removed</strong>: GATK
+counting tools ignore them, but they stay in the BAM (auditability, and
+<code>samtools view -F 1024</code> recovers them).</p>
+<p>Why <strong>after sorting</strong>: MarkDuplicates needs coordinate
+order to see co-located mates in a streaming fashion. This is also why
+the <strong>LB tag matters</strong> — duplicates are only
+<em>expected</em> within a library; two libraries of the same sample are
+independent shearatures, and marking across them would be wrong.</p>
+<p><strong>Commands</strong> (roadmap 4.1, verbatim):</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx8g&quot;</span> MarkDuplicates <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-M</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_markdup_metrics.txt&quot;</span> <span class="dt">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--CREATE_INDEX</span> true</span></code></pre></div>
+<h2 id="what-happened-实跑结果-2">4.2 What happened 实跑结果</h2>
+<p><strong>Demo round:</strong> duplication OC <strong>0.033%</strong>,
+PBMC <strong>0.06%</strong> — essentially zero, exactly what a 0.48%
+subsample must produce (the probability that both members of a duplicate
+pair survive the subsample is ~0.48%² ≈ 0.002%).</p>
+<p><strong>Full round</strong> (all values from the metrics files’
+per-library rows):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Pairs examined</th>
+<th>Dup pairs</th>
+<th>Optical dups</th>
+<th>PERCENT_DUPLICATION</th>
+<th>Est. library size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OC</td>
+<td>36,468,418</td>
+<td>2,583,317</td>
+<td>1,853,690 (71.8% of dups)</td>
+<td><strong>7.08%</strong></td>
+<td>809,511,121</td>
+</tr>
+<tr>
+<td>PBMC</td>
+<td>51,634,767</td>
+<td>5,562,361</td>
+<td>3,192,510 (57.4%)</td>
+<td><strong>10.77%</strong></td>
+<td>478,822,815</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Teacher’s own full-data run</strong> (from
+<code>analysis_full</code>): OC <strong>7.39%</strong>, PBMC
+<strong>11.01%</strong> — our run lands within 0.4 percentage points of
+both. That agreement is the strongest single validation that our prep
+chain (fastp → piped bwa|sort → MarkDup) reproduces the reference prep
+faithfully.</p>
+<p><strong>Interpretation 结果解读.</strong> For hybrid-capture WES at
+~100×, expect <strong>5–20%</strong> duplication. Rising duplication =
+shrinking library complexity (bad template prep, over-amplification);
+the metrics file’s <code>ESTIMATED_LIBRARY_SIZE</code> is the honest
+indicator (hundreds of millions to billions = healthy). One subtlety
+visible in the optical-duplicate column: <strong>71.8% of OC duplicates
+are optical</strong> (adjacent-flowcell origin), which usually indicates
+patterned-flowcell clustering rather than PCR over-amplification — a
+sequencing-hardware property, not a library-prep failure.</p>
+<h2 id="pitfalls-fixes-坑与矫正-1">4.3 Pitfalls &amp; fixes
+坑与矫正</h2>
+<ul>
+<li><strong>(p1) Optical vs PCR duplicates:</strong> the metrics split
+them. Optical duplicates come from adjacent clusters on the flowcell; if
+optical &gt;&gt; non-optical, suspect the patterned flowcell / loading
+concentration, not library prep.</li>
+<li><strong>(p2) “Unknown Library”</strong> appears in the teacher’s
+metrics (their RGs lacked <code>LB</code>); with the roadmap’s RGs you
+get a named row. Keep <code>LB</code> — duplicate statistics per
+library.</li>
+<li><strong>(p3) UMI libraries</strong> need
+<code>--barcoded-*, UMI-aware duplicate marking</code> (GATK
+<code>UmiAwareMarkDuplicatesPoN</code> or fgbio
+<code>CallMolecularDuplicates</code>); coordinate-based marking
+undercounts complexity there.</li>
+</ul>
+<h2 id="tuning-beyond-调优与扩展-2">4.4 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>--TMP_DIR</code> to a scratch disk for huge BAMs
+(MarkDuplicates spills heavily).</li>
+<li><code>--VALIDATION_STRINGENCY SILENT</code> if old BAMs trip on
+NM/MD tag order — better: fix the BAM.</li>
+<li><code>samtools markdup</code> (with <code>samtools fixmate</code>)
+is a faster alternative; GATK’s <code>EstimateLibraryComplexity</code>
+predicts complexity from read pairs alone.</li>
+</ul>
+<h1 id="base-quality-score-recalibration-bqsr-碱基质量校准">5. Base
+quality score recalibration (BQSR) · 碱基质量校准</h1>
+<h2 id="principle-原理-3">5.1 Principle 原理</h2>
+<p>Phred scores from the instrument are <strong>estimates</strong>,
+systematically off in ways that depend on cycle, machine, context. BQSR
+learns an empirical error model from “mismatches at sites we KNOW are
+true” (known-variant resources), then rewrites the quality scores. The
+mental model: <em>if base calls at known-reference positions look like
+Q35 in context C, treat future C-context calls as Q35, whatever the
+instrument said.</em></p>
+<p><strong>Commands</strong> (roadmap 5.1–5.2, verbatim — the
+known-sites trio is dbsnp + Mills + 1000G high-conf, all present with
+<code>.idx</code> on this cluster):</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx20g -XX:ParallelGCThreads=4&quot;</span> BaseRecalibrator <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$INDELS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="st">&quot;</span><span class="va">$HIGHCONF</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.recal_data.table&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx12g -XX:ParallelGCThreads=4&quot;</span> ApplyBQSR <span class="dt">\</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--bqsr-recal-file</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.recal_data.table&quot;</span> <span class="dt">\</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span></span></code></pre></div>
+<h2 id="what-happened-实跑结果-3">5.2 What happened 实跑结果</h2>
+<p>Demo: recal table 108 KB / BQSR BAM 54 MB; runtime ~2.5 min per
+sample. Full round: recal tables 110 KB per sample (24 covariate rows ×
+~400 context rows — the same model shape as demo, just denser counts),
+BQSR BAMs 8.8 GB (OC) / 8.2 GB (PBMC); runtimes from the job logs —
+BaseRecalibrator ~31 min (OC) / ~43 min (PBMC), ApplyBQSR ~20 min / ~28
+min. Note the BQSR BAM is ~1.9× the markdup BAM: ApplyBQSR rewrites
+every base quality, and re-compressed BAMs don’t always shrink — an easy
+place to waste disk if you keep every intermediate.</p>
+<p><strong>Interpretation 结果解读.</strong> The recal table’s
+<code>EmpiricalQuality</code> vs <code>EstimatedQ</code> columns are the
+story: systematic deltas of 1–5 Q are normal and worth correcting; the
+BQSR <strong>report plots</strong> (run
+<code>gatk AnalyzeCovariates</code>) make it visual. Two BQSR truths for
+this course: (a) with dbsnp as known-sites <strong>plus</strong> Mills +
+1000G, novel real variants are barely affected — the model “believes”
+the trio; (b) on 0.5× data BQSR still runs, but the empirical counts per
+covariate bin are so thin that the correction is mostly noise — another
+“works mechanically, meaningless statistically” case.</p>
+<h2 id="pitfalls-fixes-坑与矫正-2">5.3 Pitfalls &amp; fixes
+坑与矫正</h2>
+<ul>
+<li><strong>(p1) No <code>-L</code> restriction:</strong>
+BaseRecalibrator scans the <em>whole genome</em> even though only the
+exome matters downstream. Adding <code>-L $TARGETS</code> cuts wall time
+~in half for WES. We kept it verbatim (it is not wrong, just
+slower).</li>
+<li><strong>(p2) BQSR needs a good chunk of data.</strong> &lt;10⁷ bases
+on-target makes the model jittery.</li>
+<li><strong>(p3) Never BQSR without the sequence dictionary
+match</strong> (<code>hg38.dict</code> exists here — fine).</li>
+</ul>
+<h2 id="tuning-beyond-调优与扩展-3">5.4 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>--native-pair-hmm-threads</code> doesn’t apply here (that’s
+HaplotypeCaller); for BaseRecalibrator the parallelism is GC threads +
+(in newer GATK) <code>--parallelism</code>.</li>
+<li>Plot covariates:
+<code>gatk AnalyzeCovariates -bqsr recal_data.table -O report.pdf</code>
+— the single best teaching artifact of the whole step.</li>
+<li>Skip-if-known-clean: for deeply-studied platforms some pipelines
+skip BQSR; GATK still recommends it whenever the mismatch model shows
+bias.</li>
+</ul>
+<h1 id="germline-variant-calling-胚系变异检测">6. Germline variant
+calling · 胚系变异检测</h1>
+<h2 id="principle-原理-4">6.1 Principle 原理</h2>
+<p><strong>HaplotypeCaller (HC)</strong> is not a per-pileup SNP caller:
+it (1) finds <em>active regions</em> with evidence of variation, (2)
+<strong>reassembles the haplotype graph</strong> locally, (3) runs a
+pair-HMM likelihood of every read against every candidate haplotype, (4)
+emits the most likely genotype. This is why it catches indels near short
+reads far better than pileup callers.</p>
+<p><strong>GVCF mode (<code>-ERC GVCF</code>)</strong>: emit
+<em>every</em> block* (variant or reference) with confidence bands.
+Cost: bigger files. Benefit: <strong>scalable joint genotyping</strong>
+— add sample 31 later by re-running
+<code>CombineGVCFs</code>/<code>GenotypeGVCFs</code>, never re-running
+HC. This two-sample “GVCF workflow” is the exact pattern to scale to a
+cohort.</p>
+<p><strong>Commands</strong> (roadmap 6.2–6.4, verbatim):</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx12g -XX:ParallelGCThreads=4&quot;</span> HaplotypeCaller <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-ERC</span> GVCF <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-D</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="at">-L</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.g.vcf&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g -XX:ParallelGCThreads=4&quot;</span> CombineGVCFs <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/PBMC/blood.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/combined.g.vcf&quot;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g -XX:ParallelGCThreads=4&quot;</span> GenotypeGVCFs <span class="dt">\</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-V</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/combined.g.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-D</span> <span class="st">&quot;</span><span class="va">$DBSNP</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/OC_blood_variants.vcf&quot;</span></span></code></pre></div>
+<p>And the optional (roadmap 6.4) VariantAnnotator with OC’s BAM — it
+annotates with coverage-based fields; on GATK4 it is <strong>not
+required</strong> before filtering, and the roadmap itself says so.</p>
+<h2 id="what-happened-实跑结果-4">6.2 What happened 实跑结果</h2>
+<p><strong>Demo round:</strong> joint callset <strong>14,782 variant
+records</strong> (13,632 SNPs + 1,151 indels, plus mixed) — the
+tumor/normal pair genotyped jointly; PBMC’s germline variants appear in
+the tumor columns too.</p>
+<p><strong>Full round:</strong> joint callset <strong>55,123 variant
+records</strong> (OC+blood, both genotyped, target-restricted:
+<code>-L $TARGETS</code> in HC/Combine/Genotype).</p>
+<p><strong>Teacher’s reference:</strong> <strong>204,178</strong>
+records. <strong>Beware the naive comparison — these two numbers are NOT
+the same quantity</strong> (see issue #12 in Appendix A). Measured facts
+about the teacher’s VCF: (a) it contains a <strong>single
+sample</strong> (OC only — their blood gVCF’s RG <code>SM</code> tag was
+set to <code>OC</code>, so CombineGVCFs collapsed both into one); (b) it
+was called <strong>genome-wide</strong> — HaplotypeCaller/GenotypeGVCFs
+with <strong>no <code>-L</code></strong> — and <strong>72% of its sites
+lie outside the capture targets</strong> (many in
+low-complexity/off-bait regions with shallow coverage). Our 55,123 is a
+2-sample, on-target callset; their 204,178 is a 1-sample, genome-wide
+one. Depth is the dominant difference, but scope and sample count matter
+too — always read the VCF header (<code>##GATKCommandLine</code>,
+<code>#CHROM</code> line) before comparing callsets.</p>
+<p>For a sanity check on our own number: 60.51 Mb of exome at ~1.2–1.4
+germline variants per kb gives ~75–85k per sample; two samples with
+heavy overlap (both are germline from related-normal individuals —
+actually two different individuals, so overlap is the common-variant
+fraction ~70%) → ~55–65k unique sites. 55,123 sits right in that
+window.</p>
+<h2 id="pitfalls-fixes-坑与矫正-3">6.3 Pitfalls &amp; fixes
+坑与矫正</h2>
+<ul>
+<li><strong>(p1) <code>-D dbsnp</code> only adds the RS ID
+annotation</strong> — it does not restrict calling. A common
+misconception is that dbsnp “tells HC what to look for”; it
+doesn’t.</li>
+<li><strong>(p2) Never mistake this joint VCF for a somatic
+callset</strong> — these are germline variants of BOTH individuals. The
+roadmap’s take-home (and §9) is exactly this point.</li>
+<li><strong>(p3) PBMC as “normal”</strong> is acceptable for paired
+somatic calling, but it is a different tissue with its own mosaic/ageing
+mutations; clonal hematopoiesis (CHIP) variants in blood WILL appear
+here — a hot topic in modern immuno-oncology.</li>
+</ul>
+<h2 id="tuning-beyond-调优与扩展-4">6.4 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>--native-pair-hmm-threads 8</code> gave the single biggest
+speedup in our runs — use it always.</li>
+<li>For cohorts: <code>GenomicsDBImport</code> scales better than
+CombineGVCFs beyond ~50 samples (the roadmap’s CombineGVCFs is fine for
+2).</li>
+<li><code>--interval-padding 50</code> recovers splice-region variants
+just outside the BED — nearly free, clinically useful.</li>
+<li>QUAL interpretation: it’s Phred-scaled genotype confidence, NOT
+variant frequency. A het at QUAL 5,000 means “P(wrong) ≈ 10⁻⁵⁰⁰” —
+over-precise by construction.</li>
+</ul>
+<h1
+id="variant-quality-score-recalibration-vqsr-变异质量再校准-the-big-correction">7.
+Variant quality score recalibration (VQSR) · 变异质量再校准 — <em>the
+big correction</em></h1>
+<h2 id="principle-原理-5">7.1 Principle 原理</h2>
+<p>Hard filters use fixed thresholds (QD&lt;2 → bad). <strong>VQSR
+instead trains a Gaussian mixture model</strong> on your callset, using
+“truth” resources (hapmap/omni for SNPs, Mills for indels) as positive
+labels and dbsnp as a “known, don’t over-trust” population. Each variant
+gets a <strong>VQSLOD</strong> score (log-odds of being real
+vs. artifact given its annotation vector: QD, MQ, FS, SOR,
+ReadPosRankSum, MQRankSum). You keep a <em>truth sensitivity
+tranche</em> (99.5% for SNPs here, 99.0% for indels), filtering the
+worst-scoring fraction outside it.</p>
+<p><strong>The non-negotiable precondition: enough training
+data.</strong> GATK’s guidance: ~30 WGS samples (or a large cohort
+callset; exomes need more samples than WGS because fewer variants each).
+With 2 exomes at 14k variants the model is <em>mathematically
+fittable</em> but <em>statistically fictional</em> — it will happily
+produce a tranche file.</p>
+<h2 id="what-happened-实跑结果-the-two-headline-findings">7.2 What
+happened 实跑结果 — the two headline findings</h2>
+<p><strong>Finding A: VQSR “succeeds” on the demo — and that’s a
+trap.</strong> Both VariantRecalibrators ran to completion on the
+14,782-variant demo callset. But look at what it actually learned:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Demo (0.5×, 14.8k)</th>
+<th>Our full (55.1k, 2-sample on-target)</th>
+<th>Teacher (204k, genome-wide)</th>
+<th>Healthy WES expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accessible truth sites (hapmap+omni ∩ callset)</td>
+<td>7,388</td>
+<td>28,324</td>
+<td>85,159</td>
+<td>grows with cohort</td>
+</tr>
+<tr>
+<td>SNP minVQSLod at 99.9% tranche</td>
+<td>−2.56</td>
+<td>−11.62</td>
+<td>−2.47</td>
+<td>mild negative tail</td>
+</tr>
+<tr>
+<td>SNP minVQSLod at 100% tranche</td>
+<td><strong>−5889.9</strong></td>
+<td>−1111.4</td>
+<td>−25.5</td>
+<td>bounded tail</td>
+</tr>
+<tr>
+<td>Novel Ti/Tv at 90% tranche</td>
+<td><strong>2.46</strong> (hugging known 2.71)</td>
+<td>2.50 (known 2.63)</td>
+<td><strong>1.69</strong> (known 2.34)</td>
+<td>novel ≈ 1.5–2.0, clearly below known</td>
+</tr>
+<tr>
+<td>Model file size</td>
+<td>1.2 MB</td>
+<td>4.3 MB</td>
+<td>15.1 MB</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Indel known Ti/Tv</td>
+<td>0.0000 (normal artifact for indels)</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table>
+<p>The demo model’s failure mode is visible in two numbers. First, the
+100%-tranche cutoff of −5889 means the model has <strong>no
+discriminative power at the tail</strong> — it is separating noise from
+noise. Second, and more subtly: in a healthy callset the <em>novel</em>
+variants (not in dbsnp) are enriched for artifacts, so <strong>novel
+Ti/Tv falls well below known Ti/Tv</strong> — the teacher’s run shows
+exactly that (1.69 vs 2.34). The demo’s novel Ti/Tv stays at 2.46,
+<strong>hugging the known value</strong> (2.71): the model cannot tell
+its “worst” variants from its “best” ones, because at 0.5× even the
+truth sites are supported by 1–2 reads. Note our own full run sits in
+between (novel 2.50 vs known 2.63): with 55k on-target variants the
+model is usable but still thin by GATK’s own ≥30-sample guidance.</p>
+<blockquote>
+<p><strong>中文批注：</strong> VQSR 在 14,782
+个变异上”能跑完”不等于”能用”。三个铁证：① 训练用的 truth 位点只有 7,388
+个（全量轮 28,324、老师 85,159）——模型是在极稀疏的标签上拟合的；② 100%
+tranche 的 minVQSLod = −5889——健康数据的尾部应在 −10 到 −30 之间，−5889
+意味着模型在噪声里找规律；③ 最微妙的一点：健康数据里 novel Ti/Tv
+应显著低于 known（老师的 1.69 vs 2.34 就是标准样子），而 demo 的 novel
+2.46 几乎贴着 known 2.71——模型已无力区分”最差”和”最好”的变异，因为 0.5×
+深度下连 truth 位点都只有 1–2 条读段支撑。这不是”VQSR 挂了”，而是”VQSR
+拟合了一个没有统计意义的东西”——比挂了更危险，因为它不报错。</p>
+</blockquote>
+<p><strong>Finding B (issue #1): the roadmap’s §7.3 MergeVcfs duplicates
+every variant.</strong> <code>ApplyVQSR --mode SNP</code> does
+<strong>not</strong> output only SNPs — it outputs the <strong>entire
+VCF</strong> with SNP-model scores applied (indels pass through
+unfiltered), and <code>--mode INDEL</code> vice versa. Merging the two
+outputs therefore yields <strong>every variant twice</strong>:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Callset</th>
+<th>Raw joint records</th>
+<th>After roadmap §7.3 MergeVcfs</th>
+<th>Duplicated sites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>14,782</td>
+<td><strong>29,564</strong></td>
+<td><strong>100% (14,782/14,782)</strong></td>
+</tr>
+<tr>
+<td>teacher <code>analysis_full</code></td>
+<td>204,178</td>
+<td><strong>408,356</strong></td>
+<td><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The teacher’s own reference output carries the same duplication —
+proving this is the roadmap’s bug, not an environment quirk. The exact
+damage (measured in both our runs): every site appears
+<strong>twice</strong> with two different FILTER values — the SNP-mode
+record carries the SNP-model verdict (<code>PASS</code> or
+<code>VQSRTrancheSNP…</code>), the INDEL-mode record shows
+<code>.</code> (unfiltered passthrough) for SNPs and vice versa. Two
+consequences: (a) the <strong>raw record count doubles</strong> (29,564;
+110,246; 408,356) — so any downstream row-counting (including ANNOVAR’s
+avinput, §8) counts everything twice; (b) the “PASS” count
+<em>happens</em> to stay correct (53,988 in our full round) because each
+site has exactly one SNP-mode verdict — an accidental soft spot that
+masks the bug during casual QC. One more subtlety surfaced in the full
+round: at sites where the SNP model filtered the record, the
+<em>other</em> copy still shows <code>.</code> — so
+<code>SelectVariants -select-expressions</code>-style “drop non-PASS”
+logic silently keeps the unfiltered twin.</p>
+<h2 id="the-corrected-workflow-矫正方案">7.3 The corrected workflow
+矫正方案</h2>
+<p>Two standard fixes; <strong>fix 1 is canonical GATK best
+practice</strong> (sequential application — each variant filtered
+exactly once, by its own model):</p>
+<p><strong>Fix 1 — sequential ApplyVQSR (recommended):</strong></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SNP model → apply to full callset</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantRecalibrator ... <span class="at">-mode</span> SNP <span class="at">-O</span> snps.recal <span class="at">--tranches-file</span> snps.tranches ...</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyVQSR <span class="at">-V</span> raw.vcf <span class="at">-O</span> step1.vcf <span class="at">--mode</span> SNP <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recal-file</span> snps.recal <span class="at">--tranches-file</span> snps.tranches <span class="at">--truth-sensitivity-filter-level</span> 99.5</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># INDEL model → apply to the SNP-filtered output</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantRecalibrator ... <span class="at">-mode</span> INDEL <span class="at">-O</span> indel.recal <span class="at">--tranches-file</span> indel.tranches ...</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyVQSR <span class="at">-V</span> step1.vcf <span class="at">-O</span> all.VQSR.vcf <span class="at">--mode</span> INDEL <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--recal-file</span> indel.recal <span class="at">--tranches-file</span> indel.tranches <span class="at">--truth-sensitivity-filter-level</span> 99.0</span></code></pre></div>
+<p><strong>Fix 2 — split, filter, merge</strong> (SelectVariants →
+ApplyVQSR per type → MergeVcfs), if you want per-type VCFs on disk.</p>
+<p><strong>And the honest alternative for THIS course’s data (2
+samples): hard filters.</strong> GATK’s own recommendation for small
+callsets is <code>VariantFiltration</code>:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantFiltration <span class="at">-V</span> OC_blood_variants.vcf <span class="at">-O</span> filtered.vcf <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_QD2&quot;</span>     <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_MQ40&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;MQ &lt; 40.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_FS60&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 60.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;SNP_SOR3&quot;</span>   <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 3.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_QD2&quot;</span>  <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_FS200&quot;</span> <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 200.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> <span class="st">&quot;INDEL_SOR10&quot;</span> <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 10.0 &amp;&amp; INDEL&quot;</span></span></code></pre></div>
+<p>VQSR makes sense at cohort scale (30+ exomes); hard filters are the
+tool for 1–10 samples. <strong>This is the single most transferable
+lesson of the whole step.</strong></p>
+<blockquote>
+<p><strong>中文批注：</strong>
+矫正方案记忆点：<strong>顺序套用</strong>（SNP 模型套完的输出，再套
+INDEL
+模型）——每条变异只被它自己类型的模型过滤一次；或者<strong>先拆再合</strong>（SelectVariants
+按类型拆开 → 各自 ApplyVQSR → MergeVcfs）。而如果只有 1–10 个样本，GATK
+官方建议干脆不用 VQSR，改用硬过滤（上面的 QD/MQ/FS/SOR 阈值就是 GATK
+文档的标准值）。VQSR 的适用边界：约 30 个以上样本、或 callset
+足够大——“能跑”≠“该用”。</p>
+</blockquote>
+<h2 id="commands-as-we-ran-them-实跑命令说明">7.4 Commands as we ran
+them 实跑命令说明</h2>
+<p>In both rounds we ran the roadmap’s §7.1/7.2
+VariantRecalibrator/ApplyVQSR verbatim (recalibrators + mode-specific
+ApplyVQSR with the roadmap’s 99.5/99.0 levels), and §7.3 MergeVcfs
+verbatim — to <em>document</em> the duplication with measured numbers
+(14,782 → 29,564 demo; 55,123 → 110,246 full) rather than assert it. The
+corrected files for the final deliverable are produced with Fix 1
+(sequential ApplyVQSR) from the same recal models.</p>
+<p><strong>Full-round numbers, as-run vs corrected:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Roadmap §7.3 as-written (MergeVcfs)</th>
+<th>Corrected (sequential ApplyVQSR, job 3056)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total records</td>
+<td><strong>110,246</strong> (= 2 × 55,123)</td>
+<td><strong>55,123</strong> (each site once)</td>
+</tr>
+<tr>
+<td>Unique sites</td>
+<td>55,123</td>
+<td>55,123</td>
+</tr>
+<tr>
+<td>PASS records</td>
+<td>53,988</td>
+<td>53,988</td>
+</tr>
+<tr>
+<td>Sites carrying a <code>.</code> (unfiltered) FILTER</td>
+<td>53,988</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>Filtered records</td>
+<td>56,258 (mostly unfiltered twins)</td>
+<td>1,135 (696 SNP-tranche + 427 + 12 INDEL-tranche)</td>
+</tr>
+<tr>
+<td>ANNOVAR avinput lines from it</td>
+<td>110,246</td>
+<td>55,123</td>
+</tr>
+</tbody>
+</table>
+<p>The tranches of the full run (job 3051): SNP truth sites 28,324,
+minVQSLod −11.62 at 99.9% / −1111 at 100%; novel Ti/Tv 1.65 at the 100%
+tranche — the model behaves like a real, if thin, callset model. The
+sequential application then removed exactly 1,135 of 55,123 records
+(2.1%) — a plausible filter-rate for a clean WES callset, in sharp
+contrast to the demo’s degenerate tranches.</p>
+<h2 id="interpretation-结果解读-1">7.5 Interpretation 结果解读</h2>
+<ul>
+<li>The <strong>tranches file</strong> is the quality dashboard:
+<code>novelTiTv</code> per tranche should <em>fall</em> as you admit
+more variants (99 → 99.9 → 100). If it rises or wobbles, the model is
+overfitting — as it visibly does in the demo.</li>
+<li><code>--truth-sensitivity-filter-level</code> semantics: “keep at
+least X% of truth-site variants”; 99.5% for SNPs (looser, SNP models are
+stronger) / 99.0% for indels (indel truth is scarcer; being slightly
+stricter compensates).</li>
+<li>VQSLOD distribution:
+<code>bcftools query -f '%VQSLOD\n' vcf | sort -g | awk ...</code> — a
+healthy run has a smooth distribution; our demo had a degenerate
+spike.</li>
+<li><strong>Do not compare raw QUAL between the rounds; compare tranche
+behavior.</strong></li>
+</ul>
+<h1 id="functional-annotation-with-annovar-功能注释">8. Functional
+annotation with ANNOVAR · 功能注释</h1>
+<h2 id="principle-原理-6">8.1 Principle 原理</h2>
+<p>A VCF says <em>where</em> and <em>what</em>; annotation says <em>so
+what</em>. ANNOVAR’s pipeline: (1) <strong>convert2annovar</strong>
+translates VCF to a minimal tab format (<code>avinput</code>: chr,
+start, end, ref, alt); (2) <strong>annotate_variation /
+table_annovar</strong> map variants onto gene models
+(<code>refGeneWithVer</code> here — RefSeq with version suffixes) and
+optionally onto dozens of other databases (population frequencies,
+deleteriousness scores, ClinVar).</p>
+<p>The key output is <code>*.hg38_multianno.txt</code>: one row per
+(variant × transcript) with <code>Func.refGeneWithVer</code>
+(exonic/intronic/UTR/splice/…), <code>ExonicFunc</code> (synonymous/
+missense/nonsense/frameshift/…), and <code>AAChange.refGene</code>
+(protein change, e.g.
+<code>BRCA1:NM_007294:exon11:c.3082G&gt;A:p.Gly1028Arg</code> style
+coordinates).</p>
+<h2 id="commands-roadmap-8.18.3-verbatim">8.2 Commands (roadmap 8.1–8.3,
+verbatim)</h2>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/convert2annovar.pl&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-format</span> vcf4old <span class="dt">\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/2_variant_call/OC_blood.all.VQSR.vcf&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-includeinfo</span> <span class="dt">\</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-comment</span> <span class="dt">\</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-outfile</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/annotate_variation.pl&quot;</span> <span class="at">-geneanno</span> <span class="at">-buildver</span> hg38 <span class="dt">\</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">-dbtype</span> refGeneWithVer <span class="dt">\</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="dt">\</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno&quot;</span> <span class="dt">\</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer <span class="dt">\</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g</span></code></pre></div>
+<h2
+id="pitfall-issue-2-the-richer-protocol-block-fails-and-exactly-why">8.3
+Pitfall (issue #2): the “richer protocol” block fails — and exactly
+why</h2>
+<p>The roadmap’s optional step, kept verbatim:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno_rich&quot;</span> <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer,cytoBand,dbnsfp30a,exac03,gnomad_genome,avsnp147 <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f,f</span></code></pre></div>
+<p>This <strong>cannot run on this cluster</strong>: the installed
+humandb has <code>dbnsfp54a</code>, <code>gnomad211_exome</code>,
+<code>gnomad41_exome</code>, <code>avsnp151</code> — not
+<code>dbnsfp30a</code>, <code>exac03</code>, <code>gnomad_genome</code>,
+<code>avsnp147</code>. The error is
+<code>Error: the database ... not found</code> (or “cannot open …txt”).
+Confirmed in both our runs; the deviation logs record it.</p>
+<p><strong>Correction</strong> — the same intent, working protocol
+names:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="st">&quot;</span><span class="va">$ANNOVAR</span><span class="st">/table_annovar.pl&quot;</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood.all.avinput&quot;</span> <span class="st">&quot;</span><span class="va">$HUMANDB</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-buildver</span> hg38 <span class="at">-out</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/3_annotation/OC_blood_anno_rich&quot;</span> <span class="at">-remove</span> <span class="dt">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-protocol</span> refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151 <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f</span></code></pre></div>
+<p>(<code>gnomad41_exome</code> = gnomAD v4.1 exomes AF — the modern
+replacement for both <code>exac03</code> and <code>gnomad_genome</code>
+for exome work; <code>dbnsfp54a</code> bundles functional predictions
+including CADD/REVEL-class scores; <code>avsnp151</code> = dbSNP 151
+rsIDs.)</p>
+<blockquote>
+<p><strong>中文批注：</strong> ANNOVAR 的数据库名字<strong>必须和
+humandb
+里实际存在的文件名完全一致</strong>（<code>hg38_dbnsfp54a.txt</code>
+等）。原版写的是 2020
+年前后的老库名，而集群上装的是新库——这类”文档滞后于环境”的问题在生信教学环境里极其常见，遇到时先
+<code>ls $HUMANDB | grep -iE "dbnsfp|gnomad|avsnp"</code>
+看清楚有什么，再改 <code>-protocol</code>。另外注意每个
+<code>-operation</code> 字母和 <code>-protocol</code>
+里每个库一一对应（g=gene, r=region, f=filter/频率）。</p>
+</blockquote>
+<h2
+id="pitfall-issue-1-downstream-what-the-duplicated-vcf-does-to-annovar">8.4
+Pitfall (issue #1 downstream): what the duplicated VCF does to
+ANNOVAR</h2>
+<p>Because the roadmap’s §7.3 merged VCF contains every variant twice
+(§7.2), the avinput and multianno outputs double-count everything:</p>
+<table>
+<thead>
+<tr>
+<th>Callset</th>
+<th>avinput lines</th>
+<th>multianno rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>29,564 (vs 14,782 real)</td>
+<td>29,602</td>
+</tr>
+<tr>
+<td>full</td>
+<td><strong>110,246</strong> (vs 55,123 real)</td>
+<td><strong>110,284</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Any “how many variants in gene X” count is inflated 2×. The corrected
+edition annotates the <strong>sequentially-VQSR-filtered VCF</strong>
+(or the raw joint callset with hard filters) — never the merged file
+from §7.3-as-written.</p>
+<h2 id="what-happened-实跑结果-5">8.5 What happened 实跑结果</h2>
+<p>Demo: basic protocol produced
+<code>OC_blood_anno.hg38_multianno.txt</code> with columns
+<code>Chr..AAChange.refGeneWithVer</code> (10 columns), 29,602 rows for
+14,782 real variants.</p>
+<p>Full round (job 3051, roadmap-verbatim): avinput
+<strong>110,246</strong> lines, basic multianno <strong>110,284</strong>
+rows — the doubled inputs propagate exactly as predicted.</p>
+<p>Full round <strong>corrected</strong> (job 3056): avinput
+<strong>55,123</strong> lines; rich protocol with the
+<strong>installed</strong> database names
+(<code>refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151</code>)
+produced <strong>55,165 rows × 146 columns</strong> — including gnomAD
+v4.1 AFs (total + 8 sub-populations + faf95/99), SIFT4G, PolyPhen-2,
+MutationTaster, REVEL, CADD, AlphaMissense, ClinPred, conservation
+scores (GERP++/phyloP/phastCons) and <code>avsnp151</code> rsIDs. Of the
+55,165 rows, <strong>54,373 variants have gnomAD AF ≤ 0.01</strong> —
+i.e. 98.6% of this pair’s germline variants are rare, exactly what two
+unrelated individuals’ exomes should look like (common variants are
+shared; rare ones are private). The teacher’s own annotation
+(<code>analysis_full/3_annotation</code>) used the older
+<code>refGene,knownGene</code> protocol pair — functional/frequency
+interpretation was simply not part of the reference result.</p>
+<h2 id="tuning-beyond-调优与扩展-5">8.6 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>-nastring .</code> controls empty cells;
+<code>-polish -dot2comma</code>-type tidying matters for Excel
+users.</li>
+<li>Useful additional protocols available here:
+<code>clinvar_20221231</code>-style DBs (check humandb),
+<code>gerp++</code>, <code>spliceai</code> (if downloaded) — ClinVar is
+the one clinicians ask for first.</li>
+<li><code>vcfanno</code>/<code>bcftools csq</code>/<code>VEP</code> are
+alternatives; ANNOVAR’s niche is the flat-file simplicity and the
+course’s muscle memory.</li>
+<li><strong>Rows ≠ variants</strong>: one variant in 3 transcripts = 3
+rows. Always <code>sort -u</code> by (chr,pos,ref,alt) before counting
+variants; count rows only when counting transcript-level effects.</li>
+<li>Convert back to VCF with <code>-vcfoutput</code> if you need
+annotated VCFs downstream (e.g. for reporting tools).</li>
+</ul>
+<h1 id="somatic-tmb-with-matched-normal-mutect2-体细胞突变与-tmb">9.
+Somatic TMB with matched normal (Mutect2) · 体细胞突变与 TMB</h1>
+<h2 id="principle-原理-7">9.1 Principle 原理</h2>
+<p><strong>Somatic = present in tumor, absent in the matched
+normal.</strong> Mutect2’s flow: local de-novo assembly (like HC) in
+tumor <strong>and</strong> normal, then a series of discriminative
+filters — population AF from a <strong>germline resource</strong>,
+cross-sample evidence, orientation bias (FFPE/artifact),
+panel-of-normals recurrent artifacts — each variant gets a posterior
+probability of being a somatic mutation.</p>
+<p><strong>TMB (tumor mutational burden)</strong> = (# somatic PASS
+variants) ÷ (target Mb). It’s a <em>rate</em>, so it only means
+something if (a) the denominator matches what you called against (60.51
+Mb here), and (b) the caller’s sensitivity is depth-controlled (~≥50×
+tumor for stable WES TMB; the measured 54.6×/91.3× pair is just above
+that floor — see §11).</p>
+<p><strong>Commands</strong> (roadmap 9.1–9.3, verbatim):</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx16g&quot;</span> Mutect2 <span class="dt">\</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/PBMC/blood_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--normal-sample</span> blood <span class="dt">\</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-L</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--germline-resource</span> <span class="st">&quot;</span><span class="va">$HIGHCONF</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/5_somatic_tmb/somatic.raw.vcf.gz&quot;</span> <span class="dt">\</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="dt">\</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--f1r2-tar-gz</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/5_somatic_tmb/f1r2.tar.gz&quot;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> LearnReadOrientationModel <span class="at">-I</span> f1r2.tar.gz <span class="at">-O</span> orientation_model.tar.gz</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="dt">\</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-R</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="at">-V</span> somatic.raw.vcf.gz <span class="dt">\</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--stats</span> somatic.raw.vcf.gz.stats <span class="dt">\</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ob-priors</span> orientation_model.tar.gz <span class="dt">\</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> somatic.filtered.vcf.gz</span></code></pre></div>
+<h2 id="pitfalls-fixes-坑与矫正-4">9.2 Pitfalls &amp; fixes
+坑与矫正</h2>
+<ul>
+<li><strong>(p1, issue #5) Missing Panel of Normals.</strong> The
+cluster <strong>ships one</strong>:
+<code>$REF/1000g_pon.hg38.vcf.gz</code> (+ <code>.tbi</code>). Add
+<code>--pon $REF/1000g_pon.hg38.vcf.gz</code> and FilterMutectCalls
+gains a whole filter dimension (recurring capture/alignment artifacts).
+This is the single highest-value one-flag improvement to §9.</li>
+<li><strong>(p2) Germline resource semantics:</strong> Mutect2 wants a
+<strong>population AF</strong> file to down-weight common germline;
+<code>1000G_phase1.snps.high_confidence</code> carries AF in its INFO
+and <em>works</em>, but gnomAD AF-only
+(<code>af-only-gnomad.vcf.gz</code>) is the modern recommendation —
+richer, newer, and exome-matched.</li>
+<li><strong>(p3, cosmetic) <code>somatic.pass.vcf.gz</code> is written
+but never used</strong> by §9.3, which re-derives PASS from the filtered
+VCF (same result; keep whichever, but be consistent).</li>
+<li><strong>(p4) <code>--normal-sample blood</code></strong> must match
+the BAM’s <code>SM</code> tag exactly (<code>SM:blood</code>). If you
+rename samples midway, Mutect2 fails with “FATAL error: sample not
+found”.</li>
+</ul>
+<h2 id="what-happened-实跑结果-6">9.3 What happened 实跑结果</h2>
+<p><strong>Demo round (0.5×): raw = filtered = PASS = 0, TMB =
+0.00/Mb.</strong> This is the expected and <em>pedagogically
+perfect</em> outcome: at ~0.5× the tumor, there is no statistical way to
+distinguish a somatic mutation from a germline variant seen by chance —
+Mutect2’s model correctly refuses to call anything. Zero is not a bug;
+it is the honest answer.</p>
+<p><strong>Full round (~54.6× usable tumor depth): raw = 2,949, filtered
+= 2,949, PASS = 108 → TMB = 108 / 60.5079 Mb = 1.78 mut/Mb.</strong></p>
+<p>The filter breakdown reads like a textbook of why somatic calling
+needs the learning filters — of the 2,841 non-PASS records
+(combinatorial FILTER strings):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Dominant filter</th>
+<th>Records</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normal_artifact</code> (in 60%+ of filtered strings)</td>
+<td>—</td>
+<td>seen (weakly) in the normal at higher depth than this capture’s
+noise floor — mostly germline sites with lopsided allele fractions</td>
+</tr>
+<tr>
+<td><code>weak_evidence</code></td>
+<td>—</td>
+<td>tumor LOD below threshold — the 54.6× usable depth still caps
+sensitivity</td>
+</tr>
+<tr>
+<td><code>slippage</code></td>
+<td>—</td>
+<td>homopolymer/STR-adjacent indel artifacts</td>
+</tr>
+<tr>
+<td><code>germline</code></td>
+<td>—</td>
+<td>population AF says germline</td>
+</tr>
+<tr>
+<td><code>multiallelic</code> / <code>strand_bias</code> /
+<code>orientation</code> / <code>haplotype</code> /
+<code>clustered_events</code> / <code>map_qual</code> /
+<code>base_qual</code></td>
+<td>—</td>
+<td>the full modern filter battery</td>
+</tr>
+</tbody>
+</table>
+<p>108 PASS variants with AFs from 0.056 to 0.48 (median ~0.4 —
+consistent with heterozygous clonal mutations in a high-purity
+tumor).</p>
+<p><strong>Interpretation 结果解读.</strong></p>
+<ul>
+<li>A realistic epithelial ovarian tumor TMB is <strong>~1–3
+mut/Mb</strong> (HGSOC is a low-TMB, copy-number-driven disease). If you
+get 50+ mut/Mb from a quiet tumor sample, suspect germline leakage (bad
+normal matching, sample swap) or artifacts.</li>
+<li>Filter breakdown
+(<code>bcftools query -f '%FILTER\n' | sort | uniq -c</code>) tells you
+<em>why</em> variants died: a pile of <code>germline</code> filter =
+your “normal” isn’t matching the tumor; piles of
+<code>orientation</code> = FFPE artifact; <code>panel_of_normals</code>
+(if you add the PoN) = capture artifacts.</li>
+<li>CHIP in the normal (blood DNMT3A/TET2/ASXL1) can masquerade as
+somatic in the tumor direction if the tumor purity is low — keep it in
+your differential.</li>
+</ul>
+<blockquote>
+<p><strong>中文批注：</strong> TMB 的分母（60.51 Mb）必须与
+<code>-L</code> 的区域一致——用全外显子组 38 Mb 还是全部捕获区域 60.5
+Mb，TMB 能差 60%。第二个要点：demo 轮 TMB=0 不是流程坏了，而是”0.5×
+深度下体细胞检测没有统计功效”的诚实表达。全量轮实测可用深度
+54.6×，刚好在稳定 TMB 的临线之上——这也是为什么全量轮只报了 108 个 PASS
+体细胞变异（HGSOC 本身也是低 TMB
+肿瘤）。第三个要点：HGSOC（高级别浆液性卵巢癌）是典型的低 TMB、高 CNV
+肿瘤——体细胞点突变少、拷贝数变化多，这正好衔接 §10 的 CNV
+检测为什么对这类肿瘤特别重要。</p>
+</blockquote>
+<h2 id="tuning-beyond-调优与扩展-6">9.4 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li><code>--max-mnp-distance 0</code> for strict SNP/indel output;
+default 1 also emits MNPs.</li>
+<li>Tumor-in-normal mode (<code>--tumor-sample</code> in both inputs)
+when you have no normal: weaker, but possible.</li>
+<li>Absolute calling beyond TMB: combine with CNVkit’s purity/ploidy
+estimate (<code>cnvkit.py call --purity</code>) → Mutect2’s
+<code>--tumor-lod</code>-style thresholds tuned per sample.</li>
+<li>Report-grade filtering:
+<code>bcftools filter -i 'FILTER="PASS" &amp;&amp; FORMAT/AF[0]&gt;0.05'</code>
+for a confidence cut; always state VAF and depth alongside every somatic
+call.</li>
+</ul>
+<h1 id="cnv-detection-with-cnvkit-拷贝数变异">10. CNV detection with
+CNVkit · 拷贝数变异</h1>
+<h2 id="principle-原理-8">10.1 Principle 原理</h2>
+<p>CNVkit compares the tumor’s read <strong>depth</strong> per bin (on-
+and off-target) against a <strong>reference</strong> (here: the matched
+normal), converts to log2 ratio, segments (CBS), and calls integer copy
+number. The mode flag encodes <em>how the panel was prepared</em>:</p>
+<ul>
+<li><code>-m hybrid</code> — hybrid-capture (SureSelect/Xgen/…):
+<strong>off-target reads exist</strong> and are usable as a baseline →
+CNVkit builds antitarget bins.</li>
+<li><code>-m amplicon</code> — amplicon PCR: everything is on-target by
+construction; no antitarget.</li>
+</ul>
+<p>This panel is <strong>S07604514 = Agilent SureSelect Human All Exon
+V6</strong> — a <em>hybrid capture</em> design. The roadmap’s command
+uses <code>-m amplicon</code> (issue #4).</p>
+<h2 id="commands-roadmap-10.2-verbatim-and-what-it-produced">10.2
+Commands (roadmap 10.2, verbatim) and what it produced</h2>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="dt">\</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$TUMOR</span><span class="st">&quot;</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$NORMAL</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/targets.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span> amplicon <span class="dt">\</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-reference</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/reference.cnn&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/cnvkit_out&quot;</span> <span class="dt">\</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<p><strong>Demo round:</strong> it <em>ran</em> (no crash) — and
+produced textbook-garbage: segments with <code>log2</code> up to
+<strong>+11.6</strong> and called <code>cn</code> values of 324, 1601,
+6345 (copy number cannot exceed ~2× ploidy in a diploid sample; anything
+&gt;10 is a “the reference is empty” mathematical artifact), plus a
+169-Mb “loss” spanning half of chr1 at depth ~0.5×. Exactly what a 0.5×
+tumor + 0.5× single-normal reference must produce: the reference’s bin
+variances are pure noise, so every bin deviates “significantly”.</p>
+<p><strong>Full round, roadmap-verbatim (<code>-m amplicon</code>, job
+3053):</strong> no crash, plausible-looking numbers — and the tell is
+still there: the <code>*.antitargetcoverage.cnn</code> files are
+<strong>31 bytes / 0 bytes</strong> (headers only). Amplicon mode simply
+<em>has no antitarget baseline</em>; everything is computed from target
+bins alone. The call set (290 segments: cn=0 ×1, cn=1 ×58, cn=2 ×191,
+cn=3 ×39) looks reasonable at a glance — but the weights and
+diagnostically important arm-level events are all muted, because without
+off-target bins the log2 ratios lose their genome-wide anchor.</p>
+<p><strong>Full round, corrected (<code>-m hybrid</code> + access file,
+job 3055):</strong> real antitarget coverage (1.4-Mb antitarget BED,
+55-Mb of binned off-target space) → 357 segments (cn=0 ×1, cn=1 ×69,
+cn=2 ×202, cn=3 ×35) with <strong>high-weight arm-level
+events</strong>:</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Event (top by weight)</th>
+<th>log2</th>
+<th>cn</th>
+<th>Weight</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>chr9: 78–138 Mb (9q arm) single-copy loss</strong></td>
+<td>−0.76</td>
+<td><strong>1</strong></td>
+<td>7,416</td>
+<td>classic HGSOC 9q loss (spanning CDKN2A-adjacent region, Notch/TGF-β
+loci)</td>
+</tr>
+<tr>
+<td>chr8: 13–124 Mb gain</td>
+<td>+0.49</td>
+<td>3</td>
+<td>7,172</td>
+<td>whole-arm-ish chr8 gain incl. <strong>8q24 (MYC)</strong> — the
+signature HGSOC amplifier</td>
+</tr>
+<tr>
+<td>chr5: 75–181 Mb gain</td>
+<td>+0.46</td>
+<td>3</td>
+<td>~4,000</td>
+<td>chr5q+ partial gain</td>
+</tr>
+<tr>
+<td>chr20 gain (two large segments)</td>
+<td>+0.51</td>
+<td>3</td>
+<td>~2,000</td>
+<td>chr20 amp — common in OC lines</td>
+</tr>
+<tr>
+<td>chr21 gain</td>
+<td>+0.44–0.50</td>
+<td>3</td>
+<td>~1,000</td>
+<td>trisomy-21-like gain</td>
+</tr>
+<tr>
+<td><strong>chrY loss</strong></td>
+<td>−2.05</td>
+<td><strong>0</strong></td>
+<td>297</td>
+<td>consistent with a female patient (OC) — tumor and normal both “lost”
+chrY</td>
+</tr>
+<tr>
+<td>chr14q / 16p / 17p focal losses</td>
+<td>−0.33 to −0.75</td>
+<td>1</td>
+<td>~200–300</td>
+<td>sub-arm deletions</td>
+</tr>
+</tbody>
+</table>
+<p>That is a <strong>karyotypically coherent HGSOC picture</strong>
+(low-TMB, arm-level CNV-driven — see §9’s TMB=1.78 for the other half of
+the story). The amplicon-mode run shows <em>none</em> of these at
+comparable weight — the concrete, measured cost of one wrong flag.</p>
+<h2 id="pitfalls-fixes-坑与矫正-issue-4">10.3 Pitfalls &amp; fixes
+坑与矫正 (issue #4)</h2>
+<ol type="1">
+<li><strong>Mode:</strong> use <code>-m hybrid</code> for this panel.
+Amplicon mode skips antitarget generation, so all off-target reads are
+<em>discarded</em> — losing the genome-wide baseline that stabilizes
+log2 ratios.</li>
+<li><strong>Access file:</strong> with hybrid mode, pass
+<code>-g $REF/access-5kb.hg38.bed</code> (it’s on the cluster, ready) so
+antitarget bins exclude centromeres/gaps.</li>
+<li><strong>Gene names:</strong> the BED is 3-column (no
+<code>gene</code> column), so <code>--diagram</code>/scatter lack gene
+labels. <code>cnvkit.py import-rna</code>-style tricks don’t apply;
+simplest is <code>--annotate $REF/...refGene.txt</code>-based annotation
+(<code>cnvkit.py batch --annotate</code>).</li>
+<li><strong>Reference quality:</strong> a single-normal reference
+amplifies that normal’s noise. A pooled PoN reference
+(<code>--normal a.bam b.bam c.bam</code>) is the production answer; for
+the course, matched-normal is an acceptable teaching choice — <em>with
+the mode fixed</em>.</li>
+</ol>
+<p><strong>Corrected command (hybrid mode + access file):</strong></p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="dt">\</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="va">$TUMOR</span><span class="st">&quot;</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$NORMAL</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-f</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/targets.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> <span class="st">&quot;</span><span class="va">$REF</span><span class="st">/access-5kb.hg38.bed&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span> hybrid <span class="dt">\</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output-reference</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/reference.cnn&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">&quot;</span><span class="va">$CNVOUT</span><span class="st">/cnvkit_out_hybrid&quot;</span> <span class="dt">\</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<blockquote>
+<p><strong>中文批注：</strong>
+为什么模式选错”能跑但结果不可信”？amplicon
+模式的假设是”所有读段都来自靶区”，于是 off-target
+读段全部弃用；而杂交捕获数据里 off-target 读段（通常
+30–50%）恰恰是拷贝数分析的”内参基线”。丢了它们，log2
+比值的分母就只剩噪声。demo 轮里 cn=1601、6345
+这种荒谬值就是这么来的。矫正三件套：<code>-m hybrid</code> +
+<code>-g access文件</code> + （可选） BED 加基因名列。对 HGSOC 这种 CNV
+驱动的肿瘤，这步修好了才算真正”上了正菜”。</p>
+</blockquote>
+<h2 id="interpretation-结果解读-2">10.4 Interpretation 结果解读</h2>
+<ul>
+<li><code>.cnr</code> = per-bin log2; <code>.cns</code> = segmented;
+<code>.call.cns</code> = integer CN calls (<code>cn</code> column:
+0,1,2,3…; <code>weight</code> = bin support).</li>
+<li>In .call.cns, <code>log2</code> ±0.3 is the usual “gain/loss” noise
+floor for WES; arm-level events in HGSOC (chr8q gain, chr1q gain,
+chr16/17 loss, PTEN/RB1 loss) are the biologically expected pattern —
+and the corrected full-round run indeed found 9q single-copy loss, chr8
+gain (cn=3, spanning MYC), chr20/21 gains and chrY loss at high weight
+(§10.2).</li>
+<li><code>--diagram</code> produces the genome diagram PDF;
+<code>--scatter</code> the per-chromosome log2 scatter. CNVkit’s
+<code>metrics</code> and <code>segmetrics</code> give per-segment robust
+stats.</li>
+<li>Sex chromosomes: male/female mismatch between tumor and normal
+inflates chrX/Y — CNVkit normally handles it if sex is declared
+(<code>--sex</code>); check the log.</li>
+</ul>
+<h2 id="tuning-beyond-调优与扩展-7">10.5 Tuning &amp; beyond
+调优与扩展</h2>
+<ul>
+<li>Purity/ploidy: <code>cnvkit.py call --purity 0.5</code> integrates
+with the TMB/AF interpretation.</li>
+<li><code>cnvkit.py export seg/vcf/theta</code> bridges to DNAseq tools,
+IGV, ABSOLUTE/THetA2.</li>
+<li>GISTIC on a cohort of .cns/seg files → recurrent
+amplifications/deletions; that is the “cohort version” of this
+step.</li>
+<li>For immune-oncology course tie-ins: CNV of PD-L1 (CD274), copy-loss
+of HLA locus, and CCNE1 amplification are the classic
+HGSOC/immuno-evasion stories to grep for in the output.</li>
+</ul>
+<h1 id="interpretation-checklist-结果解读检查清单">11. Interpretation
+checklist · 结果解读检查清单</h1>
+<p>The original roadmap closes with an 11-point checklist. Here it is
+again — now with <strong>actual answers from both runs</strong>, and the
+one missing metric (on-target depth) added.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Demo (0.5×) answer</th>
+<th>Full (~55×/91× usable on-target) answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Do FASTQ reports pass Q30 thresholds?</td>
+<td>Yes: 97.0% / 97.8% (post-trim)</td>
+<td>Yes: 97.0% / 97.8% (post-trim; raw 95.5%/96.9%)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Is mapping rate &gt;95%?</td>
+<td>100%</td>
+<td>100% — but note: this <strong>dataset ships pre-filtered</strong>
+(only 311/79.6M unmapped in the full round); fresh lab data is
+96–99%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Properly paired &gt;90%?</td>
+<td>OC 83.3%, PBMC 99.5%</td>
+<td>OC <strong>83.2%</strong> (real tumor discordance — 15.8% mates on
+other chr), PBMC 99.4%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Duplication &lt;20%?</td>
+<td>~0.03–0.06% (subsample artifact)</td>
+<td>OC <strong>7.08%</strong>, PBMC <strong>10.77%</strong> (teacher’s:
+7.39/11.01)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>On-target depth sufficient?</strong> <em>(the metric the
+roadmap forgot)</em></td>
+<td><strong>0.3×/0.5× usable, median 0 — NO</strong></td>
+<td>OC <strong>54.6×</strong> (median 57; 87.4% ≥30×), PBMC
+<strong>91.3×</strong> (median 96; 89.6% ≥30×) — borderline-adequate
+tumor, good normal</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Insert size within capture design range?</td>
+<td>peak <strong>150 bp</strong> (short!)</td>
+<td>150 bp — 25% of usable bases lost to mate overlap (HsMetrics
+<code>PCT_EXC_OVERLAP</code>)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Are known sites recovered (dbsnp overlap)?</td>
+<td>7,388 truth sites</td>
+<td><strong>28,324</strong> truth sites (teacher’s genome-wide:
+85,159)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Ti/Tv of PASS variants?</td>
+<td>joint 2.59; PASS 2.60 — novel Ti/Tv <strong>hugs</strong> known
+(2.33 vs 2.65): no discrimination</td>
+<td>PASS <strong>2.48</strong> (known 2.49) — healthy range</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Het/Hom ratio ~1.5 for exome?</td>
+<td><strong>0.14</strong> — genotypes collapse at 0.5× (single-read
+“homs”)</td>
+<td><strong>1.45</strong> — healthy</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Somatic count plausible for tumor type?</td>
+<td>0 (no power)</td>
+<td><strong>108 PASS / TMB 1.78 mut/Mb</strong> — squarely in HGSOC
+range</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Do CNV calls make karyotypic sense?</td>
+<td>No — pure noise (§10.2)</td>
+<td><strong>Yes</strong> (corrected hybrid mode): 9q cn=1 loss, chr8
+gain cn=3, chrY loss — coherent HGSOC karyotype</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The missing metric — add this to every WES run (issue
+#9):</strong></p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CollectHsMetrics wants a Picard interval_list with a SAM header — convert the BED first</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx4g&quot;</span> BedToIntervalList <span class="dt">\</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$TARGETS</span><span class="st">&quot;</span> <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="at">-SD</span> <span class="st">&quot;</span><span class="va">$REF</span><span class="st">/hg38.dict&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> <span class="at">--java-options</span> <span class="st">&quot;-Xmx8g&quot;</span> CollectHsMetrics <span class="dt">\</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC_sorted.markdup.BQSR.bam&quot;</span> <span class="dt">\</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/1_alignment/OC/OC.hs_metrics.txt&quot;</span> <span class="dt">\</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--TARGET_INTERVALS</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="dt">\</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--BAIT_INTERVALS</span> <span class="st">&quot;</span><span class="va">$OUT</span><span class="st">/qc/targets.interval_list&quot;</span> <span class="dt">\</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--REFERENCE_SEQUENCE</span> <span class="st">&quot;</span><span class="va">$REFERENCE</span><span class="st">&quot;</span>   <span class="co"># no separate bait list on the cluster; targets≈baits for teaching</span></span></code></pre></div>
+<p><em>(Two practical notes learned the hard way in this very round:
+plain BEDs are rejected —
+<code>Interval list file must contain header</code> — hence the
+BedToIntervalList step; and the sequence dictionary lives at
+<code>hg38.dict</code>, not <code>hg38.fa.dict</code>.)</em></p>
+<p>The rows that matter: <code>MEAN_TARGET_COVERAGE</code>,
+<code>PCT_TARGET_BASES_30X</code> (or 50X/100X columns),
+<code>PCT_SELECTED_BASES</code> (on-target + near-bait = capture
+specificity), <code>FOLD_ENRICHMENT</code>, and — surprisingly
+informative — <code>PCT_EXC_OVERLAP</code> / <code>PCT_EXC_DUPE</code> /
+<code>PCT_EXC_OFF_TARGET</code>: the three places your paid-for depth
+disappears.</p>
+<p>Measured, both rounds (all four files under
+<code>wes_run_full_20260920/qc/</code>):</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sample</th>
+<th>MEAN_TARGET_COV</th>
+<th>≥30X</th>
+<th>≥100X</th>
+<th>PCT_SELECTED</th>
+<th>ZERO_CVG</th>
+<th>EXC_DUPE</th>
+<th>EXC_OVERLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC</td>
+<td>0.3×</td>
+<td>0%</td>
+<td>0%</td>
+<td>79.9%</td>
+<td>59.4%</td>
+<td>0.03%</td>
+<td>26.8%</td>
+</tr>
+<tr>
+<td>demo PBMC</td>
+<td>0.5×</td>
+<td>0%</td>
+<td>0%</td>
+<td>90.8%</td>
+<td>46.6%</td>
+<td>0.06%</td>
+<td>24.9%</td>
+</tr>
+<tr>
+<td>full OC</td>
+<td><strong>54.6×</strong></td>
+<td>87.4%</td>
+<td>74.2%</td>
+<td>79.9%</td>
+<td>8.4%</td>
+<td>7.3%</td>
+<td>25.6%</td>
+</tr>
+<tr>
+<td>full PBMC</td>
+<td><strong>91.3×</strong></td>
+<td>89.6%</td>
+<td>87.0%</td>
+<td>90.7%</td>
+<td>8.1%</td>
+<td>11.0%</td>
+<td>23.0%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>中文批注：</strong> 检查清单的 11
+个问题里，最容易被”绕过去”的是
+#5（靶区深度够不够）——因为整条路线图里没有任何命令真正测量过它。上表就是实测结果：全量轮肿瘤
+54.6×、正常 91.3×，80–100× 的临线刚好够用；demo 轮中位深度是
+<strong>0</strong>。另外注意两个实测细节：① 这套文库插入片段峰值只有
+150bp，双端重叠吃掉约 25% 的可用碱基——这是”付了 100× 的钱、拿到 55×
+的深度”的主要原因；② 零覆盖靶区 8.4%——AllTracks 版 BED
+含大量难捕获区域，这属于捕获设计的固有属性，不是实验失败。</p>
+</blockquote>
+<h1 id="file-summary-产物清单">12. File summary · 产物清单</h1>
+<p>What each run directory contains when everything is done (paths as
+produced by the verbatim pipeline; sizes from the full round, demo sizes
+in parentheses where notable):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Artifact (full round path under
+<code>wes_run_full_20260920/</code>)</th>
+<th>Size</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0_fastq/OC/OC.fastp.html/.json</code> (+ clean FASTQs)</td>
+<td>~0.5 G clean FASTQ pairs</td>
+<td>Q30 97.0% post-trim</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.bam</code></td>
+<td>4.0 GB</td>
+<td>piped <code>bwa\|sort</code> — no 33-GB SAM ever existed (issue
+#7)</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.markdup.bam</code></td>
+<td>4.7 GB</td>
+<td>+ <code>.bai</code> via <code>--CREATE_INDEX</code></td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC_sorted.markdup.BQSR.bam</code></td>
+<td>8.8 GB</td>
+<td>~1.9× the markdup BAM — recompression quirk; budget for it</td>
+</tr>
+<tr>
+<td><code>1_alignment/OC/OC.g.vcf</code></td>
+<td>209 MB</td>
+<td>GVCF per sample (PBMC: 59 MB)</td>
+</tr>
+<tr>
+<td><code>2_variant_call/combined.g.vcf</code></td>
+<td>264 MB</td>
+<td>2-sample combined GVCF</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood_variants.vcf</code></td>
+<td>14 MB</td>
+<td><strong>55,123 records</strong> — the raw joint callset</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.snps.recal</code> +
+<code>.tranches</code> (+indel)</td>
+<td>4.3 MB + 0.6 MB</td>
+<td>VQSR models</td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.all.VQSR.vcf</code></td>
+<td>30 MB</td>
+<td><strong>110,246 records — the §7.3 duplication,
+as-written</strong></td>
+</tr>
+<tr>
+<td><code>2_variant_call/OC_blood.all.sequentialVQSR.vcf</code></td>
+<td>16 MB</td>
+<td><strong>55,123 records — the corrected output</strong></td>
+</tr>
+<tr>
+<td><code>3_annotation/OC_blood_anno.hg38_multianno.txt</code></td>
+<td>10 MB</td>
+<td>basic protocol, on the duplicated VCF (110,284 rows)</td>
+</tr>
+<tr>
+<td><code>3_annotation/OC_blood_anno_rich_installed.hg38_multianno.txt</code></td>
+<td>27 MB</td>
+<td><strong>corrected rich protocol: 55,165 rows × 146
+cols</strong></td>
+</tr>
+<tr>
+<td><code>5_somatic_tmb/somatic.raw.vcf.gz</code> →
+<code>somatic.filtered.vcf.gz</code> →
+<code>somatic.pass.vcf.gz</code></td>
+<td>0.3 → 0.35 → 0.02 GB</td>
+<td>2,949 raw → 108 PASS</td>
+</tr>
+<tr>
+<td><code>4_cnv/cnvkit_out/</code> (amplicon, verbatim)</td>
+<td>~47 MB</td>
+<td>empty antitarget files — the tell (§10.2)</td>
+</tr>
+<tr>
+<td><code>4_cnv/cnvkit_out_hybrid/</code> (corrected)</td>
+<td>~55 MB</td>
+<td>real antitarget bins; <code>--scatter</code>/<code>--diagram</code>
+PDFs in both</td>
+</tr>
+<tr>
+<td><code>qc/*.hs_metrics.txt</code></td>
+<td>4 files</td>
+<td>the §11 coverage numbers, both rounds</td>
+</tr>
+</tbody>
+</table>
+<p>(Demo round: same layout, everything ~50–100× smaller — e.g. joint
+VCF 2.8 MB, BQSR BAM 54 MB.)</p>
+<h1 id="summary-总结与两轮对比">13. Summary · 总结与两轮对比</h1>
+<p><strong>What the two rounds taught, in one table:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Demo round (0.5×)</th>
+<th>Full round (54.6×/91.3× usable on-target)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purpose</td>
+<td>Pipeline mechanics</td>
+<td>Real biology</td>
+</tr>
+<tr>
+<td>Alignment</td>
+<td>100% mapped (dataset pre-filtered), OC properly-paired 83.3%</td>
+<td>identical profile: OC 83.2% (real tumor discordance), PBMC
+99.4%</td>
+</tr>
+<tr>
+<td>Germline joint callset</td>
+<td>14,782 records</td>
+<td><strong>55,123 records</strong> (2-sample, on-target; teacher’s
+genome-wide 1-sample: 204,178)</td>
+</tr>
+<tr>
+<td>VQSR</td>
+<td>ran; truth sites 7,388; minVQSLod@100% = −5889; novel Ti/Tv hugs
+known (2.33 vs 2.65)</td>
+<td>truth sites 28,324; tranches behave like a real (if thin) model;
+sequential correction removes 2.1%</td>
+</tr>
+<tr>
+<td>§7.3 duplication bug</td>
+<td>29,564 = 2 × 14,782</td>
+<td><strong>110,246 = 2 × 55,123</strong> (corrected: 55,123, zero
+unfiltered twins)</td>
+</tr>
+<tr>
+<td>ANNOVAR</td>
+<td>basic OK, rich protocol fails (missing DBs)</td>
+<td>verbatim rich still fails; <strong>corrected names: 55,165 rows ×
+146 cols</strong> incl. REVEL/CADD/AlphaMissense</td>
+</tr>
+<tr>
+<td>Somatic / TMB</td>
+<td>0 — no statistical power</td>
+<td><strong>108 PASS / TMB 1.78 mut/Mb</strong> (HGSOC-plausible)</td>
+</tr>
+<tr>
+<td>CNVkit</td>
+<td>cn=6345 absurdities</td>
+<td>verbatim amplicon: empty antitarget, muted events; <strong>corrected
+hybrid: 9q loss, chr8 gain — coherent HGSOC karyotype</strong></td>
+</tr>
+<tr>
+<td>Wall time</td>
+<td>~25 min (1 job)</td>
+<td>3 h 42 m longest chain (8 jobs, dependency-linked; prep 2:20+3:42 in
+parallel)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The four lessons to carry away:</strong></p>
+<ol type="1">
+<li><strong>“It ran” ≠ “it’s right.”</strong> The VQSR duplication bug
+(§7.2) and the CNVkit mode error (§10.3) both run to completion. The
+single most important skill this course builds is <em>counting your own
+outputs</em> (variants, rows, sites) and knowing what numbers are
+plausible.</li>
+<li><strong>Depth gates everything.</strong> 0.5× is enough to exercise
+the machinery, and it is <em>honest</em> about its limits (somatic=0,
+CNV=noise). Interpretation belongs to the full-depth round.</li>
+<li><strong>Tools encode assumptions</strong> (capture mode, sample
+naming, database names, “VQSR needs 30 samples”). Reading the manual
+after the first error is normal; reading it before the first run is
+professional.</li>
+<li><strong>Corrected, the pipeline is a strong teaching
+skeleton</strong>: the roadmap’s step order, RG discipline, GVCF
+workflow, and germline-vs-somatic separation are all best-practice — the
+fixes are surgical, not structural.</li>
+</ol>
+<blockquote>
+<p><strong>中文批注：</strong>
+两轮对比最大的价值是把”流程问题”和”数据问题”彻底分开：demo 轮暴露的
+0、噪声、荒谬 CN
+值是<strong>数据深度问题</strong>（换全量数据自然消失）；VQSR
+重复、ANNOVAR 库名、CNVkit
+模式是<strong>流程本身的问题</strong>（换什么数据都在，连老师的参考结果里都有）。把这两类问题分清楚，你就掌握了”排错”的第一层功力。</p>
+</blockquote>
+<h2 id="reproduction-复现说明">Reproduction · 复现说明</h2>
+<p>Both rounds were run as SLURM jobs (partition <code>cn-long</code>,
+QoS <code>bjx131cnl</code>, account <code>bjx131_g1</code>,
+<code>--mem=0</code>, 8–16 cores per job):</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Directory</th>
+<th>Scripts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914</code></td>
+<td><code>scripts/wes_demo_steps3to10.sbatch</code> (fastp was already
+done in a prior session)</td>
+</tr>
+<tr>
+<td>full (verbatim)</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_full_20260920</code></td>
+<td><code>scripts/full_prep_OC.sbatch</code>,
+<code>scripts/full_prep_PBMC.sbatch</code>,
+<code>scripts/full_joint.sbatch</code>,
+<code>scripts/full_somatic.sbatch</code>,
+<code>scripts/full_cnv.sbatch</code> (joint/somatic/cnv submitted with
+<code>--dependency=afterok:&lt;prep jobs&gt;</code>)</td>
+</tr>
+<tr>
+<td>full (corrected extras)</td>
+<td>same</td>
+<td><code>scripts/full_hsmetrics.sbatch</code> (§11),
+<code>scripts/full_cnv_hybrid.sbatch</code> (§10.3),
+<code>scripts/full_fix_vqsr.sbatch</code> (sequential ApplyVQSR + rich
+ANNOVAR with installed DB names)</td>
+</tr>
+</tbody>
+</table>
+<p>Each run directory contains <code>log/deviations.log</code> (every
+expected-failure and deviation with timestamps) and
+<code>log/summary_*.log</code> (the numbers quoted throughout this
+edition). The full round keeps the roadmap’s literal SAM→BAM→sort chain
+<em>only in the demo round</em>; the full round used the piped variant
+(issue #7, logged).</p>
+<p><strong>Roadmap fidelity statement:</strong> every command in steps
+3–10 was executed exactly as printed in the roadmap (same flags, same
+file names, same order). The only wrapper additions are: SLURM headers,
+environment activation, preflight existence checks, expected-failure
+<code>if/else</code> guards (which log-and-continue instead of dying),
+and the summary blocks. The single algorithmic deviation is the
+<code>bwa | sort</code> pipe in the full round, which changes no output
+content.</p>
+<h1 id="appendix-a.-issue-registry-问题清单完整版">Appendix A. Issue
+registry · 问题清单（完整版）</h1>
+<p>Each issue: <strong>where</strong> (roadmap section),
+<strong>what</strong> (symptom), <strong>evidence</strong> (measured),
+<strong>fix</strong> (what this edition recommends),
+<strong>severity</strong>.</p>
+<h3 id="a1.-vqsr-mergevcfs-duplication-major">A1. VQSR MergeVcfs
+duplication — <strong>Major</strong></h3>
+<ul>
+<li>Where: §7.3. What: <code>OC_blood.all.VQSR.vcf</code> contains every
+variant twice.</li>
+<li>Evidence: demo 29,564 records / 14,782 unique sites; our full round
+110,246 / 55,123; teacher 408,356 / 204,178. Mechanism: ApplyVQSR
+(either mode) emits the whole callset (the other variant type passes
+through with FILTER <code>.</code>); MergeVcfs concatenates two whole
+callsets. Each site ends up as one SNP-verdict record + one
+<code>.</code> record — the PASS count <em>happens</em> to stay right,
+which masks the bug during casual QC.</li>
+<li>Fix: sequential ApplyVQSR (SNP → INDEL), or SelectVariants split →
+filter → merge. Measured result of the fix (job 3056): 55,123 records /
+55,123 unique sites / 0 unfiltered twins; filter rate 2.1%.</li>
+<li>Severity: Major — silently corrupts every downstream count and
+annotation.</li>
+</ul>
+<h3 id="a2.-annovar-rich-protocol-names-unavailable-major">A2. ANNOVAR
+rich protocol names unavailable — <strong>Major</strong></h3>
+<ul>
+<li>Where: §8.3. What: <code>dbnsfp30a</code>, <code>exac03</code>,
+<code>gnomad_genome</code>, <code>avsnp147</code> absent from
+<code>/lustre1/share/annovar_new/humandb</code> (which has
+<code>dbnsfp54a</code>, <code>gnomad211_exome</code>,
+<code>gnomad41_exome</code>, <code>avsnp151</code>).</li>
+<li>Evidence: table_annovar fails in both runs; <code>ls humandb</code>
+listing.</li>
+<li>Fix: use the installed names (§8.3). Severity: Major (hard
+failure).</li>
+</ul>
+<h3 id="a3.-vqsr-on-an-undersized-callset-major-statistical">A3. VQSR on
+an undersized callset — <strong>Major (statistical)</strong></h3>
+<ul>
+<li>Where: §7. What: with 2 exomes / ~15k variants (demo) the Gaussian
+mixture is unidentifiable; tranches become meaningless.</li>
+<li>Evidence (all three callsets measured, §7.2): truth sites 7,388
+(demo) vs 28,324 (our full) vs 85,159 (teacher); minVQSLod at the 100%
+tranche −5889.9 (demo) vs −1111 (full) vs −25.5 (teacher); and the
+decisive pattern: healthy callsets show novel Ti/Tv well <em>below</em>
+known (teacher: 1.69 vs 2.34) while the demo’s novel Ti/Tv
+<strong>hugs</strong> known (2.46 vs 2.71) — a model that cannot
+separate its worst from its best variants.</li>
+<li>Fix: for ≤10 samples use VariantFiltration hard filters (§7.3); VQSR
+is a cohort tool (≈30+ samples). Severity: Major — silently wrong
+filtering.</li>
+</ul>
+<h3 id="a4.-cnvkit--m-amplicon-on-a-hybrid-capture-panel-major">A4.
+CNVkit <code>-m amplicon</code> on a hybrid-capture panel —
+<strong>Major</strong></h3>
+<ul>
+<li>Where: §10.2. What: S07604514 is a SureSelect V6 hybrid capture;
+amplicon mode discards all off-target reads and builds no antitarget
+baseline.</li>
+<li>Evidence (both rounds measured): demo produced cn up to 6345 and
+169-Mb “losses” at 0.5×; the full-round verbatim run produced
+<strong>empty antitarget coverage files (31 bytes)</strong> and muted
+arm-level events, while the corrected hybrid run on the same BAMs found
+9q single-copy loss, chr8 gain (cn=3), chrY loss at high weight (§10.2).
+The pipeline completes either way.</li>
+<li>Fix: <code>-m hybrid</code> with <code>-g access-5kb.hg38.bed</code>
+(both on the cluster). Severity: Major — results unusable as-is.</li>
+</ul>
+<h3 id="a5.-mutect2-without-a-panel-of-normals-medium">A5. Mutect2
+without a Panel of Normals — Medium</h3>
+<ul>
+<li>Where: §9.1. What: PoN filters recurring capture/alignment
+artifacts; the cluster ships <code>1000g_pon.hg38.vcf.gz</code> but the
+roadmap doesn’t use it.</li>
+<li>Fix: <code>--pon $REF/1000g_pon.hg38.vcf.gz</code>. (Also: gnomAD
+AF-only is the recommended germline resource; 1000G high-conf works but
+is dated.)</li>
+</ul>
+<h3 id="a6.-dataset-path-inconsistency-medium">A6. Dataset path
+inconsistency — Medium</h3>
+<ul>
+<li>Where: §0.2, README, old vs new roadmap. What: three different
+<code>$DATA</code> targets (<code>OC_WES</code> deprecated downsample /
+<code>data_new</code> new downsample / an <strong>empty</strong>
+<code>analysis/0_preprocess</code> in the old HTML).</li>
+<li>Fix: this edition pins every dataset by absolute path with role
+labels (§0.2).</li>
+</ul>
+<h3 id="a7.-33-gb-intermediate-sam-per-sample-medium-efficiency">A7. 33
+GB intermediate SAM per sample — Medium (efficiency)</h3>
+<ul>
+<li>Where: §3.1–3.3. Fix: <code>bwa | sort</code> pipe (full round).
+Output identical; disk and ~30–40% wall time saved. (Demo round kept the
+literal chain for fidelity.)</li>
+</ul>
+<h3 id="a8.-tmb-counts-source-inconsistency-minor">A8. TMB counts source
+inconsistency — Minor</h3>
+<ul>
+<li>Where: §9.2/9.3: <code>somatic.pass.vcf.gz</code> written, but TMB
+counted from <code>somatic.filtered.vcf.gz</code> PASS subset. Same
+number; keep one convention.</li>
+</ul>
+<h3 id="a9.-no-on-target-depth-metric-minor">A9. No on-target depth
+metric — Minor</h3>
+<ul>
+<li>Where: §11 checklist asks, no command measures. Fix:
+CollectHsMetrics (§11).</li>
+</ul>
+<h3 id="a10.-naming-inconsistencies-minor">A10. Naming inconsistencies —
+Minor</h3>
+<ul>
+<li><code>SM:blood</code> vs “PBMC” directories (functional but
+confusing); teacher’s <code>2_vairant_call</code> directory typo
+(reference side); <code>vcf4old</code> format flag in ANNOVAR (works;
+<code>vcf4</code> is the modern name).</li>
+</ul>
+<h3
+id="a11.-runtime-environment-quirks-not-roadmap-bugs-but-you-will-hit-them-info">A11.
+Runtime environment quirks (not roadmap bugs, but you will hit them) —
+Info</h3>
+<ul>
+<li>SLURM on this cluster:
+<code>--account=bjx131_g1 --qos=bjx131cnl</code> mandatory;
+<code>--mem=0</code> required (RealMemory=1 misconfiguration); conda
+activate before <code>set -u</code>.</li>
+<li>GATK bundle <code>.idx</code> files all present — but check on any
+new cluster.</li>
+<li>CollectHsMetrics wants a Picard interval_list (run BedToIntervalList
+on the BED first) and the dictionary is <code>hg38.dict</code>, not
+<code>hg38.fa.dict</code>.</li>
+</ul>
+<h3
+id="a12.-the-teachers-reference-result-deviates-from-the-printed-roadmap-major">A12.
+The teacher’s reference result deviates from the printed roadmap —
+**Major</h3>
+<p>(for comparability; not a crash)**</p>
+<ul>
+<li>Where: <code>analysis_full/2_vairant_call</code> (the reference
+everyone diffs against).</li>
+<li>Evidence (read from the VCF headers and the files themselves):
+<ol type="1">
+<li><strong>Single-sample “joint” call:</strong>
+<code>combined.g.vcf</code> has only sample <code>OC</code> — the blood
+gVCF’s RG <code>SM</code> tag was set to <code>OC</code> (sample-name
+collision), so CombineGVCFs collapsed both samples into one. The printed
+roadmap clearly intends a 2-sample joint call (OC + blood).</li>
+<li><strong>No <code>-L</code> anywhere:</strong>
+HaplotypeCaller/GenotypeGVCFs ran genome-wide — 72% of the 204,178 sites
+lie outside the capture targets, many with shallow, low-quality
+coverage.</li>
+<li>§7.3’s MergeVcfs duplication is present in the reference output as
+well (408,356 = 2 × 204,178 — issue A1).</li>
+</ol></li>
+<li>Consequence: “204,178 vs my 55,123” is <strong>not</strong> a depth
+comparison — it’s (genome-wide × 1 sample × doubled by the merge bug) vs
+(on-target × 2 samples). Diff callsets only after reading their
+<code>##GATKCommandLine</code> headers.</li>
+<li>Lesson for the course: the RG <code>SM</code> tag discipline the
+roadmap itself preaches (§2) is exactly what silently bit its own
+reference run. This is the best argument for step 0’s “check your BAM
+header” habit.</li>
+<li>Fix: nothing to fix in the roadmap text (it prescribes
+<code>-L</code> and correct SM tags); this entry exists so students
+comparing against <code>analysis_full</code> know what the differences
+are and why.</li>
+</ul>
+<h1
+id="appendix-b.-one-page-corrected-pipeline-一页矫正版命令速查">Appendix
+B. One-page corrected pipeline · 一页矫正版命令速查</h1>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0) env</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate wes</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SHARE</span><span class="op">=</span>/lustre1/share <span class="va">REF</span><span class="op">=</span><span class="va">$SHARE</span>/references</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TARGETS</span><span class="op">=</span><span class="va">$REF</span>/S07604514_AllTracks_V6_60_hg38.bed <span class="va">REFERENCE</span><span class="op">=</span><span class="va">$REF</span>/hg38.fa</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DBSNP</span><span class="op">=</span><span class="va">$REF</span>/dbsnp_138.hg38.vcf <span class="va">INDELS</span><span class="op">=</span><span class="va">$REF</span>/Mills_and_1000G_gold_standard.indels.hg38.vcf</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HIGHCONF</span><span class="op">=</span><span class="va">$REF</span>/1000G_phase1.snps.high_confidence.hg38.vcf</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PON</span><span class="op">=</span><span class="va">$REF</span>/1000g_pon.hg38.vcf.gz <span class="va">ACCESS</span><span class="op">=</span><span class="va">$REF</span>/access-5kb.hg38.bed</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANNOVAR</span><span class="op">=</span><span class="va">$SHARE</span>/annovar_new <span class="va">HUMANDB</span><span class="op">=</span><span class="va">$ANNOVAR</span>/humandb</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) QC</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fastp</span> <span class="at">-i</span> R1.fq.gz <span class="at">-I</span> R2.fq.gz <span class="at">-o</span> R1.clean.fq.gz <span class="at">-O</span> R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--detect_adapter_for_pe</span> <span class="at">--cut_right</span> <span class="at">--cut_right_window_size</span> 4 <span class="at">--cut_right_mean_quality</span> 20 <span class="dt">\</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--qualified_quality_phred</span> 20 <span class="at">--unqualified_percent_limit</span> 40 <span class="at">--n_base_limit</span> 5 <span class="dt">\</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--length_required</span> 50 <span class="at">--thread</span> 8 <span class="at">--html</span> S.html <span class="at">--json</span> S.json</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) align (piped)</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="ex">bwa</span> mem <span class="at">-t</span> 8 <span class="at">-M</span> <span class="at">-R</span> <span class="st">&quot;@RG\tID:S\tPL:illumina\tSM:S\tLB:libS&quot;</span> <span class="va">$REFERENCE</span> R1.clean.fq.gz R2.clean.fq.gz <span class="dt">\</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="ex">samtools</span> sort <span class="at">-@</span> 8 <span class="at">-m</span> 4G <span class="at">-o</span> S_sorted.bam <span class="at">-</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> index <span class="at">-@</span> 8 S_sorted.bam</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> flagstat <span class="at">-@</span> 8 S_sorted.bam <span class="op">&gt;</span> S.flagstat.txt</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> BedToIntervalList <span class="at">-I</span> <span class="va">$TARGETS</span> <span class="at">-O</span> targets.interval_list <span class="at">-SD</span> <span class="va">$REF</span>/hg38.dict</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> CollectHsMetrics <span class="at">-I</span> S_sorted.bam <span class="at">-O</span> S.hs_metrics.txt <span class="dt">\</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">--TARGET_INTERVALS</span> targets.interval_list <span class="at">--BAIT_INTERVALS</span> targets.interval_list <span class="dt">\</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">--REFERENCE_SEQUENCE</span> <span class="va">$REFERENCE</span>   <span class="co"># NEW: on-target depth (§11)</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) markdup</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> MarkDuplicates <span class="at">-I</span> S_sorted.bam <span class="at">-O</span> S_sorted.markdup.bam <span class="at">-M</span> S_markdup_metrics.txt <span class="at">--CREATE_INDEX</span> true</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) BQSR</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> BaseRecalibrator <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S_sorted.markdup.bam <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">--known-sites</span> <span class="va">$DBSNP</span> <span class="at">--known-sites</span> <span class="va">$INDELS</span> <span class="at">--known-sites</span> <span class="va">$HIGHCONF</span> <span class="at">-O</span> S.recal.table</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> ApplyBQSR <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S_sorted.markdup.bam <span class="at">--bqsr-recal-file</span> S.recal.table <span class="at">-O</span> S.BQSR.bam</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 6) germline GVCF workflow</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> HaplotypeCaller <span class="at">-ERC</span> GVCF <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> S.BQSR.bam <span class="at">-D</span> <span class="va">$DBSNP</span> <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">--native-pair-hmm-threads</span> 8 <span class="at">-O</span> S.g.vcf</span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> CombineGVCFs <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> OC.g.vcf <span class="at">-V</span> blood.g.vcf <span class="at">-O</span> combined.g.vcf</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> GenotypeGVCFs <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> combined.g.vcf <span class="at">-D</span> <span class="va">$DBSNP</span> <span class="at">-O</span> joint.vcf</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 7) filtering — small callset: hard filters (VQSR needs ~30+ samples)</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> VariantFiltration <span class="at">-V</span> joint.vcf <span class="at">-O</span> joint.filtered.vcf <span class="dt">\</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_QD2 <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_MQ40 <span class="at">--filter-expression</span> <span class="st">&quot;MQ &lt; 40.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_FS60 <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 60.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> SNP_SOR3 <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 3.0 &amp;&amp; SNP&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_QD2 <span class="at">--filter-expression</span> <span class="st">&quot;QD &lt; 2.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_FS200 <span class="at">--filter-expression</span> <span class="st">&quot;FS &gt; 200.0 &amp;&amp; INDEL&quot;</span> <span class="dt">\</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filter-name</span> INDEL_SOR10 <span class="at">--filter-expression</span> <span class="st">&quot;SOR &gt; 10.0 &amp;&amp; INDEL&quot;</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="co"># (cohort scale instead: VariantRecalibrator SNP → ApplyVQSR → VariantRecalibrator INDEL</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="co">#  → ApplyVQSR on the SNP output — sequential, never MergeVcfs of two whole callsets)</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 8) ANNOVAR (installed databases)</span></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="va">$ANNOVAR</span>/convert2annovar.pl <span class="at">-format</span> vcf4 joint.filtered.vcf <span class="at">-includeinfo</span> <span class="at">-comment</span> <span class="dt">\</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">-out</span> ann.avinput</span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="fu">perl</span> <span class="va">$ANNOVAR</span>/table_annovar.pl ann.avinput <span class="va">$HUMANDB</span> <span class="at">-buildver</span> hg38 <span class="at">-out</span> anno <span class="dt">\</span></span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">-remove</span> <span class="at">-protocol</span> refGeneWithVer,cytoBand,gnomad41_exome,dbnsfp54a,avsnp151 <span class="dt">\</span></span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">-operation</span> g,r,f,f,f</span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a><span class="co"># 9) somatic TMB (PoN added)</span></span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> Mutect2 <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-I</span> OC.BQSR.bam <span class="at">-I</span> blood.BQSR.bam <span class="at">--normal-sample</span> blood <span class="dt">\</span></span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">-L</span> <span class="va">$TARGETS</span> <span class="at">--germline-resource</span> <span class="va">$HIGHCONF</span> <span class="at">--pon</span> <span class="va">$PON</span> <span class="dt">\</span></span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">-O</span> somatic.raw.vcf.gz <span class="at">--native-pair-hmm-threads</span> 8 <span class="at">--f1r2-tar-gz</span> f1r2.tar.gz</span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> LearnReadOrientationModel <span class="at">-I</span> f1r2.tar.gz <span class="at">-O</span> ob.tar.gz</span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="at">-R</span> <span class="va">$REFERENCE</span> <span class="at">-V</span> somatic.raw.vcf.gz <span class="at">--stats</span> somatic.raw.vcf.gz.stats <span class="dt">\</span></span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ob-priors</span> ob.tar.gz <span class="at">-O</span> somatic.filtered.vcf.gz</span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a><span class="va">TMB</span><span class="op">=</span><span class="va">$(</span><span class="ex">bcftools</span> view <span class="at">-H</span> <span class="at">-f</span> PASS somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="va">)</span></span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;TMB = </span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> n=<span class="va">$TMB</span> <span class="at">-v</span> mb=60.5079 <span class="st">&#39;BEGIN{printf &quot;%.2f&quot;, n/mb}&#39;</span><span class="va">)</span><span class="st"> mut/Mb&quot;</span></span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a><span class="co"># 10) CNVkit (hybrid mode)</span></span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch OC.BQSR.bam <span class="at">-n</span> blood.BQSR.bam <span class="at">-f</span> <span class="va">$REFERENCE</span> <span class="at">-t</span> <span class="va">$TARGETS</span> <span class="dt">\</span></span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> <span class="va">$ACCESS</span> <span class="at">-m</span> hybrid <span class="at">--output-reference</span> reference.cnn <span class="at">-d</span> cnvkit_out <span class="dt">\</span></span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scatter</span> <span class="at">--diagram</span> <span class="at">-p</span> 8</span></code></pre></div>
+<p><em>Generated from the two-run reproduction described in §13; all
+quoted numbers are measured in those runs. Chinese annotations target
+the course’s bilingual audience.</em></p>
+</body>
+</html>

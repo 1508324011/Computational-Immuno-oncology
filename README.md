@@ -14,8 +14,13 @@
 └── WES/
     └── ref/                                  # 参考文档 (reference material)
         ├── WES_roadmap_to_students.html      # 主路线图 (pandoc 导出, 图文完整)
-        └── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
+        ├── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
+        ├── WES_roadmap_english_embedded.html # 英文版 (图片内嵌)
+        ├── WES_roadmap_corrected.html        # 矫正增强版：两轮实跑对照 + 逐坑修复说明
+        └── WES_roadmap_corrected.pdf         # 同一文档的 PDF 版
 ```
+
+> **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
 
 ## WES 路线图内容一览 / What the roadmap covers
 
@@ -55,8 +60,9 @@ export TARGETS=$REF/S07604514_AllTracks_V6_60_hg38.bed  # 243,559 intervals, 60.
 export ANNOVAR=$SHARE/annovar_new                     # table_annovar.pl + humandb (hg38)
 
 # 教学数据（降采样 demo 版，输出写到自己目录）
-#   $SHARE/data/OC_WES/{OC,PBMC}         # 降采样 (CNV 部分仅为演示)
-#   $SHARE/data/OC_WES_all/{OC,PBMC}     # 全量 (OC 10.5 Gb, PBMC 15.0 Gb)
+#   $SHARE/data_new/{OC,PBMC}             # 新降采样 demo（新版路线图指向这个）
+#   $SHARE/data/OC_WES/{OC,PBMC}          # 旧降样本 (弃用，README 旧版指向这个)
+#   $SHARE/data/OC_WES_all/{OC,PBMC}      # 全量 (OC 10.4 Gbp, PBMC 15.0 Gbp)
 
 # 个人输出目录
 export BASE=/gpfs1/home/$USER/wes_run_cluster_$(date +%Y%m%d)
