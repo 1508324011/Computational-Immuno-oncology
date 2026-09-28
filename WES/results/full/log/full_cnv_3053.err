@@ -1,0 +1,75 @@
+CNVkit 0.9.11
+Detected file format: bed
+Splitting large targets
+Created directory /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/targets.target.bed with 280504 regions
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/targets.antitarget.bed with 0 regions
+Building a copy number reference from normal samples...
+Processing reads in blood_sorted.markdup.BQSR.bam
+Skip processing blood_sorted.markdup.BQSR.bam with empty regions file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/targets.antitarget.bed
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/blood_sorted.markdup.BQSR.antitargetcoverage.cnn with 0 regions
+Time: 175.279 seconds (326631 reads/sec, 1600 bins/sec)
+Summary: #bins=280504, #reads=57251627, mean=204.1027, min=0.0, max=3296.0333333333333
+Percent reads in regions: 55.340 (of 103454498 mapped)
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/blood_sorted.markdup.BQSR.targetcoverage.cnn with 280504 regions
+Sample sex not provided; inferring from samples. 
+Relative log2 coverage of chrX=0.177, chrY=-20.6 (maleness=0.037 x 0.287 = 0.0106) --> assuming female
+Loading /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/blood_sorted.markdup.BQSR.targetcoverage.cnn
+Calculating GC and RepeatMasker content in /lustre1/share/references/hg38.fa ...
+Extracting sequences from chromosome chr1
+Extracting sequences from chromosome chr2
+Extracting sequences from chromosome chr3
+Extracting sequences from chromosome chr4
+Extracting sequences from chromosome chr5
+Extracting sequences from chromosome chr6
+Extracting sequences from chromosome chr7
+Extracting sequences from chromosome chr8
+Extracting sequences from chromosome chr9
+Extracting sequences from chromosome chr10
+Extracting sequences from chromosome chr11
+Extracting sequences from chromosome chr12
+Extracting sequences from chromosome chr13
+Extracting sequences from chromosome chr14
+Extracting sequences from chromosome chr15
+Extracting sequences from chromosome chr16
+Extracting sequences from chromosome chr17
+Extracting sequences from chromosome chr18
+Extracting sequences from chromosome chr19
+Extracting sequences from chromosome chr20
+Extracting sequences from chromosome chr21
+Extracting sequences from chromosome chr22
+Extracting sequences from chromosome chrX
+Extracting sequences from chromosome chrY
+Correcting for GC bias for blood_sorted.markdup.BQSR...
+Loading /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/blood_sorted.markdup.BQSR.antitargetcoverage.cnn
+Calculating average bin coverages
+Calculating bin spreads
+Targets: 25059 (8.934%) bins failed filters (log2 < -5.0, log2 > 5.0, spread > 1.0)
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/reference.cnn with 280504 regions
+Running 1 samples in 8 processes (that's 8 processes per bam)
+Running the CNVkit pipeline on /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/OC/OC_sorted.markdup.BQSR.bam ...
+Processing reads in OC_sorted.markdup.BQSR.bam
+Time: 67.436 seconds (541639 reads/sec, 4160 bins/sec)
+Summary: #bins=280504, #reads=36526179, mean=130.2163, min=0.0, max=1604.64
+Percent reads in regions: 45.884 (of 79604784 mapped)
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.targetcoverage.cnn with 280504 regions
+Skip processing OC_sorted.markdup.BQSR.bam with empty regions file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/targets.antitarget.bed
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.antitargetcoverage.cnn with 0 regions
+Processing target: OC_sorted.markdup.BQSR
+Keeping 255445 of 280504 bins
+Correcting for GC bias...
+Processing antitarget: OC_sorted.markdup.BQSR
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.cnr with 255445 regions
+Segmenting /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.cnr ...
+Segmenting with method 'cbs', significance threshold 0.0001, in 8 processes
+Post-processing /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.cns ...
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.cns with 496 regions
+Applying filter 'ci'
+Filtered by 'ci' from 496 to 289 rows
+Calling copy number with thresholds: -1.1 => 0, -0.25 => 1, 0.2 => 2, 0.7 => 3
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.call.cns with 289 regions
+Significant hits in 7972/255445 bins (3.12%)
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR.bintest.cns with 7972 regions
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png
+Relative log2 coverage of chrX=0.0195, chrY=-1.56 (maleness=0.00743 x 34.7 = 0.258) --> assuming female
+Wrote /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-diagram.pdf

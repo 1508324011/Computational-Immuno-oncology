@@ -1,0 +1,195 @@
+=== 9 somatic (full data) ===
+raw records: 2949
+filtered records: 2949
+PASS records: 108
+filter breakdown:
+    888 normal_artifact;slippage;weak_evidence
+    194 normal_artifact;slippage
+    132 multiallelic;normal_artifact;slippage;weak_evidence
+    130 germline;multiallelic;normal_artifact
+    119 weak_evidence
+    108 PASS
+    104 orientation;weak_evidence
+    104 normal_artifact;weak_evidence
+    103 slippage;weak_evidence
+     94 germline;multiallelic;normal_artifact;slippage
+     77 multiallelic;normal_artifact;slippage
+     67 normal_artifact;strand_bias;weak_evidence
+     58 normal_artifact
+     50 multiallelic;normal_artifact;weak_evidence
+     43 germline;multiallelic;normal_artifact;slippage;weak_evidence
+     37 clustered_events;haplotype;normal_artifact
+     36 base_qual;normal_artifact;strand_bias;weak_evidence
+     27 multiallelic;normal_artifact
+     24 slippage
+     23 normal_artifact;orientation;strand_bias;weak_evidence
+     23 germline;multiallelic;normal_artifact;weak_evidence
+     22 normal_artifact;orientation;weak_evidence
+     21 map_qual;normal_artifact;weak_evidence
+     20 map_qual;normal_artifact
+     17 haplotype;normal_artifact
+     17 clustered_events;haplotype;normal_artifact;orientation
+     16 strand_bias;weak_evidence
+     15 base_qual;normal_artifact;orientation;strand_bias;weak_evidence
+     14 haplotype;normal_artifact;weak_evidence
+     13 normal_artifact;strand_bias
+     13 haplotype;weak_evidence
+     12 normal_artifact;orientation
+     11 map_qual;weak_evidence
+     11 haplotype;normal_artifact;slippage;weak_evidence
+     10 orientation
+     10 haplotype;orientation;weak_evidence
+      9 map_qual;normal_artifact;strand_bias;weak_evidence
+      9 clustered_events;normal_artifact
+      9 clustered_events;haplotype;weak_evidence
+      9 clustered_events;haplotype;normal_artifact;strand_bias;weak_evidence
+      9 base_qual;strand_bias;weak_evidence
+      7 map_qual;normal_artifact;strand_bias
+      7 clustered_events;haplotype
+      7 clustered_events;germline;multiallelic;normal_artifact
+      6 normal_artifact;slippage;strand_bias;weak_evidence
+      6 multiallelic;slippage;weak_evidence
+      6 map_qual;normal_artifact;orientation;strand_bias;weak_evidence
+      6 haplotype;map_qual;normal_artifact
+      6 clustered_events;haplotype;normal_artifact;orientation;weak_evidence
+      5 normal_artifact;orientation;strand_bias
+      5 multiallelic;weak_evidence
+      5 map_qual;orientation;weak_evidence
+      5 haplotype;normal_artifact;orientation;strand_bias;weak_evidence
+      5 haplotype;map_qual;normal_artifact;orientation
+      5 clustered_events;normal_artifact;weak_evidence
+      5 clustered_events;haplotype;normal_artifact;orientation;strand_bias;weak_evidence
+      5 clustered_events;haplotype;map_qual;normal_artifact
+      5 base_qual;normal_artifact;weak_evidence
+      4 map_qual;normal_artifact;orientation;weak_evidence
+      4 map_qual
+      4 haplotype;strand_bias;weak_evidence
+      4 haplotype;map_qual;normal_artifact;orientation;strand_bias
+      4 clustered_events;haplotype;normal_artifact;orientation;strand_bias
+      4 clustered_events;haplotype;map_qual;weak_evidence
+      4 base_qual;weak_evidence
+      4 base_qual;haplotype;normal_artifact;strand_bias;weak_evidence
+      4 base_qual;clustered_events;haplotype;strand_bias;weak_evidence
+      3 strand_bias
+      3 haplotype;normal_artifact;strand_bias;weak_evidence
+      3 haplotype;normal_artifact;orientation
+      3 haplotype;map_qual;weak_evidence
+      3 clustered_events;orientation;weak_evidence
+      3 clustered_events;multiallelic;normal_artifact
+      3 clustered_events;haplotype;orientation;weak_evidence
+      3 clustered_events;haplotype;orientation
+      3 base_qual;normal_artifact;strand_bias
+      3 base_qual;haplotype;strand_bias;weak_evidence
+      3 base_qual;clustered_events;haplotype;weak_evidence
+      2 orientation;strand_bias;weak_evidence
+      2 map_qual;slippage;weak_evidence
+      2 haplotype;strand_bias
+      2 haplotype;slippage;weak_evidence
+      2 haplotype;normal_artifact;strand_bias
+      2 haplotype;normal_artifact;orientation;weak_evidence
+      2 haplotype;normal_artifact;orientation;strand_bias
+      2 haplotype;map_qual;strand_bias
+      2 haplotype
+      2 clustered_events;strand_bias;weak_evidence
+      2 clustered_events;orientation
+      2 clustered_events;normal_artifact;orientation
+      2 clustered_events;haplotype;normal_artifact;weak_evidence
+      2 clustered_events;haplotype;normal_artifact;strand_bias
+      2 clustered_events;haplotype;map_qual;orientation
+      2 clustered_events;haplotype;map_qual
+      2 clustered_events
+      1 slippage;strand_bias;weak_evidence
+      1 orientation;strand_bias
+      1 multiallelic
+      1 map_qual;strand_bias;weak_evidence
+      1 map_qual;normal_artifact;orientation
+      1 haplotype;orientation;strand_bias;weak_evidence
+      1 haplotype;orientation;strand_bias
+      1 haplotype;orientation
+      1 haplotype;normal_artifact;slippage
+      1 haplotype;map_qual;orientation;weak_evidence
+      1 haplotype;map_qual;orientation;strand_bias
+      1 haplotype;map_qual;normal_artifact;weak_evidence
+      1 haplotype;map_qual;normal_artifact;strand_bias;weak_evidence
+      1 haplotype;map_qual;normal_artifact;strand_bias
+      1 haplotype;map_qual
+      1 germline;weak_evidence
+      1 clustered_events;orientation;strand_bias;weak_evidence
+      1 clustered_events;normal_artifact;strand_bias;weak_evidence
+      1 clustered_events;normal_artifact;strand_bias
+      1 clustered_events;normal_artifact;orientation;weak_evidence
+      1 clustered_events;normal_artifact;orientation;strand_bias
+      1 clustered_events;multiallelic;normal_artifact;weak_evidence
+      1 clustered_events;multiallelic;normal_artifact;orientation
+      1 clustered_events;multiallelic
+      1 clustered_events;map_qual;normal_artifact;weak_evidence
+      1 clustered_events;haplotype;strand_bias;weak_evidence
+      1 clustered_events;haplotype;strand_bias
+      1 clustered_events;haplotype;position
+      1 clustered_events;haplotype;map_qual;normal_artifact;strand_bias
+      1 clustered_events;haplotype;map_qual;normal_artifact;orientation
+      1 clustered_events;germline;haplotype;map_qual;weak_evidence
+      1 base_qual;orientation;weak_evidence
+      1 base_qual;orientation;strand_bias;weak_evidence
+      1 base_qual;normal_artifact;orientation;weak_evidence
+      1 base_qual;map_qual;weak_evidence
+      1 base_qual;haplotype;weak_evidence
+      1 base_qual;haplotype;normal_artifact;weak_evidence
+      1 base_qual;fragment;haplotype;orientation;strand_bias;weak_evidence
+      1 base_qual;clustered_events;orientation
+      1 base_qual;clustered_events;haplotype;orientation;weak_evidence
+      1 base_qual;clustered_events;haplotype;map_qual;weak_evidence
+      1 base_qual;clustered_events;haplotype
+target Mb: 60.507855
+somatic TMB = 1.784892 variants/Mb
+PASS variants list (chr:pos ref>alt, first 50):
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS
+PASS

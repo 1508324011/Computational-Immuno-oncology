@@ -1,0 +1,1873 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="Site contains at least one allele that passes filters">
+##GATKCommandLine=<ID=VariantRecalibrator,CommandLine="VariantRecalibrator --mode INDEL --max-gaussians 4 --resource:mills,known=false,training=true,truth=true,prior=12.0 mills:/lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp:/lustre1/share/references/dbsnp_138.hg38.vcf --output /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/2_variant_call/OC_blood.indel.recal --tranches-file /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/2_variant_call/OC_blood.indel.tranches --use-annotation QD --use-annotation ReadPosRankSum --use-annotation FS --use-annotation SOR --rscript-file /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/2_variant_call/OC_blood.indel.plots.R --dont-run-rscript true --variant /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/2_variant_call/OC_blood_variants.vcf --reference /lustre1/share/references/hg38.fa --use-allele-specific-annotations false --max-negative-gaussians 2 --max-iterations 150 --k-means-iterations 100 --standard-deviation-threshold 10.0 --shrinkage 1.0 --dirichlet 0.001 --prior-counts 20.0 --maximum-training-variants 2500000 --minimum-bad-variants 1000 --bad-lod-score-cutoff -5.0 --mq-cap-for-logit-jitter-transform 0 --mq-jitter 0.05 --debug-stdev-thresholding false --target-titv 2.15 --truth-sensitivity-tranche 100.0 --truth-sensitivity-tranche 99.9 --truth-sensitivity-tranche 99.0 --truth-sensitivity-tranche 90.0 --ignore-all-filters false --sample-every-Nth-variant 1 --output-tranches-for-scatter false --vqslod-tranche 10.0 --vqslod-tranche 9.9 --vqslod-tranche 9.8 --vqslod-tranche 9.700000000000001 --vqslod-tranche 9.600000000000001 --vqslod-tranche 9.500000000000002 --vqslod-tranche 9.400000000000002 --vqslod-tranche 9.300000000000002 --vqslod-tranche 9.200000000000003 --vqslod-tranche 9.100000000000003 --vqslod-tranche 9.000000000000004 --vqslod-tranche 8.900000000000004 --vqslod-tranche 8.800000000000004 --vqslod-tranche 8.700000000000005 --vqslod-tranche 8.600000000000005 --vqslod-tranche 8.500000000000005 --vqslod-tranche 8.400000000000006 --vqslod-tranche 8.300000000000006 --vqslod-tranche 8.200000000000006 --vqslod-tranche 8.100000000000007 --vqslod-tranche 8.000000000000007 --vqslod-tranche 7.9000000000000075 --vqslod-tranche 7.800000000000008 --vqslod-tranche 7.700000000000008 --vqslod-tranche 7.6000000000000085 --vqslod-tranche 7.500000000000009 --vqslod-tranche 7.400000000000009 --vqslod-tranche 7.30000000000001 --vqslod-tranche 7.20000000000001 --vqslod-tranche 7.10000000000001 --vqslod-tranche 7.000000000000011 --vqslod-tranche 6.900000000000011 --vqslod-tranche 6.800000000000011 --vqslod-tranche 6.700000000000012 --vqslod-tranche 6.600000000000012 --vqslod-tranche 6.500000000000012 --vqslod-tranche 6.400000000000013 --vqslod-tranche 6.300000000000013 --vqslod-tranche 6.2000000000000135 --vqslod-tranche 6.100000000000014 --vqslod-tranche 6.000000000000014 --vqslod-tranche 5.900000000000015 --vqslod-tranche 5.800000000000015 --vqslod-tranche 5.700000000000015 --vqslod-tranche 5.600000000000016 --vqslod-tranche 5.500000000000016 --vqslod-tranche 5.400000000000016 --vqslod-tranche 5.300000000000017 --vqslod-tranche 5.200000000000017 --vqslod-tranche 5.100000000000017 --vqslod-tranche 5.000000000000018 --vqslod-tranche 5.0 --vqslod-tranche 4.99 --vqslod-tranche 4.98 --vqslod-tranche 4.970000000000001 --vqslod-tranche 4.960000000000001 --vqslod-tranche 4.950000000000001 --vqslod-tranche 4.940000000000001 --vqslod-tranche 4.9300000000000015 --vqslod-tranche 4.920000000000002 --vqslod-tranche 4.910000000000002 --vqslod-tranche 4.900000000000002 --vqslod-tranche 4.890000000000002 --vqslod-tranche 4.880000000000003 --vqslod-tranche 4.870000000000003 --vqslod-tranche 4.860000000000003 --vqslod-tranche 4.850000000000003 --vqslod-tranche 4.840000000000003 --vqslod-tranche 4.830000000000004 --vqslod-tranche 4.820000000000004 --vqslod-tranche 4.810000000000004 --vqslod-tranche 4.800000000000004 --vqslod-tranche 4.7900000000000045 --vqslod-tranche 4.780000000000005 --vqslod-tranche 4.770000000000005 --vqslod-tranche 4.760000000000005 --vqslod-tranche 4.750000000000005 --vqslod-tranche 4.7400000000000055 --vqslod-tranche 4.730000000000006 --vqslod-tranche 4.720000000000006 --vqslod-tranche 4.710000000000006 --vqslod-tranche 4.700000000000006 --vqslod-tranche 4.690000000000007 --vqslod-tranche 4.680000000000007 --vqslod-tranche 4.670000000000007 --vqslod-tranche 4.660000000000007 --vqslod-tranche 4.6500000000000075 --vqslod-tranche 4.640000000000008 --vqslod-tranche 4.630000000000008 --vqslod-tranche 4.620000000000008 --vqslod-tranche 4.610000000000008 --vqslod-tranche 4.6000000000000085 --vqslod-tranche 4.590000000000009 --vqslod-tranche 4.580000000000009 --vqslod-tranche 4.570000000000009 --vqslod-tranche 4.560000000000009 --vqslod-tranche 4.55000000000001 --vqslod-tranche 4.54000000000001 --vqslod-tranche 4.53000000000001 --vqslod-tranche 4.52000000000001 --vqslod-tranche 4.5100000000000104 --vqslod-tranche 4.500000000000011 --vqslod-tranche 4.490000000000011 --vqslod-tranche 4.480000000000011 --vqslod-tranche 4.470000000000011 --vqslod-tranche 4.4600000000000115 --vqslod-tranche 4.450000000000012 --vqslod-tranche 4.440000000000012 --vqslod-tranche 4.430000000000012 --vqslod-tranche 4.420000000000012 --vqslod-tranche 4.410000000000013 --vqslod-tranche 4.400000000000013 --vqslod-tranche 4.390000000000013 --vqslod-tranche 4.380000000000013 --vqslod-tranche 4.370000000000013 --vqslod-tranche 4.360000000000014 --vqslod-tranche 4.350000000000014 --vqslod-tranche 4.340000000000014 --vqslod-tranche 4.330000000000014 --vqslod-tranche 4.3200000000000145 --vqslod-tranche 4.310000000000015 --vqslod-tranche 4.300000000000015 --vqslod-tranche 4.290000000000015 --vqslod-tranche 4.280000000000015 --vqslod-tranche 4.270000000000016 --vqslod-tranche 4.260000000000016 --vqslod-tranche 4.250000000000016 --vqslod-tranche 4.240000000000016 --vqslod-tranche 4.230000000000016 --vqslod-tranche 4.220000000000017 --vqslod-tranche 4.210000000000017 --vqslod-tranche 4.200000000000017 --vqslod-tranche 4.190000000000017 --vqslod-tranche 4.1800000000000175 --vqslod-tranche 4.170000000000018 --vqslod-tranche 4.160000000000018 --vqslod-tranche 4.150000000000018 --vqslod-tranche 4.140000000000018 --vqslod-tranche 4.1300000000000185 --vqslod-tranche 4.120000000000019 --vqslod-tranche 4.110000000000019 --vqslod-tranche 4.100000000000019 --vqslod-tranche 4.090000000000019 --vqslod-tranche 4.08000000000002 --vqslod-tranche 4.07000000000002 --vqslod-tranche 4.06000000000002 --vqslod-tranche 4.05000000000002 --vqslod-tranche 4.0400000000000205 --vqslod-tranche 4.030000000000021 --vqslod-tranche 4.020000000000021 --vqslod-tranche 4.010000000000021 --vqslod-tranche 4.000000000000021 --vqslod-tranche 3.9900000000000215 --vqslod-tranche 3.9800000000000217 --vqslod-tranche 3.970000000000022 --vqslod-tranche 3.960000000000022 --vqslod-tranche 3.9500000000000224 --vqslod-tranche 3.9400000000000226 --vqslod-tranche 3.930000000000023 --vqslod-tranche 3.920000000000023 --vqslod-tranche 3.9100000000000232 --vqslod-tranche 3.9000000000000234 --vqslod-tranche 3.8900000000000237 --vqslod-tranche 3.880000000000024 --vqslod-tranche 3.870000000000024 --vqslod-tranche 3.8600000000000243 --vqslod-tranche 3.8500000000000245 --vqslod-tranche 3.8400000000000247 --vqslod-tranche 3.830000000000025 --vqslod-tranche 3.820000000000025 --vqslod-tranche 3.8100000000000254 --vqslod-tranche 3.8000000000000256 --vqslod-tranche 3.790000000000026 --vqslod-tranche 3.780000000000026 --vqslod-tranche 3.770000000000026 --vqslod-tranche 3.7600000000000264 --vqslod-tranche 3.7500000000000266 --vqslod-tranche 3.740000000000027 --vqslod-tranche 3.730000000000027 --vqslod-tranche 3.7200000000000273 --vqslod-tranche 3.7100000000000275 --vqslod-tranche 3.7000000000000277 --vqslod-tranche 3.690000000000028 --vqslod-tranche 3.680000000000028 --vqslod-tranche 3.6700000000000284 --vqslod-tranche 3.6600000000000286 --vqslod-tranche 3.6500000000000288 --vqslod-tranche 3.640000000000029 --vqslod-tranche 3.630000000000029 --vqslod-tranche 3.6200000000000294 --vqslod-tranche 3.6100000000000296 --vqslod-tranche 3.60000000000003 --vqslod-tranche 3.59000000000003 --vqslod-tranche 3.5800000000000303 --vqslod-tranche 3.5700000000000305 --vqslod-tranche 3.5600000000000307 --vqslod-tranche 3.550000000000031 --vqslod-tranche 3.540000000000031 --vqslod-tranche 3.5300000000000313 --vqslod-tranche 3.5200000000000315 --vqslod-tranche 3.5100000000000318 --vqslod-tranche 3.500000000000032 --vqslod-tranche 3.490000000000032 --vqslod-tranche 3.4800000000000324 --vqslod-tranche 3.4700000000000326 --vqslod-tranche 3.460000000000033 --vqslod-tranche 3.450000000000033 --vqslod-tranche 3.4400000000000333 --vqslod-tranche 3.4300000000000335 --vqslod-tranche 3.4200000000000337 --vqslod-tranche 3.410000000000034 --vqslod-tranche 3.400000000000034 --vqslod-tranche 3.3900000000000343 --vqslod-tranche 3.3800000000000345 --vqslod-tranche 3.3700000000000347 --vqslod-tranche 3.360000000000035 --vqslod-tranche 3.350000000000035 --vqslod-tranche 3.3400000000000354 --vqslod-tranche 3.3300000000000356 --vqslod-tranche 3.320000000000036 --vqslod-tranche 3.310000000000036 --vqslod-tranche 3.3000000000000362 --vqslod-tranche 3.2900000000000365 --vqslod-tranche 3.2800000000000367 --vqslod-tranche 3.270000000000037 --vqslod-tranche 3.260000000000037 --vqslod-tranche 3.2500000000000373 --vqslod-tranche 3.2400000000000375 --vqslod-tranche 3.2300000000000377 --vqslod-tranche 3.220000000000038 --vqslod-tranche 3.210000000000038 --vqslod-tranche 3.2000000000000384 --vqslod-tranche 3.1900000000000386 --vqslod-tranche 3.180000000000039 --vqslod-tranche 3.170000000000039 --vqslod-tranche 3.160000000000039 --vqslod-tranche 3.1500000000000394 --vqslod-tranche 3.1400000000000396 --vqslod-tranche 3.13000000000004 --vqslod-tranche 3.12000000000004 --vqslod-tranche 3.1100000000000403 --vqslod-tranche 3.1000000000000405 --vqslod-tranche 3.0900000000000407 --vqslod-tranche 3.080000000000041 --vqslod-tranche 3.070000000000041 --vqslod-tranche 3.0600000000000414 --vqslod-tranche 3.0500000000000416 --vqslod-tranche 3.040000000000042 --vqslod-tranche 3.030000000000042 --vqslod-tranche 3.020000000000042 --vqslod-tranche 3.0100000000000424 --vqslod-tranche 3.0000000000000426 --vqslod-tranche 2.990000000000043 --vqslod-tranche 2.980000000000043 --vqslod-tranche 2.9700000000000433 --vqslod-tranche 2.9600000000000435 --vqslod-tranche 2.9500000000000437 --vqslod-tranche 2.940000000000044 --vqslod-tranche 2.930000000000044 --vqslod-tranche 2.9200000000000443 --vqslod-tranche 2.9100000000000446 --vqslod-tranche 2.9000000000000448 --vqslod-tranche 2.890000000000045 --vqslod-tranche 2.880000000000045 --vqslod-tranche 2.8700000000000454 --vqslod-tranche 2.8600000000000456 --vqslod-tranche 2.850000000000046 --vqslod-tranche 2.840000000000046 --vqslod-tranche 2.8300000000000463 --vqslod-tranche 2.8200000000000465 --vqslod-tranche 2.8100000000000467 --vqslod-tranche 2.800000000000047 --vqslod-tranche 2.790000000000047 --vqslod-tranche 2.7800000000000473 --vqslod-tranche 2.7700000000000475 --vqslod-tranche 2.7600000000000477 --vqslod-tranche 2.750000000000048 --vqslod-tranche 2.740000000000048 --vqslod-tranche 2.7300000000000484 --vqslod-tranche 2.7200000000000486 --vqslod-tranche 2.710000000000049 --vqslod-tranche 2.700000000000049 --vqslod-tranche 2.6900000000000492 --vqslod-tranche 2.6800000000000495 --vqslod-tranche 2.6700000000000497 --vqslod-tranche 2.66000000000005 --vqslod-tranche 2.65000000000005 --vqslod-tranche 2.6400000000000503 --vqslod-tranche 2.6300000000000505 --vqslod-tranche 2.6200000000000507 --vqslod-tranche 2.610000000000051 --vqslod-tranche 2.600000000000051 --vqslod-tranche 2.5900000000000514 --vqslod-tranche 2.5800000000000516 --vqslod-tranche 2.570000000000052 --vqslod-tranche 2.560000000000052 --vqslod-tranche 2.5500000000000522 --vqslod-tranche 2.5400000000000524 --vqslod-tranche 2.5300000000000527 --vqslod-tranche 2.520000000000053 --vqslod-tranche 2.510000000000053 --vqslod-tranche 2.5000000000000533 --vqslod-tranche 2.4900000000000535 --vqslod-tranche 2.4800000000000537 --vqslod-tranche 2.470000000000054 --vqslod-tranche 2.460000000000054 --vqslod-tranche 2.4500000000000544 --vqslod-tranche 2.4400000000000546 --vqslod-tranche 2.430000000000055 --vqslod-tranche 2.420000000000055 --vqslod-tranche 2.410000000000055 --vqslod-tranche 2.4000000000000554 --vqslod-tranche 2.3900000000000556 --vqslod-tranche 2.380000000000056 --vqslod-tranche 2.370000000000056 --vqslod-tranche 2.3600000000000563 --vqslod-tranche 2.3500000000000565 --vqslod-tranche 2.3400000000000567 --vqslod-tranche 2.330000000000057 --vqslod-tranche 2.320000000000057 --vqslod-tranche 2.3100000000000573 --vqslod-tranche 2.3000000000000576 --vqslod-tranche 2.2900000000000578 --vqslod-tranche 2.280000000000058 --vqslod-tranche 2.270000000000058 --vqslod-tranche 2.2600000000000584 --vqslod-tranche 2.2500000000000586 --vqslod-tranche 2.240000000000059 --vqslod-tranche 2.230000000000059 --vqslod-tranche 2.2200000000000593 --vqslod-tranche 2.2100000000000595 --vqslod-tranche 2.2000000000000597 --vqslod-tranche 2.19000000000006 --vqslod-tranche 2.18000000000006 --vqslod-tranche 2.1700000000000603 --vqslod-tranche 2.1600000000000605 --vqslod-tranche 2.1500000000000608 --vqslod-tranche 2.140000000000061 --vqslod-tranche 2.130000000000061 --vqslod-tranche 2.1200000000000614 --vqslod-tranche 2.1100000000000616 --vqslod-tranche 2.100000000000062 --vqslod-tranche 2.090000000000062 --vqslod-tranche 2.0800000000000622 --vqslod-tranche 2.0700000000000625 --vqslod-tranche 2.0600000000000627 --vqslod-tranche 2.050000000000063 --vqslod-tranche 2.040000000000063 --vqslod-tranche 2.0300000000000633 --vqslod-tranche 2.0200000000000635 --vqslod-tranche 2.0100000000000637 --vqslod-tranche 2.000000000000064 --vqslod-tranche 1.990000000000064 --vqslod-tranche 1.980000000000064 --vqslod-tranche 1.970000000000064 --vqslod-tranche 1.960000000000064 --vqslod-tranche 1.950000000000064 --vqslod-tranche 1.940000000000064 --vqslod-tranche 1.9300000000000639 --vqslod-tranche 1.9200000000000639 --vqslod-tranche 1.9100000000000639 --vqslod-tranche 1.9000000000000639 --vqslod-tranche 1.8900000000000639 --vqslod-tranche 1.8800000000000638 --vqslod-tranche 1.8700000000000638 --vqslod-tranche 1.8600000000000638 --vqslod-tranche 1.8500000000000638 --vqslod-tranche 1.8400000000000638 --vqslod-tranche 1.8300000000000638 --vqslod-tranche 1.8200000000000638 --vqslod-tranche 1.8100000000000638 --vqslod-tranche 1.8000000000000638 --vqslod-tranche 1.7900000000000638 --vqslod-tranche 1.7800000000000638 --vqslod-tranche 1.7700000000000637 --vqslod-tranche 1.7600000000000637 --vqslod-tranche 1.7500000000000637 --vqslod-tranche 1.7400000000000637 --vqslod-tranche 1.7300000000000637 --vqslod-tranche 1.7200000000000637 --vqslod-tranche 1.7100000000000637 --vqslod-tranche 1.7000000000000637 --vqslod-tranche 1.6900000000000637 --vqslod-tranche 1.6800000000000637 --vqslod-tranche 1.6700000000000637 --vqslod-tranche 1.6600000000000636 --vqslod-tranche 1.6500000000000636 --vqslod-tranche 1.6400000000000636 --vqslod-tranche 1.6300000000000636 --vqslod-tranche 1.6200000000000636 --vqslod-tranche 1.6100000000000636 --vqslod-tranche 1.6000000000000636 --vqslod-tranche 1.5900000000000636 --vqslod-tranche 1.5800000000000636 --vqslod-tranche 1.5700000000000636 --vqslod-tranche 1.5600000000000636 --vqslod-tranche 1.5500000000000635 --vqslod-tranche 1.5400000000000635 --vqslod-tranche 1.5300000000000635 --vqslod-tranche 1.5200000000000635 --vqslod-tranche 1.5100000000000635 --vqslod-tranche 1.5000000000000635 --vqslod-tranche 1.4900000000000635 --vqslod-tranche 1.4800000000000635 --vqslod-tranche 1.4700000000000635 --vqslod-tranche 1.4600000000000635 --vqslod-tranche 1.4500000000000635 --vqslod-tranche 1.4400000000000635 --vqslod-tranche 1.4300000000000634 --vqslod-tranche 1.4200000000000634 --vqslod-tranche 1.4100000000000634 --vqslod-tranche 1.4000000000000634 --vqslod-tranche 1.3900000000000634 --vqslod-tranche 1.3800000000000634 --vqslod-tranche 1.3700000000000634 --vqslod-tranche 1.3600000000000634 --vqslod-tranche 1.3500000000000634 --vqslod-tranche 1.3400000000000634 --vqslod-tranche 1.3300000000000634 --vqslod-tranche 1.3200000000000633 --vqslod-tranche 1.3100000000000633 --vqslod-tranche 1.3000000000000633 --vqslod-tranche 1.2900000000000633 --vqslod-tranche 1.2800000000000633 --vqslod-tranche 1.2700000000000633 --vqslod-tranche 1.2600000000000633 --vqslod-tranche 1.2500000000000633 --vqslod-tranche 1.2400000000000633 --vqslod-tranche 1.2300000000000633 --vqslod-tranche 1.2200000000000633 --vqslod-tranche 1.2100000000000632 --vqslod-tranche 1.2000000000000632 --vqslod-tranche 1.1900000000000632 --vqslod-tranche 1.1800000000000632 --vqslod-tranche 1.1700000000000632 --vqslod-tranche 1.1600000000000632 --vqslod-tranche 1.1500000000000632 --vqslod-tranche 1.1400000000000632 --vqslod-tranche 1.1300000000000632 --vqslod-tranche 1.1200000000000632 --vqslod-tranche 1.1100000000000632 --vqslod-tranche 1.1000000000000631 --vqslod-tranche 1.0900000000000631 --vqslod-tranche 1.0800000000000631 --vqslod-tranche 1.0700000000000631 --vqslod-tranche 1.0600000000000631 --vqslod-tranche 1.050000000000063 --vqslod-tranche 1.040000000000063 --vqslod-tranche 1.030000000000063 --vqslod-tranche 1.020000000000063 --vqslod-tranche 1.010000000000063 --vqslod-tranche 1.000000000000063 --vqslod-tranche 0.990000000000063 --vqslod-tranche 0.980000000000063 --vqslod-tranche 0.970000000000063 --vqslod-tranche 0.960000000000063 --vqslod-tranche 0.950000000000063 --vqslod-tranche 0.940000000000063 --vqslod-tranche 0.930000000000063 --vqslod-tranche 0.920000000000063 --vqslod-tranche 0.910000000000063 --vqslod-tranche 0.900000000000063 --vqslod-tranche 0.890000000000063 --vqslod-tranche 0.880000000000063 --vqslod-tranche 0.870000000000063 --vqslod-tranche 0.8600000000000629 --vqslod-tranche 0.8500000000000629 --vqslod-tranche 0.8400000000000629 --vqslod-tranche 0.8300000000000629 --vqslod-tranche 0.8200000000000629 --vqslod-tranche 0.8100000000000629 --vqslod-tranche 0.8000000000000629 --vqslod-tranche 0.7900000000000629 --vqslod-tranche 0.7800000000000629 --vqslod-tranche 0.7700000000000629 --vqslod-tranche 0.7600000000000628 --vqslod-tranche 0.7500000000000628 --vqslod-tranche 0.7400000000000628 --vqslod-tranche 0.7300000000000628 --vqslod-tranche 0.7200000000000628 --vqslod-tranche 0.7100000000000628 --vqslod-tranche 0.7000000000000628 --vqslod-tranche 0.6900000000000628 --vqslod-tranche 0.6800000000000628 --vqslod-tranche 0.6700000000000628 --vqslod-tranche 0.6600000000000628 --vqslod-tranche 0.6500000000000627 --vqslod-tranche 0.6400000000000627 --vqslod-tranche 0.6300000000000627 --vqslod-tranche 0.6200000000000627 --vqslod-tranche 0.6100000000000627 --vqslod-tranche 0.6000000000000627 --vqslod-tranche 0.5900000000000627 --vqslod-tranche 0.5800000000000627 --vqslod-tranche 0.5700000000000627 --vqslod-tranche 0.5600000000000627 --vqslod-tranche 0.5500000000000627 --vqslod-tranche 0.5400000000000627 --vqslod-tranche 0.5300000000000626 --vqslod-tranche 0.5200000000000626 --vqslod-tranche 0.5100000000000626 --vqslod-tranche 0.5000000000000626 --vqslod-tranche 0.4900000000000626 --vqslod-tranche 0.4800000000000626 --vqslod-tranche 0.4700000000000626 --vqslod-tranche 0.4600000000000626 --vqslod-tranche 0.45000000000006257 --vqslod-tranche 0.44000000000006256 --vqslod-tranche 0.43000000000006255 --vqslod-tranche 0.42000000000006255 --vqslod-tranche 0.41000000000006254 --vqslod-tranche 0.40000000000006253 --vqslod-tranche 0.3900000000000625 --vqslod-tranche 0.3800000000000625 --vqslod-tranche 0.3700000000000625 --vqslod-tranche 0.3600000000000625 --vqslod-tranche 0.3500000000000625 --vqslod-tranche 0.3400000000000625 --vqslod-tranche 0.33000000000006247 --vqslod-tranche 0.32000000000006246 --vqslod-tranche 0.31000000000006245 --vqslod-tranche 0.30000000000006244 --vqslod-tranche 0.29000000000006243 --vqslod-tranche 0.2800000000000624 --vqslod-tranche 0.2700000000000624 --vqslod-tranche 0.2600000000000624 --vqslod-tranche 0.2500000000000624 --vqslod-tranche 0.24000000000006239 --vqslod-tranche 0.23000000000006238 --vqslod-tranche 0.22000000000006237 --vqslod-tranche 0.21000000000006236 --vqslod-tranche 0.20000000000006235 --vqslod-tranche 0.19000000000006234 --vqslod-tranche 0.18000000000006233 --vqslod-tranche 0.17000000000006232 --vqslod-tranche 0.16000000000006231 --vqslod-tranche 0.1500000000000623 --vqslod-tranche 0.1400000000000623 --vqslod-tranche 0.1300000000000623 --vqslod-tranche 0.12000000000006229 --vqslod-tranche 0.1100000000000623 --vqslod-tranche 0.1000000000000623 --vqslod-tranche 0.09000000000006231 --vqslod-tranche 0.08000000000006231 --vqslod-tranche 0.07000000000006232 --vqslod-tranche 0.060000000000062316 --vqslod-tranche 0.050000000000062314 --vqslod-tranche 0.04000000000006231 --vqslod-tranche 0.03000000000006231 --vqslod-tranche 0.020000000000062308 --vqslod-tranche 0.010000000000062308 --vqslod-tranche 6.230779781013496E-14 --vqslod-tranche -0.009999999999937692 --vqslod-tranche -0.019999999999937693 --vqslod-tranche -0.029999999999937695 --vqslod-tranche -0.039999999999937697 --vqslod-tranche -0.0499999999999377 --vqslod-tranche -0.0599999999999377 --vqslod-tranche -0.0699999999999377 --vqslod-tranche -0.07999999999993769 --vqslod-tranche -0.08999999999993769 --vqslod-tranche -0.09999999999993768 --vqslod-tranche -0.10999999999993768 --vqslod-tranche -0.11999999999993767 --vqslod-tranche -0.12999999999993767 --vqslod-tranche -0.13999999999993767 --vqslod-tranche -0.14999999999993768 --vqslod-tranche -0.1599999999999377 --vqslod-tranche -0.1699999999999377 --vqslod-tranche -0.1799999999999377 --vqslod-tranche -0.18999999999993772 --vqslod-tranche -0.19999999999993773 --vqslod-tranche -0.20999999999993774 --vqslod-tranche -0.21999999999993775 --vqslod-tranche -0.22999999999993775 --vqslod-tranche -0.23999999999993776 --vqslod-tranche -0.24999999999993777 --vqslod-tranche -0.2599999999999378 --vqslod-tranche -0.2699999999999378 --vqslod-tranche -0.2799999999999378 --vqslod-tranche -0.2899999999999378 --vqslod-tranche -0.2999999999999378 --vqslod-tranche -0.3099999999999378 --vqslod-tranche -0.31999999999993783 --vqslod-tranche -0.32999999999993784 --vqslod-tranche -0.33999999999993785 --vqslod-tranche -0.34999999999993786 --vqslod-tranche -0.35999999999993787 --vqslod-tranche -0.3699999999999379 --vqslod-tranche -0.3799999999999379 --vqslod-tranche -0.3899999999999379 --vqslod-tranche -0.3999999999999379 --vqslod-tranche -0.4099999999999379 --vqslod-tranche -0.4199999999999379 --vqslod-tranche -0.42999999999993793 --vqslod-tranche -0.43999999999993794 --vqslod-tranche -0.44999999999993795 --vqslod-tranche -0.45999999999993796 --vqslod-tranche -0.46999999999993797 --vqslod-tranche -0.479999999999938 --vqslod-tranche -0.489999999999938 --vqslod-tranche -0.499999999999938 --vqslod-tranche -0.509999999999938 --vqslod-tranche -0.519999999999938 --vqslod-tranche -0.529999999999938 --vqslod-tranche -0.539999999999938 --vqslod-tranche -0.549999999999938 --vqslod-tranche -0.559999999999938 --vqslod-tranche -0.569999999999938 --vqslod-tranche -0.579999999999938 --vqslod-tranche -0.589999999999938 --vqslod-tranche -0.599999999999938 --vqslod-tranche -0.609999999999938 --vqslod-tranche -0.619999999999938 --vqslod-tranche -0.629999999999938 --vqslod-tranche -0.6399999999999381 --vqslod-tranche -0.6499999999999381 --vqslod-tranche -0.6599999999999381 --vqslod-tranche -0.6699999999999381 --vqslod-tranche -0.6799999999999381 --vqslod-tranche -0.6899999999999381 --vqslod-tranche -0.6999999999999381 --vqslod-tranche -0.7099999999999381 --vqslod-tranche -0.7199999999999381 --vqslod-tranche -0.7299999999999381 --vqslod-tranche -0.7399999999999382 --vqslod-tranche -0.7499999999999382 --vqslod-tranche -0.7599999999999382 --vqslod-tranche -0.7699999999999382 --vqslod-tranche -0.7799999999999382 --vqslod-tranche -0.7899999999999382 --vqslod-tranche -0.7999999999999382 --vqslod-tranche -0.8099999999999382 --vqslod-tranche -0.8199999999999382 --vqslod-tranche -0.8299999999999382 --vqslod-tranche -0.8399999999999382 --vqslod-tranche -0.8499999999999382 --vqslod-tranche -0.8599999999999383 --vqslod-tranche -0.8699999999999383 --vqslod-tranche -0.8799999999999383 --vqslod-tranche -0.8899999999999383 --vqslod-tranche -0.8999999999999383 --vqslod-tranche -0.9099999999999383 --vqslod-tranche -0.9199999999999383 --vqslod-tranche -0.9299999999999383 --vqslod-tranche -0.9399999999999383 --vqslod-tranche -0.9499999999999383 --vqslod-tranche -0.9599999999999383 --vqslod-tranche -0.9699999999999384 --vqslod-tranche -0.9799999999999384 --vqslod-tranche -0.9899999999999384 --vqslod-tranche -0.9999999999999384 --vqslod-tranche -1.0099999999999383 --vqslod-tranche -1.0199999999999383 --vqslod-tranche -1.0299999999999383 --vqslod-tranche -1.0399999999999383 --vqslod-tranche -1.0499999999999383 --vqslod-tranche -1.0599999999999383 --vqslod-tranche -1.0699999999999383 --vqslod-tranche -1.0799999999999383 --vqslod-tranche -1.0899999999999384 --vqslod-tranche -1.0999999999999384 --vqslod-tranche -1.1099999999999384 --vqslod-tranche -1.1199999999999384 --vqslod-tranche -1.1299999999999384 --vqslod-tranche -1.1399999999999384 --vqslod-tranche -1.1499999999999384 --vqslod-tranche -1.1599999999999384 --vqslod-tranche -1.1699999999999384 --vqslod-tranche -1.1799999999999384 --vqslod-tranche -1.1899999999999384 --vqslod-tranche -1.1999999999999384 --vqslod-tranche -1.2099999999999385 --vqslod-tranche -1.2199999999999385 --vqslod-tranche -1.2299999999999385 --vqslod-tranche -1.2399999999999385 --vqslod-tranche -1.2499999999999385 --vqslod-tranche -1.2599999999999385 --vqslod-tranche -1.2699999999999385 --vqslod-tranche -1.2799999999999385 --vqslod-tranche -1.2899999999999385 --vqslod-tranche -1.2999999999999385 --vqslod-tranche -1.3099999999999385 --vqslod-tranche -1.3199999999999386 --vqslod-tranche -1.3299999999999386 --vqslod-tranche -1.3399999999999386 --vqslod-tranche -1.3499999999999386 --vqslod-tranche -1.3599999999999386 --vqslod-tranche -1.3699999999999386 --vqslod-tranche -1.3799999999999386 --vqslod-tranche -1.3899999999999386 --vqslod-tranche -1.3999999999999386 --vqslod-tranche -1.4099999999999386 --vqslod-tranche -1.4199999999999386 --vqslod-tranche -1.4299999999999387 --vqslod-tranche -1.4399999999999387 --vqslod-tranche -1.4499999999999387 --vqslod-tranche -1.4599999999999387 --vqslod-tranche -1.4699999999999387 --vqslod-tranche -1.4799999999999387 --vqslod-tranche -1.4899999999999387 --vqslod-tranche -1.4999999999999387 --vqslod-tranche -1.5099999999999387 --vqslod-tranche -1.5199999999999387 --vqslod-tranche -1.5299999999999387 --vqslod-tranche -1.5399999999999388 --vqslod-tranche -1.5499999999999388 --vqslod-tranche -1.5599999999999388 --vqslod-tranche -1.5699999999999388 --vqslod-tranche -1.5799999999999388 --vqslod-tranche -1.5899999999999388 --vqslod-tranche -1.5999999999999388 --vqslod-tranche -1.6099999999999388 --vqslod-tranche -1.6199999999999388 --vqslod-tranche -1.6299999999999388 --vqslod-tranche -1.6399999999999388 --vqslod-tranche -1.6499999999999388 --vqslod-tranche -1.6599999999999389 --vqslod-tranche -1.6699999999999389 --vqslod-tranche -1.6799999999999389 --vqslod-tranche -1.6899999999999389 --vqslod-tranche -1.699999999999939 --vqslod-tranche -1.709999999999939 --vqslod-tranche -1.719999999999939 --vqslod-tranche -1.729999999999939 --vqslod-tranche -1.739999999999939 --vqslod-tranche -1.749999999999939 --vqslod-tranche -1.759999999999939 --vqslod-tranche -1.769999999999939 --vqslod-tranche -1.779999999999939 --vqslod-tranche -1.789999999999939 --vqslod-tranche -1.799999999999939 --vqslod-tranche -1.809999999999939 --vqslod-tranche -1.819999999999939 --vqslod-tranche -1.829999999999939 --vqslod-tranche -1.839999999999939 --vqslod-tranche -1.849999999999939 --vqslod-tranche -1.859999999999939 --vqslod-tranche -1.869999999999939 --vqslod-tranche -1.879999999999939 --vqslod-tranche -1.889999999999939 --vqslod-tranche -1.899999999999939 --vqslod-tranche -1.909999999999939 --vqslod-tranche -1.919999999999939 --vqslod-tranche -1.929999999999939 --vqslod-tranche -1.939999999999939 --vqslod-tranche -1.9499999999999391 --vqslod-tranche -1.9599999999999391 --vqslod-tranche -1.9699999999999391 --vqslod-tranche -1.9799999999999391 --vqslod-tranche -1.9899999999999392 --vqslod-tranche -1.9999999999999392 --vqslod-tranche -2.009999999999939 --vqslod-tranche -2.0199999999999387 --vqslod-tranche -2.0299999999999385 --vqslod-tranche -2.0399999999999383 --vqslod-tranche -2.049999999999938 --vqslod-tranche -2.059999999999938 --vqslod-tranche -2.0699999999999377 --vqslod-tranche -2.0799999999999375 --vqslod-tranche -2.0899999999999372 --vqslod-tranche -2.099999999999937 --vqslod-tranche -2.109999999999937 --vqslod-tranche -2.1199999999999366 --vqslod-tranche -2.1299999999999364 --vqslod-tranche -2.139999999999936 --vqslod-tranche -2.149999999999936 --vqslod-tranche -2.1599999999999357 --vqslod-tranche -2.1699999999999355 --vqslod-tranche -2.1799999999999353 --vqslod-tranche -2.189999999999935 --vqslod-tranche -2.199999999999935 --vqslod-tranche -2.2099999999999347 --vqslod-tranche -2.2199999999999345 --vqslod-tranche -2.2299999999999343 --vqslod-tranche -2.239999999999934 --vqslod-tranche -2.249999999999934 --vqslod-tranche -2.2599999999999336 --vqslod-tranche -2.2699999999999334 --vqslod-tranche -2.279999999999933 --vqslod-tranche -2.289999999999933 --vqslod-tranche -2.2999999999999328 --vqslod-tranche -2.3099999999999326 --vqslod-tranche -2.3199999999999323 --vqslod-tranche -2.329999999999932 --vqslod-tranche -2.339999999999932 --vqslod-tranche -2.3499999999999317 --vqslod-tranche -2.3599999999999315 --vqslod-tranche -2.3699999999999313 --vqslod-tranche -2.379999999999931 --vqslod-tranche -2.389999999999931 --vqslod-tranche -2.3999999999999306 --vqslod-tranche -2.4099999999999304 --vqslod-tranche -2.41999999999993 --vqslod-tranche -2.42999999999993 --vqslod-tranche -2.43999999999993 --vqslod-tranche -2.4499999999999296 --vqslod-tranche -2.4599999999999294 --vqslod-tranche -2.469999999999929 --vqslod-tranche -2.479999999999929 --vqslod-tranche -2.4899999999999287 --vqslod-tranche -2.4999999999999285 --vqslod-tranche -2.5099999999999283 --vqslod-tranche -2.519999999999928 --vqslod-tranche -2.529999999999928 --vqslod-tranche -2.5399999999999276 --vqslod-tranche -2.5499999999999274 --vqslod-tranche -2.5599999999999272 --vqslod-tranche -2.569999999999927 --vqslod-tranche -2.579999999999927 --vqslod-tranche -2.5899999999999266 --vqslod-tranche -2.5999999999999264 --vqslod-tranche -2.609999999999926 --vqslod-tranche -2.619999999999926 --vqslod-tranche -2.6299999999999257 --vqslod-tranche -2.6399999999999255 --vqslod-tranche -2.6499999999999253 --vqslod-tranche -2.659999999999925 --vqslod-tranche -2.669999999999925 --vqslod-tranche -2.6799999999999247 --vqslod-tranche -2.6899999999999245 --vqslod-tranche -2.6999999999999242 --vqslod-tranche -2.709999999999924 --vqslod-tranche -2.719999999999924 --vqslod-tranche -2.7299999999999236 --vqslod-tranche -2.7399999999999234 --vqslod-tranche -2.749999999999923 --vqslod-tranche -2.759999999999923 --vqslod-tranche -2.7699999999999227 --vqslod-tranche -2.7799999999999225 --vqslod-tranche -2.7899999999999223 --vqslod-tranche -2.799999999999922 --vqslod-tranche -2.809999999999922 --vqslod-tranche -2.8199999999999217 --vqslod-tranche -2.8299999999999215 --vqslod-tranche -2.8399999999999213 --vqslod-tranche -2.849999999999921 --vqslod-tranche -2.859999999999921 --vqslod-tranche -2.8699999999999206 --vqslod-tranche -2.8799999999999204 --vqslod-tranche -2.88999999999992 --vqslod-tranche -2.89999999999992 --vqslod-tranche -2.9099999999999198 --vqslod-tranche -2.9199999999999195 --vqslod-tranche -2.9299999999999193 --vqslod-tranche -2.939999999999919 --vqslod-tranche -2.949999999999919 --vqslod-tranche -2.9599999999999187 --vqslod-tranche -2.9699999999999185 --vqslod-tranche -2.9799999999999183 --vqslod-tranche -2.989999999999918 --vqslod-tranche -2.999999999999918 --vqslod-tranche -3.0099999999999176 --vqslod-tranche -3.0199999999999174 --vqslod-tranche -3.029999999999917 --vqslod-tranche -3.039999999999917 --vqslod-tranche -3.0499999999999168 --vqslod-tranche -3.0599999999999166 --vqslod-tranche -3.0699999999999164 --vqslod-tranche -3.079999999999916 --vqslod-tranche -3.089999999999916 --vqslod-tranche -3.0999999999999157 --vqslod-tranche -3.1099999999999155 --vqslod-tranche -3.1199999999999153 --vqslod-tranche -3.129999999999915 --vqslod-tranche -3.139999999999915 --vqslod-tranche -3.1499999999999146 --vqslod-tranche -3.1599999999999144 --vqslod-tranche -3.169999999999914 --vqslod-tranche -3.179999999999914 --vqslod-tranche -3.189999999999914 --vqslod-tranche -3.1999999999999136 --vqslod-tranche -3.2099999999999134 --vqslod-tranche -3.219999999999913 --vqslod-tranche -3.229999999999913 --vqslod-tranche -3.2399999999999127 --vqslod-tranche -3.2499999999999125 --vqslod-tranche -3.2599999999999123 --vqslod-tranche -3.269999999999912 --vqslod-tranche -3.279999999999912 --vqslod-tranche -3.2899999999999117 --vqslod-tranche -3.2999999999999114 --vqslod-tranche -3.3099999999999112 --vqslod-tranche -3.319999999999911 --vqslod-tranche -3.329999999999911 --vqslod-tranche -3.3399999999999106 --vqslod-tranche -3.3499999999999104 --vqslod-tranche -3.35999999999991 --vqslod-tranche -3.36999999999991 --vqslod-tranche -3.3799999999999097 --vqslod-tranche -3.3899999999999095 --vqslod-tranche -3.3999999999999093 --vqslod-tranche -3.409999999999909 --vqslod-tranche -3.419999999999909 --vqslod-tranche -3.4299999999999087 --vqslod-tranche -3.4399999999999085 --vqslod-tranche -3.4499999999999083 --vqslod-tranche -3.459999999999908 --vqslod-tranche -3.469999999999908 --vqslod-tranche -3.4799999999999076 --vqslod-tranche -3.4899999999999074 --vqslod-tranche -3.499999999999907 --vqslod-tranche -3.509999999999907 --vqslod-tranche -3.5199999999999068 --vqslod-tranche -3.5299999999999065 --vqslod-tranche -3.5399999999999063 --vqslod-tranche -3.549999999999906 --vqslod-tranche -3.559999999999906 --vqslod-tranche -3.5699999999999057 --vqslod-tranche -3.5799999999999055 --vqslod-tranche -3.5899999999999053 --vqslod-tranche -3.599999999999905 --vqslod-tranche -3.609999999999905 --vqslod-tranche -3.6199999999999046 --vqslod-tranche -3.6299999999999044 --vqslod-tranche -3.639999999999904 --vqslod-tranche -3.649999999999904 --vqslod-tranche -3.6599999999999038 --vqslod-tranche -3.6699999999999036 --vqslod-tranche -3.6799999999999033 --vqslod-tranche -3.689999999999903 --vqslod-tranche -3.699999999999903 --vqslod-tranche -3.7099999999999027 --vqslod-tranche -3.7199999999999025 --vqslod-tranche -3.7299999999999023 --vqslod-tranche -3.739999999999902 --vqslod-tranche -3.749999999999902 --vqslod-tranche -3.7599999999999016 --vqslod-tranche -3.7699999999999014 --vqslod-tranche -3.779999999999901 --vqslod-tranche -3.789999999999901 --vqslod-tranche -3.799999999999901 --vqslod-tranche -3.8099999999999006 --vqslod-tranche -3.8199999999999004 --vqslod-tranche -3.8299999999999 --vqslod-tranche -3.8399999999999 --vqslod-tranche -3.8499999999998997 --vqslod-tranche -3.8599999999998995 --vqslod-tranche -3.8699999999998993 --vqslod-tranche -3.879999999999899 --vqslod-tranche -3.889999999999899 --vqslod-tranche -3.8999999999998987 --vqslod-tranche -3.9099999999998984 --vqslod-tranche -3.9199999999998982 --vqslod-tranche -3.929999999999898 --vqslod-tranche -3.939999999999898 --vqslod-tranche -3.9499999999998976 --vqslod-tranche -3.9599999999998974 --vqslod-tranche -3.969999999999897 --vqslod-tranche -3.979999999999897 --vqslod-tranche -3.9899999999998967 --vqslod-tranche -3.9999999999998965 --vqslod-tranche -4.009999999999897 --vqslod-tranche -4.0199999999998965 --vqslod-tranche -4.029999999999896 --vqslod-tranche -4.039999999999896 --vqslod-tranche -4.049999999999896 --vqslod-tranche -4.059999999999896 --vqslod-tranche -4.0699999999998955 --vqslod-tranche -4.079999999999895 --vqslod-tranche -4.089999999999895 --vqslod-tranche -4.099999999999895 --vqslod-tranche -4.109999999999895 --vqslod-tranche -4.119999999999894 --vqslod-tranche -4.129999999999894 --vqslod-tranche -4.139999999999894 --vqslod-tranche -4.149999999999894 --vqslod-tranche -4.159999999999894 --vqslod-tranche -4.169999999999893 --vqslod-tranche -4.179999999999893 --vqslod-tranche -4.189999999999893 --vqslod-tranche -4.199999999999893 --vqslod-tranche -4.2099999999998925 --vqslod-tranche -4.219999999999892 --vqslod-tranche -4.229999999999892 --vqslod-tranche -4.239999999999892 --vqslod-tranche -4.249999999999892 --vqslod-tranche -4.259999999999891 --vqslod-tranche -4.269999999999891 --vqslod-tranche -4.279999999999891 --vqslod-tranche -4.289999999999891 --vqslod-tranche -4.299999999999891 --vqslod-tranche -4.30999999999989 --vqslod-tranche -4.31999999999989 --vqslod-tranche -4.32999999999989 --vqslod-tranche -4.33999999999989 --vqslod-tranche -4.3499999999998895 --vqslod-tranche -4.359999999999889 --vqslod-tranche -4.369999999999889 --vqslod-tranche -4.379999999999889 --vqslod-tranche -4.389999999999889 --vqslod-tranche -4.3999999999998884 --vqslod-tranche -4.409999999999888 --vqslod-tranche -4.419999999999888 --vqslod-tranche -4.429999999999888 --vqslod-tranche -4.439999999999888 --vqslod-tranche -4.449999999999887 --vqslod-tranche -4.459999999999887 --vqslod-tranche -4.469999999999887 --vqslod-tranche -4.479999999999887 --vqslod-tranche -4.4899999999998865 --vqslod-tranche -4.499999999999886 --vqslod-tranche -4.509999999999886 --vqslod-tranche -4.519999999999886 --vqslod-tranche -4.529999999999886 --vqslod-tranche -4.5399999999998855 --vqslod-tranche -4.549999999999885 --vqslod-tranche -4.559999999999885 --vqslod-tranche -4.569999999999885 --vqslod-tranche -4.579999999999885 --vqslod-tranche -4.589999999999884 --vqslod-tranche -4.599999999999884 --vqslod-tranche -4.609999999999884 --vqslod-tranche -4.619999999999884 --vqslod-tranche -4.6299999999998835 --vqslod-tranche -4.639999999999883 --vqslod-tranche -4.649999999999883 --vqslod-tranche -4.659999999999883 --vqslod-tranche -4.669999999999883 --vqslod-tranche -4.6799999999998825 --vqslod-tranche -4.689999999999882 --vqslod-tranche -4.699999999999882 --vqslod-tranche -4.709999999999882 --vqslod-tranche -4.719999999999882 --vqslod-tranche -4.729999999999881 --vqslod-tranche -4.739999999999881 --vqslod-tranche -4.749999999999881 --vqslod-tranche -4.759999999999881 --vqslod-tranche -4.769999999999881 --vqslod-tranche -4.77999999999988 --vqslod-tranche -4.78999999999988 --vqslod-tranche -4.79999999999988 --vqslod-tranche -4.80999999999988 --vqslod-tranche -4.8199999999998795 --vqslod-tranche -4.829999999999879 --vqslod-tranche -4.839999999999879 --vqslod-tranche -4.849999999999879 --vqslod-tranche -4.859999999999879 --vqslod-tranche -4.869999999999878 --vqslod-tranche -4.879999999999878 --vqslod-tranche -4.889999999999878 --vqslod-tranche -4.899999999999878 --vqslod-tranche -4.909999999999878 --vqslod-tranche -4.919999999999877 --vqslod-tranche -4.929999999999877 --vqslod-tranche -4.939999999999877 --vqslod-tranche -4.949999999999877 --vqslod-tranche -4.9599999999998765 --vqslod-tranche -4.969999999999876 --vqslod-tranche -4.979999999999876 --vqslod-tranche -4.989999999999876 --vqslod-tranche -4.999999999999876 --vqslod-tranche -5.0 --vqslod-tranche -5.1 --vqslod-tranche -5.199999999999999 --vqslod-tranche -5.299999999999999 --vqslod-tranche -5.399999999999999 --vqslod-tranche -5.499999999999998 --vqslod-tranche -5.599999999999998 --vqslod-tranche -5.6999999999999975 --vqslod-tranche -5.799999999999997 --vqslod-tranche -5.899999999999997 --vqslod-tranche -5.9999999999999964 --vqslod-tranche -6.099999999999996 --vqslod-tranche -6.199999999999996 --vqslod-tranche -6.299999999999995 --vqslod-tranche -6.399999999999995 --vqslod-tranche -6.499999999999995 --vqslod-tranche -6.599999999999994 --vqslod-tranche -6.699999999999994 --vqslod-tranche -6.799999999999994 --vqslod-tranche -6.899999999999993 --vqslod-tranche -6.999999999999993 --vqslod-tranche -7.0999999999999925 --vqslod-tranche -7.199999999999992 --vqslod-tranche -7.299999999999992 --vqslod-tranche -7.3999999999999915 --vqslod-tranche -7.499999999999991 --vqslod-tranche -7.599999999999991 --vqslod-tranche -7.69999999999999 --vqslod-tranche -7.79999999999999 --vqslod-tranche -7.89999999999999 --vqslod-tranche -7.999999999999989 --vqslod-tranche -8.099999999999989 --vqslod-tranche -8.199999999999989 --vqslod-tranche -8.299999999999988 --vqslod-tranche -8.399999999999988 --vqslod-tranche -8.499999999999988 --vqslod-tranche -8.599999999999987 --vqslod-tranche -8.699999999999987 --vqslod-tranche -8.799999999999986 --vqslod-tranche -8.899999999999986 --vqslod-tranche -8.999999999999986 --vqslod-tranche -9.099999999999985 --vqslod-tranche -9.199999999999985 --vqslod-tranche -9.299999999999985 --vqslod-tranche -9.399999999999984 --vqslod-tranche -9.499999999999984 --vqslod-tranche -9.599999999999984 --vqslod-tranche -9.699999999999983 --vqslod-tranche -9.799999999999983 --vqslod-tranche -9.899999999999983 --vqslod-tranche -9.999999999999982 --replicate 200 --max-attempts 1 --trust-all-polymorphic false --interval-set-rule UNION --interval-padding 0 --interval-exclusion-padding 0 --interval-merging-rule ALL --read-validation-stringency SILENT --seconds-between-progress-updates 10.0 --disable-sequence-dictionary-validation false --create-output-bam-index true --create-output-bam-md5 false --create-output-variant-index true --create-output-variant-md5 false --max-variants-per-shard 0 --lenient false --add-output-sam-program-record true --add-output-vcf-command-line true --cloud-prefetch-buffer 40 --cloud-index-prefetch-buffer -1 --disable-bam-index-caching false --sites-only-vcf-output false --help false --version false --showHidden false --verbosity INFO --QUIET false --use-jdk-deflater false --use-jdk-inflater false --gcs-max-retries 20 --gcs-project-for-requester-pays  --disable-tool-default-read-filters false",Version="4.6.2.0",Date="September 20, 2026 at 10:41:13 PM CST">
+##INFO=<ID=END,Number=1,Type=Integer,Description="Stop position of the interval">
+##INFO=<ID=NEGATIVE_TRAIN_SITE,Number=0,Type=Flag,Description="This variant was used to build the negative training set of bad variants">
+##INFO=<ID=POSITIVE_TRAIN_SITE,Number=0,Type=Flag,Description="This variant was used to build the positive training set of good variants">
+##INFO=<ID=VQSLOD,Number=1,Type=Float,Description="Log odds of being a true variant versus being false under the trained gaussian mixture model">
+##INFO=<ID=culprit,Number=1,Type=String,Description="The annotation which was the worst performing in the Gaussian mixture model, likely the reason why the variant was filtered out">
+##contig=<ID=chr1,length=248956422,assembly=hg38.fa>
+##contig=<ID=chr10,length=133797422,assembly=hg38.fa>
+##contig=<ID=chr11,length=135086622,assembly=hg38.fa>
+##contig=<ID=chr11_KI270721v1_random,length=100316,assembly=hg38.fa>
+##contig=<ID=chr12,length=133275309,assembly=hg38.fa>
+##contig=<ID=chr13,length=114364328,assembly=hg38.fa>
+##contig=<ID=chr14,length=107043718,assembly=hg38.fa>
+##contig=<ID=chr14_GL000009v2_random,length=201709,assembly=hg38.fa>
+##contig=<ID=chr14_GL000225v1_random,length=211173,assembly=hg38.fa>
+##contig=<ID=chr14_KI270722v1_random,length=194050,assembly=hg38.fa>
+##contig=<ID=chr14_GL000194v1_random,length=191469,assembly=hg38.fa>
+##contig=<ID=chr14_KI270723v1_random,length=38115,assembly=hg38.fa>
+##contig=<ID=chr14_KI270724v1_random,length=39555,assembly=hg38.fa>
+##contig=<ID=chr14_KI270725v1_random,length=172810,assembly=hg38.fa>
+##contig=<ID=chr14_KI270726v1_random,length=43739,assembly=hg38.fa>
+##contig=<ID=chr15,length=101991189,assembly=hg38.fa>
+##contig=<ID=chr15_KI270727v1_random,length=448248,assembly=hg38.fa>
+##contig=<ID=chr16,length=90338345,assembly=hg38.fa>
+##contig=<ID=chr16_KI270728v1_random,length=1872759,assembly=hg38.fa>
+##contig=<ID=chr17,length=83257441,assembly=hg38.fa>
+##contig=<ID=chr17_GL000205v2_random,length=185591,assembly=hg38.fa>
+##contig=<ID=chr17_KI270729v1_random,length=280839,assembly=hg38.fa>
+##contig=<ID=chr17_KI270730v1_random,length=112551,assembly=hg38.fa>
+##contig=<ID=chr18,length=80373285,assembly=hg38.fa>
+##contig=<ID=chr19,length=58617616,assembly=hg38.fa>
+##contig=<ID=chr1_KI270706v1_random,length=175055,assembly=hg38.fa>
+##contig=<ID=chr1_KI270707v1_random,length=32032,assembly=hg38.fa>
+##contig=<ID=chr1_KI270708v1_random,length=127682,assembly=hg38.fa>
+##contig=<ID=chr1_KI270709v1_random,length=66860,assembly=hg38.fa>
+##contig=<ID=chr1_KI270710v1_random,length=40176,assembly=hg38.fa>
+##contig=<ID=chr1_KI270711v1_random,length=42210,assembly=hg38.fa>
+##contig=<ID=chr1_KI270712v1_random,length=176043,assembly=hg38.fa>
+##contig=<ID=chr1_KI270713v1_random,length=40745,assembly=hg38.fa>
+##contig=<ID=chr1_KI270714v1_random,length=41717,assembly=hg38.fa>
+##contig=<ID=chr2,length=242193529,assembly=hg38.fa>
+##contig=<ID=chr20,length=64444167,assembly=hg38.fa>
+##contig=<ID=chr21,length=46709983,assembly=hg38.fa>
+##contig=<ID=chr22,length=50818468,assembly=hg38.fa>
+##contig=<ID=chr22_KI270731v1_random,length=150754,assembly=hg38.fa>
+##contig=<ID=chr22_KI270732v1_random,length=41543,assembly=hg38.fa>
+##contig=<ID=chr22_KI270733v1_random,length=179772,assembly=hg38.fa>
+##contig=<ID=chr22_KI270734v1_random,length=165050,assembly=hg38.fa>
+##contig=<ID=chr22_KI270735v1_random,length=42811,assembly=hg38.fa>
+##contig=<ID=chr22_KI270736v1_random,length=181920,assembly=hg38.fa>
+##contig=<ID=chr22_KI270737v1_random,length=103838,assembly=hg38.fa>
+##contig=<ID=chr22_KI270738v1_random,length=99375,assembly=hg38.fa>
+##contig=<ID=chr22_KI270739v1_random,length=73985,assembly=hg38.fa>
+##contig=<ID=chr2_KI270715v1_random,length=161471,assembly=hg38.fa>
+##contig=<ID=chr2_KI270716v1_random,length=153799,assembly=hg38.fa>
+##contig=<ID=chr3,length=198295559,assembly=hg38.fa>
+##contig=<ID=chr3_GL000221v1_random,length=155397,assembly=hg38.fa>
+##contig=<ID=chr4,length=190214555,assembly=hg38.fa>
+##contig=<ID=chr4_GL000008v2_random,length=209709,assembly=hg38.fa>
+##contig=<ID=chr5,length=181538259,assembly=hg38.fa>
+##contig=<ID=chr5_GL000208v1_random,length=92689,assembly=hg38.fa>
+##contig=<ID=chr6,length=170805979,assembly=hg38.fa>
+##contig=<ID=chr7,length=159345973,assembly=hg38.fa>
+##contig=<ID=chr8,length=145138636,assembly=hg38.fa>
+##contig=<ID=chr9,length=138394717,assembly=hg38.fa>
+##contig=<ID=chr9_KI270717v1_random,length=40062,assembly=hg38.fa>
+##contig=<ID=chr9_KI270718v1_random,length=38054,assembly=hg38.fa>
+##contig=<ID=chr9_KI270719v1_random,length=176845,assembly=hg38.fa>
+##contig=<ID=chr9_KI270720v1_random,length=39050,assembly=hg38.fa>
+##contig=<ID=chr1_KI270762v1_alt,length=354444,assembly=hg38.fa>
+##contig=<ID=chr1_KI270766v1_alt,length=256271,assembly=hg38.fa>
+##contig=<ID=chr1_KI270760v1_alt,length=109528,assembly=hg38.fa>
+##contig=<ID=chr1_KI270765v1_alt,length=185285,assembly=hg38.fa>
+##contig=<ID=chr1_GL383518v1_alt,length=182439,assembly=hg38.fa>
+##contig=<ID=chr1_GL383519v1_alt,length=110268,assembly=hg38.fa>
+##contig=<ID=chr1_GL383520v2_alt,length=366580,assembly=hg38.fa>
+##contig=<ID=chr1_KI270764v1_alt,length=50258,assembly=hg38.fa>
+##contig=<ID=chr1_KI270763v1_alt,length=911658,assembly=hg38.fa>
+##contig=<ID=chr1_KI270759v1_alt,length=425601,assembly=hg38.fa>
+##contig=<ID=chr1_KI270761v1_alt,length=165834,assembly=hg38.fa>
+##contig=<ID=chr2_KI270770v1_alt,length=136240,assembly=hg38.fa>
+##contig=<ID=chr2_KI270773v1_alt,length=70887,assembly=hg38.fa>
+##contig=<ID=chr2_KI270774v1_alt,length=223625,assembly=hg38.fa>
+##contig=<ID=chr2_KI270769v1_alt,length=120616,assembly=hg38.fa>
+##contig=<ID=chr2_GL383521v1_alt,length=143390,assembly=hg38.fa>
+##contig=<ID=chr2_KI270772v1_alt,length=133041,assembly=hg38.fa>
+##contig=<ID=chr2_KI270775v1_alt,length=138019,assembly=hg38.fa>
+##contig=<ID=chr2_KI270771v1_alt,length=110395,assembly=hg38.fa>
+##contig=<ID=chr2_KI270768v1_alt,length=110099,assembly=hg38.fa>
+##contig=<ID=chr2_GL582966v2_alt,length=96131,assembly=hg38.fa>
+##contig=<ID=chr2_GL383522v1_alt,length=123821,assembly=hg38.fa>
+##contig=<ID=chr2_KI270776v1_alt,length=174166,assembly=hg38.fa>
+##contig=<ID=chr2_KI270767v1_alt,length=161578,assembly=hg38.fa>
+##contig=<ID=chr3_JH636055v2_alt,length=173151,assembly=hg38.fa>
+##contig=<ID=chr3_KI270783v1_alt,length=109187,assembly=hg38.fa>
+##contig=<ID=chr3_KI270780v1_alt,length=224108,assembly=hg38.fa>
+##contig=<ID=chr3_GL383526v1_alt,length=180671,assembly=hg38.fa>
+##contig=<ID=chr3_KI270777v1_alt,length=173649,assembly=hg38.fa>
+##contig=<ID=chr3_KI270778v1_alt,length=248252,assembly=hg38.fa>
+##contig=<ID=chr3_KI270781v1_alt,length=113034,assembly=hg38.fa>
+##contig=<ID=chr3_KI270779v1_alt,length=205312,assembly=hg38.fa>
+##contig=<ID=chr3_KI270782v1_alt,length=162429,assembly=hg38.fa>
+##contig=<ID=chr3_KI270784v1_alt,length=184404,assembly=hg38.fa>
+##contig=<ID=chr4_KI270790v1_alt,length=220246,assembly=hg38.fa>
+##contig=<ID=chr4_GL383528v1_alt,length=376187,assembly=hg38.fa>
+##contig=<ID=chr4_KI270787v1_alt,length=111943,assembly=hg38.fa>
+##contig=<ID=chr4_GL000257v2_alt,length=586476,assembly=hg38.fa>
+##contig=<ID=chr4_KI270788v1_alt,length=158965,assembly=hg38.fa>
+##contig=<ID=chr4_GL383527v1_alt,length=164536,assembly=hg38.fa>
+##contig=<ID=chr4_KI270785v1_alt,length=119912,assembly=hg38.fa>
+##contig=<ID=chr4_KI270789v1_alt,length=205944,assembly=hg38.fa>
+##contig=<ID=chr4_KI270786v1_alt,length=244096,assembly=hg38.fa>
+##contig=<ID=chr5_KI270793v1_alt,length=126136,assembly=hg38.fa>
+##contig=<ID=chr5_KI270792v1_alt,length=179043,assembly=hg38.fa>
+##contig=<ID=chr5_KI270791v1_alt,length=195710,assembly=hg38.fa>
+##contig=<ID=chr5_GL383532v1_alt,length=82728,assembly=hg38.fa>
+##contig=<ID=chr5_GL949742v1_alt,length=226852,assembly=hg38.fa>
+##contig=<ID=chr5_KI270794v1_alt,length=164558,assembly=hg38.fa>
+##contig=<ID=chr5_GL339449v2_alt,length=1612928,assembly=hg38.fa>
+##contig=<ID=chr5_GL383530v1_alt,length=101241,assembly=hg38.fa>
+##contig=<ID=chr5_KI270796v1_alt,length=172708,assembly=hg38.fa>
+##contig=<ID=chr5_GL383531v1_alt,length=173459,assembly=hg38.fa>
+##contig=<ID=chr5_KI270795v1_alt,length=131892,assembly=hg38.fa>
+##contig=<ID=chr6_GL000250v2_alt,length=4672374,assembly=hg38.fa>
+##contig=<ID=chr6_KI270800v1_alt,length=175808,assembly=hg38.fa>
+##contig=<ID=chr6_KI270799v1_alt,length=152148,assembly=hg38.fa>
+##contig=<ID=chr6_GL383533v1_alt,length=124736,assembly=hg38.fa>
+##contig=<ID=chr6_KI270801v1_alt,length=870480,assembly=hg38.fa>
+##contig=<ID=chr6_KI270802v1_alt,length=75005,assembly=hg38.fa>
+##contig=<ID=chr6_KB021644v2_alt,length=185823,assembly=hg38.fa>
+##contig=<ID=chr6_KI270797v1_alt,length=197536,assembly=hg38.fa>
+##contig=<ID=chr6_KI270798v1_alt,length=271782,assembly=hg38.fa>
+##contig=<ID=chr7_KI270804v1_alt,length=157952,assembly=hg38.fa>
+##contig=<ID=chr7_KI270809v1_alt,length=209586,assembly=hg38.fa>
+##contig=<ID=chr7_KI270806v1_alt,length=158166,assembly=hg38.fa>
+##contig=<ID=chr7_GL383534v2_alt,length=119183,assembly=hg38.fa>
+##contig=<ID=chr7_KI270803v1_alt,length=1111570,assembly=hg38.fa>
+##contig=<ID=chr7_KI270808v1_alt,length=271455,assembly=hg38.fa>
+##contig=<ID=chr7_KI270807v1_alt,length=126434,assembly=hg38.fa>
+##contig=<ID=chr7_KI270805v1_alt,length=209988,assembly=hg38.fa>
+##contig=<ID=chr8_KI270818v1_alt,length=145606,assembly=hg38.fa>
+##contig=<ID=chr8_KI270812v1_alt,length=282736,assembly=hg38.fa>
+##contig=<ID=chr8_KI270811v1_alt,length=292436,assembly=hg38.fa>
+##contig=<ID=chr8_KI270821v1_alt,length=985506,assembly=hg38.fa>
+##contig=<ID=chr8_KI270813v1_alt,length=300230,assembly=hg38.fa>
+##contig=<ID=chr8_KI270822v1_alt,length=624492,assembly=hg38.fa>
+##contig=<ID=chr8_KI270814v1_alt,length=141812,assembly=hg38.fa>
+##contig=<ID=chr8_KI270810v1_alt,length=374415,assembly=hg38.fa>
+##contig=<ID=chr8_KI270819v1_alt,length=133535,assembly=hg38.fa>
+##contig=<ID=chr8_KI270820v1_alt,length=36640,assembly=hg38.fa>
+##contig=<ID=chr8_KI270817v1_alt,length=158983,assembly=hg38.fa>
+##contig=<ID=chr8_KI270816v1_alt,length=305841,assembly=hg38.fa>
+##contig=<ID=chr8_KI270815v1_alt,length=132244,assembly=hg38.fa>
+##contig=<ID=chr9_GL383539v1_alt,length=162988,assembly=hg38.fa>
+##contig=<ID=chr9_GL383540v1_alt,length=71551,assembly=hg38.fa>
+##contig=<ID=chr9_GL383541v1_alt,length=171286,assembly=hg38.fa>
+##contig=<ID=chr9_GL383542v1_alt,length=60032,assembly=hg38.fa>
+##contig=<ID=chr9_KI270823v1_alt,length=439082,assembly=hg38.fa>
+##contig=<ID=chr10_GL383545v1_alt,length=179254,assembly=hg38.fa>
+##contig=<ID=chr10_KI270824v1_alt,length=181496,assembly=hg38.fa>
+##contig=<ID=chr10_GL383546v1_alt,length=309802,assembly=hg38.fa>
+##contig=<ID=chr10_KI270825v1_alt,length=188315,assembly=hg38.fa>
+##contig=<ID=chr11_KI270832v1_alt,length=210133,assembly=hg38.fa>
+##contig=<ID=chr11_KI270830v1_alt,length=177092,assembly=hg38.fa>
+##contig=<ID=chr11_KI270831v1_alt,length=296895,assembly=hg38.fa>
+##contig=<ID=chr11_KI270829v1_alt,length=204059,assembly=hg38.fa>
+##contig=<ID=chr11_GL383547v1_alt,length=154407,assembly=hg38.fa>
+##contig=<ID=chr11_JH159136v1_alt,length=200998,assembly=hg38.fa>
+##contig=<ID=chr11_JH159137v1_alt,length=191409,assembly=hg38.fa>
+##contig=<ID=chr11_KI270827v1_alt,length=67707,assembly=hg38.fa>
+##contig=<ID=chr11_KI270826v1_alt,length=186169,assembly=hg38.fa>
+##contig=<ID=chr12_GL877875v1_alt,length=167313,assembly=hg38.fa>
+##contig=<ID=chr12_GL877876v1_alt,length=408271,assembly=hg38.fa>
+##contig=<ID=chr12_KI270837v1_alt,length=40090,assembly=hg38.fa>
+##contig=<ID=chr12_GL383549v1_alt,length=120804,assembly=hg38.fa>
+##contig=<ID=chr12_KI270835v1_alt,length=238139,assembly=hg38.fa>
+##contig=<ID=chr12_GL383550v2_alt,length=169178,assembly=hg38.fa>
+##contig=<ID=chr12_GL383552v1_alt,length=138655,assembly=hg38.fa>
+##contig=<ID=chr12_GL383553v2_alt,length=152874,assembly=hg38.fa>
+##contig=<ID=chr12_KI270834v1_alt,length=119498,assembly=hg38.fa>
+##contig=<ID=chr12_GL383551v1_alt,length=184319,assembly=hg38.fa>
+##contig=<ID=chr12_KI270833v1_alt,length=76061,assembly=hg38.fa>
+##contig=<ID=chr12_KI270836v1_alt,length=56134,assembly=hg38.fa>
+##contig=<ID=chr13_KI270840v1_alt,length=191684,assembly=hg38.fa>
+##contig=<ID=chr13_KI270839v1_alt,length=180306,assembly=hg38.fa>
+##contig=<ID=chr13_KI270843v1_alt,length=103832,assembly=hg38.fa>
+##contig=<ID=chr13_KI270841v1_alt,length=169134,assembly=hg38.fa>
+##contig=<ID=chr13_KI270838v1_alt,length=306913,assembly=hg38.fa>
+##contig=<ID=chr13_KI270842v1_alt,length=37287,assembly=hg38.fa>
+##contig=<ID=chr14_KI270844v1_alt,length=322166,assembly=hg38.fa>
+##contig=<ID=chr14_KI270847v1_alt,length=1511111,assembly=hg38.fa>
+##contig=<ID=chr14_KI270845v1_alt,length=180703,assembly=hg38.fa>
+##contig=<ID=chr14_KI270846v1_alt,length=1351393,assembly=hg38.fa>
+##contig=<ID=chr15_KI270852v1_alt,length=478999,assembly=hg38.fa>
+##contig=<ID=chr15_KI270851v1_alt,length=263054,assembly=hg38.fa>
+##contig=<ID=chr15_KI270848v1_alt,length=327382,assembly=hg38.fa>
+##contig=<ID=chr15_GL383554v1_alt,length=296527,assembly=hg38.fa>
+##contig=<ID=chr15_KI270849v1_alt,length=244917,assembly=hg38.fa>
+##contig=<ID=chr15_GL383555v2_alt,length=388773,assembly=hg38.fa>
+##contig=<ID=chr15_KI270850v1_alt,length=430880,assembly=hg38.fa>
+##contig=<ID=chr16_KI270854v1_alt,length=134193,assembly=hg38.fa>
+##contig=<ID=chr16_KI270856v1_alt,length=63982,assembly=hg38.fa>
+##contig=<ID=chr16_KI270855v1_alt,length=232857,assembly=hg38.fa>
+##contig=<ID=chr16_KI270853v1_alt,length=2659700,assembly=hg38.fa>
+##contig=<ID=chr16_GL383556v1_alt,length=192462,assembly=hg38.fa>
+##contig=<ID=chr16_GL383557v1_alt,length=89672,assembly=hg38.fa>
+##contig=<ID=chr17_GL383563v3_alt,length=375691,assembly=hg38.fa>
+##contig=<ID=chr17_KI270862v1_alt,length=391357,assembly=hg38.fa>
+##contig=<ID=chr17_KI270861v1_alt,length=196688,assembly=hg38.fa>
+##contig=<ID=chr17_KI270857v1_alt,length=2877074,assembly=hg38.fa>
+##contig=<ID=chr17_JH159146v1_alt,length=278131,assembly=hg38.fa>
+##contig=<ID=chr17_JH159147v1_alt,length=70345,assembly=hg38.fa>
+##contig=<ID=chr17_GL383564v2_alt,length=133151,assembly=hg38.fa>
+##contig=<ID=chr17_GL000258v2_alt,length=1821992,assembly=hg38.fa>
+##contig=<ID=chr17_GL383565v1_alt,length=223995,assembly=hg38.fa>
+##contig=<ID=chr17_KI270858v1_alt,length=235827,assembly=hg38.fa>
+##contig=<ID=chr17_KI270859v1_alt,length=108763,assembly=hg38.fa>
+##contig=<ID=chr17_GL383566v1_alt,length=90219,assembly=hg38.fa>
+##contig=<ID=chr17_KI270860v1_alt,length=178921,assembly=hg38.fa>
+##contig=<ID=chr18_KI270864v1_alt,length=111737,assembly=hg38.fa>
+##contig=<ID=chr18_GL383567v1_alt,length=289831,assembly=hg38.fa>
+##contig=<ID=chr18_GL383570v1_alt,length=164789,assembly=hg38.fa>
+##contig=<ID=chr18_GL383571v1_alt,length=198278,assembly=hg38.fa>
+##contig=<ID=chr18_GL383568v1_alt,length=104552,assembly=hg38.fa>
+##contig=<ID=chr18_GL383569v1_alt,length=167950,assembly=hg38.fa>
+##contig=<ID=chr18_GL383572v1_alt,length=159547,assembly=hg38.fa>
+##contig=<ID=chr18_KI270863v1_alt,length=167999,assembly=hg38.fa>
+##contig=<ID=chr19_KI270868v1_alt,length=61734,assembly=hg38.fa>
+##contig=<ID=chr19_KI270865v1_alt,length=52969,assembly=hg38.fa>
+##contig=<ID=chr19_GL383573v1_alt,length=385657,assembly=hg38.fa>
+##contig=<ID=chr19_GL383575v2_alt,length=170222,assembly=hg38.fa>
+##contig=<ID=chr19_GL383576v1_alt,length=188024,assembly=hg38.fa>
+##contig=<ID=chr19_GL383574v1_alt,length=155864,assembly=hg38.fa>
+##contig=<ID=chr19_KI270866v1_alt,length=43156,assembly=hg38.fa>
+##contig=<ID=chr19_KI270867v1_alt,length=233762,assembly=hg38.fa>
+##contig=<ID=chr19_GL949746v1_alt,length=987716,assembly=hg38.fa>
+##contig=<ID=chr20_GL383577v2_alt,length=128386,assembly=hg38.fa>
+##contig=<ID=chr20_KI270869v1_alt,length=118774,assembly=hg38.fa>
+##contig=<ID=chr20_KI270871v1_alt,length=58661,assembly=hg38.fa>
+##contig=<ID=chr20_KI270870v1_alt,length=183433,assembly=hg38.fa>
+##contig=<ID=chr21_GL383578v2_alt,length=63917,assembly=hg38.fa>
+##contig=<ID=chr21_KI270874v1_alt,length=166743,assembly=hg38.fa>
+##contig=<ID=chr21_KI270873v1_alt,length=143900,assembly=hg38.fa>
+##contig=<ID=chr21_GL383579v2_alt,length=201197,assembly=hg38.fa>
+##contig=<ID=chr21_GL383580v2_alt,length=74653,assembly=hg38.fa>
+##contig=<ID=chr21_GL383581v2_alt,length=116689,assembly=hg38.fa>
+##contig=<ID=chr21_KI270872v1_alt,length=82692,assembly=hg38.fa>
+##contig=<ID=chr22_KI270875v1_alt,length=259914,assembly=hg38.fa>
+##contig=<ID=chr22_KI270878v1_alt,length=186262,assembly=hg38.fa>
+##contig=<ID=chr22_KI270879v1_alt,length=304135,assembly=hg38.fa>
+##contig=<ID=chr22_KI270876v1_alt,length=263666,assembly=hg38.fa>
+##contig=<ID=chr22_KI270877v1_alt,length=101331,assembly=hg38.fa>
+##contig=<ID=chr22_GL383583v2_alt,length=96924,assembly=hg38.fa>
+##contig=<ID=chr22_GL383582v2_alt,length=162811,assembly=hg38.fa>
+##contig=<ID=chrX_KI270880v1_alt,length=284869,assembly=hg38.fa>
+##contig=<ID=chrX_KI270881v1_alt,length=144206,assembly=hg38.fa>
+##contig=<ID=chr19_KI270882v1_alt,length=248807,assembly=hg38.fa>
+##contig=<ID=chr19_KI270883v1_alt,length=170399,assembly=hg38.fa>
+##contig=<ID=chr19_KI270884v1_alt,length=157053,assembly=hg38.fa>
+##contig=<ID=chr19_KI270885v1_alt,length=171027,assembly=hg38.fa>
+##contig=<ID=chr19_KI270886v1_alt,length=204239,assembly=hg38.fa>
+##contig=<ID=chr19_KI270887v1_alt,length=209512,assembly=hg38.fa>
+##contig=<ID=chr19_KI270888v1_alt,length=155532,assembly=hg38.fa>
+##contig=<ID=chr19_KI270889v1_alt,length=170698,assembly=hg38.fa>
+##contig=<ID=chr19_KI270890v1_alt,length=184499,assembly=hg38.fa>
+##contig=<ID=chr19_KI270891v1_alt,length=170680,assembly=hg38.fa>
+##contig=<ID=chr1_KI270892v1_alt,length=162212,assembly=hg38.fa>
+##contig=<ID=chr2_KI270894v1_alt,length=214158,assembly=hg38.fa>
+##contig=<ID=chr2_KI270893v1_alt,length=161218,assembly=hg38.fa>
+##contig=<ID=chr3_KI270895v1_alt,length=162896,assembly=hg38.fa>
+##contig=<ID=chr4_KI270896v1_alt,length=378547,assembly=hg38.fa>
+##contig=<ID=chr5_KI270897v1_alt,length=1144418,assembly=hg38.fa>
+##contig=<ID=chr5_KI270898v1_alt,length=130957,assembly=hg38.fa>
+##contig=<ID=chr6_GL000251v2_alt,length=4795265,assembly=hg38.fa>
+##contig=<ID=chr7_KI270899v1_alt,length=190869,assembly=hg38.fa>
+##contig=<ID=chr8_KI270901v1_alt,length=136959,assembly=hg38.fa>
+##contig=<ID=chr8_KI270900v1_alt,length=318687,assembly=hg38.fa>
+##contig=<ID=chr11_KI270902v1_alt,length=106711,assembly=hg38.fa>
+##contig=<ID=chr11_KI270903v1_alt,length=214625,assembly=hg38.fa>
+##contig=<ID=chr12_KI270904v1_alt,length=572349,assembly=hg38.fa>
+##contig=<ID=chr15_KI270906v1_alt,length=196384,assembly=hg38.fa>
+##contig=<ID=chr15_KI270905v1_alt,length=5161414,assembly=hg38.fa>
+##contig=<ID=chr17_KI270907v1_alt,length=137721,assembly=hg38.fa>
+##contig=<ID=chr17_KI270910v1_alt,length=157099,assembly=hg38.fa>
+##contig=<ID=chr17_KI270909v1_alt,length=325800,assembly=hg38.fa>
+##contig=<ID=chr17_JH159148v1_alt,length=88070,assembly=hg38.fa>
+##contig=<ID=chr17_KI270908v1_alt,length=1423190,assembly=hg38.fa>
+##contig=<ID=chr18_KI270912v1_alt,length=174061,assembly=hg38.fa>
+##contig=<ID=chr18_KI270911v1_alt,length=157710,assembly=hg38.fa>
+##contig=<ID=chr19_GL949747v2_alt,length=729520,assembly=hg38.fa>
+##contig=<ID=chr22_KB663609v1_alt,length=74013,assembly=hg38.fa>
+##contig=<ID=chrX_KI270913v1_alt,length=274009,assembly=hg38.fa>
+##contig=<ID=chr19_KI270914v1_alt,length=205194,assembly=hg38.fa>
+##contig=<ID=chr19_KI270915v1_alt,length=170665,assembly=hg38.fa>
+##contig=<ID=chr19_KI270916v1_alt,length=184516,assembly=hg38.fa>
+##contig=<ID=chr19_KI270917v1_alt,length=190932,assembly=hg38.fa>
+##contig=<ID=chr19_KI270918v1_alt,length=123111,assembly=hg38.fa>
+##contig=<ID=chr19_KI270919v1_alt,length=170701,assembly=hg38.fa>
+##contig=<ID=chr19_KI270920v1_alt,length=198005,assembly=hg38.fa>
+##contig=<ID=chr19_KI270921v1_alt,length=282224,assembly=hg38.fa>
+##contig=<ID=chr19_KI270922v1_alt,length=187935,assembly=hg38.fa>
+##contig=<ID=chr19_KI270923v1_alt,length=189352,assembly=hg38.fa>
+##contig=<ID=chr3_KI270924v1_alt,length=166540,assembly=hg38.fa>
+##contig=<ID=chr4_KI270925v1_alt,length=555799,assembly=hg38.fa>
+##contig=<ID=chr6_GL000252v2_alt,length=4604811,assembly=hg38.fa>
+##contig=<ID=chr8_KI270926v1_alt,length=229282,assembly=hg38.fa>
+##contig=<ID=chr11_KI270927v1_alt,length=218612,assembly=hg38.fa>
+##contig=<ID=chr19_GL949748v2_alt,length=1064304,assembly=hg38.fa>
+##contig=<ID=chr22_KI270928v1_alt,length=176103,assembly=hg38.fa>
+##contig=<ID=chr19_KI270929v1_alt,length=186203,assembly=hg38.fa>
+##contig=<ID=chr19_KI270930v1_alt,length=200773,assembly=hg38.fa>
+##contig=<ID=chr19_KI270931v1_alt,length=170148,assembly=hg38.fa>
+##contig=<ID=chr19_KI270932v1_alt,length=215732,assembly=hg38.fa>
+##contig=<ID=chr19_KI270933v1_alt,length=170537,assembly=hg38.fa>
+##contig=<ID=chr19_GL000209v2_alt,length=177381,assembly=hg38.fa>
+##contig=<ID=chr3_KI270934v1_alt,length=163458,assembly=hg38.fa>
+##contig=<ID=chr6_GL000253v2_alt,length=4677643,assembly=hg38.fa>
+##contig=<ID=chr19_GL949749v2_alt,length=1091841,assembly=hg38.fa>
+##contig=<ID=chr3_KI270935v1_alt,length=197351,assembly=hg38.fa>
+##contig=<ID=chr6_GL000254v2_alt,length=4827813,assembly=hg38.fa>
+##contig=<ID=chr19_GL949750v2_alt,length=1066390,assembly=hg38.fa>
+##contig=<ID=chr3_KI270936v1_alt,length=164170,assembly=hg38.fa>
+##contig=<ID=chr6_GL000255v2_alt,length=4606388,assembly=hg38.fa>
+##contig=<ID=chr19_GL949751v2_alt,length=1002683,assembly=hg38.fa>
+##contig=<ID=chr3_KI270937v1_alt,length=165607,assembly=hg38.fa>
+##contig=<ID=chr6_GL000256v2_alt,length=4929269,assembly=hg38.fa>
+##contig=<ID=chr19_GL949752v1_alt,length=987100,assembly=hg38.fa>
+##contig=<ID=chr6_KI270758v1_alt,length=76752,assembly=hg38.fa>
+##contig=<ID=chr19_GL949753v2_alt,length=796479,assembly=hg38.fa>
+##contig=<ID=chr19_KI270938v1_alt,length=1066800,assembly=hg38.fa>
+##contig=<ID=chrM,length=16569,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270302v1,length=2274,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270304v1,length=2165,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270303v1,length=1942,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270305v1,length=1472,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270322v1,length=21476,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270320v1,length=4416,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270310v1,length=1201,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270316v1,length=1444,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270315v1,length=2276,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270312v1,length=998,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270311v1,length=12399,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270317v1,length=37690,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270412v1,length=1179,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270411v1,length=2646,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270414v1,length=2489,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270419v1,length=1029,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270418v1,length=2145,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270420v1,length=2321,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270424v1,length=2140,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270417v1,length=2043,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270422v1,length=1445,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270423v1,length=981,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270425v1,length=1884,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270429v1,length=1361,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270442v1,length=392061,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270466v1,length=1233,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270465v1,length=1774,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270467v1,length=3920,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270435v1,length=92983,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270438v1,length=112505,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270468v1,length=4055,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270510v1,length=2415,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270509v1,length=2318,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270518v1,length=2186,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270508v1,length=1951,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270516v1,length=1300,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270512v1,length=22689,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270519v1,length=138126,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270522v1,length=5674,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270511v1,length=8127,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270515v1,length=6361,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270507v1,length=5353,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270517v1,length=3253,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270529v1,length=1899,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270528v1,length=2983,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270530v1,length=2168,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270539v1,length=993,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270538v1,length=91309,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270544v1,length=1202,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270548v1,length=1599,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270583v1,length=1400,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270587v1,length=2969,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270580v1,length=1553,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270581v1,length=7046,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270579v1,length=31033,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270589v1,length=44474,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270590v1,length=4685,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270584v1,length=4513,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270582v1,length=6504,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270588v1,length=6158,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270593v1,length=3041,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270591v1,length=5796,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270330v1,length=1652,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270329v1,length=1040,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270334v1,length=1368,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270333v1,length=2699,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270335v1,length=1048,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270338v1,length=1428,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270340v1,length=1428,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270336v1,length=1026,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270337v1,length=1121,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270363v1,length=1803,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270364v1,length=2855,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270362v1,length=3530,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270366v1,length=8320,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270378v1,length=1048,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270379v1,length=1045,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270389v1,length=1298,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270390v1,length=2387,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270387v1,length=1537,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270395v1,length=1143,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270396v1,length=1880,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270388v1,length=1216,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270394v1,length=970,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270386v1,length=1788,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270391v1,length=1484,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270383v1,length=1750,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270393v1,length=1308,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270384v1,length=1658,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270392v1,length=971,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270381v1,length=1930,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270385v1,length=990,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270382v1,length=4215,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270376v1,length=1136,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270374v1,length=2656,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270372v1,length=1650,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270373v1,length=1451,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270375v1,length=2378,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270371v1,length=2805,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270448v1,length=7992,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270521v1,length=7642,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000195v1,length=182896,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000219v1,length=179198,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000220v1,length=161802,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000224v1,length=179693,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270741v1,length=157432,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000226v1,length=15008,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000213v1,length=164239,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270743v1,length=210658,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270744v1,length=168472,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270745v1,length=41891,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270746v1,length=66486,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270747v1,length=198735,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270748v1,length=93321,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270749v1,length=158759,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270750v1,length=148850,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270751v1,length=150742,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270752v1,length=27745,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270753v1,length=62944,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270754v1,length=40191,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270755v1,length=36723,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270756v1,length=79590,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270757v1,length=71251,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000214v1,length=137718,assembly=hg38.fa>
+##contig=<ID=chrUn_KI270742v1,length=186739,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000216v2,length=176608,assembly=hg38.fa>
+##contig=<ID=chrUn_GL000218v1,length=161147,assembly=hg38.fa>
+##contig=<ID=chrX,length=156040895,assembly=hg38.fa>
+##contig=<ID=chrY,length=57227415,assembly=hg38.fa>
+##contig=<ID=chrY_KI270740v1_random,length=37240,assembly=hg38.fa>
+##contig=<ID=chr1_KQ031383v1_fix,length=467143,assembly=hg38.fa>
+##contig=<ID=chr1_KQ983255v1_alt,length=278659,assembly=hg38.fa>
+##contig=<ID=chr1_KN538361v1_fix,length=305542,assembly=hg38.fa>
+##contig=<ID=chr1_KQ458383v1_alt,length=349938,assembly=hg38.fa>
+##contig=<ID=chr1_KN196473v1_fix,length=166200,assembly=hg38.fa>
+##contig=<ID=chr1_KZ208904v1_alt,length=166136,assembly=hg38.fa>
+##contig=<ID=chr1_KN196472v1_fix,length=186494,assembly=hg38.fa>
+##contig=<ID=chr1_KZ208905v1_alt,length=140355,assembly=hg38.fa>
+##contig=<ID=chr1_KQ458382v1_alt,length=141019,assembly=hg38.fa>
+##contig=<ID=chr1_KV880763v1_alt,length=551020,assembly=hg38.fa>
+##contig=<ID=chr1_KN196474v1_fix,length=122022,assembly=hg38.fa>
+##contig=<ID=chr1_KN538360v1_fix,length=460100,assembly=hg38.fa>
+##contig=<ID=chr1_KZ208906v1_fix,length=330031,assembly=hg38.fa>
+##contig=<ID=chr1_KQ458384v1_alt,length=212205,assembly=hg38.fa>
+##contig=<ID=chr2_KQ031384v1_fix,length=481245,assembly=hg38.fa>
+##contig=<ID=chr2_KZ208907v1_alt,length=181658,assembly=hg38.fa>
+##contig=<ID=chr2_KQ983256v1_alt,length=535088,assembly=hg38.fa>
+##contig=<ID=chr2_KZ208908v1_alt,length=140361,assembly=hg38.fa>
+##contig=<ID=chr2_KN538363v1_fix,length=365499,assembly=hg38.fa>
+##contig=<ID=chr2_KN538362v1_fix,length=208149,assembly=hg38.fa>
+##contig=<ID=chr3_KV766192v1_fix,length=411654,assembly=hg38.fa>
+##contig=<ID=chr3_KN196475v1_fix,length=451168,assembly=hg38.fa>
+##contig=<ID=chr3_KQ031385v1_fix,length=373699,assembly=hg38.fa>
+##contig=<ID=chr3_KN538364v1_fix,length=415308,assembly=hg38.fa>
+##contig=<ID=chr3_KZ208909v1_alt,length=175849,assembly=hg38.fa>
+##contig=<ID=chr3_KQ031386v1_fix,length=165718,assembly=hg38.fa>
+##contig=<ID=chr3_KN196476v1_fix,length=305979,assembly=hg38.fa>
+##contig=<ID=chr4_KQ090013v1_alt,length=90922,assembly=hg38.fa>
+##contig=<ID=chr4_KQ090014v1_alt,length=163749,assembly=hg38.fa>
+##contig=<ID=chr4_KQ090015v1_alt,length=236512,assembly=hg38.fa>
+##contig=<ID=chr4_KV766193v1_alt,length=420675,assembly=hg38.fa>
+##contig=<ID=chr4_KQ983257v1_fix,length=230434,assembly=hg38.fa>
+##contig=<ID=chr4_KQ983258v1_alt,length=205407,assembly=hg38.fa>
+##contig=<ID=chr5_KZ208910v1_alt,length=135987,assembly=hg38.fa>
+##contig=<ID=chr5_KN196477v1_alt,length=139087,assembly=hg38.fa>
+##contig=<ID=chr5_KV575243v1_alt,length=362221,assembly=hg38.fa>
+##contig=<ID=chr5_KV575244v1_fix,length=673059,assembly=hg38.fa>
+##contig=<ID=chr6_KZ208911v1_fix,length=242796,assembly=hg38.fa>
+##contig=<ID=chr6_KQ090017v1_alt,length=82315,assembly=hg38.fa>
+##contig=<ID=chr6_KQ031387v1_fix,length=320750,assembly=hg38.fa>
+##contig=<ID=chr6_KN196478v1_fix,length=268330,assembly=hg38.fa>
+##contig=<ID=chr6_KQ090016v1_fix,length=245716,assembly=hg38.fa>
+##contig=<ID=chr6_KV766194v1_fix,length=139427,assembly=hg38.fa>
+##contig=<ID=chr7_KV880764v1_fix,length=142129,assembly=hg38.fa>
+##contig=<ID=chr7_KV880765v1_fix,length=468267,assembly=hg38.fa>
+##contig=<ID=chr7_KZ208912v1_fix,length=589656,assembly=hg38.fa>
+##contig=<ID=chr7_KZ208913v1_alt,length=680662,assembly=hg38.fa>
+##contig=<ID=chr7_KQ031388v1_fix,length=179932,assembly=hg38.fa>
+##contig=<ID=chr8_KZ208915v1_fix,length=6367528,assembly=hg38.fa>
+##contig=<ID=chr8_KV880767v1_fix,length=265876,assembly=hg38.fa>
+##contig=<ID=chr8_KV880766v1_fix,length=156998,assembly=hg38.fa>
+##contig=<ID=chr8_KZ208914v1_fix,length=165120,assembly=hg38.fa>
+##contig=<ID=chr9_KQ090018v1_alt,length=163882,assembly=hg38.fa>
+##contig=<ID=chr9_KQ090019v1_alt,length=134099,assembly=hg38.fa>
+##contig=<ID=chr9_KN196479v1_fix,length=330164,assembly=hg38.fa>
+##contig=<ID=chr10_KN538367v1_fix,length=420164,assembly=hg38.fa>
+##contig=<ID=chr10_KQ090020v1_alt,length=185507,assembly=hg38.fa>
+##contig=<ID=chr10_KN196480v1_fix,length=277797,assembly=hg38.fa>
+##contig=<ID=chr10_KQ090021v1_fix,length=264545,assembly=hg38.fa>
+##contig=<ID=chr10_KN538366v1_fix,length=85284,assembly=hg38.fa>
+##contig=<ID=chr10_KN538365v1_fix,length=14347,assembly=hg38.fa>
+##contig=<ID=chr11_KQ759759v1_fix,length=196940,assembly=hg38.fa>
+##contig=<ID=chr11_KN538368v1_alt,length=203552,assembly=hg38.fa>
+##contig=<ID=chr11_KV766195v1_fix,length=140877,assembly=hg38.fa>
+##contig=<ID=chr11_KQ090022v1_fix,length=181958,assembly=hg38.fa>
+##contig=<ID=chr11_KN196481v1_fix,length=108875,assembly=hg38.fa>
+##contig=<ID=chr12_KQ090023v1_alt,length=109323,assembly=hg38.fa>
+##contig=<ID=chr12_KZ208916v1_fix,length=1046838,assembly=hg38.fa>
+##contig=<ID=chr12_KN538369v1_fix,length=541038,assembly=hg38.fa>
+##contig=<ID=chr12_KN196482v1_fix,length=211377,assembly=hg38.fa>
+##contig=<ID=chr12_KZ208918v1_alt,length=174808,assembly=hg38.fa>
+##contig=<ID=chr12_KQ759760v1_fix,length=315610,assembly=hg38.fa>
+##contig=<ID=chr12_KZ208917v1_fix,length=64689,assembly=hg38.fa>
+##contig=<ID=chr12_KN538370v1_fix,length=86533,assembly=hg38.fa>
+##contig=<ID=chr13_KN538372v1_fix,length=356766,assembly=hg38.fa>
+##contig=<ID=chr13_KQ090024v1_alt,length=168146,assembly=hg38.fa>
+##contig=<ID=chr13_KN196483v1_fix,length=35455,assembly=hg38.fa>
+##contig=<ID=chr13_KN538373v1_fix,length=148762,assembly=hg38.fa>
+##contig=<ID=chr13_KQ090025v1_alt,length=123480,assembly=hg38.fa>
+##contig=<ID=chr13_KN538371v1_fix,length=206320,assembly=hg38.fa>
+##contig=<ID=chr14_KZ208920v1_fix,length=690932,assembly=hg38.fa>
+##contig=<ID=chr14_KZ208919v1_alt,length=171798,assembly=hg38.fa>
+##contig=<ID=chr15_KN538374v1_fix,length=4998962,assembly=hg38.fa>
+##contig=<ID=chr15_KQ031389v1_alt,length=2365364,assembly=hg38.fa>
+##contig=<ID=chr16_KQ090026v1_alt,length=59016,assembly=hg38.fa>
+##contig=<ID=chr16_KV880768v1_fix,length=1927115,assembly=hg38.fa>
+##contig=<ID=chr16_KQ090027v1_alt,length=267463,assembly=hg38.fa>
+##contig=<ID=chr16_KZ208921v1_alt,length=78609,assembly=hg38.fa>
+##contig=<ID=chr16_KQ031390v1_alt,length=169136,assembly=hg38.fa>
+##contig=<ID=chr17_KV766196v1_fix,length=281919,assembly=hg38.fa>
+##contig=<ID=chr17_KV575245v1_fix,length=154723,assembly=hg38.fa>
+##contig=<ID=chr17_KV766198v1_alt,length=276292,assembly=hg38.fa>
+##contig=<ID=chr17_KV766197v1_alt,length=246895,assembly=hg38.fa>
+##contig=<ID=chr18_KQ458385v1_alt,length=205101,assembly=hg38.fa>
+##contig=<ID=chr18_KQ090028v1_fix,length=407387,assembly=hg38.fa>
+##contig=<ID=chr18_KZ208922v1_fix,length=93070,assembly=hg38.fa>
+##contig=<ID=chr19_KQ458386v1_fix,length=405389,assembly=hg38.fa>
+##contig=<ID=chr19_KN196484v1_fix,length=370917,assembly=hg38.fa>
+##contig=<ID=chr19_KV575246v1_alt,length=163926,assembly=hg38.fa>
+##contig=<ID=chr19_KV575247v1_alt,length=170206,assembly=hg38.fa>
+##contig=<ID=chr19_KV575248v1_alt,length=168131,assembly=hg38.fa>
+##contig=<ID=chr19_KV575249v1_alt,length=293522,assembly=hg38.fa>
+##contig=<ID=chr19_KV575250v1_alt,length=241058,assembly=hg38.fa>
+##contig=<ID=chr19_KV575251v1_alt,length=159285,assembly=hg38.fa>
+##contig=<ID=chr19_KV575252v1_alt,length=178197,assembly=hg38.fa>
+##contig=<ID=chr19_KV575253v1_alt,length=166713,assembly=hg38.fa>
+##contig=<ID=chr19_KV575254v1_alt,length=99845,assembly=hg38.fa>
+##contig=<ID=chr19_KV575255v1_alt,length=161095,assembly=hg38.fa>
+##contig=<ID=chr19_KV575256v1_alt,length=223118,assembly=hg38.fa>
+##contig=<ID=chr19_KV575257v1_alt,length=100553,assembly=hg38.fa>
+##contig=<ID=chr19_KV575259v1_alt,length=171263,assembly=hg38.fa>
+##contig=<ID=chr19_KV575260v1_alt,length=145691,assembly=hg38.fa>
+##contig=<ID=chr19_KV575258v1_alt,length=156965,assembly=hg38.fa>
+##contig=<ID=chr22_KN196485v1_alt,length=156562,assembly=hg38.fa>
+##contig=<ID=chr22_KQ458387v1_alt,length=155930,assembly=hg38.fa>
+##contig=<ID=chr22_KQ458388v1_alt,length=174749,assembly=hg38.fa>
+##contig=<ID=chr22_KN196486v1_alt,length=153027,assembly=hg38.fa>
+##contig=<ID=chr22_KQ759761v1_alt,length=145162,assembly=hg38.fa>
+##contig=<ID=chr22_KQ759762v1_fix,length=101037,assembly=hg38.fa>
+##contig=<ID=chrX_KV766199v1_alt,length=188004,assembly=hg38.fa>
+##contig=<ID=chrY_KZ208923v1_fix,length=48370,assembly=hg38.fa>
+##contig=<ID=chrY_KZ208924v1_fix,length=209722,assembly=hg38.fa>
+##contig=<ID=chrY_KN196487v1_fix,length=101150,assembly=hg38.fa>
+##contig=<ID=chr1_KZ559100v1_fix,length=44955,assembly=hg38.fa>
+##contig=<ID=chr3_KZ559104v1_fix,length=105527,assembly=hg38.fa>
+##contig=<ID=chr3_KZ559105v1_alt,length=195063,assembly=hg38.fa>
+##contig=<ID=chr3_KZ559103v1_alt,length=302885,assembly=hg38.fa>
+##contig=<ID=chr3_KZ559102v1_alt,length=197752,assembly=hg38.fa>
+##contig=<ID=chr3_KZ559101v1_alt,length=164041,assembly=hg38.fa>
+##contig=<ID=chr7_KZ559106v1_alt,length=172555,assembly=hg38.fa>
+##contig=<ID=chr8_KZ559107v1_alt,length=103072,assembly=hg38.fa>
+##contig=<ID=chr11_KZ559109v1_fix,length=279644,assembly=hg38.fa>
+##contig=<ID=chr11_KZ559108v1_fix,length=305244,assembly=hg38.fa>
+##contig=<ID=chr11_KZ559111v1_alt,length=181167,assembly=hg38.fa>
+##contig=<ID=chr11_KZ559110v1_alt,length=301637,assembly=hg38.fa>
+##contig=<ID=chr12_KZ559112v1_alt,length=154139,assembly=hg38.fa>
+##contig=<ID=chr16_KZ559113v1_fix,length=480415,assembly=hg38.fa>
+##contig=<ID=chr17_KZ559114v1_alt,length=116753,assembly=hg38.fa>
+##contig=<ID=chr18_KZ559116v1_alt,length=163186,assembly=hg38.fa>
+##contig=<ID=chr18_KZ559115v1_fix,length=230843,assembly=hg38.fa>
+##contig=<ID=chr2_ML143342v1_fix,length=84043,assembly=hg38.fa>
+##contig=<ID=chr2_ML143341v1_fix,length=145975,assembly=hg38.fa>
+##contig=<ID=chr3_ML143343v1_alt,length=215443,assembly=hg38.fa>
+##contig=<ID=chr4_ML143344v1_fix,length=235734,assembly=hg38.fa>
+##contig=<ID=chr4_ML143347v1_fix,length=176674,assembly=hg38.fa>
+##contig=<ID=chr4_ML143346v1_fix,length=53476,assembly=hg38.fa>
+##contig=<ID=chr4_ML143348v1_fix,length=125549,assembly=hg38.fa>
+##contig=<ID=chr4_ML143345v1_fix,length=341066,assembly=hg38.fa>
+##contig=<ID=chr4_ML143349v1_fix,length=276109,assembly=hg38.fa>
+##contig=<ID=chr5_ML143350v1_fix,length=89956,assembly=hg38.fa>
+##contig=<ID=chr6_ML143351v1_fix,length=73265,assembly=hg38.fa>
+##contig=<ID=chr7_ML143352v1_fix,length=254759,assembly=hg38.fa>
+##contig=<ID=chr9_ML143353v1_fix,length=25408,assembly=hg38.fa>
+##contig=<ID=chr10_ML143354v1_fix,length=454963,assembly=hg38.fa>
+##contig=<ID=chr10_ML143355v1_fix,length=292944,assembly=hg38.fa>
+##contig=<ID=chr11_ML143358v1_fix,length=270122,assembly=hg38.fa>
+##contig=<ID=chr11_ML143360v1_fix,length=170928,assembly=hg38.fa>
+##contig=<ID=chr11_ML143359v1_fix,length=217075,assembly=hg38.fa>
+##contig=<ID=chr11_ML143357v1_fix,length=165419,assembly=hg38.fa>
+##contig=<ID=chr11_ML143356v1_fix,length=45257,assembly=hg38.fa>
+##contig=<ID=chr12_ML143362v1_fix,length=192531,assembly=hg38.fa>
+##contig=<ID=chr12_ML143361v1_fix,length=297568,assembly=hg38.fa>
+##contig=<ID=chr13_ML143366v1_fix,length=409912,assembly=hg38.fa>
+##contig=<ID=chr13_ML143363v1_fix,length=7309,assembly=hg38.fa>
+##contig=<ID=chr13_ML143364v1_fix,length=158944,assembly=hg38.fa>
+##contig=<ID=chr13_ML143365v1_fix,length=65394,assembly=hg38.fa>
+##contig=<ID=chr14_ML143367v1_fix,length=399183,assembly=hg38.fa>
+##contig=<ID=chr14_ML143368v1_alt,length=264228,assembly=hg38.fa>
+##contig=<ID=chr15_ML143372v1_fix,length=396515,assembly=hg38.fa>
+##contig=<ID=chr15_ML143371v1_fix,length=5500449,assembly=hg38.fa>
+##contig=<ID=chr15_ML143370v1_fix,length=369264,assembly=hg38.fa>
+##contig=<ID=chr15_ML143369v1_fix,length=97763,assembly=hg38.fa>
+##contig=<ID=chr16_ML143373v1_fix,length=270967,assembly=hg38.fa>
+##contig=<ID=chr17_ML143374v1_fix,length=137908,assembly=hg38.fa>
+##contig=<ID=chr17_ML143375v1_fix,length=56695,assembly=hg38.fa>
+##contig=<ID=chr19_ML143376v1_fix,length=493165,assembly=hg38.fa>
+##contig=<ID=chr21_ML143377v1_fix,length=519485,assembly=hg38.fa>
+##contig=<ID=chr22_ML143380v1_fix,length=412368,assembly=hg38.fa>
+##contig=<ID=chr22_ML143378v1_fix,length=461303,assembly=hg38.fa>
+##contig=<ID=chr22_ML143379v1_fix,length=12295,assembly=hg38.fa>
+##contig=<ID=chrX_ML143385v1_fix,length=17435,assembly=hg38.fa>
+##contig=<ID=chrX_ML143382v1_fix,length=28824,assembly=hg38.fa>
+##contig=<ID=chrX_ML143383v1_fix,length=68192,assembly=hg38.fa>
+##contig=<ID=chrX_ML143381v1_fix,length=403128,assembly=hg38.fa>
+##contig=<ID=chrX_ML143384v1_fix,length=14678,assembly=hg38.fa>
+##contig=<ID=chr1_MU273333v1_fix,length=1572686,assembly=hg38.fa>
+##contig=<ID=chr1_MU273330v1_alt,length=516764,assembly=hg38.fa>
+##contig=<ID=chr1_MU273335v1_fix,length=211934,assembly=hg38.fa>
+##contig=<ID=chr1_MU273336v1_fix,length=250447,assembly=hg38.fa>
+##contig=<ID=chr1_MU273331v1_alt,length=847441,assembly=hg38.fa>
+##contig=<ID=chr1_MU273334v1_fix,length=210426,assembly=hg38.fa>
+##contig=<ID=chr1_MU273332v1_alt,length=335159,assembly=hg38.fa>
+##contig=<ID=chr2_MU273344v1_fix,length=244725,assembly=hg38.fa>
+##contig=<ID=chr2_MU273345v1_fix,length=174385,assembly=hg38.fa>
+##contig=<ID=chr2_MU273343v1_fix,length=489404,assembly=hg38.fa>
+##contig=<ID=chr2_MU273340v1_alt,length=284971,assembly=hg38.fa>
+##contig=<ID=chr2_MU273337v1_alt,length=431782,assembly=hg38.fa>
+##contig=<ID=chr2_MU273342v1_fix,length=955087,assembly=hg38.fa>
+##contig=<ID=chr2_MU273339v1_alt,length=500581,assembly=hg38.fa>
+##contig=<ID=chr2_MU273338v1_alt,length=535251,assembly=hg38.fa>
+##contig=<ID=chr2_MU273341v1_fix,length=120381,assembly=hg38.fa>
+##contig=<ID=chr3_MU273347v1_fix,length=301310,assembly=hg38.fa>
+##contig=<ID=chr3_MU273348v1_fix,length=475876,assembly=hg38.fa>
+##contig=<ID=chr3_MU273346v1_fix,length=469342,assembly=hg38.fa>
+##contig=<ID=chr4_MU273351v1_fix,length=205691,assembly=hg38.fa>
+##contig=<ID=chr4_MU273349v1_alt,length=308682,assembly=hg38.fa>
+##contig=<ID=chr4_MU273350v1_fix,length=113364,assembly=hg38.fa>
+##contig=<ID=chr5_MU273354v1_fix,length=2101585,assembly=hg38.fa>
+##contig=<ID=chr5_MU273353v1_fix,length=208405,assembly=hg38.fa>
+##contig=<ID=chr5_MU273356v1_alt,length=302485,assembly=hg38.fa>
+##contig=<ID=chr5_MU273355v1_fix,length=508332,assembly=hg38.fa>
+##contig=<ID=chr5_MU273352v1_fix,length=34400,assembly=hg38.fa>
+##contig=<ID=chr6_MU273357v1_alt,length=383128,assembly=hg38.fa>
+##contig=<ID=chr7_MU273358v1_alt,length=464417,assembly=hg38.fa>
+##contig=<ID=chr8_MU273362v1_fix,length=429744,assembly=hg38.fa>
+##contig=<ID=chr8_MU273359v1_fix,length=150302,assembly=hg38.fa>
+##contig=<ID=chr8_MU273361v1_fix,length=106905,assembly=hg38.fa>
+##contig=<ID=chr8_MU273363v1_fix,length=207371,assembly=hg38.fa>
+##contig=<ID=chr8_MU273360v1_fix,length=39290,assembly=hg38.fa>
+##contig=<ID=chr9_MU273366v1_fix,length=569668,assembly=hg38.fa>
+##contig=<ID=chr9_MU273364v1_fix,length=340717,assembly=hg38.fa>
+##contig=<ID=chr9_MU273365v1_fix,length=482250,assembly=hg38.fa>
+##contig=<ID=chr10_MU273367v1_fix,length=196262,assembly=hg38.fa>
+##contig=<ID=chr11_KQ759759v2_fix,length=204999,assembly=hg38.fa>
+##contig=<ID=chr11_MU273369v1_fix,length=434831,assembly=hg38.fa>
+##contig=<ID=chr11_MU273371v1_fix,length=122722,assembly=hg38.fa>
+##contig=<ID=chr11_MU273370v1_fix,length=344606,assembly=hg38.fa>
+##contig=<ID=chr11_MU273368v1_alt,length=261194,assembly=hg38.fa>
+##contig=<ID=chr12_MU273372v1_fix,length=104537,assembly=hg38.fa>
+##contig=<ID=chr14_MU273373v1_fix,length=722645,assembly=hg38.fa>
+##contig=<ID=chr15_MU273375v1_alt,length=204007,assembly=hg38.fa>
+##contig=<ID=chr15_MU273374v1_fix,length=1154574,assembly=hg38.fa>
+##contig=<ID=chr16_MU273376v1_fix,length=87715,assembly=hg38.fa>
+##contig=<ID=chr16_MU273377v1_fix,length=334997,assembly=hg38.fa>
+##contig=<ID=chr17_MU273380v1_fix,length=538541,assembly=hg38.fa>
+##contig=<ID=chr17_MU273378v1_alt,length=372839,assembly=hg38.fa>
+##contig=<ID=chr17_MU273383v1_fix,length=172609,assembly=hg38.fa>
+##contig=<ID=chr17_MU273379v1_fix,length=234878,assembly=hg38.fa>
+##contig=<ID=chr17_MU273382v1_fix,length=187626,assembly=hg38.fa>
+##contig=<ID=chr17_MU273381v1_fix,length=144689,assembly=hg38.fa>
+##contig=<ID=chr19_MU273386v1_fix,length=226166,assembly=hg38.fa>
+##contig=<ID=chr19_MU273387v1_alt,length=89211,assembly=hg38.fa>
+##contig=<ID=chr19_MU273384v1_fix,length=333754,assembly=hg38.fa>
+##contig=<ID=chr19_MU273385v1_fix,length=137818,assembly=hg38.fa>
+##contig=<ID=chr20_MU273388v1_fix,length=273725,assembly=hg38.fa>
+##contig=<ID=chr20_MU273389v1_fix,length=355731,assembly=hg38.fa>
+##contig=<ID=chr21_MU273390v1_fix,length=336752,assembly=hg38.fa>
+##contig=<ID=chr21_MU273391v1_fix,length=1020778,assembly=hg38.fa>
+##contig=<ID=chr21_MU273392v1_fix,length=189707,assembly=hg38.fa>
+##contig=<ID=chr22_KQ759762v2_fix,length=101040,assembly=hg38.fa>
+##contig=<ID=chrX_MU273397v1_alt,length=330493,assembly=hg38.fa>
+##contig=<ID=chrX_MU273393v1_fix,length=68810,assembly=hg38.fa>
+##contig=<ID=chrX_MU273394v1_fix,length=140567,assembly=hg38.fa>
+##contig=<ID=chrX_MU273396v1_alt,length=294119,assembly=hg38.fa>
+##contig=<ID=chrX_MU273395v1_alt,length=619716,assembly=hg38.fa>
+##contig=<ID=chrY_MU273398v1_fix,length=865743,assembly=hg38.fa>
+##reference=hg38
+##source=VariantRecalibrator
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+chr1	1142929	.	N	<VQSR>	.	.	END=1142930;VQSLOD=Infinity;culprit=SOR
+chr1	1355779	.	N	<VQSR>	.	.	END=1355780;VQSLOD=Infinity;culprit=SOR
+chr1	1468592	.	N	<VQSR>	.	.	END=1468592;VQSLOD=Infinity;culprit=FS
+chr1	6393460	.	N	<VQSR>	.	.	END=6393460;VQSLOD=Infinity;culprit=SOR
+chr1	6586899	.	N	<VQSR>	.	.	END=6586908;VQSLOD=Infinity;culprit=FS
+chr1	7801093	.	N	<VQSR>	.	.	END=7801093;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	8974756	.	N	<VQSR>	.	.	END=8974756;VQSLOD=Infinity;culprit=FS
+chr1	12579013	.	N	<VQSR>	.	.	END=12579014;VQSLOD=916080.6556;culprit=ReadPosRankSum
+chr1	13583969	.	N	<VQSR>	.	.	END=13583970;VQSLOD=Infinity;culprit=SOR
+chr1	13779899	.	N	<VQSR>	.	.	END=13779899;VQSLOD=Infinity;culprit=SOR
+chr1	16134248	.	N	<VQSR>	.	.	END=16134251;VQSLOD=Infinity;culprit=FS
+chr1	17697502	.	N	<VQSR>	.	.	END=17697502;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	18735931	.	N	<VQSR>	.	.	END=18735932;VQSLOD=767516.8392;culprit=QD
+chr1	18881651	.	N	<VQSR>	.	.	END=18881651;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	19081800	.	N	<VQSR>	.	.	END=19081800;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	19219527	.	N	<VQSR>	.	.	END=19219527;VQSLOD=Infinity;culprit=SOR
+chr1	20084807	.	N	<VQSR>	.	.	END=20084807;VQSLOD=Infinity;culprit=SOR
+chr1	20645487	.	N	<VQSR>	.	.	END=20645487;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	24652503	.	N	<VQSR>	.	.	END=24652504;VQSLOD=Infinity;culprit=SOR
+chr1	26030687	.	N	<VQSR>	.	.	END=26030687;VQSLOD=Infinity;culprit=SOR
+chr1	29304724	.	N	<VQSR>	.	.	END=29304724;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr1	29515842	.	N	<VQSR>	.	.	END=29515842;VQSLOD=Infinity;culprit=SOR
+chr1	31413903	.	N	<VQSR>	.	.	END=31413903;VQSLOD=Infinity;culprit=SOR
+chr1	32190356	.	N	<VQSR>	.	.	END=32190359;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	33577569	.	N	<VQSR>	.	.	END=33577570;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr1	36170985	.	N	<VQSR>	.	.	END=36170986;VQSLOD=Infinity;culprit=SOR
+chr1	36466912	.	N	<VQSR>	.	.	END=36466913;VQSLOD=Infinity;culprit=SOR
+chr1	39788096	.	N	<VQSR>	.	.	END=39788096;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	41583196	.	N	<VQSR>	.	.	END=41583197;VQSLOD=1195489.3594;culprit=QD
+chr1	44704039	.	N	<VQSR>	.	.	END=44704040;VQSLOD=1025099.1418;culprit=QD
+chr1	45620835	.	N	<VQSR>	.	.	END=45620836;VQSLOD=Infinity;culprit=SOR
+chr1	46645094	.	N	<VQSR>	.	.	END=46645094;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr1	47438996	.	N	<VQSR>	.	.	END=47438996;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr1	47994334	.	N	<VQSR>	.	.	END=47994335;VQSLOD=Infinity;culprit=FS
+chr1	51236860	.	N	<VQSR>	.	.	END=51236863;VQSLOD=958022.5691;culprit=SOR
+chr1	54139646	.	N	<VQSR>	.	.	END=54139646;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	54733747	.	N	<VQSR>	.	.	END=54733755;VQSLOD=Infinity;culprit=FS
+chr1	55107256	.	N	<VQSR>	.	.	END=55107256;VQSLOD=Infinity;culprit=SOR
+chr1	60001239	.	N	<VQSR>	.	.	END=60001242;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	62121342	.	N	<VQSR>	.	.	END=62121342;VQSLOD=Infinity;culprit=QD
+chr1	76142823	.	N	<VQSR>	.	.	END=76142823;VQSLOD=Infinity;culprit=SOR
+chr1	91976482	.	N	<VQSR>	.	.	END=91976482;VQSLOD=Infinity;culprit=SOR
+chr1	93846972	.	N	<VQSR>	.	.	END=93846972;VQSLOD=Infinity;culprit=SOR
+chr1	103005900	.	N	<VQSR>	.	.	END=103005903;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	109270614	.	N	<VQSR>	.	.	END=109270628;VQSLOD=884708.7844;culprit=FS
+chr1	109629724	.	N	<VQSR>	.	.	END=109629724;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	111197149	.	N	<VQSR>	.	.	END=111197149;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	113116443	.	N	<VQSR>	.	.	END=113116445;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	116397859	.	N	<VQSR>	.	.	END=116397860;VQSLOD=Infinity;culprit=SOR
+chr1	119724974	.	N	<VQSR>	.	.	END=119724975;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	121564923	.	N	<VQSR>	.	.	END=121564923;VQSLOD=Infinity;culprit=SOR
+chr1	150344460	.	N	<VQSR>	.	.	END=150344461;VQSLOD=Infinity;culprit=SOR
+chr1	150577543	.	N	<VQSR>	.	.	END=150577543;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	150579015	.	N	<VQSR>	.	.	END=150579018;VQSLOD=1075065.2577;culprit=QD
+chr1	151294679	.	N	<VQSR>	.	.	END=151294682;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	151406533	.	N	<VQSR>	.	.	END=151406536;VQSLOD=Infinity;culprit=SOR
+chr1	154246163	.	N	<VQSR>	.	.	END=154246167;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	156139242	.	N	<VQSR>	.	.	END=156139243;VQSLOD=Infinity;culprit=SOR
+chr1	156384556	.	N	<VQSR>	.	.	END=156384556;VQSLOD=Infinity;culprit=FS
+chr1	158537432	.	N	<VQSR>	.	.	END=158537433;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr1	158686557	.	N	<VQSR>	.	.	END=158686557;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	158686642	.	N	<VQSR>	.	.	END=158686642;VQSLOD=Infinity;culprit=SOR
+chr1	160120891	.	N	<VQSR>	.	.	END=160120895;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	160711863	.	N	<VQSR>	.	.	END=160711864;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	161231211	.	N	<VQSR>	.	.	END=161231212;VQSLOD=1726335.3787;culprit=QD
+chr1	161853407	.	N	<VQSR>	.	.	END=161853407;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	170074341	.	N	<VQSR>	.	.	END=170074341;VQSLOD=Infinity;culprit=SOR
+chr1	171116174	.	N	<VQSR>	.	.	END=171116174;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr1	173667706	.	N	<VQSR>	.	.	END=173667707;VQSLOD=Infinity;culprit=SOR
+chr1	179432429	.	N	<VQSR>	.	.	END=179432430;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	184737078	.	N	<VQSR>	.	.	END=184737079;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr1	186144515	.	N	<VQSR>	.	.	END=186144516;VQSLOD=Infinity;culprit=SOR
+chr1	200213575	.	N	<VQSR>	.	.	END=200213599;VQSLOD=Infinity;culprit=SOR
+chr1	200990015	.	N	<VQSR>	.	.	END=200990016;VQSLOD=Infinity;culprit=SOR
+chr1	200996464	.	N	<VQSR>	.	.	END=200996464;VQSLOD=Infinity;culprit=SOR
+chr1	201324384	.	N	<VQSR>	.	.	END=201324385;POSITIVE_TRAIN_SITE;VQSLOD=245060.5500;culprit=QD
+chr1	203035499	.	N	<VQSR>	.	.	END=203035499;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	203218213	.	N	<VQSR>	.	.	END=203218213;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	206393503	.	N	<VQSR>	.	.	END=206393503;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	206480621	.	N	<VQSR>	.	.	END=206480622;VQSLOD=Infinity;culprit=SOR
+chr1	207027563	.	N	<VQSR>	.	.	END=207027564;VQSLOD=Infinity;culprit=SOR
+chr1	210094548	.	N	<VQSR>	.	.	END=210094551;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	212796500	.	N	<VQSR>	.	.	END=212796500;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	223541885	.	N	<VQSR>	.	.	END=223541885;VQSLOD=Infinity;culprit=SOR
+chr1	225861044	.	N	<VQSR>	.	.	END=225861045;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	225887710	.	N	<VQSR>	.	.	END=225887711;VQSLOD=Infinity;culprit=SOR
+chr1	226735445	.	N	<VQSR>	.	.	END=226735446;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	227034814	.	N	<VQSR>	.	.	END=227034814;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	228273707	.	N	<VQSR>	.	.	END=228273707;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	229527317	.	N	<VQSR>	.	.	END=229527322;VQSLOD=Infinity;culprit=SOR
+chr1	237655790	.	N	<VQSR>	.	.	END=237655791;VQSLOD=Infinity;culprit=SOR
+chr1	245930163	.	N	<VQSR>	.	.	END=245930166;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr1	248850187	.	N	<VQSR>	.	.	END=248850187;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	472607	.	N	<VQSR>	.	.	END=472609;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	4990048	.	N	<VQSR>	.	.	END=4990048;VQSLOD=Infinity;culprit=SOR
+chr10	6511079	.	N	<VQSR>	.	.	END=6511080;VQSLOD=795878.5621;culprit=ReadPosRankSum
+chr10	7713125	.	N	<VQSR>	.	.	END=7713125;VQSLOD=Infinity;culprit=SOR
+chr10	11320826	.	N	<VQSR>	.	.	END=11320827;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	12828643	.	N	<VQSR>	.	.	END=12828643;VQSLOD=Infinity;culprit=FS
+chr10	12828667	.	N	<VQSR>	.	.	END=12828667;VQSLOD=Infinity;culprit=FS
+chr10	13229513	.	N	<VQSR>	.	.	END=13229514;VQSLOD=330839.3102;culprit=QD
+chr10	14527999	.	N	<VQSR>	.	.	END=14528000;VQSLOD=Infinity;culprit=SOR
+chr10	16965848	.	N	<VQSR>	.	.	END=16965848;POSITIVE_TRAIN_SITE;VQSLOD=926299.4876;culprit=QD
+chr10	17849559	.	N	<VQSR>	.	.	END=17849559;VQSLOD=Infinity;culprit=SOR
+chr10	18539740	.	N	<VQSR>	.	.	END=18539742;VQSLOD=Infinity;culprit=SOR
+chr10	18545868	.	N	<VQSR>	.	.	END=18545868;VQSLOD=Infinity;culprit=SOR
+chr10	29289251	.	N	<VQSR>	.	.	END=29289251;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	32453329	.	N	<VQSR>	.	.	END=32453330;VQSLOD=Infinity;culprit=SOR
+chr10	32725426	.	N	<VQSR>	.	.	END=32725428;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	32855204	.	N	<VQSR>	.	.	END=32855204;VQSLOD=Infinity;culprit=SOR
+chr10	33195514	.	N	<VQSR>	.	.	END=33195515;VQSLOD=Infinity;culprit=SOR
+chr10	46012800	.	N	<VQSR>	.	.	END=46012803;VQSLOD=Infinity;culprit=SOR
+chr10	62262650	.	N	<VQSR>	.	.	END=62262653;VQSLOD=Infinity;culprit=SOR
+chr10	68747339	.	N	<VQSR>	.	.	END=68747339;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	68754021	.	N	<VQSR>	.	.	END=68754022;VQSLOD=1363444.6860;culprit=QD
+chr10	68756501	.	N	<VQSR>	.	.	END=68756502;VQSLOD=827115.1562;culprit=QD
+chr10	70277931	.	N	<VQSR>	.	.	END=70277931;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	71811824	.	N	<VQSR>	.	.	END=71811824;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr10	74043235	.	N	<VQSR>	.	.	END=74043236;VQSLOD=Infinity;culprit=SOR
+chr10	78001178	.	N	<VQSR>	.	.	END=78001179;VQSLOD=Infinity;culprit=SOR
+chr10	79907638	.	N	<VQSR>	.	.	END=79907642;VQSLOD=Infinity;culprit=SOR
+chr10	86666857	.	N	<VQSR>	.	.	END=86666858;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	88602550	.	N	<VQSR>	.	.	END=88602551;VQSLOD=Infinity;culprit=QD
+chr10	91410608	.	N	<VQSR>	.	.	END=91410609;VQSLOD=Infinity;culprit=SOR
+chr10	91819246	.	N	<VQSR>	.	.	END=91819246;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	91908915	.	N	<VQSR>	.	.	END=91908918;VQSLOD=Infinity;culprit=SOR
+chr10	91940023	.	N	<VQSR>	.	.	END=91940024;VQSLOD=1070092.4989;culprit=QD
+chr10	92690496	.	N	<VQSR>	.	.	END=92690498;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	97219354	.	N	<VQSR>	.	.	END=97219355;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	98244117	.	N	<VQSR>	.	.	END=98244118;VQSLOD=Infinity;culprit=SOR
+chr10	98490262	.	N	<VQSR>	.	.	END=98490272;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	100167234	.	N	<VQSR>	.	.	END=100167235;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	100482836	.	N	<VQSR>	.	.	END=100482837;VQSLOD=1291908.2224;culprit=QD
+chr10	102145006	.	N	<VQSR>	.	.	END=102145007;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	102416445	.	N	<VQSR>	.	.	END=102416446;VQSLOD=Infinity;culprit=SOR
+chr10	103590341	.	N	<VQSR>	.	.	END=103590342;VQSLOD=788143.1204;culprit=ReadPosRankSum
+chr10	103668695	.	N	<VQSR>	.	.	END=103668697;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	103992573	.	N	<VQSR>	.	.	END=103992574;VQSLOD=Infinity;culprit=SOR
+chr10	104162298	.	N	<VQSR>	.	.	END=104162299;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	104172399	.	N	<VQSR>	.	.	END=104172400;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	106577319	.	N	<VQSR>	.	.	END=106577319;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr10	107164164	.	N	<VQSR>	.	.	END=107164165;VQSLOD=800166.4204;culprit=QD
+chr10	113575791	.	N	<VQSR>	.	.	END=113575795;VQSLOD=Infinity;culprit=SOR
+chr10	113595412	.	N	<VQSR>	.	.	END=113595412;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr10	114300435	.	N	<VQSR>	.	.	END=114300435;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr10	124498816	.	N	<VQSR>	.	.	END=124498817;VQSLOD=Infinity;culprit=SOR
+chr10	128106847	.	N	<VQSR>	.	.	END=128106849;VQSLOD=Infinity;culprit=SOR
+chr10	131163292	.	N	<VQSR>	.	.	END=131163292;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	209894	.	N	<VQSR>	.	.	END=209897;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	244490	.	N	<VQSR>	.	.	END=244500;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	2303509	.	N	<VQSR>	.	.	END=2303510;VQSLOD=Infinity;culprit=SOR
+chr11	3101692	.	N	<VQSR>	.	.	END=3101693;VQSLOD=Infinity;culprit=SOR
+chr11	3640355	.	N	<VQSR>	.	.	END=3640355;VQSLOD=Infinity;culprit=QD
+chr11	4571478	.	N	<VQSR>	.	.	END=4571478;VQSLOD=Infinity;culprit=SOR
+chr11	5178110	.	N	<VQSR>	.	.	END=5178110;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	5248352	.	N	<VQSR>	.	.	END=5248353;VQSLOD=Infinity;culprit=SOR
+chr11	5248356	.	N	<VQSR>	.	.	END=5248356;VQSLOD=Infinity;culprit=SOR
+chr11	6546665	.	N	<VQSR>	.	.	END=6546665;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	12513938	.	N	<VQSR>	.	.	END=12513954;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	20382841	.	N	<VQSR>	.	.	END=20382850;VQSLOD=Infinity;culprit=SOR
+chr11	34071802	.	N	<VQSR>	.	.	END=34071803;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	35306294	.	N	<VQSR>	.	.	END=35306294;VQSLOD=Infinity;culprit=SOR
+chr11	43312487	.	N	<VQSR>	.	.	END=43312488;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr11	44083151	.	N	<VQSR>	.	.	END=44083151;VQSLOD=Infinity;culprit=SOR
+chr11	46312549	.	N	<VQSR>	.	.	END=46312549;VQSLOD=Infinity;culprit=SOR
+chr11	46672763	.	N	<VQSR>	.	.	END=46672765;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	48096795	.	N	<VQSR>	.	.	END=48096795;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	60934940	.	N	<VQSR>	.	.	END=60934940;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	62516707	.	N	<VQSR>	.	.	END=62516707;VQSLOD=973511.7178;culprit=ReadPosRankSum
+chr11	62778018	.	N	<VQSR>	.	.	END=62778018;VQSLOD=1149979.1975;culprit=QD
+chr11	64230094	.	N	<VQSR>	.	.	END=64230095;VQSLOD=Infinity;culprit=SOR
+chr11	64267628	.	N	<VQSR>	.	.	END=64267629;VQSLOD=Infinity;culprit=SOR
+chr11	64653777	.	N	<VQSR>	.	.	END=64653777;VQSLOD=Infinity;culprit=SOR
+chr11	64727244	.	N	<VQSR>	.	.	END=64727244;VQSLOD=1059377.5478;culprit=QD
+chr11	64729713	.	N	<VQSR>	.	.	END=64729713;VQSLOD=Infinity;culprit=SOR
+chr11	65389567	.	N	<VQSR>	.	.	END=65389568;VQSLOD=Infinity;culprit=SOR
+chr11	65834173	.	N	<VQSR>	.	.	END=65834198;VQSLOD=Infinity;culprit=SOR
+chr11	65869948	.	N	<VQSR>	.	.	END=65869949;VQSLOD=Infinity;culprit=FS
+chr11	65882548	.	N	<VQSR>	.	.	END=65882550;VQSLOD=Infinity;culprit=SOR
+chr11	66003579	.	N	<VQSR>	.	.	END=66003586;VQSLOD=Infinity;culprit=SOR
+chr11	67666237	.	N	<VQSR>	.	.	END=67666237;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	68409850	.	N	<VQSR>	.	.	END=68409851;VQSLOD=Infinity;culprit=SOR
+chr11	71957316	.	N	<VQSR>	.	.	END=71957317;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	72029332	.	N	<VQSR>	.	.	END=72029332;POSITIVE_TRAIN_SITE;VQSLOD=601273.6000;culprit=FS
+chr11	72843362	.	N	<VQSR>	.	.	END=72843362;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	75441697	.	N	<VQSR>	.	.	END=75441698;VQSLOD=Infinity;culprit=SOR
+chr11	77900551	.	N	<VQSR>	.	.	END=77900551;VQSLOD=Infinity;culprit=SOR
+chr11	93741404	.	N	<VQSR>	.	.	END=93741404;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	100297588	.	N	<VQSR>	.	.	END=100297588;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr11	101127799	.	N	<VQSR>	.	.	END=101127799;VQSLOD=671819.8628;culprit=QD
+chr11	101958200	.	N	<VQSR>	.	.	END=101958201;VQSLOD=1294318.6463;culprit=QD
+chr11	106009816	.	N	<VQSR>	.	.	END=106009817;VQSLOD=Infinity;culprit=SOR
+chr11	110263868	.	N	<VQSR>	.	.	END=110263869;VQSLOD=Infinity;culprit=SOR
+chr11	112045277	.	N	<VQSR>	.	.	END=112045278;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	117410008	.	N	<VQSR>	.	.	END=117410009;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	117903547	.	N	<VQSR>	.	.	END=117903548;VQSLOD=Infinity;culprit=SOR
+chr11	119274995	.	N	<VQSR>	.	.	END=119274995;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	120123189	.	N	<VQSR>	.	.	END=120123191;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	124224615	.	N	<VQSR>	.	.	END=124224615;VQSLOD=Infinity;culprit=SOR
+chr11	125582325	.	N	<VQSR>	.	.	END=125582325;VQSLOD=Infinity;culprit=SOR
+chr11	125602453	.	N	<VQSR>	.	.	END=125602453;VQSLOD=Infinity;culprit=SOR
+chr11	128768321	.	N	<VQSR>	.	.	END=128768322;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr11	130196557	.	N	<VQSR>	.	.	END=130196557;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr11	134345196	.	N	<VQSR>	.	.	END=134345222;VQSLOD=Infinity;culprit=SOR
+chr12	388000	.	N	<VQSR>	.	.	END=388000;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	861130	.	N	<VQSR>	.	.	END=861131;VQSLOD=677229.3588;culprit=QD
+chr12	930977	.	N	<VQSR>	.	.	END=930978;VQSLOD=1223512.7200;culprit=ReadPosRankSum
+chr12	2887892	.	N	<VQSR>	.	.	END=2887895;VQSLOD=632406.0878;culprit=SOR
+chr12	4580797	.	N	<VQSR>	.	.	END=4580798;VQSLOD=Infinity;culprit=SOR
+chr12	5827858	.	N	<VQSR>	.	.	END=5827858;VQSLOD=Infinity;culprit=SOR
+chr12	6581016	.	N	<VQSR>	.	.	END=6581016;VQSLOD=Infinity;culprit=SOR
+chr12	8651672	.	N	<VQSR>	.	.	END=8651672;VQSLOD=Infinity;culprit=SOR
+chr12	14567620	.	N	<VQSR>	.	.	END=14567623;VQSLOD=Infinity;culprit=SOR
+chr12	18282464	.	N	<VQSR>	.	.	END=18282467;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	26979758	.	N	<VQSR>	.	.	END=26979758;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	27470500	.	N	<VQSR>	.	.	END=27470500;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	31102838	.	N	<VQSR>	.	.	END=31102838;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	32705945	.	N	<VQSR>	.	.	END=32705946;VQSLOD=985448.4530;culprit=ReadPosRankSum
+chr12	40481583	.	N	<VQSR>	.	.	END=40481613;VQSLOD=381445.7329;culprit=FS
+chr12	40485404	.	N	<VQSR>	.	.	END=40485404;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	40557188	.	N	<VQSR>	.	.	END=40557190;VQSLOD=776742.2196;culprit=SOR
+chr12	43432474	.	N	<VQSR>	.	.	END=43432474;VQSLOD=Infinity;culprit=QD
+chr12	47978079	.	N	<VQSR>	.	.	END=47978080;VQSLOD=Infinity;culprit=SOR
+chr12	47982660	.	N	<VQSR>	.	.	END=47982660;VQSLOD=Infinity;culprit=SOR
+chr12	48047945	.	N	<VQSR>	.	.	END=48047945;VQSLOD=Infinity;culprit=SOR
+chr12	48938668	.	N	<VQSR>	.	.	END=48938668;POSITIVE_TRAIN_SITE;VQSLOD=319771.8086;culprit=SOR
+chr12	49129740	.	N	<VQSR>	.	.	END=49129742;VQSLOD=Infinity;culprit=SOR
+chr12	50727846	.	N	<VQSR>	.	.	END=50727847;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	50929889	.	N	<VQSR>	.	.	END=50929890;VQSLOD=Infinity;culprit=SOR
+chr12	51765654	.	N	<VQSR>	.	.	END=51765654;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr12	51810254	.	N	<VQSR>	.	.	END=51810254;VQSLOD=Infinity;culprit=SOR
+chr12	51951822	.	N	<VQSR>	.	.	END=51951823;VQSLOD=Infinity;culprit=SOR
+chr12	52237610	.	N	<VQSR>	.	.	END=52237610;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	52395909	.	N	<VQSR>	.	.	END=52395910;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	54405214	.	N	<VQSR>	.	.	END=54405215;VQSLOD=647593.0392;culprit=ReadPosRankSum
+chr12	54961092	.	N	<VQSR>	.	.	END=54961093;VQSLOD=Infinity;culprit=QD
+chr12	55129802	.	N	<VQSR>	.	.	END=55129803;POSITIVE_TRAIN_SITE;VQSLOD=803661.2736;culprit=SOR
+chr12	55688722	.	N	<VQSR>	.	.	END=55688723;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr12	55819347	.	N	<VQSR>	.	.	END=55819348;VQSLOD=Infinity;culprit=SOR
+chr12	56283880	.	N	<VQSR>	.	.	END=56283880;VQSLOD=Infinity;culprit=SOR
+chr12	56612275	.	N	<VQSR>	.	.	END=56612275;VQSLOD=Infinity;culprit=SOR
+chr12	57631871	.	N	<VQSR>	.	.	END=57631871;VQSLOD=Infinity;culprit=SOR
+chr12	57735269	.	N	<VQSR>	.	.	END=57735271;VQSLOD=Infinity;culprit=SOR
+chr12	65245835	.	N	<VQSR>	.	.	END=65245839;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	68792839	.	N	<VQSR>	.	.	END=68792841;VQSLOD=Infinity;culprit=FS
+chr12	69694305	.	N	<VQSR>	.	.	END=69694307;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	70609744	.	N	<VQSR>	.	.	END=70609746;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	71611104	.	N	<VQSR>	.	.	END=71611104;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	76031157	.	N	<VQSR>	.	.	END=76031160;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	78199212	.	N	<VQSR>	.	.	END=78199227;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr12	78199290	.	N	<VQSR>	.	.	END=78199295;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	95962502	.	N	<VQSR>	.	.	END=95962502;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	96522075	.	N	<VQSR>	.	.	END=96522076;VQSLOD=Infinity;culprit=SOR
+chr12	101685811	.	N	<VQSR>	.	.	END=101685811;VQSLOD=Infinity;culprit=QD
+chr12	101737312	.	N	<VQSR>	.	.	END=101737312;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	103999526	.	N	<VQSR>	.	.	END=103999527;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	109092473	.	N	<VQSR>	.	.	END=109092473;POSITIVE_TRAIN_SITE;VQSLOD=394389.5623;culprit=FS
+chr12	110381954	.	N	<VQSR>	.	.	END=110381954;VQSLOD=Infinity;culprit=QD
+chr12	113310200	.	N	<VQSR>	.	.	END=113310200;VQSLOD=Infinity;culprit=FS
+chr12	115982470	.	N	<VQSR>	.	.	END=115982471;VQSLOD=Infinity;culprit=SOR
+chr12	116007645	.	N	<VQSR>	.	.	END=116007647;VQSLOD=Infinity;culprit=SOR
+chr12	116576326	.	N	<VQSR>	.	.	END=116576326;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr12	117280668	.	N	<VQSR>	.	.	END=117280668;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	118238179	.	N	<VQSR>	.	.	END=118238179;VQSLOD=513285.3846;culprit=QD
+chr12	119712869	.	N	<VQSR>	.	.	END=119712869;VQSLOD=Infinity;culprit=SOR
+chr12	122858081	.	N	<VQSR>	.	.	END=122858086;POSITIVE_TRAIN_SITE;VQSLOD=776136.7945;culprit=QD
+chr12	122859025	.	N	<VQSR>	.	.	END=122859025;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	123660025	.	N	<VQSR>	.	.	END=123660026;VQSLOD=Infinity;culprit=SOR
+chr12	131725387	.	N	<VQSR>	.	.	END=131725389;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr12	132843947	.	N	<VQSR>	.	.	END=132843948;VQSLOD=Infinity;culprit=SOR
+chr13	20862772	.	N	<VQSR>	.	.	END=20862773;VQSLOD=1184150.1180;culprit=QD
+chr13	24447006	.	N	<VQSR>	.	.	END=24447009;VQSLOD=Infinity;culprit=SOR
+chr13	28028089	.	N	<VQSR>	.	.	END=28028091;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	39655705	.	N	<VQSR>	.	.	END=39655705;POSITIVE_TRAIN_SITE;VQSLOD=813343.2115;culprit=QD
+chr13	46459322	.	N	<VQSR>	.	.	END=46459322;VQSLOD=Infinity;culprit=SOR
+chr13	49520763	.	N	<VQSR>	.	.	END=49520763;VQSLOD=Infinity;culprit=SOR
+chr13	49732687	.	N	<VQSR>	.	.	END=49732688;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	51020868	.	N	<VQSR>	.	.	END=51020869;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	51937139	.	N	<VQSR>	.	.	END=51937141;VQSLOD=Infinity;culprit=SOR
+chr13	57725300	.	N	<VQSR>	.	.	END=57725301;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	59810926	.	N	<VQSR>	.	.	END=59810926;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr13	75796619	.	N	<VQSR>	.	.	END=75796620;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	109784467	.	N	<VQSR>	.	.	END=109784468;VQSLOD=Infinity;culprit=SOR
+chr13	110425053	.	N	<VQSR>	.	.	END=110425054;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr13	110642573	.	N	<VQSR>	.	.	END=110642573;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr14	20590439	.	N	<VQSR>	.	.	END=20590439;VQSLOD=Infinity;culprit=SOR
+chr14	21088804	.	N	<VQSR>	.	.	END=21088804;POSITIVE_TRAIN_SITE;VQSLOD=752683.9299;culprit=QD
+chr14	22002675	.	N	<VQSR>	.	.	END=22002675;VQSLOD=Infinity;culprit=SOR
+chr14	22841833	.	N	<VQSR>	.	.	END=22841834;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	23571226	.	N	<VQSR>	.	.	END=23571227;VQSLOD=Infinity;culprit=SOR
+chr14	28792101	.	N	<VQSR>	.	.	END=28792101;VQSLOD=1508469.9452;culprit=QD
+chr14	28792103	.	N	<VQSR>	.	.	END=28792103;VQSLOD=884449.3731;culprit=FS
+chr14	30601968	.	N	<VQSR>	.	.	END=30601969;VQSLOD=1366681.1853;culprit=QD
+chr14	31340362	.	N	<VQSR>	.	.	END=31340362;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	35046400	.	N	<VQSR>	.	.	END=35046402;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr14	39033335	.	N	<VQSR>	.	.	END=39033335;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	39133808	.	N	<VQSR>	.	.	END=39133809;VQSLOD=Infinity;culprit=SOR
+chr14	50377649	.	N	<VQSR>	.	.	END=50377649;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	50908981	.	N	<VQSR>	.	.	END=50908981;VQSLOD=Infinity;culprit=SOR
+chr14	50911872	.	N	<VQSR>	.	.	END=50911873;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	52706962	.	N	<VQSR>	.	.	END=52706963;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	53152762	.	N	<VQSR>	.	.	END=53152762;VQSLOD=Infinity;culprit=FS
+chr14	55137673	.	N	<VQSR>	.	.	END=55137673;VQSLOD=Infinity;culprit=SOR
+chr14	57865821	.	N	<VQSR>	.	.	END=57865822;VQSLOD=Infinity;culprit=SOR
+chr14	59263704	.	N	<VQSR>	.	.	END=59263707;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	60292649	.	N	<VQSR>	.	.	END=60292649;VQSLOD=Infinity;culprit=SOR
+chr14	67579123	.	N	<VQSR>	.	.	END=67579123;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	70011456	.	N	<VQSR>	.	.	END=70011457;VQSLOD=Infinity;culprit=SOR
+chr14	72894111	.	N	<VQSR>	.	.	END=72894111;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	73927089	.	N	<VQSR>	.	.	END=73927089;VQSLOD=Infinity;culprit=SOR
+chr14	74502373	.	N	<VQSR>	.	.	END=74502375;VQSLOD=Infinity;culprit=SOR
+chr14	75771911	.	N	<VQSR>	.	.	END=75771912;VQSLOD=Infinity;culprit=SOR
+chr14	81108492	.	N	<VQSR>	.	.	END=81108492;VQSLOD=Infinity;culprit=SOR
+chr14	81220594	.	N	<VQSR>	.	.	END=81220594;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	90899302	.	N	<VQSR>	.	.	END=90899304;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr14	92688192	.	N	<VQSR>	.	.	END=92688195;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr14	95444632	.	N	<VQSR>	.	.	END=95444634;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	96945393	.	N	<VQSR>	.	.	END=96945393;VQSLOD=Infinity;culprit=SOR
+chr14	100538192	.	N	<VQSR>	.	.	END=100538192;VQSLOD=Infinity;culprit=SOR
+chr14	100951855	.	N	<VQSR>	.	.	END=100951856;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	101893112	.	N	<VQSR>	.	.	END=101893113;VQSLOD=861435.4463;culprit=QD
+chr14	102084596	.	N	<VQSR>	.	.	END=102084597;VQSLOD=Infinity;culprit=SOR
+chr14	103110466	.	N	<VQSR>	.	.	END=103110467;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr14	104711014	.	N	<VQSR>	.	.	END=104711015;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	25074140	.	N	<VQSR>	.	.	END=25074141;VQSLOD=Infinity;culprit=SOR
+chr15	25339105	.	N	<VQSR>	.	.	END=25339106;VQSLOD=842707.2348;culprit=QD
+chr15	33623763	.	N	<VQSR>	.	.	END=33623764;VQSLOD=Infinity;culprit=SOR
+chr15	34938733	.	N	<VQSR>	.	.	END=34938733;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	35372205	.	N	<VQSR>	.	.	END=35372206;VQSLOD=Infinity;culprit=SOR
+chr15	39583861	.	N	<VQSR>	.	.	END=39583861;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	40037279	.	N	<VQSR>	.	.	END=40037279;VQSLOD=Infinity;culprit=FS
+chr15	40736550	.	N	<VQSR>	.	.	END=40736551;VQSLOD=Infinity;culprit=SOR
+chr15	40738381	.	N	<VQSR>	.	.	END=40738381;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	41505375	.	N	<VQSR>	.	.	END=41505375;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	41844838	.	N	<VQSR>	.	.	END=41844839;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	41852769	.	N	<VQSR>	.	.	END=41852769;VQSLOD=898289.6647;culprit=QD
+chr15	50229068	.	N	<VQSR>	.	.	END=50229068;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	57072791	.	N	<VQSR>	.	.	END=57072792;VQSLOD=Infinity;culprit=SOR
+chr15	57192374	.	N	<VQSR>	.	.	END=57192374;VQSLOD=Infinity;culprit=SOR
+chr15	57675087	.	N	<VQSR>	.	.	END=57675088;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr15	60479239	.	N	<VQSR>	.	.	END=60479239;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	64854864	.	N	<VQSR>	.	.	END=64854864;VQSLOD=Infinity;culprit=SOR
+chr15	65392084	.	N	<VQSR>	.	.	END=65392084;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	67099056	.	N	<VQSR>	.	.	END=67099057;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	68801819	.	N	<VQSR>	.	.	END=68801819;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	68820632	.	N	<VQSR>	.	.	END=68820632;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	70055477	.	N	<VQSR>	.	.	END=70055477;POSITIVE_TRAIN_SITE;VQSLOD=927820.4633;culprit=QD
+chr15	73253373	.	N	<VQSR>	.	.	END=73253374;VQSLOD=Infinity;culprit=SOR
+chr15	75677786	.	N	<VQSR>	.	.	END=75677787;VQSLOD=484503.0562;culprit=QD
+chr15	76283841	.	N	<VQSR>	.	.	END=76283842;VQSLOD=Infinity;culprit=SOR
+chr15	78212438	.	N	<VQSR>	.	.	END=78212439;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	78933471	.	N	<VQSR>	.	.	END=78933472;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	78939184	.	N	<VQSR>	.	.	END=78939184;POSITIVE_TRAIN_SITE;VQSLOD=426285.9590;culprit=QD
+chr15	80186245	.	N	<VQSR>	.	.	END=80186249;VQSLOD=Infinity;culprit=SOR
+chr15	80186251	.	N	<VQSR>	.	.	END=80186251;VQSLOD=Infinity;culprit=SOR
+chr15	80186257	.	N	<VQSR>	.	.	END=80186258;VQSLOD=Infinity;culprit=FS
+chr15	80894945	.	N	<VQSR>	.	.	END=80894945;VQSLOD=Infinity;culprit=SOR
+chr15	81362416	.	N	<VQSR>	.	.	END=81362416;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	82859304	.	N	<VQSR>	.	.	END=82859304;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	84354724	.	N	<VQSR>	.	.	END=84354724;VQSLOD=Infinity;culprit=SOR
+chr15	89328990	.	N	<VQSR>	.	.	END=89328990;VQSLOD=Infinity;culprit=SOR
+chr15	89731408	.	N	<VQSR>	.	.	END=89731408;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	89751073	.	N	<VQSR>	.	.	END=89751073;VQSLOD=Infinity;culprit=SOR
+chr15	89751075	.	N	<VQSR>	.	.	END=89751075;VQSLOD=Infinity;culprit=SOR
+chr15	90073998	.	N	<VQSR>	.	.	END=90073998;VQSLOD=Infinity;culprit=SOR
+chr15	90474042	.	N	<VQSR>	.	.	END=90474042;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	90889200	.	N	<VQSR>	.	.	END=90889201;VQSLOD=Infinity;culprit=SOR
+chr15	90904536	.	N	<VQSR>	.	.	END=90904536;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr15	90970602	.	N	<VQSR>	.	.	END=90970605;VQSLOD=Infinity;culprit=FS
+chr15	92655448	.	N	<VQSR>	.	.	END=92655454;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr15	101051652	.	N	<VQSR>	.	.	END=101051653;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr16	263976	.	N	<VQSR>	.	.	END=263976;VQSLOD=1205844.3797;culprit=QD
+chr16	656010	.	N	<VQSR>	.	.	END=656010;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr16	682287	.	N	<VQSR>	.	.	END=682288;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	723291	.	N	<VQSR>	.	.	END=723292;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr16	723313	.	N	<VQSR>	.	.	END=723313;VQSLOD=Infinity;culprit=SOR
+chr16	1261512	.	N	<VQSR>	.	.	END=1261512;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	1348076	.	N	<VQSR>	.	.	END=1348076;VQSLOD=Infinity;culprit=SOR
+chr16	1499342	.	N	<VQSR>	.	.	END=1499343;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	1734874	.	N	<VQSR>	.	.	END=1734878;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	2557383	.	N	<VQSR>	.	.	END=2557383;VQSLOD=Infinity;culprit=SOR
+chr16	3020707	.	N	<VQSR>	.	.	END=3020708;VQSLOD=Infinity;culprit=SOR
+chr16	3027709	.	N	<VQSR>	.	.	END=3027711;VQSLOD=Infinity;culprit=SOR
+chr16	3485573	.	N	<VQSR>	.	.	END=3485574;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	3544162	.	N	<VQSR>	.	.	END=3544163;VQSLOD=Infinity;culprit=FS
+chr16	4778035	.	N	<VQSR>	.	.	END=4778036;VQSLOD=497943.9319;culprit=QD
+chr16	4786154	.	N	<VQSR>	.	.	END=4786154;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	5027394	.	N	<VQSR>	.	.	END=5027401;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	5044843	.	N	<VQSR>	.	.	END=5044843;VQSLOD=251352.2732;culprit=QD
+chr16	5599139	.	N	<VQSR>	.	.	END=5599139;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	8764843	.	N	<VQSR>	.	.	END=8764847;VQSLOD=Infinity;culprit=SOR
+chr16	11551920	.	N	<VQSR>	.	.	END=11551921;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	11933617	.	N	<VQSR>	.	.	END=11933619;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	19581668	.	N	<VQSR>	.	.	END=19581668;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	20691081	.	N	<VQSR>	.	.	END=20691082;VQSLOD=Infinity;culprit=SOR
+chr16	23757059	.	N	<VQSR>	.	.	END=23757059;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	27211121	.	N	<VQSR>	.	.	END=27211125;VQSLOD=1213623.0130;culprit=QD
+chr16	27352673	.	N	<VQSR>	.	.	END=27352674;VQSLOD=Infinity;culprit=SOR
+chr16	27740993	.	N	<VQSR>	.	.	END=27740993;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	28830936	.	N	<VQSR>	.	.	END=28830936;VQSLOD=Infinity;culprit=SOR
+chr16	29697108	.	N	<VQSR>	.	.	END=29697109;VQSLOD=854640.1413;culprit=QD
+chr16	29780497	.	N	<VQSR>	.	.	END=29780498;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	29813694	.	N	<VQSR>	.	.	END=29813695;VQSLOD=Infinity;culprit=FS
+chr16	30086868	.	N	<VQSR>	.	.	END=30086871;VQSLOD=Infinity;culprit=SOR
+chr16	30757171	.	N	<VQSR>	.	.	END=30757178;VQSLOD=Infinity;culprit=SOR
+chr16	31188289	.	N	<VQSR>	.	.	END=31188289;VQSLOD=1352272.3049;culprit=QD
+chr16	31759375	.	N	<VQSR>	.	.	END=31759375;VQSLOD=Infinity;culprit=SOR
+chr16	34158923	.	N	<VQSR>	.	.	END=34158950;VQSLOD=Infinity;culprit=SOR
+chr16	56869718	.	N	<VQSR>	.	.	END=56869719;VQSLOD=1013223.1061;culprit=QD
+chr16	57061930	.	N	<VQSR>	.	.	END=57061934;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	57764116	.	N	<VQSR>	.	.	END=57764116;VQSLOD=1081041.8527;culprit=QD
+chr16	58279674	.	N	<VQSR>	.	.	END=58279674;VQSLOD=Infinity;culprit=SOR
+chr16	58588950	.	N	<VQSR>	.	.	END=58588951;VQSLOD=Infinity;culprit=SOR
+chr16	58669974	.	N	<VQSR>	.	.	END=58669975;VQSLOD=Infinity;culprit=FS
+chr16	66821565	.	N	<VQSR>	.	.	END=66821566;VQSLOD=Infinity;culprit=SOR
+chr16	66827567	.	N	<VQSR>	.	.	END=66827568;VQSLOD=400477.1219;culprit=QD
+chr16	68737515	.	N	<VQSR>	.	.	END=68737515;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	68846502	.	N	<VQSR>	.	.	END=68846502;VQSLOD=Infinity;culprit=SOR
+chr16	70148586	.	N	<VQSR>	.	.	END=70148596;VQSLOD=Infinity;culprit=SOR
+chr16	71739381	.	N	<VQSR>	.	.	END=71739381;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	71774604	.	N	<VQSR>	.	.	END=71774604;VQSLOD=1091140.0890;culprit=QD
+chr16	77191320	.	N	<VQSR>	.	.	END=77191320;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	84179935	.	N	<VQSR>	.	.	END=84179935;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	84195006	.	N	<VQSR>	.	.	END=84195007;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	84408422	.	N	<VQSR>	.	.	END=84408425;VQSLOD=Infinity;culprit=SOR
+chr16	84439398	.	N	<VQSR>	.	.	END=84439398;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	85071765	.	N	<VQSR>	.	.	END=85071765;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	85781293	.	N	<VQSR>	.	.	END=85781293;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	85806429	.	N	<VQSR>	.	.	END=85806430;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	88696534	.	N	<VQSR>	.	.	END=88696535;VQSLOD=Infinity;culprit=FS
+chr16	89224802	.	N	<VQSR>	.	.	END=89224802;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	89225537	.	N	<VQSR>	.	.	END=89225537;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	89523760	.	N	<VQSR>	.	.	END=89523760;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	89584767	.	N	<VQSR>	.	.	END=89584767;POSITIVE_TRAIN_SITE;VQSLOD=1050770.5307;culprit=QD
+chr16	89709021	.	N	<VQSR>	.	.	END=89709021;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr16	89737927	.	N	<VQSR>	.	.	END=89737928;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr16	90095557	.	N	<VQSR>	.	.	END=90095558;VQSLOD=1343686.9004;culprit=QD
+chr17	2057110	.	N	<VQSR>	.	.	END=2057113;VQSLOD=Infinity;culprit=SOR
+chr17	2375518	.	N	<VQSR>	.	.	END=2375519;VQSLOD=Infinity;culprit=SOR
+chr17	2394277	.	N	<VQSR>	.	.	END=2394277;VQSLOD=Infinity;culprit=SOR
+chr17	3573532	.	N	<VQSR>	.	.	END=3573532;VQSLOD=Infinity;culprit=SOR
+chr17	3690982	.	N	<VQSR>	.	.	END=3690983;POSITIVE_TRAIN_SITE;VQSLOD=1357526.5592;culprit=QD
+chr17	4682958	.	N	<VQSR>	.	.	END=4682959;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	4717677	.	N	<VQSR>	.	.	END=4717678;VQSLOD=Infinity;culprit=SOR
+chr17	5381248	.	N	<VQSR>	.	.	END=5381250;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	5431484	.	N	<VQSR>	.	.	END=5431484;VQSLOD=Infinity;culprit=SOR
+chr17	5434981	.	N	<VQSR>	.	.	END=5434995;VQSLOD=Infinity;culprit=SOR
+chr17	7900716	.	N	<VQSR>	.	.	END=7900717;VQSLOD=Infinity;culprit=SOR
+chr17	8149207	.	N	<VQSR>	.	.	END=8149214;VQSLOD=Infinity;culprit=SOR
+chr17	8254038	.	N	<VQSR>	.	.	END=8254038;VQSLOD=Infinity;culprit=SOR
+chr17	8575268	.	N	<VQSR>	.	.	END=8575271;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	9594161	.	N	<VQSR>	.	.	END=9594161;VQSLOD=1316873.9647;culprit=QD
+chr17	10639805	.	N	<VQSR>	.	.	END=10639805;VQSLOD=1025220.3927;culprit=QD
+chr17	12736052	.	N	<VQSR>	.	.	END=12736052;VQSLOD=Infinity;culprit=SOR
+chr17	12752672	.	N	<VQSR>	.	.	END=12752673;VQSLOD=Infinity;culprit=SOR
+chr17	15439273	.	N	<VQSR>	.	.	END=15439274;VQSLOD=Infinity;culprit=SOR
+chr17	16709539	.	N	<VQSR>	.	.	END=16709540;VQSLOD=Infinity;culprit=FS
+chr17	17280548	.	N	<VQSR>	.	.	END=17280549;VQSLOD=Infinity;culprit=SOR
+chr17	17280552	.	N	<VQSR>	.	.	END=17280553;VQSLOD=Infinity;culprit=SOR
+chr17	17811403	.	N	<VQSR>	.	.	END=17811405;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	18028570	.	N	<VQSR>	.	.	END=18028570;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	18144458	.	N	<VQSR>	.	.	END=18144458;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	21295793	.	N	<VQSR>	.	.	END=21295794;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	27582989	.	N	<VQSR>	.	.	END=27582990;VQSLOD=Infinity;culprit=SOR
+chr17	28357257	.	N	<VQSR>	.	.	END=28357258;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	28360461	.	N	<VQSR>	.	.	END=28360461;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	29684483	.	N	<VQSR>	.	.	END=29684484;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	31560077	.	N	<VQSR>	.	.	END=31560078;VQSLOD=Infinity;culprit=FS
+chr17	35135063	.	N	<VQSR>	.	.	END=35135063;VQSLOD=Infinity;culprit=SOR
+chr17	40168513	.	N	<VQSR>	.	.	END=40168514;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	40184509	.	N	<VQSR>	.	.	END=40184509;VQSLOD=1007018.8342;culprit=QD
+chr17	41479266	.	N	<VQSR>	.	.	END=41479267;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	41835596	.	N	<VQSR>	.	.	END=41835600;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	41853662	.	N	<VQSR>	.	.	END=41853663;VQSLOD=Infinity;culprit=SOR
+chr17	41953383	.	N	<VQSR>	.	.	END=41953383;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	42785372	.	N	<VQSR>	.	.	END=42785373;VQSLOD=Infinity;culprit=SOR
+chr17	43377864	.	N	<VQSR>	.	.	END=43377866;VQSLOD=Infinity;culprit=QD
+chr17	44152671	.	N	<VQSR>	.	.	END=44152672;VQSLOD=Infinity;culprit=SOR
+chr17	44172349	.	N	<VQSR>	.	.	END=44172349;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	48056874	.	N	<VQSR>	.	.	END=48056874;POSITIVE_TRAIN_SITE;VQSLOD=217204.1379;culprit=QD
+chr17	48724360	.	N	<VQSR>	.	.	END=48724360;VQSLOD=Infinity;culprit=SOR
+chr17	48922766	.	N	<VQSR>	.	.	END=48922766;VQSLOD=1094492.7701;culprit=QD
+chr17	59946863	.	N	<VQSR>	.	.	END=59946863;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	63482300	.	N	<VQSR>	.	.	END=63482301;VQSLOD=Infinity;culprit=SOR
+chr17	63585248	.	N	<VQSR>	.	.	END=63585249;VQSLOD=Infinity;culprit=SOR
+chr17	64188478	.	N	<VQSR>	.	.	END=64188479;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	67959642	.	N	<VQSR>	.	.	END=67959642;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	74289520	.	N	<VQSR>	.	.	END=74289520;VQSLOD=Infinity;culprit=SOR
+chr17	74340949	.	N	<VQSR>	.	.	END=74340949;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	74961867	.	N	<VQSR>	.	.	END=74961868;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	75130651	.	N	<VQSR>	.	.	END=75130652;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	75600587	.	N	<VQSR>	.	.	END=75600590;VQSLOD=Infinity;culprit=SOR
+chr17	75727373	.	N	<VQSR>	.	.	END=75727375;VQSLOD=396193.6537;culprit=ReadPosRankSum
+chr17	75762957	.	N	<VQSR>	.	.	END=75762958;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	76080046	.	N	<VQSR>	.	.	END=76080047;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	76754133	.	N	<VQSR>	.	.	END=76754133;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr17	76932755	.	N	<VQSR>	.	.	END=76932755;VQSLOD=Infinity;culprit=SOR
+chr17	78119397	.	N	<VQSR>	.	.	END=78119398;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	79090923	.	N	<VQSR>	.	.	END=79090923;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr17	79094585	.	N	<VQSR>	.	.	END=79094585;VQSLOD=Infinity;culprit=SOR
+chr17	80213922	.	N	<VQSR>	.	.	END=80213924;VQSLOD=Infinity;culprit=FS
+chr17	81106138	.	N	<VQSR>	.	.	END=81106139;VQSLOD=Infinity;culprit=SOR
+chr17	81202100	.	N	<VQSR>	.	.	END=81202100;VQSLOD=Infinity;culprit=SOR
+chr17	81245700	.	N	<VQSR>	.	.	END=81245703;VQSLOD=Infinity;culprit=SOR
+chr17	81715610	.	N	<VQSR>	.	.	END=81715611;VQSLOD=Infinity;culprit=FS
+chr17	82327321	.	N	<VQSR>	.	.	END=82327321;VQSLOD=Infinity;culprit=SOR
+chr18	335244	.	N	<VQSR>	.	.	END=335244;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr18	712319	.	N	<VQSR>	.	.	END=712322;POSITIVE_TRAIN_SITE;VQSLOD=628878.3393;culprit=SOR
+chr18	2674160	.	N	<VQSR>	.	.	END=2674162;VQSLOD=Infinity;culprit=SOR
+chr18	3075505	.	N	<VQSR>	.	.	END=3075505;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr18	3655963	.	N	<VQSR>	.	.	END=3655964;VQSLOD=Infinity;culprit=SOR
+chr18	5437962	.	N	<VQSR>	.	.	END=5437962;POSITIVE_TRAIN_SITE;VQSLOD=1003720.1112;culprit=QD
+chr18	6588937	.	N	<VQSR>	.	.	END=6588937;VQSLOD=558264.6286;culprit=QD
+chr18	21520797	.	N	<VQSR>	.	.	END=21520797;VQSLOD=Infinity;culprit=SOR
+chr18	23466291	.	N	<VQSR>	.	.	END=23466291;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr18	24366608	.	N	<VQSR>	.	.	END=24366608;VQSLOD=Infinity;culprit=SOR
+chr18	46118368	.	N	<VQSR>	.	.	END=46118368;VQSLOD=Infinity;culprit=SOR
+chr18	46253735	.	N	<VQSR>	.	.	END=46253738;VQSLOD=Infinity;culprit=SOR
+chr18	49488583	.	N	<VQSR>	.	.	END=49488583;VQSLOD=Infinity;culprit=SOR
+chr18	54269587	.	N	<VQSR>	.	.	END=54269590;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr18	55403562	.	N	<VQSR>	.	.	END=55403563;VQSLOD=Infinity;culprit=SOR
+chr18	57476792	.	N	<VQSR>	.	.	END=57476793;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr18	57662527	.	N	<VQSR>	.	.	END=57662528;VQSLOD=585194.7598;culprit=QD
+chr18	76816666	.	N	<VQSR>	.	.	END=76816667;VQSLOD=Infinity;culprit=QD
+chr18	76880036	.	N	<VQSR>	.	.	END=76880036;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr18	79863691	.	N	<VQSR>	.	.	END=79863691;VQSLOD=1063323.7757;culprit=QD
+chr19	327260	.	N	<VQSR>	.	.	END=327262;VQSLOD=870505.3551;culprit=QD
+chr19	815135	.	N	<VQSR>	.	.	END=815135;VQSLOD=741088.0515;culprit=ReadPosRankSum
+chr19	1085858	.	N	<VQSR>	.	.	END=1085858;VQSLOD=572954.3167;culprit=SOR
+chr19	1349157	.	N	<VQSR>	.	.	END=1349158;VQSLOD=1075253.4267;culprit=QD
+chr19	1605269	.	N	<VQSR>	.	.	END=1605270;VQSLOD=Infinity;culprit=SOR
+chr19	2271578	.	N	<VQSR>	.	.	END=2271579;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	2340238	.	N	<VQSR>	.	.	END=2340239;VQSLOD=Infinity;culprit=SOR
+chr19	2382605	.	N	<VQSR>	.	.	END=2382605;VQSLOD=Infinity;culprit=SOR
+chr19	3576316	.	N	<VQSR>	.	.	END=3576319;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	3933953	.	N	<VQSR>	.	.	END=3933954;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	4430527	.	N	<VQSR>	.	.	END=4430528;VQSLOD=Infinity;culprit=SOR
+chr19	4702724	.	N	<VQSR>	.	.	END=4702725;VQSLOD=Infinity;culprit=SOR
+chr19	5456627	.	N	<VQSR>	.	.	END=5456627;VQSLOD=1646002.7603;culprit=SOR
+chr19	5613385	.	N	<VQSR>	.	.	END=5613387;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	5667193	.	N	<VQSR>	.	.	END=5667193;VQSLOD=Infinity;culprit=SOR
+chr19	5753561	.	N	<VQSR>	.	.	END=5753562;VQSLOD=Infinity;culprit=QD
+chr19	6213474	.	N	<VQSR>	.	.	END=6213475;NEGATIVE_TRAIN_SITE;VQSLOD=-10.1276;culprit=QD
+chr19	6685208	.	N	<VQSR>	.	.	END=6685208;VQSLOD=Infinity;culprit=SOR
+chr19	7541076	.	N	<VQSR>	.	.	END=7541076;VQSLOD=731341.2539;culprit=ReadPosRankSum
+chr19	7561127	.	N	<VQSR>	.	.	END=7561128;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	7879463	.	N	<VQSR>	.	.	END=7879464;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	10117005	.	N	<VQSR>	.	.	END=10117005;VQSLOD=1362475.2019;culprit=QD
+chr19	10361893	.	N	<VQSR>	.	.	END=10361894;VQSLOD=Infinity;culprit=SOR
+chr19	10986948	.	N	<VQSR>	.	.	END=10986948;VQSLOD=502540.7338;culprit=QD
+chr19	11361192	.	N	<VQSR>	.	.	END=11361192;VQSLOD=Infinity;culprit=SOR
+chr19	11866023	.	N	<VQSR>	.	.	END=11866025;VQSLOD=Infinity;culprit=SOR
+chr19	13227366	.	N	<VQSR>	.	.	END=13227369;VQSLOD=Infinity;culprit=FS
+chr19	14482947	.	N	<VQSR>	.	.	END=14482948;VQSLOD=Infinity;culprit=SOR
+chr19	14942171	.	N	<VQSR>	.	.	END=14942171;VQSLOD=Infinity;culprit=FS
+chr19	16076005	.	N	<VQSR>	.	.	END=16076005;VQSLOD=Infinity;culprit=SOR
+chr19	18233463	.	N	<VQSR>	.	.	END=18233464;VQSLOD=Infinity;culprit=SOR
+chr19	18281189	.	N	<VQSR>	.	.	END=18281190;VQSLOD=Infinity;culprit=SOR
+chr19	18430769	.	N	<VQSR>	.	.	END=18430769;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	19026242	.	N	<VQSR>	.	.	END=19026242;VQSLOD=Infinity;culprit=SOR
+chr19	20117892	.	N	<VQSR>	.	.	END=20117892;VQSLOD=893489.0103;culprit=QD
+chr19	20645300	.	N	<VQSR>	.	.	END=20645300;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	20645604	.	N	<VQSR>	.	.	END=20645604;VQSLOD=Infinity;culprit=SOR
+chr19	21378606	.	N	<VQSR>	.	.	END=21378606;VQSLOD=Infinity;culprit=SOR
+chr19	31349605	.	N	<VQSR>	.	.	END=31349605;VQSLOD=Infinity;culprit=SOR
+chr19	32860470	.	N	<VQSR>	.	.	END=32860471;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	33021726	.	N	<VQSR>	.	.	END=33021727;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	33811768	.	N	<VQSR>	.	.	END=33811768;VQSLOD=Infinity;culprit=SOR
+chr19	35042646	.	N	<VQSR>	.	.	END=35042646;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	35111541	.	N	<VQSR>	.	.	END=35111542;VQSLOD=Infinity;culprit=SOR
+chr19	35119068	.	N	<VQSR>	.	.	END=35119071;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	35787732	.	N	<VQSR>	.	.	END=35787732;VQSLOD=Infinity;culprit=SOR
+chr19	36997775	.	N	<VQSR>	.	.	END=36997775;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	40192348	.	N	<VQSR>	.	.	END=40192349;VQSLOD=Infinity;culprit=SOR
+chr19	40682985	.	N	<VQSR>	.	.	END=40682985;VQSLOD=Infinity;culprit=QD
+chr19	40686705	.	N	<VQSR>	.	.	END=40686705;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	41363582	.	N	<VQSR>	.	.	END=41363582;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	42226078	.	N	<VQSR>	.	.	END=42226079;VQSLOD=1020002.0141;culprit=QD
+chr19	43999389	.	N	<VQSR>	.	.	END=43999390;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	44343328	.	N	<VQSR>	.	.	END=44343329;POSITIVE_TRAIN_SITE;VQSLOD=1009839.0971;culprit=QD
+chr19	45489059	.	N	<VQSR>	.	.	END=45489060;VQSLOD=Infinity;culprit=SOR
+chr19	45619039	.	N	<VQSR>	.	.	END=45619040;VQSLOD=Infinity;culprit=FS
+chr19	46649888	.	N	<VQSR>	.	.	END=46649891;VQSLOD=1078413.3094;culprit=SOR
+chr19	48196182	.	N	<VQSR>	.	.	END=48196183;VQSLOD=Infinity;culprit=SOR
+chr19	48419515	.	N	<VQSR>	.	.	END=48419516;VQSLOD=Infinity;culprit=SOR
+chr19	48616995	.	N	<VQSR>	.	.	END=48616995;VQSLOD=Infinity;culprit=FS
+chr19	48638149	.	N	<VQSR>	.	.	END=48638153;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	49907537	.	N	<VQSR>	.	.	END=49907538;NEGATIVE_TRAIN_SITE;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	50007714	.	N	<VQSR>	.	.	END=50007735;VQSLOD=Infinity;culprit=FS
+chr19	50662519	.	N	<VQSR>	.	.	END=50662522;VQSLOD=1091598.1176;culprit=SOR
+chr19	50909109	.	N	<VQSR>	.	.	END=50909110;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	51332638	.	N	<VQSR>	.	.	END=51332638;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	51416180	.	N	<VQSR>	.	.	END=51416180;VQSLOD=368074.3045;culprit=QD
+chr19	52281519	.	N	<VQSR>	.	.	END=52281519;VQSLOD=Infinity;culprit=SOR
+chr19	52384494	.	N	<VQSR>	.	.	END=52384495;VQSLOD=Infinity;culprit=SOR
+chr19	55160605	.	N	<VQSR>	.	.	END=55160626;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	55358511	.	N	<VQSR>	.	.	END=55358535;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr19	55518249	.	N	<VQSR>	.	.	END=55518249;VQSLOD=Infinity;culprit=FS
+chr19	55678602	.	N	<VQSR>	.	.	END=55678603;VQSLOD=Infinity;culprit=SOR
+chr19	55738355	.	N	<VQSR>	.	.	END=55738355;VQSLOD=1064175.7957;culprit=QD
+chr19	55796313	.	N	<VQSR>	.	.	END=55796313;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr19	57639970	.	N	<VQSR>	.	.	END=57639971;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	243567	.	N	<VQSR>	.	.	END=243567;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	271998	.	N	<VQSR>	.	.	END=271999;VQSLOD=Infinity;culprit=SOR
+chr2	3389794	.	N	<VQSR>	.	.	END=3389794;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr2	5693294	.	N	<VQSR>	.	.	END=5693295;VQSLOD=1077816.5436;culprit=QD
+chr2	6936399	.	N	<VQSR>	.	.	END=6936401;VQSLOD=326646.3606;culprit=ReadPosRankSum
+chr2	7400515	.	N	<VQSR>	.	.	END=7400515;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	8974358	.	N	<VQSR>	.	.	END=8974359;VQSLOD=Infinity;culprit=FS
+chr2	9843462	.	N	<VQSR>	.	.	END=9843462;VQSLOD=Infinity;culprit=SOR
+chr2	11133310	.	N	<VQSR>	.	.	END=11133310;VQSLOD=Infinity;culprit=SOR
+chr2	11133332	.	N	<VQSR>	.	.	END=11133332;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	11765510	.	N	<VQSR>	.	.	END=11765511;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr2	11804982	.	N	<VQSR>	.	.	END=11804983;VQSLOD=Infinity;culprit=SOR
+chr2	25652532	.	N	<VQSR>	.	.	END=25652532;VQSLOD=Infinity;culprit=FS
+chr2	27039202	.	N	<VQSR>	.	.	END=27039202;VQSLOD=1015571.3658;culprit=QD
+chr2	27277865	.	N	<VQSR>	.	.	END=27277866;VQSLOD=570763.9442;culprit=QD
+chr2	27372781	.	N	<VQSR>	.	.	END=27372782;VQSLOD=Infinity;culprit=SOR
+chr2	27374323	.	N	<VQSR>	.	.	END=27374323;VQSLOD=Infinity;culprit=SOR
+chr2	37146839	.	N	<VQSR>	.	.	END=37146839;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	38358691	.	N	<VQSR>	.	.	END=38358692;VQSLOD=Infinity;culprit=SOR
+chr2	38822919	.	N	<VQSR>	.	.	END=38822920;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	47520858	.	N	<VQSR>	.	.	END=47520866;VQSLOD=Infinity;culprit=SOR
+chr2	54255566	.	N	<VQSR>	.	.	END=54255572;VQSLOD=Infinity;culprit=FS
+chr2	65003929	.	N	<VQSR>	.	.	END=65003930;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	68162349	.	N	<VQSR>	.	.	END=68162351;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	68162425	.	N	<VQSR>	.	.	END=68162425;VQSLOD=Infinity;culprit=SOR
+chr2	70449637	.	N	<VQSR>	.	.	END=70449638;VQSLOD=Infinity;culprit=SOR
+chr2	73247948	.	N	<VQSR>	.	.	END=73247948;VQSLOD=Infinity;culprit=SOR
+chr2	73265401	.	N	<VQSR>	.	.	END=73265401;VQSLOD=Infinity;culprit=SOR
+chr2	74304657	.	N	<VQSR>	.	.	END=74304658;VQSLOD=Infinity;culprit=SOR
+chr2	79121003	.	N	<VQSR>	.	.	END=79121004;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr2	85621624	.	N	<VQSR>	.	.	END=85621625;POSITIVE_TRAIN_SITE;VQSLOD=1075033.5319;culprit=QD
+chr2	88562260	.	N	<VQSR>	.	.	END=88562261;VQSLOD=Infinity;culprit=SOR
+chr2	96876770	.	N	<VQSR>	.	.	END=96876770;VQSLOD=Infinity;culprit=SOR
+chr2	108008484	.	N	<VQSR>	.	.	END=108008485;VQSLOD=Infinity;culprit=SOR
+chr2	109129326	.	N	<VQSR>	.	.	END=109129345;VQSLOD=Infinity;culprit=FS
+chr2	112085988	.	N	<VQSR>	.	.	END=112085989;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	112542424	.	N	<VQSR>	.	.	END=112542449;VQSLOD=477513.1202;culprit=QD
+chr2	112722168	.	N	<VQSR>	.	.	END=112722169;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	118096518	.	N	<VQSR>	.	.	END=118096519;VQSLOD=Infinity;culprit=QD
+chr2	119956825	.	N	<VQSR>	.	.	END=119956826;VQSLOD=Infinity;culprit=SOR
+chr2	121367781	.	N	<VQSR>	.	.	END=121367782;VQSLOD=1215666.3168;culprit=QD
+chr2	127423658	.	N	<VQSR>	.	.	END=127423659;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	128133304	.	N	<VQSR>	.	.	END=128133304;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	131516224	.	N	<VQSR>	.	.	END=131516224;VQSLOD=Infinity;culprit=SOR
+chr2	131516225	.	N	<VQSR>	.	.	END=131516225;VQSLOD=Infinity;culprit=SOR
+chr2	131516229	.	N	<VQSR>	.	.	END=131516229;VQSLOD=Infinity;culprit=SOR
+chr2	135776391	.	N	<VQSR>	.	.	END=135776392;VQSLOD=Infinity;culprit=SOR
+chr2	147975979	.	N	<VQSR>	.	.	END=147975979;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	157534054	.	N	<VQSR>	.	.	END=157534054;VQSLOD=Infinity;culprit=SOR
+chr2	158178832	.	N	<VQSR>	.	.	END=158178832;VQSLOD=Infinity;culprit=SOR
+chr2	159236192	.	N	<VQSR>	.	.	END=159236192;VQSLOD=1547951.3629;culprit=QD
+chr2	162172893	.	N	<VQSR>	.	.	END=162172895;VQSLOD=564236.4871;culprit=QD
+chr2	169504410	.	N	<VQSR>	.	.	END=169504411;VQSLOD=910870.0042;culprit=QD
+chr2	169776450	.	N	<VQSR>	.	.	END=169776450;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	169776513	.	N	<VQSR>	.	.	END=169776513;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr2	169776593	.	N	<VQSR>	.	.	END=169776594;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	174574953	.	N	<VQSR>	.	.	END=174574953;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr2	181534770	.	N	<VQSR>	.	.	END=181534770;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	181539065	.	N	<VQSR>	.	.	END=181539065;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	182866039	.	N	<VQSR>	.	.	END=182866040;VQSLOD=Infinity;culprit=SOR
+chr2	195718229	.	N	<VQSR>	.	.	END=195718229;VQSLOD=937585.6853;culprit=QD
+chr2	199819523	.	N	<VQSR>	.	.	END=199819524;VQSLOD=Infinity;culprit=SOR
+chr2	201419513	.	N	<VQSR>	.	.	END=201419513;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	202290292	.	N	<VQSR>	.	.	END=202290293;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr2	202552668	.	N	<VQSR>	.	.	END=202552669;VQSLOD=Infinity;culprit=SOR
+chr2	205113623	.	N	<VQSR>	.	.	END=205113623;VQSLOD=Infinity;culprit=SOR
+chr2	205766829	.	N	<VQSR>	.	.	END=205766829;VQSLOD=1484346.6073;culprit=QD
+chr2	206587427	.	N	<VQSR>	.	.	END=206587428;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	209729802	.	N	<VQSR>	.	.	END=209729803;VQSLOD=Infinity;culprit=SOR
+chr2	210455317	.	N	<VQSR>	.	.	END=210455317;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	210656503	.	N	<VQSR>	.	.	END=210656504;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr2	214731137	.	N	<VQSR>	.	.	END=214731137;VQSLOD=Infinity;culprit=SOR
+chr2	215075560	.	N	<VQSR>	.	.	END=215075561;VQSLOD=110750.1720;culprit=ReadPosRankSum
+chr2	217848163	.	N	<VQSR>	.	.	END=217848169;VQSLOD=Infinity;culprit=SOR
+chr2	218400413	.	N	<VQSR>	.	.	END=218400413;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr2	219019160	.	N	<VQSR>	.	.	END=219019161;VQSLOD=Infinity;culprit=SOR
+chr2	219329809	.	N	<VQSR>	.	.	END=219329810;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	219399821	.	N	<VQSR>	.	.	END=219399821;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	222599950	.	N	<VQSR>	.	.	END=222599951;VQSLOD=1443105.3479;culprit=QD
+chr2	223912388	.	N	<VQSR>	.	.	END=223912388;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr2	227813722	.	N	<VQSR>	.	.	END=227813723;VQSLOD=824106.9303;culprit=QD
+chr2	232378818	.	N	<VQSR>	.	.	END=232378821;VQSLOD=Infinity;culprit=SOR
+chr2	232406987	.	N	<VQSR>	.	.	END=232406987;VQSLOD=Infinity;culprit=SOR
+chr2	233760233	.	N	<VQSR>	.	.	END=233760233;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	233852711	.	N	<VQSR>	.	.	END=233852712;VQSLOD=Infinity;culprit=SOR
+chr2	237549187	.	N	<VQSR>	.	.	END=237549190;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr2	238093839	.	N	<VQSR>	.	.	END=238093842;POSITIVE_TRAIN_SITE;VQSLOD=964277.6062;culprit=SOR
+chr2	240042642	.	N	<VQSR>	.	.	END=240042650;VQSLOD=709463.9380;culprit=QD
+chr2	240042651	.	N	<VQSR>	.	.	END=240042699;VQSLOD=710545.4874;culprit=QD
+chr2	241081585	.	N	<VQSR>	.	.	END=241081585;VQSLOD=Infinity;culprit=SOR
+chr20	290584	.	N	<VQSR>	.	.	END=290584;VQSLOD=Infinity;culprit=SOR
+chr20	353673	.	N	<VQSR>	.	.	END=353674;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr20	2815075	.	N	<VQSR>	.	.	END=2815076;VQSLOD=948737.7884;culprit=QD
+chr20	2816491	.	N	<VQSR>	.	.	END=2816494;VQSLOD=Infinity;culprit=SOR
+chr20	3045699	.	N	<VQSR>	.	.	END=3045699;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	3231576	.	N	<VQSR>	.	.	END=3231576;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	3703177	.	N	<VQSR>	.	.	END=3703178;VQSLOD=Infinity;culprit=SOR
+chr20	13715177	.	N	<VQSR>	.	.	END=13715177;VQSLOD=Infinity;culprit=QD
+chr20	16378711	.	N	<VQSR>	.	.	END=16378712;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	16749009	.	N	<VQSR>	.	.	END=16749009;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	18524919	.	N	<VQSR>	.	.	END=18524920;VQSLOD=Infinity;culprit=SOR
+chr20	19579911	.	N	<VQSR>	.	.	END=19579912;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	21382065	.	N	<VQSR>	.	.	END=21382066;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr20	23353977	.	N	<VQSR>	.	.	END=23353978;VQSLOD=Infinity;culprit=SOR
+chr20	24964443	.	N	<VQSR>	.	.	END=24964446;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	25476413	.	N	<VQSR>	.	.	END=25476419;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	28565416	.	N	<VQSR>	.	.	END=28565416;VQSLOD=925878.0460;culprit=QD
+chr20	33367013	.	N	<VQSR>	.	.	END=33367014;VQSLOD=Infinity;culprit=QD
+chr20	34526485	.	N	<VQSR>	.	.	END=34526485;VQSLOD=Infinity;culprit=SOR
+chr20	34581691	.	N	<VQSR>	.	.	END=34581695;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	34710006	.	N	<VQSR>	.	.	END=34710006;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	34999750	.	N	<VQSR>	.	.	END=34999752;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	36817487	.	N	<VQSR>	.	.	END=36817489;VQSLOD=Infinity;culprit=SOR
+chr20	44727299	.	N	<VQSR>	.	.	END=44727300;VQSLOD=Infinity;culprit=SOR
+chr20	48660101	.	N	<VQSR>	.	.	END=48660101;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr20	54169689	.	N	<VQSR>	.	.	END=54169690;VQSLOD=1714783.1168;culprit=QD
+chr20	57616116	.	N	<VQSR>	.	.	END=57616118;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	58434572	.	N	<VQSR>	.	.	END=58434573;VQSLOD=1475326.0053;culprit=QD
+chr20	61719190	.	N	<VQSR>	.	.	END=61719190;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	62216869	.	N	<VQSR>	.	.	END=62216869;VQSLOD=Infinity;culprit=SOR
+chr20	62414495	.	N	<VQSR>	.	.	END=62414507;VQSLOD=810809.3122;culprit=FS
+chr20	63203571	.	N	<VQSR>	.	.	END=63203571;VQSLOD=879279.8117;culprit=QD
+chr20	63312564	.	N	<VQSR>	.	.	END=63312565;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr20	63694304	.	N	<VQSR>	.	.	END=63694305;NEGATIVE_TRAIN_SITE;VQSLOD=-10.0442;culprit=FS
+chr20	63701286	.	N	<VQSR>	.	.	END=63701286;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr20	63738073	.	N	<VQSR>	.	.	END=63738073;VQSLOD=Infinity;culprit=FS
+chr20	63877033	.	N	<VQSR>	.	.	END=63877033;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr21	18485751	.	N	<VQSR>	.	.	END=18485752;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr21	26010047	.	N	<VQSR>	.	.	END=26010047;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr21	32467905	.	N	<VQSR>	.	.	END=32467905;VQSLOD=Infinity;culprit=SOR
+chr21	34095173	.	N	<VQSR>	.	.	END=34095174;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr21	36758983	.	N	<VQSR>	.	.	END=36758984;VQSLOD=720889.7884;culprit=QD
+chr21	37227633	.	N	<VQSR>	.	.	END=37227634;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr21	38878838	.	N	<VQSR>	.	.	END=38878839;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr21	39345109	.	N	<VQSR>	.	.	END=39345111;VQSLOD=732012.8754;culprit=QD
+chr21	39609503	.	N	<VQSR>	.	.	END=39609504;VQSLOD=Infinity;culprit=SOR
+chr21	41476633	.	N	<VQSR>	.	.	END=41476635;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr21	46227704	.	N	<VQSR>	.	.	END=46227706;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr21	46556906	.	N	<VQSR>	.	.	END=46556907;VQSLOD=Infinity;culprit=SOR
+chr22	15820306	.	N	<VQSR>	.	.	END=15820309;VQSLOD=Infinity;culprit=SOR
+chr22	17105825	.	N	<VQSR>	.	.	END=17105829;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	17121023	.	N	<VQSR>	.	.	END=17121023;VQSLOD=Infinity;culprit=SOR
+chr22	17548128	.	N	<VQSR>	.	.	END=17548129;VQSLOD=Infinity;culprit=QD
+chr22	19456379	.	N	<VQSR>	.	.	END=19456379;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	19469980	.	N	<VQSR>	.	.	END=19469981;POSITIVE_TRAIN_SITE;VQSLOD=1422435.4941;culprit=ReadPosRankSum
+chr22	21002538	.	N	<VQSR>	.	.	END=21002546;VQSLOD=Infinity;culprit=FS
+chr22	23292427	.	N	<VQSR>	.	.	END=23292427;VQSLOD=Infinity;culprit=SOR
+chr22	26458658	.	N	<VQSR>	.	.	END=26458659;VQSLOD=Infinity;culprit=FS
+chr22	28296159	.	N	<VQSR>	.	.	END=28296159;VQSLOD=1080324.3869;culprit=QD
+chr22	28734359	.	N	<VQSR>	.	.	END=28734359;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	29838203	.	N	<VQSR>	.	.	END=29838206;VQSLOD=Infinity;culprit=SOR
+chr22	32360843	.	N	<VQSR>	.	.	END=32360844;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	32513916	.	N	<VQSR>	.	.	END=32513917;VQSLOD=Infinity;culprit=SOR
+chr22	37675724	.	N	<VQSR>	.	.	END=37675725;VQSLOD=1329770.9244;culprit=QD
+chr22	37765828	.	N	<VQSR>	.	.	END=37765828;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	38303045	.	N	<VQSR>	.	.	END=38303049;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	38780899	.	N	<VQSR>	.	.	END=38780899;VQSLOD=1056886.4549;culprit=QD
+chr22	41249496	.	N	<VQSR>	.	.	END=41249497;POSITIVE_TRAIN_SITE;VQSLOD=1076082.5578;culprit=QD
+chr22	42516336	.	N	<VQSR>	.	.	END=42516336;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	42556482	.	N	<VQSR>	.	.	END=42556483;VQSLOD=682725.3502;culprit=ReadPosRankSum
+chr22	42857980	.	N	<VQSR>	.	.	END=42857980;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr22	43128481	.	N	<VQSR>	.	.	END=43128483;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	43937008	.	N	<VQSR>	.	.	END=43937008;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	45533714	.	N	<VQSR>	.	.	END=45533715;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr22	49885118	.	N	<VQSR>	.	.	END=49885119;VQSLOD=862539.8309;culprit=QD
+chr3	3076321	.	N	<VQSR>	.	.	END=3076323;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	3095471	.	N	<VQSR>	.	.	END=3095471;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	4645786	.	N	<VQSR>	.	.	END=4645786;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	4831026	.	N	<VQSR>	.	.	END=4831026;VQSLOD=Infinity;culprit=SOR
+chr3	9688845	.	N	<VQSR>	.	.	END=9688846;VQSLOD=Infinity;culprit=SOR
+chr3	10276546	.	N	<VQSR>	.	.	END=10276546;VQSLOD=Infinity;culprit=FS
+chr3	10305862	.	N	<VQSR>	.	.	END=10305868;VQSLOD=Infinity;culprit=SOR
+chr3	33866343	.	N	<VQSR>	.	.	END=33866343;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	38599089	.	N	<VQSR>	.	.	END=38599089;VQSLOD=508612.9472;culprit=QD
+chr3	40462029	.	N	<VQSR>	.	.	END=40462029;VQSLOD=Infinity;culprit=SOR
+chr3	42659204	.	N	<VQSR>	.	.	END=42659207;VQSLOD=1512704.4218;culprit=QD
+chr3	44287902	.	N	<VQSR>	.	.	END=44287903;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	44358201	.	N	<VQSR>	.	.	END=44358201;VQSLOD=Infinity;culprit=SOR
+chr3	45636143	.	N	<VQSR>	.	.	END=45636143;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	45636146	.	N	<VQSR>	.	.	END=45636147;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	47009418	.	N	<VQSR>	.	.	END=47009419;POSITIVE_TRAIN_SITE;VQSLOD=1274753.3602;culprit=QD
+chr3	48647967	.	N	<VQSR>	.	.	END=48647968;VQSLOD=Infinity;culprit=SOR
+chr3	49011101	.	N	<VQSR>	.	.	END=49011102;VQSLOD=Infinity;culprit=SOR
+chr3	51471061	.	N	<VQSR>	.	.	END=51471064;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	51779028	.	N	<VQSR>	.	.	END=51779028;VQSLOD=1610351.5863;culprit=QD
+chr3	52225343	.	N	<VQSR>	.	.	END=52225344;VQSLOD=Infinity;culprit=SOR
+chr3	52743398	.	N	<VQSR>	.	.	END=52743399;VQSLOD=Infinity;culprit=SOR
+chr3	52799542	.	N	<VQSR>	.	.	END=52799543;VQSLOD=Infinity;culprit=SOR
+chr3	52836713	.	N	<VQSR>	.	.	END=52836713;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	53665639	.	N	<VQSR>	.	.	END=53665641;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	53848646	.	N	<VQSR>	.	.	END=53848646;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	57402310	.	N	<VQSR>	.	.	END=57402310;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	57596991	.	N	<VQSR>	.	.	END=57596994;VQSLOD=Infinity;culprit=SOR
+chr3	69030022	.	N	<VQSR>	.	.	END=69030022;VQSLOD=Infinity;culprit=FS
+chr3	100451756	.	N	<VQSR>	.	.	END=100451756;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	100875482	.	N	<VQSR>	.	.	END=100875488;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	107744609	.	N	<VQSR>	.	.	END=107744610;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	108460372	.	N	<VQSR>	.	.	END=108460373;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	109330873	.	N	<VQSR>	.	.	END=109330873;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	109494206	.	N	<VQSR>	.	.	END=109494207;VQSLOD=Infinity;culprit=SOR
+chr3	119609602	.	N	<VQSR>	.	.	END=119609609;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	122091580	.	N	<VQSR>	.	.	END=122091581;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	123367851	.	N	<VQSR>	.	.	END=123367852;VQSLOD=1454694.1762;culprit=QD
+chr3	123726104	.	N	<VQSR>	.	.	END=123726105;VQSLOD=566909.9758;culprit=ReadPosRankSum
+chr3	124678402	.	N	<VQSR>	.	.	END=124678403;VQSLOD=Infinity;culprit=SOR
+chr3	128910662	.	N	<VQSR>	.	.	END=128910662;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr3	129566469	.	N	<VQSR>	.	.	END=129566470;VQSLOD=1571995.6969;culprit=QD
+chr3	130403565	.	N	<VQSR>	.	.	END=130403566;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	130471876	.	N	<VQSR>	.	.	END=130471877;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	131014202	.	N	<VQSR>	.	.	END=131014203;VQSLOD=Infinity;culprit=SOR
+chr3	131024808	.	N	<VQSR>	.	.	END=131024808;VQSLOD=841048.1242;culprit=FS
+chr3	138262597	.	N	<VQSR>	.	.	END=138262598;VQSLOD=1213642.0532;culprit=QD
+chr3	155804255	.	N	<VQSR>	.	.	END=155804258;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	158592602	.	N	<VQSR>	.	.	END=158592606;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	158809153	.	N	<VQSR>	.	.	END=158809153;VQSLOD=Infinity;culprit=SOR
+chr3	161372693	.	N	<VQSR>	.	.	END=161372693;VQSLOD=Infinity;culprit=SOR
+chr3	172448338	.	N	<VQSR>	.	.	END=172448338;VQSLOD=1520994.5729;culprit=QD
+chr3	184039048	.	N	<VQSR>	.	.	END=184039048;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	184039049	.	N	<VQSR>	.	.	END=184039049;VQSLOD=Infinity;culprit=SOR
+chr3	184711345	.	N	<VQSR>	.	.	END=184711345;VQSLOD=Infinity;culprit=SOR
+chr3	185612516	.	N	<VQSR>	.	.	END=185612519;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	193372312	.	N	<VQSR>	.	.	END=193372312;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr3	196431597	.	N	<VQSR>	.	.	END=196431599;POSITIVE_TRAIN_SITE;VQSLOD=300783.6072;culprit=SOR
+chr4	337904	.	N	<VQSR>	.	.	END=337904;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr4	948128	.	N	<VQSR>	.	.	END=948128;VQSLOD=Infinity;culprit=SOR
+chr4	1737791	.	N	<VQSR>	.	.	END=1737800;VQSLOD=962926.6586;culprit=FS
+chr4	5731468	.	N	<VQSR>	.	.	END=5731469;VQSLOD=Infinity;culprit=SOR
+chr4	5839696	.	N	<VQSR>	.	.	END=5839696;VQSLOD=Infinity;culprit=FS
+chr4	7460099	.	N	<VQSR>	.	.	END=7460099;NEGATIVE_TRAIN_SITE;POSITIVE_TRAIN_SITE;VQSLOD=-13.1488;culprit=SOR
+chr4	15936554	.	N	<VQSR>	.	.	END=15936555;VQSLOD=Infinity;culprit=SOR
+chr4	15994056	.	N	<VQSR>	.	.	END=15994057;VQSLOD=979550.0736;culprit=ReadPosRankSum
+chr4	17511875	.	N	<VQSR>	.	.	END=17511876;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	17632633	.	N	<VQSR>	.	.	END=17632633;VQSLOD=Infinity;culprit=SOR
+chr4	17840246	.	N	<VQSR>	.	.	END=17840247;VQSLOD=Infinity;culprit=SOR
+chr4	17874112	.	N	<VQSR>	.	.	END=17874115;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	24820162	.	N	<VQSR>	.	.	END=24820164;VQSLOD=Infinity;culprit=SOR
+chr4	26860924	.	N	<VQSR>	.	.	END=26860927;VQSLOD=Infinity;culprit=SOR
+chr4	36147388	.	N	<VQSR>	.	.	END=36147389;VQSLOD=Infinity;culprit=SOR
+chr4	40807190	.	N	<VQSR>	.	.	END=40807191;VQSLOD=Infinity;culprit=SOR
+chr4	48527666	.	N	<VQSR>	.	.	END=48527668;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	55087651	.	N	<VQSR>	.	.	END=55087654;VQSLOD=Infinity;culprit=SOR
+chr4	56395206	.	N	<VQSR>	.	.	END=56395206;VQSLOD=Infinity;culprit=QD
+chr4	70249239	.	N	<VQSR>	.	.	END=70249240;VQSLOD=1138898.6592;culprit=QD
+chr4	72568662	.	N	<VQSR>	.	.	END=72568663;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr4	75876184	.	N	<VQSR>	.	.	END=75876184;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr4	77048672	.	N	<VQSR>	.	.	END=77048673;VQSLOD=Infinity;culprit=SOR
+chr4	82502936	.	N	<VQSR>	.	.	END=82502936;VQSLOD=Infinity;culprit=SOR
+chr4	88790539	.	N	<VQSR>	.	.	END=88790539;VQSLOD=1183701.2238;culprit=QD
+chr4	94285101	.	N	<VQSR>	.	.	END=94285105;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	94640500	.	N	<VQSR>	.	.	END=94640500;VQSLOD=Infinity;culprit=SOR
+chr4	100480004	.	N	<VQSR>	.	.	END=100480007;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr4	113255692	.	N	<VQSR>	.	.	END=113255692;VQSLOD=Infinity;culprit=QD
+chr4	118745062	.	N	<VQSR>	.	.	END=118745063;VQSLOD=Infinity;culprit=SOR
+chr4	119029820	.	N	<VQSR>	.	.	END=119029821;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	121669728	.	N	<VQSR>	.	.	END=121669729;VQSLOD=Infinity;culprit=SOR
+chr4	122301262	.	N	<VQSR>	.	.	END=122301263;VQSLOD=Infinity;culprit=SOR
+chr4	139266507	.	N	<VQSR>	.	.	END=139266507;VQSLOD=Infinity;culprit=SOR
+chr4	139730430	.	N	<VQSR>	.	.	END=139730433;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	143586117	.	N	<VQSR>	.	.	END=143586117;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	143693204	.	N	<VQSR>	.	.	END=143693205;VQSLOD=1280118.2054;culprit=QD
+chr4	147618050	.	N	<VQSR>	.	.	END=147618050;VQSLOD=Infinity;culprit=SOR
+chr4	150265859	.	N	<VQSR>	.	.	END=150265859;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr4	151662755	.	N	<VQSR>	.	.	END=151662755;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr4	174508219	.	N	<VQSR>	.	.	END=174508220;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr4	177310144	.	N	<VQSR>	.	.	END=177310145;VQSLOD=Infinity;culprit=SOR
+chr4	185078286	.	N	<VQSR>	.	.	END=185078287;VQSLOD=Infinity;culprit=SOR
+chr4	185402106	.	N	<VQSR>	.	.	END=185402106;VQSLOD=Infinity;culprit=SOR
+chr4	186191193	.	N	<VQSR>	.	.	END=186191193;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	432782	.	N	<VQSR>	.	.	END=432783;VQSLOD=926354.3682;culprit=QD
+chr5	10390316	.	N	<VQSR>	.	.	END=10390317;VQSLOD=Infinity;culprit=SOR
+chr5	16711256	.	N	<VQSR>	.	.	END=16711257;POSITIVE_TRAIN_SITE;VQSLOD=800779.4583;culprit=QD
+chr5	31540928	.	N	<VQSR>	.	.	END=31540928;VQSLOD=546963.8257;culprit=QD
+chr5	34035732	.	N	<VQSR>	.	.	END=34035732;VQSLOD=Infinity;culprit=SOR
+chr5	40950055	.	N	<VQSR>	.	.	END=40950055;VQSLOD=Infinity;culprit=QD
+chr5	50828000	.	N	<VQSR>	.	.	END=50828001;VQSLOD=1024823.8112;culprit=QD
+chr5	54310517	.	N	<VQSR>	.	.	END=54310518;VQSLOD=Infinity;culprit=SOR
+chr5	56457995	.	N	<VQSR>	.	.	END=56457995;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	56882021	.	N	<VQSR>	.	.	END=56882024;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	58999563	.	N	<VQSR>	.	.	END=58999563;VQSLOD=Infinity;culprit=SOR
+chr5	65713119	.	N	<VQSR>	.	.	END=65713120;VQSLOD=Infinity;culprit=FS
+chr5	73499230	.	N	<VQSR>	.	.	END=73499230;VQSLOD=Infinity;culprit=SOR
+chr5	74801519	.	N	<VQSR>	.	.	END=74801521;POSITIVE_TRAIN_SITE;VQSLOD=965472.5733;culprit=QD
+chr5	75195890	.	N	<VQSR>	.	.	END=75195893;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	75230664	.	N	<VQSR>	.	.	END=75230665;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	75236663	.	N	<VQSR>	.	.	END=75236664;VQSLOD=Infinity;culprit=SOR
+chr5	75689145	.	N	<VQSR>	.	.	END=75689146;VQSLOD=Infinity;culprit=SOR
+chr5	80114654	.	N	<VQSR>	.	.	END=80114659;VQSLOD=Infinity;culprit=SOR
+chr5	90681278	.	N	<VQSR>	.	.	END=90681278;VQSLOD=Infinity;culprit=SOR
+chr5	90756446	.	N	<VQSR>	.	.	END=90756446;POSITIVE_TRAIN_SITE;VQSLOD=1517099.9302;culprit=QD
+chr5	93600829	.	N	<VQSR>	.	.	END=93600830;VQSLOD=1371029.4478;culprit=QD
+chr5	95283841	.	N	<VQSR>	.	.	END=95283841;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr5	96896546	.	N	<VQSR>	.	.	END=96896546;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	96996381	.	N	<VQSR>	.	.	END=96996382;POSITIVE_TRAIN_SITE;VQSLOD=786959.7137;culprit=QD
+chr5	98889241	.	N	<VQSR>	.	.	END=98889242;VQSLOD=Infinity;culprit=SOR
+chr5	103028838	.	N	<VQSR>	.	.	END=103028838;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	109855234	.	N	<VQSR>	.	.	END=109855237;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	111375001	.	N	<VQSR>	.	.	END=111375001;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	112205271	.	N	<VQSR>	.	.	END=112205271;POSITIVE_TRAIN_SITE;VQSLOD=715144.7577;culprit=QD
+chr5	114362934	.	N	<VQSR>	.	.	END=114362934;VQSLOD=Infinity;culprit=FS
+chr5	119134074	.	N	<VQSR>	.	.	END=119134075;VQSLOD=Infinity;culprit=SOR
+chr5	126469981	.	N	<VQSR>	.	.	END=126469981;VQSLOD=1442056.5119;culprit=QD
+chr5	126615109	.	N	<VQSR>	.	.	END=126615109;VQSLOD=Infinity;culprit=SOR
+chr5	126917846	.	N	<VQSR>	.	.	END=126917846;VQSLOD=Infinity;culprit=SOR
+chr5	132203680	.	N	<VQSR>	.	.	END=132203681;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	133026644	.	N	<VQSR>	.	.	END=133026644;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	133233568	.	N	<VQSR>	.	.	END=133233571;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	134679586	.	N	<VQSR>	.	.	END=134679587;VQSLOD=Infinity;culprit=SOR
+chr5	137943092	.	N	<VQSR>	.	.	END=137943093;VQSLOD=733518.0831;culprit=QD
+chr5	138177680	.	N	<VQSR>	.	.	END=138177680;VQSLOD=Infinity;culprit=SOR
+chr5	139137388	.	N	<VQSR>	.	.	END=139137388;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	141415641	.	N	<VQSR>	.	.	END=141415641;VQSLOD=1266900.4270;culprit=QD
+chr5	141945390	.	N	<VQSR>	.	.	END=141945390;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	147660538	.	N	<VQSR>	.	.	END=147660538;VQSLOD=Infinity;culprit=SOR
+chr5	149626955	.	N	<VQSR>	.	.	END=149626961;VQSLOD=844692.0336;culprit=QD
+chr5	149995316	.	N	<VQSR>	.	.	END=149995317;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr5	150205406	.	N	<VQSR>	.	.	END=150205406;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	150549879	.	N	<VQSR>	.	.	END=150549883;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	151133028	.	N	<VQSR>	.	.	END=151133028;VQSLOD=Infinity;culprit=SOR
+chr5	151187488	.	N	<VQSR>	.	.	END=151187489;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	151187513	.	N	<VQSR>	.	.	END=151187513;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	151791027	.	N	<VQSR>	.	.	END=151791028;VQSLOD=Infinity;culprit=SOR
+chr5	157738589	.	N	<VQSR>	.	.	END=157738589;VQSLOD=Infinity;culprit=SOR
+chr5	159084786	.	N	<VQSR>	.	.	END=159084788;VQSLOD=Infinity;culprit=SOR
+chr5	160394226	.	N	<VQSR>	.	.	END=160394227;VQSLOD=Infinity;culprit=SOR
+chr5	168149508	.	N	<VQSR>	.	.	END=168149508;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	173091078	.	N	<VQSR>	.	.	END=173091079;VQSLOD=Infinity;culprit=SOR
+chr5	174107798	.	N	<VQSR>	.	.	END=174107800;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr5	177503170	.	N	<VQSR>	.	.	END=177503173;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr5	178984177	.	N	<VQSR>	.	.	END=178984177;VQSLOD=Infinity;culprit=FS
+chr5	178984289	.	N	<VQSR>	.	.	END=178984298;POSITIVE_TRAIN_SITE;VQSLOD=630211.1998;culprit=FS
+chr5	181047856	.	N	<VQSR>	.	.	END=181047857;VQSLOD=1052341.0894;culprit=QD
+chr6	1390850	.	N	<VQSR>	.	.	END=1390850;VQSLOD=Infinity;culprit=SOR
+chr6	1611782	.	N	<VQSR>	.	.	END=1611782;VQSLOD=Infinity;culprit=FS
+chr6	3439361	.	N	<VQSR>	.	.	END=3439361;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	6318688	.	N	<VQSR>	.	.	END=6318688;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	7541915	.	N	<VQSR>	.	.	END=7541915;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	7555747	.	N	<VQSR>	.	.	END=7555748;VQSLOD=986672.4740;culprit=QD
+chr6	10784778	.	N	<VQSR>	.	.	END=10784778;VQSLOD=Infinity;culprit=SOR
+chr6	24418352	.	N	<VQSR>	.	.	END=24418353;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	25452225	.	N	<VQSR>	.	.	END=25452225;VQSLOD=Infinity;culprit=SOR
+chr6	26033581	.	N	<VQSR>	.	.	END=26033581;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr6	27762287	.	N	<VQSR>	.	.	END=27762287;VQSLOD=Infinity;culprit=SOR
+chr6	28149652	.	N	<VQSR>	.	.	END=28149653;VQSLOD=Infinity;culprit=SOR
+chr6	34058824	.	N	<VQSR>	.	.	END=34058825;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	36072865	.	N	<VQSR>	.	.	END=36072866;POSITIVE_TRAIN_SITE;VQSLOD=1268356.4099;culprit=QD
+chr6	36886081	.	N	<VQSR>	.	.	END=36886081;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	39345842	.	N	<VQSR>	.	.	END=39345842;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	41228366	.	N	<VQSR>	.	.	END=41228366;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	42106567	.	N	<VQSR>	.	.	END=42106568;VQSLOD=Infinity;culprit=SOR
+chr6	43621858	.	N	<VQSR>	.	.	END=43621859;VQSLOD=Infinity;culprit=SOR
+chr6	44166873	.	N	<VQSR>	.	.	END=44166876;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	44254424	.	N	<VQSR>	.	.	END=44254424;VQSLOD=Infinity;culprit=SOR
+chr6	46854900	.	N	<VQSR>	.	.	END=46854900;VQSLOD=Infinity;culprit=SOR
+chr6	53269306	.	N	<VQSR>	.	.	END=53269306;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	63229697	.	N	<VQSR>	.	.	END=63229697;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	75666724	.	N	<VQSR>	.	.	END=75666727;VQSLOD=1493501.2146;culprit=QD
+chr6	79234379	.	N	<VQSR>	.	.	END=79234379;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	83656666	.	N	<VQSR>	.	.	END=83656666;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr6	89080840	.	N	<VQSR>	.	.	END=89080844;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	89267603	.	N	<VQSR>	.	.	END=89267603;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	107755586	.	N	<VQSR>	.	.	END=107755587;POSITIVE_TRAIN_SITE;VQSLOD=1514366.1413;culprit=QD
+chr6	110476500	.	N	<VQSR>	.	.	END=110476506;VQSLOD=Infinity;culprit=SOR
+chr6	110476510	.	N	<VQSR>	.	.	END=110476510;VQSLOD=Infinity;culprit=SOR
+chr6	111597824	.	N	<VQSR>	.	.	END=111597824;VQSLOD=1337145.5364;culprit=QD
+chr6	113860033	.	N	<VQSR>	.	.	END=113860033;VQSLOD=Infinity;culprit=SOR
+chr6	116705054	.	N	<VQSR>	.	.	END=116705054;VQSLOD=Infinity;culprit=SOR
+chr6	122399668	.	N	<VQSR>	.	.	END=122399668;POSITIVE_TRAIN_SITE;VQSLOD=788090.9753;culprit=QD
+chr6	138773492	.	N	<VQSR>	.	.	END=138773492;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	138862583	.	N	<VQSR>	.	.	END=138862584;VQSLOD=Infinity;culprit=SOR
+chr6	143462894	.	N	<VQSR>	.	.	END=143462895;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	143760558	.	N	<VQSR>	.	.	END=143760559;VQSLOD=Infinity;culprit=SOR
+chr6	145502583	.	N	<VQSR>	.	.	END=145502583;VQSLOD=Infinity;culprit=SOR
+chr6	150066168	.	N	<VQSR>	.	.	END=150066168;VQSLOD=465627.2890;culprit=QD
+chr6	151041759	.	N	<VQSR>	.	.	END=151041762;VQSLOD=Infinity;culprit=SOR
+chr6	152697964	.	N	<VQSR>	.	.	END=152697968;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	158572309	.	N	<VQSR>	.	.	END=158572312;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	160595634	.	N	<VQSR>	.	.	END=160595636;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr6	161139556	.	N	<VQSR>	.	.	END=161139556;VQSLOD=Infinity;culprit=SOR
+chr6	167305726	.	N	<VQSR>	.	.	END=167305727;VQSLOD=Infinity;culprit=SOR
+chr7	607321	.	N	<VQSR>	.	.	END=607322;VQSLOD=1389987.2692;culprit=QD
+chr7	2253246	.	N	<VQSR>	.	.	END=2253246;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	3140916	.	N	<VQSR>	.	.	END=3140916;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	5199688	.	N	<VQSR>	.	.	END=5199689;VQSLOD=Infinity;culprit=SOR
+chr7	6026426	.	N	<VQSR>	.	.	END=6026426;VQSLOD=Infinity;culprit=SOR
+chr7	6402511	.	N	<VQSR>	.	.	END=6402512;VQSLOD=750159.5600;culprit=FS
+chr7	6402523	.	N	<VQSR>	.	.	END=6402525;VQSLOD=881022.3484;culprit=QD
+chr7	12604723	.	N	<VQSR>	.	.	END=12604723;VQSLOD=Infinity;culprit=QD
+chr7	13977501	.	N	<VQSR>	.	.	END=13977501;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	13989082	.	N	<VQSR>	.	.	END=13989083;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	16685876	.	N	<VQSR>	.	.	END=16685879;VQSLOD=Infinity;culprit=SOR
+chr7	20140884	.	N	<VQSR>	.	.	END=20140884;VQSLOD=Infinity;culprit=SOR
+chr7	20363730	.	N	<VQSR>	.	.	END=20363731;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	22150513	.	N	<VQSR>	.	.	END=22150514;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	22856721	.	N	<VQSR>	.	.	END=22856722;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	23155936	.	N	<VQSR>	.	.	END=23155941;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	24289484	.	N	<VQSR>	.	.	END=24289486;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	24863700	.	N	<VQSR>	.	.	END=24863701;VQSLOD=549544.9946;culprit=QD
+chr7	28494883	.	N	<VQSR>	.	.	END=28494883;POSITIVE_TRAIN_SITE;VQSLOD=938727.4033;culprit=ReadPosRankSum
+chr7	33177459	.	N	<VQSR>	.	.	END=33177459;VQSLOD=Infinity;culprit=SOR
+chr7	35801288	.	N	<VQSR>	.	.	END=35801288;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	36239018	.	N	<VQSR>	.	.	END=36239020;VQSLOD=Infinity;culprit=SOR
+chr7	43456279	.	N	<VQSR>	.	.	END=43456279;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	43501183	.	N	<VQSR>	.	.	END=43501185;VQSLOD=Infinity;culprit=SOR
+chr7	44115266	.	N	<VQSR>	.	.	END=44115266;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	44404780	.	N	<VQSR>	.	.	END=44404780;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	66377556	.	N	<VQSR>	.	.	END=66377556;VQSLOD=Infinity;culprit=SOR
+chr7	66671385	.	N	<VQSR>	.	.	END=66671385;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	66682710	.	N	<VQSR>	.	.	END=66682710;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	75416218	.	N	<VQSR>	.	.	END=75416218;VQSLOD=Infinity;culprit=SOR
+chr7	76022005	.	N	<VQSR>	.	.	END=76022005;VQSLOD=Infinity;culprit=FS
+chr7	87166631	.	N	<VQSR>	.	.	END=87166633;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	91265144	.	N	<VQSR>	.	.	END=91265144;VQSLOD=Infinity;culprit=SOR
+chr7	94419464	.	N	<VQSR>	.	.	END=94419466;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	100105218	.	N	<VQSR>	.	.	END=100105220;VQSLOD=Infinity;culprit=SOR
+chr7	100113838	.	N	<VQSR>	.	.	END=100113840;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	100158036	.	N	<VQSR>	.	.	END=100158037;VQSLOD=Infinity;culprit=SOR
+chr7	100186331	.	N	<VQSR>	.	.	END=100186332;VQSLOD=Infinity;culprit=SOR
+chr7	100221381	.	N	<VQSR>	.	.	END=100221385;POSITIVE_TRAIN_SITE;VQSLOD=763620.9264;culprit=QD
+chr7	100488740	.	N	<VQSR>	.	.	END=100488741;VQSLOD=1357601.6534;culprit=QD
+chr7	100686887	.	N	<VQSR>	.	.	END=100686888;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	100870353	.	N	<VQSR>	.	.	END=100870353;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	100964649	.	N	<VQSR>	.	.	END=100964651;VQSLOD=506694.8950;culprit=SOR
+chr7	100964658	.	N	<VQSR>	.	.	END=100964658;VQSLOD=568089.0133;culprit=SOR
+chr7	102934552	.	N	<VQSR>	.	.	END=102934555;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr7	103055754	.	N	<VQSR>	.	.	END=103055754;VQSLOD=Infinity;culprit=SOR
+chr7	103515504	.	N	<VQSR>	.	.	END=103515504;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	105506146	.	N	<VQSR>	.	.	END=105506146;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	107674214	.	N	<VQSR>	.	.	END=107674215;VQSLOD=Infinity;culprit=QD
+chr7	108150602	.	N	<VQSR>	.	.	END=108150602;VQSLOD=Infinity;culprit=SOR
+chr7	117020410	.	N	<VQSR>	.	.	END=117020411;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr7	122013320	.	N	<VQSR>	.	.	END=122013323;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr7	133305902	.	N	<VQSR>	.	.	END=133305902;VQSLOD=1371475.8307;culprit=QD
+chr7	135010022	.	N	<VQSR>	.	.	END=135010022;VQSLOD=Infinity;culprit=QD
+chr7	135413432	.	N	<VQSR>	.	.	END=135413432;VQSLOD=Infinity;culprit=QD
+chr7	135691161	.	N	<VQSR>	.	.	END=135691162;POSITIVE_TRAIN_SITE;VQSLOD=1576788.4720;culprit=QD
+chr7	138585999	.	N	<VQSR>	.	.	END=138586000;VQSLOD=Infinity;culprit=SOR
+chr7	138649188	.	N	<VQSR>	.	.	END=138649189;VQSLOD=Infinity;culprit=SOR
+chr7	149819807	.	N	<VQSR>	.	.	END=149819807;VQSLOD=Infinity;culprit=SOR
+chr7	149826742	.	N	<VQSR>	.	.	END=149826743;VQSLOD=Infinity;culprit=SOR
+chr7	149848221	.	N	<VQSR>	.	.	END=149848222;VQSLOD=Infinity;culprit=SOR
+chr7	149892407	.	N	<VQSR>	.	.	END=149892407;VQSLOD=Infinity;culprit=SOR
+chr7	150371260	.	N	<VQSR>	.	.	END=150371261;VQSLOD=Infinity;culprit=SOR
+chr7	152025937	.	N	<VQSR>	.	.	END=152025940;VQSLOD=Infinity;culprit=SOR
+chr7	158263158	.	N	<VQSR>	.	.	END=158263160;VQSLOD=Infinity;culprit=SOR
+chr8	13092579	.	N	<VQSR>	.	.	END=13092581;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	17628545	.	N	<VQSR>	.	.	END=17628545;VQSLOD=Infinity;culprit=SOR
+chr8	22004919	.	N	<VQSR>	.	.	END=22004920;VQSLOD=Infinity;culprit=SOR
+chr8	22634566	.	N	<VQSR>	.	.	END=22634566;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	22999622	.	N	<VQSR>	.	.	END=22999623;VQSLOD=Infinity;culprit=SOR
+chr8	23201752	.	N	<VQSR>	.	.	END=23201753;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	25300556	.	N	<VQSR>	.	.	END=25300557;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr8	26578175	.	N	<VQSR>	.	.	END=26578175;VQSLOD=Infinity;culprit=SOR
+chr8	26765960	.	N	<VQSR>	.	.	END=26765960;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	27469321	.	N	<VQSR>	.	.	END=27469323;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr8	27740525	.	N	<VQSR>	.	.	END=27740526;POSITIVE_TRAIN_SITE;VQSLOD=1235565.7181;culprit=ReadPosRankSum
+chr8	28794040	.	N	<VQSR>	.	.	END=28794046;VQSLOD=Infinity;culprit=SOR
+chr8	29165904	.	N	<VQSR>	.	.	END=29165904;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr8	31100837	.	N	<VQSR>	.	.	END=31100838;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	39054602	.	N	<VQSR>	.	.	END=39054602;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	39455446	.	N	<VQSR>	.	.	END=39455447;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	42362726	.	N	<VQSR>	.	.	END=42362727;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	43027412	.	N	<VQSR>	.	.	END=43027412;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	43072253	.	N	<VQSR>	.	.	END=43072254;VQSLOD=Infinity;culprit=SOR
+chr8	47408001	.	N	<VQSR>	.	.	END=47408002;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	63035626	.	N	<VQSR>	.	.	END=63035626;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	67204830	.	N	<VQSR>	.	.	END=67204831;VQSLOD=894277.7113;culprit=QD
+chr8	74752459	.	N	<VQSR>	.	.	END=74752460;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	75032174	.	N	<VQSR>	.	.	END=75032176;VQSLOD=Infinity;culprit=SOR
+chr8	81815405	.	N	<VQSR>	.	.	END=81815406;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	85448229	.	N	<VQSR>	.	.	END=85448230;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr8	90960783	.	N	<VQSR>	.	.	END=90960783;VQSLOD=Infinity;culprit=SOR
+chr8	102277120	.	N	<VQSR>	.	.	END=102277121;VQSLOD=Infinity;culprit=SOR
+chr8	103154674	.	N	<VQSR>	.	.	END=103154674;VQSLOD=Infinity;culprit=SOR
+chr8	109491859	.	N	<VQSR>	.	.	END=109491862;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr8	131953798	.	N	<VQSR>	.	.	END=131953800;VQSLOD=Infinity;culprit=SOR
+chr8	138762609	.	N	<VQSR>	.	.	END=138762609;VQSLOD=Infinity;culprit=SOR
+chr8	143429783	.	N	<VQSR>	.	.	END=143429786;VQSLOD=Infinity;culprit=FS
+chr8	143920094	.	N	<VQSR>	.	.	END=143920095;VQSLOD=Infinity;culprit=SOR
+chr8	143944572	.	N	<VQSR>	.	.	END=143944572;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	3855963	.	N	<VQSR>	.	.	END=3855963;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	4125633	.	N	<VQSR>	.	.	END=4125633;VQSLOD=Infinity;culprit=SOR
+chr9	6553514	.	N	<VQSR>	.	.	END=6553514;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	8525217	.	N	<VQSR>	.	.	END=8525218;VQSLOD=Infinity;culprit=SOR
+chr9	16583102	.	N	<VQSR>	.	.	END=16583102;VQSLOD=Infinity;culprit=SOR
+chr9	21815590	.	N	<VQSR>	.	.	END=21815590;VQSLOD=Infinity;culprit=FS
+chr9	35562331	.	N	<VQSR>	.	.	END=35562335;POSITIVE_TRAIN_SITE;VQSLOD=953335.2424;culprit=FS
+chr9	35680770	.	N	<VQSR>	.	.	END=35680771;VQSLOD=1530641.5509;culprit=QD
+chr9	36263176	.	N	<VQSR>	.	.	END=36263176;VQSLOD=Infinity;culprit=SOR
+chr9	38571979	.	N	<VQSR>	.	.	END=38571979;VQSLOD=Infinity;culprit=SOR
+chr9	42891087	.	N	<VQSR>	.	.	END=42891087;VQSLOD=Infinity;culprit=SOR
+chr9	69385763	.	N	<VQSR>	.	.	END=69385767;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	76703459	.	N	<VQSR>	.	.	END=76703474;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr9	76709219	.	N	<VQSR>	.	.	END=76709219;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	83643404	.	N	<VQSR>	.	.	END=83643404;VQSLOD=630478.0150;culprit=QD
+chr9	87640773	.	N	<VQSR>	.	.	END=87640773;VQSLOD=1137657.9400;culprit=QD
+chr9	88468345	.	N	<VQSR>	.	.	END=88468346;VQSLOD=Infinity;culprit=SOR
+chr9	94318662	.	N	<VQSR>	.	.	END=94318665;VQSLOD=Infinity;culprit=FS
+chr9	100284343	.	N	<VQSR>	.	.	END=100284343;VQSLOD=Infinity;culprit=SOR
+chr9	109422692	.	N	<VQSR>	.	.	END=109422692;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	109923913	.	N	<VQSR>	.	.	END=109923913;VQSLOD=Infinity;culprit=SOR
+chr9	114290458	.	N	<VQSR>	.	.	END=114290458;VQSLOD=Infinity;culprit=FS
+chr9	114349180	.	N	<VQSR>	.	.	END=114349181;VQSLOD=Infinity;culprit=SOR
+chr9	116207407	.	N	<VQSR>	.	.	END=116207407;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	116207430	.	N	<VQSR>	.	.	END=116207431;VQSLOD=Infinity;culprit=SOR
+chr9	123065473	.	N	<VQSR>	.	.	END=123065474;VQSLOD=Infinity;culprit=FS
+chr9	125220496	.	N	<VQSR>	.	.	END=125220497;POSITIVE_TRAIN_SITE;VQSLOD=1313723.0212;culprit=QD
+chr9	128170117	.	N	<VQSR>	.	.	END=128170119;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	128981422	.	N	<VQSR>	.	.	END=128981422;VQSLOD=Infinity;culprit=SOR
+chr9	129958441	.	N	<VQSR>	.	.	END=129958441;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=QD
+chr9	130609924	.	N	<VQSR>	.	.	END=130609924;VQSLOD=Infinity;culprit=SOR
+chr9	133783489	.	N	<VQSR>	.	.	END=133783489;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	135077073	.	N	<VQSR>	.	.	END=135077073;VQSLOD=Infinity;culprit=FS
+chr9	136438597	.	N	<VQSR>	.	.	END=136438601;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chr9	136923717	.	N	<VQSR>	.	.	END=136923719;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	137048913	.	N	<VQSR>	.	.	END=137048918;VQSLOD=Infinity;culprit=SOR
+chr9	137106889	.	N	<VQSR>	.	.	END=137106889;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chr9	137215400	.	N	<VQSR>	.	.	END=137215401;VQSLOD=224367.7816;culprit=QD
+chr9	138023718	.	N	<VQSR>	.	.	END=138023733;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	2904903	.	N	<VQSR>	.	.	END=2904903;VQSLOD=Infinity;culprit=SOR
+chrX	13938542	.	N	<VQSR>	.	.	END=13938543;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	16854985	.	N	<VQSR>	.	.	END=16854987;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	17687730	.	N	<VQSR>	.	.	END=17687730;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS
+chrX	46653825	.	N	<VQSR>	.	.	END=46653826;VQSLOD=1156061.4176;culprit=QD
+chrX	47058233	.	N	<VQSR>	.	.	END=47058234;VQSLOD=Infinity;culprit=SOR
+chrX	48511242	.	N	<VQSR>	.	.	END=48511242;VQSLOD=Infinity;culprit=FS
+chrX	48700918	.	N	<VQSR>	.	.	END=48700942;VQSLOD=1230169.0298;culprit=QD
+chrX	49211498	.	N	<VQSR>	.	.	END=49211499;VQSLOD=Infinity;culprit=SOR
+chrX	51496443	.	N	<VQSR>	.	.	END=51496457;VQSLOD=Infinity;culprit=SOR
+chrX	53547821	.	N	<VQSR>	.	.	END=53547824;VQSLOD=812613.4908;culprit=QD
+chrX	53984971	.	N	<VQSR>	.	.	END=53984974;VQSLOD=486805.7812;culprit=ReadPosRankSum
+chrX	54923561	.	N	<VQSR>	.	.	END=54923564;VQSLOD=508245.2717;culprit=SOR
+chrX	55147299	.	N	<VQSR>	.	.	END=55147300;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	65739998	.	N	<VQSR>	.	.	END=65739999;VQSLOD=Infinity;culprit=FS
+chrX	66599444	.	N	<VQSR>	.	.	END=66599444;VQSLOD=Infinity;culprit=SOR
+chrX	68209992	.	N	<VQSR>	.	.	END=68209993;VQSLOD=Infinity;culprit=SOR
+chrX	71104199	.	N	<VQSR>	.	.	END=71104200;VQSLOD=Infinity;culprit=SOR
+chrX	73852010	.	N	<VQSR>	.	.	END=73852010;VQSLOD=Infinity;culprit=SOR
+chrX	85054328	.	N	<VQSR>	.	.	END=85054328;VQSLOD=666427.3263;culprit=QD
+chrX	96939027	.	N	<VQSR>	.	.	END=96939028;VQSLOD=Infinity;culprit=FS
+chrX	108209966	.	N	<VQSR>	.	.	END=108209967;VQSLOD=Infinity;culprit=SOR
+chrX	119470590	.	N	<VQSR>	.	.	END=119470590;VQSLOD=Infinity;culprit=SOR
+chrX	123627856	.	N	<VQSR>	.	.	END=123627857;VQSLOD=1285418.4342;culprit=QD
+chrX	136033510	.	N	<VQSR>	.	.	END=136033510;VQSLOD=Infinity;culprit=SOR
+chrX	151181085	.	N	<VQSR>	.	.	END=151181097;POSITIVE_TRAIN_SITE;VQSLOD=1444077.7030;culprit=QD
+chrX	153788243	.	N	<VQSR>	.	.	END=153788243;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	153867806	.	N	<VQSR>	.	.	END=153867807;VQSLOD=1707965.2782;culprit=QD
+chrX	153909365	.	N	<VQSR>	.	.	END=153909365;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	153909413	.	N	<VQSR>	.	.	END=153909413;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=SOR
+chrX	153909599	.	N	<VQSR>	.	.	END=153909599;POSITIVE_TRAIN_SITE;VQSLOD=Infinity;culprit=FS

@@ -1,0 +1,7 @@
+s29b00n60
+fastp: fastp 0.23.2
+gatk: Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+bwa: Version: 0.7.19-r1273
+/lustre1/share/data_new/OC/OC_R1.fq.gz
+/lustre1/share/references/hg38.fa.fai
+TEST OK

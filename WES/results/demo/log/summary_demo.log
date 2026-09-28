@@ -1,0 +1,78 @@
+=== node/resources ===
+s29b00n60
+8
+=== 3.4 flagstat (OC) ===
+397780 + 0 in total (QC-passed reads + QC-failed reads)
+364598 + 0 primary
+33182 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+397764 + 0 mapped (100.00% : N/A)
+364582 + 0 primary mapped (100.00% : N/A)
+364598 + 0 paired in sequencing
+182299 + 0 read1
+182299 + 0 read2
+303676 + 0 properly paired (83.29% : N/A)
+364566 + 0 with itself and mate mapped
+16 + 0 singletons (0.00% : N/A)
+57236 + 0 with mate mapped to a different chr
+49981 + 0 with mate mapped to a different chr (mapQ>=5)
+=== 3.4 flagstat (PBMC) ===
+517164 + 0 in total (QC-passed reads + QC-failed reads)
+516224 + 0 primary
+940 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+0 + 0 primary duplicates
+517161 + 0 mapped (100.00% : N/A)
+516221 + 0 primary mapped (100.00% : N/A)
+516224 + 0 paired in sequencing
+258112 + 0 read1
+258112 + 0 read2
+513422 + 0 properly paired (99.46% : N/A)
+516220 + 0 with itself and mate mapped
+1 + 0 singletons (0.00% : N/A)
+2148 + 0 with mate mapped to a different chr
+1861 + 0 with mate mapped to a different chr (mapQ>=5)
+=== 4.2 duplication (OC) ===
+LIBRARY	UNPAIRED_READS_EXAMINED	READ_PAIRS_EXAMINED	SECONDARY_OR_SUPPLEMENTARY_RDS	UNMAPPED_READS	UNPAIRED_READ_DUPLICATES	READ_PAIR_DUPLICATES	READ_PAIR_OPTICAL_DUPLICATES	PERCENT_DUPLICATION	ESTIMATED_LIBRARY_SIZE
+WES_OC	16	182283	33182	16	0	60	43	0.000329	976745652
+
+## HISTOGRAM	java.lang.Double
+BIN	CoverageMult	all_sets	optical_sets	non_optical_sets
+1.0	1.000236	182163	0	182206
+2.0	2.000285	60	43	17
+=== 4.2 duplication (PBMC) ===
+LIBRARY	UNPAIRED_READS_EXAMINED	READ_PAIRS_EXAMINED	SECONDARY_OR_SUPPLEMENTARY_RDS	UNMAPPED_READS	UNPAIRED_READ_DUPLICATES	READ_PAIR_DUPLICATES	READ_PAIR_OPTICAL_DUPLICATES	PERCENT_DUPLICATION	ESTIMATED_LIBRARY_SIZE
+WES_PBMC	1	258110	940	3	0	154	92	0.000597	536795348
+
+## HISTOGRAM	java.lang.Double
+BIN	CoverageMult	all_sets	optical_sets	non_optical_sets
+1.0	1.000356	257802	0	257894
+2.0	2.000232	154	92	62
+=== 6.3 joint callset counts ===
+OC_blood_variants.vcf records: 14782
+anno.vcf records: 14782
+=== 7 VQSR status ===
+SNP ok=yes INDEL ok=yes merged=yes
+PASS in merged VQSR vcf: 14614
+=== 8 ANNOVAR ===
+avinput lines: 29564
+multianno rows: 29602
+=== 9 somatic ===
+raw records: 0
+filtered records: 0
+PASS records: 0
+target Mb: 60.507855
+somatic TMB = 0.000000 variants/Mb
+=== 10 CNVkit ===
+OC_sorted.markdup.BQSR.cnr rows: 81534
+OC_sorted.markdup.BQSR.bintest.cns rows: 73433
+OC_sorted.markdup.BQSR.call.cns rows: 49
+OC_sorted.markdup.BQSR.cns rows: 93
+OC_sorted.markdup.BQSR.call.cns rows: 49
+OC_sorted.markdup.BQSR-scatter.png rows: 535
+OC_sorted.markdup.BQSR-diagram.pdf rows: 86
+=== deviations ===
+[DEVIATION 2026-09-20 22:41:50] 8.3b rich protocol failed as anticipated: humandb lacks dbnsfp30a/exac03/gnomad_genome/avsnp147 (installed: dbnsfp54a, gnomad211_exome, gnomad41_exome, avsnp151); basic protocol output stands

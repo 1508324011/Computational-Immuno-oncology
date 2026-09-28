@@ -1,0 +1,51 @@
+==== [2026-09-20 22:28:50] STAGE preflight ====
+preflight OK: node s29b00n60, 8 CPUs
+==== [2026-09-20 22:28:50] STAGE 3.1 bwa mem ====
+==== [2026-09-20 22:29:18] STAGE 3.2 SAM to BAM ====
+==== [2026-09-20 22:29:19] STAGE 3.3 sort and index ====
+==== [2026-09-20 22:29:20] STAGE 3.4 flagstat ====
+==== [2026-09-20 22:29:20] STAGE 4.1 MarkDuplicates ====
+Tool returned:
+0
+Tool returned:
+0
+==== [2026-09-20 22:29:37] STAGE 5.1 BaseRecalibrator ====
+Tool returned:
+SUCCESS
+Tool returned:
+SUCCESS
+==== [2026-09-20 22:32:12] STAGE 5.2 ApplyBQSR ====
+==== [2026-09-20 22:32:30] STAGE 6.2 HaplotypeCaller GVCF ====
+==== [2026-09-20 22:37:38] STAGE 6.3 CombineGVCFs + GenotypeGVCFs ====
+==== [2026-09-20 22:39:01] STAGE 6.4 VariantAnnotator ====
+==== [2026-09-20 22:39:55] STAGE 7.1 SNP VQSR ====
+Tool returned:
+true
+==== [2026-09-20 22:41:11] STAGE 7.2 INDEL VQSR ====
+Tool returned:
+true
+==== [2026-09-20 22:41:25] STAGE 7.3 MergeVcfs ====
+Tool returned:
+0
+PASS variants in merged VCF: 14614
+==== [2026-09-20 22:41:28] STAGE 8.1 convert2annovar ====
+ANNOVAR input: /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/2_variant_call/OC_blood.all.VQSR.vcf
+==== [2026-09-20 22:41:29] STAGE 8.2 gene annotation ====
+==== [2026-09-20 22:41:38] STAGE 8.3 table_annovar (basic protocol) ====
+==== [2026-09-20 22:41:50] STAGE 8.3b table_annovar (richer protocol, verbatim - EXPECTED TO FAIL) ====
+[DEVIATION 2026-09-20 22:41:50] 8.3b rich protocol failed as anticipated: humandb lacks dbnsfp30a/exac03/gnomad_genome/avsnp147 (installed: dbnsfp54a, gnomad211_exome, gnomad41_exome, avsnp151); basic protocol output stands
+==== [2026-09-20 22:41:50] STAGE 9.1 Mutect2 ====
+Tool returned:
+SUCCESS
+==== [2026-09-20 22:45:16] STAGE 9.2 orientation bias model + FilterMutectCalls ====
+Tool returned:
+SUCCESS
+==== [2026-09-20 22:45:33] STAGE 9.3 TMB ====
+somatic TMB = 0.000000 variants/Mb
+==== [2026-09-20 22:45:33] STAGE 10.1 prepare target BED ====
+==== [2026-09-20 22:45:33] STAGE 10.2 CNVkit batch (amplicon mode, verbatim) ====
+CNVkit batch done
+==== [2026-09-20 22:47:32] STAGE 11 summary ====
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/log/summary_demo.log
+==== [2026-09-20 22:47:32] STAGE done ====
+ALL DONE. Deviations logged in /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/log/deviations.log

@@ -1,0 +1,11 @@
+==== [2026-09-21 02:25:45][somatic] STAGE 9.1 Mutect2 ====
+Tool returned:
+SUCCESS
+==== [2026-09-21 03:38:24][somatic] STAGE 9.2 LearnReadOrientationModel + FilterMutectCalls ====
+Tool returned:
+SUCCESS
+==== [2026-09-21 03:39:05][somatic] STAGE 9.3 TMB ====
+somatic TMB = 1.784892 variants/Mb
+==== [2026-09-21 03:39:05][somatic] STAGE somatic summary ====
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/log/summary_somatic.log
+==== [2026-09-21 03:39:06][somatic] STAGE somatic done ====

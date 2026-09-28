@@ -1,0 +1,6 @@
+[CNV-HYBRID 2026-09-21 02:25:46] target bins + antitarget bins
+[CNV-HYBRID 2026-09-21 02:25:54] target --annotate failed (no refGene txt at /lustre1/share/references); continuing with plain targets
+[CNV-HYBRID 2026-09-21 02:25:58] batch -m hybrid
+[CNV-HYBRID 2026-09-21 02:36:45] summary
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/log/summary_cnv_hybrid.log
+[CNV-HYBRID 2026-09-21 02:36:45] done

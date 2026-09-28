@@ -1,0 +1,9 @@
+[FIX-VQSR 2026-09-21 02:36:52] sequential ApplyVQSR: step 1 (SNP model on full callset)
+[FIX-VQSR 2026-09-21 02:36:56] sequential ApplyVQSR: step 2 (INDEL model on step-1 output)
+sequential-VQSR total records: 55123
+sequential-VQSR PASS:         53988
+unique sites:                  55123
+[FIX-VQSR 2026-09-21 02:37:00] ANNOVAR on the corrected (sequential) VCF
+[FIX-VQSR 2026-09-21 02:46:26] summary
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/log/summary_fix_vqsr.log
+[FIX-VQSR 2026-09-21 02:46:27] done

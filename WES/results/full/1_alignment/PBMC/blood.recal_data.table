@@ -1,0 +1,1084 @@
+#:GATKReport.v1.1:5
+#:GATKTable:2:17:%s:%s:;
+#:GATKTable:Arguments:Recalibration argument collection values used in this run
+Argument                    Value                                                                   
+binary_tag_name             null                                                                    
+covariate                   ReadGroupCovariate,QualityScoreCovariate,ContextCovariate,CycleCovariate
+default_platform            null                                                                    
+deletions_default_quality   45                                                                      
+force_platform              null                                                                    
+indels_context_size         3                                                                       
+insertions_default_quality  45                                                                      
+low_quality_tail            2                                                                       
+maximum_cycle_value         500                                                                     
+mismatches_context_size     2                                                                       
+mismatches_default_quality  -1                                                                      
+no_standard_covs            false                                                                   
+quantizing_levels           16                                                                      
+recalibration_report        null                                                                    
+run_without_dbsnp           false                                                                   
+solid_nocall_strategy       THROW_EXCEPTION                                                         
+solid_recal_mode            SET_Q_ZERO                                                              
+
+#:GATKTable:3:94:%d:%d:%d:;
+#:GATKTable:Quantized:Quality quantization map
+QualityScore  Count        QuantizedScore
+           0            0              93
+           1            0              93
+           2            0              93
+           3            0              93
+           4            0              93
+           5            0              93
+           6            0              93
+           7            0              93
+           8            0              93
+           9            0              93
+          10            0              93
+          11            0              93
+          12     62917835              12
+          13            0              93
+          14            0              93
+          15            0              93
+          16            0              93
+          17            0              93
+          18            0              93
+          19            0              93
+          20            0              93
+          21            0              93
+          22            0              93
+          23    167034425              23
+          24            0              93
+          25            0              93
+          26            0              93
+          27            0              93
+          28            0              93
+          29            0              93
+          30            0              93
+          31            0              93
+          32            0              93
+          33            0              93
+          34            0              93
+          35            0              93
+          36            0              93
+          37  11067520265              37
+          38            0              93
+          39            0              93
+          40            0              93
+          41            0              93
+          42            0              93
+          43            0              93
+          44            0              93
+          45            0              93
+          46            0              93
+          47            0              93
+          48            0              93
+          49            0              93
+          50            0              93
+          51            0              93
+          52            0              93
+          53            0              93
+          54            0              93
+          55            0              93
+          56            0              93
+          57            0              93
+          58            0              93
+          59            0              93
+          60            0              93
+          61            0              93
+          62            0              93
+          63            0              93
+          64            0              93
+          65            0              93
+          66            0              93
+          67            0              93
+          68            0              93
+          69            0              93
+          70            0              93
+          71            0              93
+          72            0              93
+          73            0              93
+          74            0              93
+          75            0              93
+          76            0              93
+          77            0              93
+          78            0              93
+          79            0              93
+          80            0              93
+          81            0              93
+          82            0              93
+          83            0              93
+          84            0              93
+          85            0              85
+          86            0              86
+          87            0              87
+          88            0              88
+          89            0              89
+          90            0              90
+          91            0              91
+          92            0              92
+          93            0              93
+
+#:GATKTable:6:1:%s:%s:%.4f:%.4f:%d:%.2f:;
+#:GATKTable:RecalTable0:
+ReadGroup  EventType  EmpiricalQuality  EstimatedQReported  Observations  Errors    
+PBMC       M                   32.0000             32.9395   11297472525  6580975.00
+
+#:GATKTable:6:3:%s:%d:%s:%.4f:%d:%.2f:;
+#:GATKTable:RecalTable1:
+ReadGroup  QualityScore  EventType  EmpiricalQuality  Observations  Errors    
+PBMC                 12  M                   12.0000      62917835  3639634.00
+PBMC                 24  M                   23.0000     167034425   858258.00
+PBMC                 40  M                   37.0000   11067520265  2083083.00
+
+#:GATKTable:8:948:%s:%d:%s:%s:%s:%.4f:%d:%.2f:;
+#:GATKTable:RecalTable2:
+ReadGroup  QualityScore  CovariateValue  CovariateName  EventType  EmpiricalQuality  Observations  Errors   
+PBMC                 12  -1              Cycle          M                   14.0000        300763   13047.00
+PBMC                 12  -10             Cycle          M                   11.0000        141805   10906.00
+PBMC                 12  -100            Cycle          M                   13.0000        238625   13381.00
+PBMC                 12  -101            Cycle          M                   13.0000        241755   13568.00
+PBMC                 12  -102            Cycle          M                   13.0000        241792   13505.00
+PBMC                 12  -103            Cycle          M                   13.0000        241322   13307.00
+PBMC                 12  -104            Cycle          M                   13.0000        243002   13498.00
+PBMC                 12  -105            Cycle          M                   13.0000        241085   13290.00
+PBMC                 12  -106            Cycle          M                   13.0000        240257   12949.00
+PBMC                 12  -107            Cycle          M                   13.0000        250405   13589.00
+PBMC                 12  -108            Cycle          M                   13.0000        256670   13928.00
+PBMC                 12  -109            Cycle          M                   13.0000        253488   13663.00
+PBMC                 12  -11             Cycle          M                   11.0000        132721    9507.00
+PBMC                 12  -110            Cycle          M                   13.0000        255184   13814.00
+PBMC                 12  -111            Cycle          M                   13.0000        256680   13681.00
+PBMC                 12  -112            Cycle          M                   12.0000        263433   14974.00
+PBMC                 12  -113            Cycle          M                   13.0000        258896   13828.00
+PBMC                 12  -114            Cycle          M                   13.0000        257223   13735.00
+PBMC                 12  -115            Cycle          M                   13.0000        263947   14077.00
+PBMC                 12  -116            Cycle          M                   13.0000        261298   13697.00
+PBMC                 12  -117            Cycle          M                   13.0000        262904   13703.00
+PBMC                 12  -118            Cycle          M                   13.0000        264024   13643.00
+PBMC                 12  -119            Cycle          M                   13.0000        262885   13398.00
+PBMC                 12  -12             Cycle          M                   11.0000        137899   10123.00
+PBMC                 12  -120            Cycle          M                   13.0000        271763   13842.00
+PBMC                 12  -121            Cycle          M                   13.0000        278273   14425.00
+PBMC                 12  -122            Cycle          M                   13.0000        263729   13363.00
+PBMC                 12  -123            Cycle          M                   13.0000        261209   13147.00
+PBMC                 12  -124            Cycle          M                   13.0000        271461   13925.00
+PBMC                 12  -125            Cycle          M                   13.0000        283300   14568.00
+PBMC                 12  -126            Cycle          M                   13.0000        284922   14747.00
+PBMC                 12  -127            Cycle          M                   13.0000        302635   16141.00
+PBMC                 12  -128            Cycle          M                   13.0000        293911   15473.00
+PBMC                 12  -129            Cycle          M                   13.0000        290446   15158.00
+PBMC                 12  -13             Cycle          M                   11.0000        138560   10249.00
+PBMC                 12  -130            Cycle          M                   13.0000        286701   14552.00
+PBMC                 12  -131            Cycle          M                   13.0000        288625   14815.00
+PBMC                 12  -132            Cycle          M                   13.0000        287515   14722.00
+PBMC                 12  -133            Cycle          M                   13.0000        296945   15328.00
+PBMC                 12  -134            Cycle          M                   13.0000        304125   16059.00
+PBMC                 12  -135            Cycle          M                   13.0000        312645   16460.00
+PBMC                 12  -136            Cycle          M                   13.0000        311375   16552.00
+PBMC                 12  -137            Cycle          M                   13.0000        310337   16729.00
+PBMC                 12  -138            Cycle          M                   13.0000        319540   17178.00
+PBMC                 12  -139            Cycle          M                   13.0000        313123   16566.00
+PBMC                 12  -14             Cycle          M                   11.0000        135433    9976.00
+PBMC                 12  -140            Cycle          M                   13.0000        308806   16449.00
+PBMC                 12  -141            Cycle          M                   13.0000        316578   16868.00
+PBMC                 12  -142            Cycle          M                   13.0000        328629   18124.00
+PBMC                 12  -143            Cycle          M                   13.0000        331064   18097.00
+PBMC                 12  -144            Cycle          M                   13.0000        340118   18625.00
+PBMC                 12  -145            Cycle          M                   13.0000        335430   18299.00
+PBMC                 12  -146            Cycle          M                   13.0000        351485   18700.00
+PBMC                 12  -147            Cycle          M                   13.0000        378314   20964.00
+PBMC                 12  -148            Cycle          M                   13.0000        385569   21536.00
+PBMC                 12  -149            Cycle          M                   13.0000        384051   21607.00
+PBMC                 12  -15             Cycle          M                   11.0000        130626    9326.00
+PBMC                 12  -150            Cycle          M                   12.0000        392222   22462.00
+PBMC                 12  -16             Cycle          M                   12.0000        119172    8292.00
+PBMC                 12  -17             Cycle          M                   11.0000        123412    8846.00
+PBMC                 12  -18             Cycle          M                   11.0000        126757    9110.00
+PBMC                 12  -19             Cycle          M                   12.0000        129199    9159.00
+PBMC                 12  -2              Cycle          M                   12.0000        213746   13928.00
+PBMC                 12  -20             Cycle          M                   11.0000        131068    9497.00
+PBMC                 12  -21             Cycle          M                   11.0000        139083   10148.00
+PBMC                 12  -22             Cycle          M                   11.0000        133979    9649.00
+PBMC                 12  -23             Cycle          M                   11.0000        138305   10043.00
+PBMC                 12  -24             Cycle          M                   12.0000        131142    9127.00
+PBMC                 12  -25             Cycle          M                   11.0000        138701    9991.00
+PBMC                 12  -26             Cycle          M                   12.0000        153103   10266.00
+PBMC                 12  -27             Cycle          M                   12.0000        150624   10082.00
+PBMC                 12  -28             Cycle          M                   12.0000        146926    9783.00
+PBMC                 12  -29             Cycle          M                   12.0000        142861    9343.00
+PBMC                 12  -3              Cycle          M                   12.0000        165927   11521.00
+PBMC                 12  -30             Cycle          M                   12.0000        147311    9899.00
+PBMC                 12  -31             Cycle          M                   12.0000        155415   10585.00
+PBMC                 12  -32             Cycle          M                   12.0000        153940   10423.00
+PBMC                 12  -33             Cycle          M                   12.0000        154855   10611.00
+PBMC                 12  -34             Cycle          M                   12.0000        154017   10649.00
+PBMC                 12  -35             Cycle          M                   12.0000        152355   10224.00
+PBMC                 12  -36             Cycle          M                   12.0000        149473    9825.00
+PBMC                 12  -37             Cycle          M                   12.0000        156929   10917.00
+PBMC                 12  -38             Cycle          M                   12.0000        155660   10434.00
+PBMC                 12  -39             Cycle          M                   12.0000        153048   10276.00
+PBMC                 12  -4              Cycle          M                   11.0000        172282   13445.00
+PBMC                 12  -40             Cycle          M                   12.0000        153536   10369.00
+PBMC                 12  -41             Cycle          M                   12.0000        157394   10750.00
+PBMC                 12  -42             Cycle          M                   12.0000        159539   10981.00
+PBMC                 12  -43             Cycle          M                   12.0000        158690   10715.00
+PBMC                 12  -44             Cycle          M                   12.0000        153943   10205.00
+PBMC                 12  -45             Cycle          M                   12.0000        160213   10996.00
+PBMC                 12  -46             Cycle          M                   12.0000        163811   11088.00
+PBMC                 12  -47             Cycle          M                   12.0000        163515   10867.00
+PBMC                 12  -48             Cycle          M                   12.0000        173463   11990.00
+PBMC                 12  -49             Cycle          M                   12.0000        167545   11186.00
+PBMC                 12  -5              Cycle          M                   11.0000        165824   12534.00
+PBMC                 12  -50             Cycle          M                   12.0000        168859   11599.00
+PBMC                 12  -51             Cycle          M                   12.0000        167466   11309.00
+PBMC                 12  -52             Cycle          M                   12.0000        166250   11481.00
+PBMC                 12  -53             Cycle          M                   12.0000        168806   11426.00
+PBMC                 12  -54             Cycle          M                   12.0000        166878   10962.00
+PBMC                 12  -55             Cycle          M                   12.0000        171768   11462.00
+PBMC                 12  -56             Cycle          M                   12.0000        170031   11253.00
+PBMC                 12  -57             Cycle          M                   12.0000        167899   10803.00
+PBMC                 12  -58             Cycle          M                   12.0000        175468   11771.00
+PBMC                 12  -59             Cycle          M                   12.0000        174010   11087.00
+PBMC                 12  -6              Cycle          M                   11.0000        153457   11400.00
+PBMC                 12  -60             Cycle          M                   12.0000        179075   11631.00
+PBMC                 12  -61             Cycle          M                   11.0000        188678   13539.00
+PBMC                 12  -62             Cycle          M                   12.0000        180234   11675.00
+PBMC                 12  -63             Cycle          M                   12.0000        180531   11676.00
+PBMC                 12  -64             Cycle          M                   12.0000        181853   11592.00
+PBMC                 12  -65             Cycle          M                   12.0000        189783   12353.00
+PBMC                 12  -66             Cycle          M                   12.0000        190823   12289.00
+PBMC                 12  -67             Cycle          M                   12.0000        182060   11549.00
+PBMC                 12  -68             Cycle          M                   12.0000        189234   11863.00
+PBMC                 12  -69             Cycle          M                   12.0000        187049   11854.00
+PBMC                 12  -7              Cycle          M                   11.0000        147204   11141.00
+PBMC                 12  -70             Cycle          M                   12.0000        192988   13610.00
+PBMC                 12  -71             Cycle          M                   12.0000        192408   12239.00
+PBMC                 12  -72             Cycle          M                   12.0000        191194   11923.00
+PBMC                 12  -73             Cycle          M                   12.0000        198381   12552.00
+PBMC                 12  -74             Cycle          M                   12.0000        195786   12255.00
+PBMC                 12  -75             Cycle          M                   12.0000        198158   12014.00
+PBMC                 12  -76             Cycle          M                   12.0000        196495   12003.00
+PBMC                 12  -77             Cycle          M                   12.0000        197006   12199.00
+PBMC                 12  -78             Cycle          M                   12.0000        193319   11592.00
+PBMC                 12  -79             Cycle          M                   12.0000        196101   11916.00
+PBMC                 12  -8              Cycle          M                   11.0000        133384    9692.00
+PBMC                 12  -80             Cycle          M                   12.0000        194633   11648.00
+PBMC                 12  -81             Cycle          M                   12.0000        200737   12013.00
+PBMC                 12  -82             Cycle          M                   12.0000        202574   11990.00
+PBMC                 12  -83             Cycle          M                   12.0000        207907   12251.00
+PBMC                 12  -84             Cycle          M                   12.0000        214333   12909.00
+PBMC                 12  -85             Cycle          M                   12.0000        209731   12558.00
+PBMC                 12  -86             Cycle          M                   12.0000        212203   12445.00
+PBMC                 12  -87             Cycle          M                   12.0000        211134   12278.00
+PBMC                 12  -88             Cycle          M                   12.0000        219879   12935.00
+PBMC                 12  -89             Cycle          M                   12.0000        217417   12679.00
+PBMC                 12  -9              Cycle          M                   11.0000        142038   10759.00
+PBMC                 12  -90             Cycle          M                   12.0000        222147   12901.00
+PBMC                 12  -91             Cycle          M                   12.0000        220328   12650.00
+PBMC                 12  -92             Cycle          M                   12.0000        225201   12827.00
+PBMC                 12  -93             Cycle          M                   12.0000        233184   13554.00
+PBMC                 12  -94             Cycle          M                   12.0000        229424   13258.00
+PBMC                 12  -95             Cycle          M                   12.0000        230703   13129.00
+PBMC                 12  -96             Cycle          M                   12.0000        227578   12904.00
+PBMC                 12  -97             Cycle          M                   12.0000        233065   13225.00
+PBMC                 12  -98             Cycle          M                   13.0000        237891   13237.00
+PBMC                 12  -99             Cycle          M                   12.0000        236321   13342.00
+PBMC                 12  1               Cycle          M                   15.0000        309057    9148.00
+PBMC                 12  10              Cycle          M                   11.0000        261693   20752.00
+PBMC                 12  100             Cycle          M                   13.0000        198521    9585.00
+PBMC                 12  101             Cycle          M                   13.0000        202926    9793.00
+PBMC                 12  102             Cycle          M                   13.0000        209491   10071.00
+PBMC                 12  103             Cycle          M                   13.0000        210533   10058.00
+PBMC                 12  104             Cycle          M                   13.0000        210436   10138.00
+PBMC                 12  105             Cycle          M                   13.0000        202862    9474.00
+PBMC                 12  106             Cycle          M                   13.0000        202224    9452.00
+PBMC                 12  107             Cycle          M                   13.0000        201890    9412.00
+PBMC                 12  108             Cycle          M                   13.0000        221218   10701.00
+PBMC                 12  109             Cycle          M                   13.0000        218592   10320.00
+PBMC                 12  11              Cycle          M                   10.0000        270515   25220.00
+PBMC                 12  110             Cycle          M                   13.0000        229192   11000.00
+PBMC                 12  111             Cycle          M                   13.0000        196584    8817.00
+PBMC                 12  112             Cycle          M                   13.0000        209470    9611.00
+PBMC                 12  113             Cycle          M                   13.0000        218435   10036.00
+PBMC                 12  114             Cycle          M                   13.0000        217258   10001.00
+PBMC                 12  115             Cycle          M                   13.0000        216865    9940.00
+PBMC                 12  116             Cycle          M                   13.0000        209761    9534.00
+PBMC                 12  117             Cycle          M                   13.0000        224479   10222.00
+PBMC                 12  118             Cycle          M                   13.0000        225562   10129.00
+PBMC                 12  119             Cycle          M                   14.0000        225917    9943.00
+PBMC                 12  12              Cycle          M                   11.0000        276419   22835.00
+PBMC                 12  120             Cycle          M                   14.0000        226477   10072.00
+PBMC                 12  121             Cycle          M                   14.0000        221640    9653.00
+PBMC                 12  122             Cycle          M                   14.0000        224135    9850.00
+PBMC                 12  123             Cycle          M                   13.0000        243996   11482.00
+PBMC                 12  124             Cycle          M                   13.0000        240082   10982.00
+PBMC                 12  125             Cycle          M                   13.0000        230269   10331.00
+PBMC                 12  126             Cycle          M                   14.0000        240056   10641.00
+PBMC                 12  127             Cycle          M                   13.0000        248202   11267.00
+PBMC                 12  128             Cycle          M                   13.0000        244081   11066.00
+PBMC                 12  129             Cycle          M                   14.0000        236104   10503.00
+PBMC                 12  13              Cycle          M                   11.0000        269031   22040.00
+PBMC                 12  130             Cycle          M                   14.0000        235559   10423.00
+PBMC                 12  131             Cycle          M                   13.0000        247871   11505.00
+PBMC                 12  132             Cycle          M                   13.0000        247904   11458.00
+PBMC                 12  133             Cycle          M                   13.0000        243177   10916.00
+PBMC                 12  134             Cycle          M                   13.0000        239310   10948.00
+PBMC                 12  135             Cycle          M                   13.0000        247973   11417.00
+PBMC                 12  136             Cycle          M                   13.0000        260449   12184.00
+PBMC                 12  137             Cycle          M                   13.0000        246144   11227.00
+PBMC                 12  138             Cycle          M                   13.0000        251600   11823.00
+PBMC                 12  139             Cycle          M                   13.0000        258177   12226.00
+PBMC                 12  14              Cycle          M                   11.0000        261927   20644.00
+PBMC                 12  140             Cycle          M                   13.0000        264639   12507.00
+PBMC                 12  141             Cycle          M                   13.0000        253240   11552.00
+PBMC                 12  142             Cycle          M                   13.0000        251945   11380.00
+PBMC                 12  143             Cycle          M                   13.0000        264240   12512.00
+PBMC                 12  144             Cycle          M                   13.0000        290314   14726.00
+PBMC                 12  145             Cycle          M                   13.0000        282885   13904.00
+PBMC                 12  146             Cycle          M                   13.0000        277337   12958.00
+PBMC                 12  147             Cycle          M                   13.0000        275491   12911.00
+PBMC                 12  148             Cycle          M                   13.0000        282973   13486.00
+PBMC                 12  149             Cycle          M                   13.0000        308147   15675.00
+PBMC                 12  15              Cycle          M                   11.0000        260975   20828.00
+PBMC                 12  150             Cycle          M                   13.0000        306394   15683.00
+PBMC                 12  16              Cycle          M                   12.0000        131426    7466.00
+PBMC                 12  17              Cycle          M                   12.0000        132105    7569.00
+PBMC                 12  18              Cycle          M                   13.0000        130275    7295.00
+PBMC                 12  19              Cycle          M                   13.0000        139723    7862.00
+PBMC                 12  2               Cycle          M                   12.0000        175160   10386.00
+PBMC                 12  20              Cycle          M                   12.0000        138301    7872.00
+PBMC                 12  21              Cycle          M                   12.0000        139694    7955.00
+PBMC                 12  22              Cycle          M                   12.0000        134977    7752.00
+PBMC                 12  23              Cycle          M                   12.0000        133954    7567.00
+PBMC                 12  24              Cycle          M                   12.0000        132995    7674.00
+PBMC                 12  25              Cycle          M                   12.0000        134645    7698.00
+PBMC                 12  26              Cycle          M                   12.0000        157824   10480.00
+PBMC                 12  27              Cycle          M                   12.0000        161478   10475.00
+PBMC                 12  28              Cycle          M                   12.0000        165122   10674.00
+PBMC                 12  29              Cycle          M                   12.0000        166519   11030.00
+PBMC                 12  3               Cycle          M                   13.0000        151650    7758.00
+PBMC                 12  30              Cycle          M                   11.0000        172670   13112.00
+PBMC                 12  31              Cycle          M                   12.0000        170861   11340.00
+PBMC                 12  32              Cycle          M                   12.0000        173584   11638.00
+PBMC                 12  33              Cycle          M                   12.0000        171228   11689.00
+PBMC                 12  34              Cycle          M                   12.0000        174108   11757.00
+PBMC                 12  35              Cycle          M                   12.0000        168401   11279.00
+PBMC                 12  36              Cycle          M                   12.0000        167660   10887.00
+PBMC                 12  37              Cycle          M                   12.0000        154661    9881.00
+PBMC                 12  38              Cycle          M                   12.0000        151377    9659.00
+PBMC                 12  39              Cycle          M                   12.0000        152686    9667.00
+PBMC                 12  4               Cycle          M                   11.0000        205226   15345.00
+PBMC                 12  40              Cycle          M                   12.0000        159216   10115.00
+PBMC                 12  41              Cycle          M                   12.0000        158628   10004.00
+PBMC                 12  42              Cycle          M                   12.0000        160726   10223.00
+PBMC                 12  43              Cycle          M                   12.0000        161117   10113.00
+PBMC                 12  44              Cycle          M                   12.0000        166168   10673.00
+PBMC                 12  45              Cycle          M                   12.0000        174934   11566.00
+PBMC                 12  46              Cycle          M                   12.0000        175951   11489.00
+PBMC                 12  47              Cycle          M                   12.0000        180744   11984.00
+PBMC                 12  48              Cycle          M                   11.0000        185636   13245.00
+PBMC                 12  49              Cycle          M                   12.0000        178372   11695.00
+PBMC                 12  5               Cycle          M                   12.0000        238107   16906.00
+PBMC                 12  50              Cycle          M                   12.0000        180390   11814.00
+PBMC                 12  51              Cycle          M                   12.0000        184008   11938.00
+PBMC                 12  52              Cycle          M                   12.0000        185052   12088.00
+PBMC                 12  53              Cycle          M                   12.0000        179769   11336.00
+PBMC                 12  54              Cycle          M                   12.0000        181535   11453.00
+PBMC                 12  55              Cycle          M                   12.0000        185146   11653.00
+PBMC                 12  56              Cycle          M                   12.0000        187166   12446.00
+PBMC                 12  57              Cycle          M                   12.0000        187936   11604.00
+PBMC                 12  58              Cycle          M                   12.0000        189317   11888.00
+PBMC                 12  59              Cycle          M                   12.0000        193837   11973.00
+PBMC                 12  6               Cycle          M                   11.0000        268669   21008.00
+PBMC                 12  60              Cycle          M                   12.0000        191493   11849.00
+PBMC                 12  61              Cycle          M                   12.0000        201671   12495.00
+PBMC                 12  62              Cycle          M                   12.0000        199149   12508.00
+PBMC                 12  63              Cycle          M                   12.0000        196742   11791.00
+PBMC                 12  64              Cycle          M                   12.0000        195126   11859.00
+PBMC                 12  65              Cycle          M                   12.0000        190683   11426.00
+PBMC                 12  66              Cycle          M                   12.0000        194827   11964.00
+PBMC                 12  67              Cycle          M                   12.0000        189650   11300.00
+PBMC                 12  68              Cycle          M                   12.0000        189103   11080.00
+PBMC                 12  69              Cycle          M                   12.0000        189511   11257.00
+PBMC                 12  7               Cycle          M                   11.0000        247306   18780.00
+PBMC                 12  70              Cycle          M                   12.0000        185741   10989.00
+PBMC                 12  71              Cycle          M                   12.0000        189419   11119.00
+PBMC                 12  72              Cycle          M                   12.0000        183827   10500.00
+PBMC                 12  73              Cycle          M                   12.0000        185340   10704.00
+PBMC                 12  74              Cycle          M                   12.0000        184347   10573.00
+PBMC                 12  75              Cycle          M                   13.0000        182749   10273.00
+PBMC                 12  76              Cycle          M                   13.0000        181137   10094.00
+PBMC                 12  77              Cycle          M                   12.0000        189904   10913.00
+PBMC                 12  78              Cycle          M                   12.0000        192063   10819.00
+PBMC                 12  79              Cycle          M                   13.0000        189583   10540.00
+PBMC                 12  8               Cycle          M                   11.0000        218643   15938.00
+PBMC                 12  80              Cycle          M                   13.0000        188157   10331.00
+PBMC                 12  81              Cycle          M                   13.0000        193252   10761.00
+PBMC                 12  82              Cycle          M                   13.0000        199603   11237.00
+PBMC                 12  83              Cycle          M                   13.0000        196462   10864.00
+PBMC                 12  84              Cycle          M                   13.0000        196802   10551.00
+PBMC                 12  85              Cycle          M                   13.0000        204062   11233.00
+PBMC                 12  86              Cycle          M                   13.0000        186739    9788.00
+PBMC                 12  87              Cycle          M                   13.0000        190965   10061.00
+PBMC                 12  88              Cycle          M                   13.0000        190918    9880.00
+PBMC                 12  89              Cycle          M                   13.0000        202611   10641.00
+PBMC                 12  9               Cycle          M                   11.0000        250638   19973.00
+PBMC                 12  90              Cycle          M                   13.0000        205348   10804.00
+PBMC                 12  91              Cycle          M                   13.0000        206757   10852.00
+PBMC                 12  92              Cycle          M                   13.0000        204799   10813.00
+PBMC                 12  93              Cycle          M                   13.0000        204268   10279.00
+PBMC                 12  94              Cycle          M                   13.0000        198237   10016.00
+PBMC                 12  95              Cycle          M                   13.0000        199285    9895.00
+PBMC                 12  96              Cycle          M                   13.0000        208411   10597.00
+PBMC                 12  97              Cycle          M                   13.0000        209489   10487.00
+PBMC                 12  98              Cycle          M                   13.0000        215433   10751.00
+PBMC                 12  99              Cycle          M                   13.0000        208852   10297.00
+PBMC                 12  AA              Context        M                   11.0000       6828827  534263.00
+PBMC                 12  AC              Context        M                   13.0000       7094726  373303.00
+PBMC                 12  AG              Context        M                   15.0000       2559793   78781.00
+PBMC                 12  AT              Context        M                   17.0000        848389   18687.00
+PBMC                 12  CA              Context        M                    9.0000       6723752  783760.00
+PBMC                 12  CC              Context        M                   15.0000      11678622  412609.00
+PBMC                 12  CG              Context        M                   14.0000       1165011   51792.00
+PBMC                 12  CT              Context        M                   19.0000       1179486   14237.00
+PBMC                 12  GA              Context        M                   15.0000       5627196  183171.00
+PBMC                 12  GC              Context        M                   10.0000       3137228  303142.00
+PBMC                 12  GG              Context        M                   14.0000       2304185   88945.00
+PBMC                 12  GT              Context        M                   11.0000        647941   51134.00
+PBMC                 12  TA              Context        M                   11.0000       4186846  337509.00
+PBMC                 12  TC              Context        M                   12.0000       5033279  311372.00
+PBMC                 12  TG              Context        M                   19.0000       2579220   31112.00
+PBMC                 12  TT              Context        M                   12.0000        712587   43577.00
+PBMC                 24  -1              Cycle          M                   28.0000       1487172    2090.00
+PBMC                 24  -10             Cycle          M                   25.0000        420890    1361.00
+PBMC                 24  -100            Cycle          M                   23.0000        616085    3052.00
+PBMC                 24  -101            Cycle          M                   23.0000        624810    3195.00
+PBMC                 24  -102            Cycle          M                   23.0000        626206    3301.00
+PBMC                 24  -103            Cycle          M                   23.0000        624532    3112.00
+PBMC                 24  -104            Cycle          M                   23.0000        631324    3254.00
+PBMC                 24  -105            Cycle          M                   23.0000        626411    3182.00
+PBMC                 24  -106            Cycle          M                   23.0000        628483    3261.00
+PBMC                 24  -107            Cycle          M                   23.0000        644916    3328.00
+PBMC                 24  -108            Cycle          M                   23.0000        658894    3577.00
+PBMC                 24  -109            Cycle          M                   23.0000        653611    3409.00
+PBMC                 24  -11             Cycle          M                   26.0000        409392    1118.00
+PBMC                 24  -110            Cycle          M                   23.0000        655625    3517.00
+PBMC                 24  -111            Cycle          M                   23.0000        657332    3573.00
+PBMC                 24  -112            Cycle          M                   21.0000        668987    4997.00
+PBMC                 24  -113            Cycle          M                   23.0000        664416    3620.00
+PBMC                 24  -114            Cycle          M                   23.0000        664393    3564.00
+PBMC                 24  -115            Cycle          M                   23.0000        678389    3622.00
+PBMC                 24  -116            Cycle          M                   23.0000        673751    3701.00
+PBMC                 24  -117            Cycle          M                   23.0000        676433    3707.00
+PBMC                 24  -118            Cycle          M                   23.0000        679771    3689.00
+PBMC                 24  -119            Cycle          M                   23.0000        678637    3664.00
+PBMC                 24  -12             Cycle          M                   25.0000        415444    1160.00
+PBMC                 24  -120            Cycle          M                   23.0000        693480    3876.00
+PBMC                 24  -121            Cycle          M                   23.0000        704248    3988.00
+PBMC                 24  -122            Cycle          M                   23.0000        681430    3649.00
+PBMC                 24  -123            Cycle          M                   23.0000        676843    3669.00
+PBMC                 24  -124            Cycle          M                   23.0000        696482    3903.00
+PBMC                 24  -125            Cycle          M                   22.0000        717574    4125.00
+PBMC                 24  -126            Cycle          M                   22.0000        721475    4313.00
+PBMC                 24  -127            Cycle          M                   22.0000        745695    4687.00
+PBMC                 24  -128            Cycle          M                   22.0000        736398    4522.00
+PBMC                 24  -129            Cycle          M                   22.0000        733335    4340.00
+PBMC                 24  -13             Cycle          M                   25.0000        407510    1258.00
+PBMC                 24  -130            Cycle          M                   22.0000        726534    4270.00
+PBMC                 24  -131            Cycle          M                   22.0000        732626    4258.00
+PBMC                 24  -132            Cycle          M                   22.0000        730448    4361.00
+PBMC                 24  -133            Cycle          M                   22.0000        743804    4477.00
+PBMC                 24  -134            Cycle          M                   22.0000        759160    4757.00
+PBMC                 24  -135            Cycle          M                   22.0000        770978    5064.00
+PBMC                 24  -136            Cycle          M                   22.0000        767689    4973.00
+PBMC                 24  -137            Cycle          M                   22.0000        768438    5125.00
+PBMC                 24  -138            Cycle          M                   22.0000        785111    5299.00
+PBMC                 24  -139            Cycle          M                   22.0000        775180    5077.00
+PBMC                 24  -14             Cycle          M                   25.0000        400444    1209.00
+PBMC                 24  -140            Cycle          M                   22.0000        768378    4970.00
+PBMC                 24  -141            Cycle          M                   22.0000        781815    5165.00
+PBMC                 24  -142            Cycle          M                   22.0000        800556    5636.00
+PBMC                 24  -143            Cycle          M                   21.0000        805774    5787.00
+PBMC                 24  -144            Cycle          M                   21.0000        823128    6006.00
+PBMC                 24  -145            Cycle          M                   21.0000        814831    5924.00
+PBMC                 24  -146            Cycle          M                   21.0000        839770    6182.00
+PBMC                 24  -147            Cycle          M                   21.0000        867992    7114.00
+PBMC                 24  -148            Cycle          M                   21.0000        878041    7205.00
+PBMC                 24  -149            Cycle          M                   21.0000        871326    6911.00
+PBMC                 24  -15             Cycle          M                   25.0000        383131    1101.00
+PBMC                 24  -150            Cycle          M                   21.0000        876018    7230.00
+PBMC                 24  -16             Cycle          M                   26.0000        361329     982.00
+PBMC                 24  -17             Cycle          M                   25.0000        366894    1193.00
+PBMC                 24  -18             Cycle          M                   25.0000        369976    1154.00
+PBMC                 24  -19             Cycle          M                   25.0000        373598    1131.00
+PBMC                 24  -2              Cycle          M                   25.0000        612785    2151.00
+PBMC                 24  -20             Cycle          M                   25.0000        376190    1291.00
+PBMC                 24  -21             Cycle          M                   25.0000        391031    1273.00
+PBMC                 24  -22             Cycle          M                   25.0000        380042    1156.00
+PBMC                 24  -23             Cycle          M                   25.0000        390406    1273.00
+PBMC                 24  -24             Cycle          M                   25.0000        372440    1193.00
+PBMC                 24  -25             Cycle          M                   25.0000        387430    1310.00
+PBMC                 24  -26             Cycle          M                   25.0000        450211    1260.00
+PBMC                 24  -27             Cycle          M                   25.0000        444556    1269.00
+PBMC                 24  -28             Cycle          M                   25.0000        439086    1277.00
+PBMC                 24  -29             Cycle          M                   26.0000        431761    1181.00
+PBMC                 24  -3              Cycle          M                   25.0000        541904    1545.00
+PBMC                 24  -30             Cycle          M                   25.0000        433949    1270.00
+PBMC                 24  -31             Cycle          M                   25.0000        450837    1437.00
+PBMC                 24  -32             Cycle          M                   25.0000        446077    1371.00
+PBMC                 24  -33             Cycle          M                   25.0000        448324    1355.00
+PBMC                 24  -34             Cycle          M                   25.0000        441875    1509.00
+PBMC                 24  -35             Cycle          M                   25.0000        436766    1355.00
+PBMC                 24  -36             Cycle          M                   25.0000        432782    1383.00
+PBMC                 24  -37             Cycle          M                   25.0000        444900    1484.00
+PBMC                 24  -38             Cycle          M                   25.0000        443261    1496.00
+PBMC                 24  -39             Cycle          M                   25.0000        437830    1427.00
+PBMC                 24  -4              Cycle          M                   25.0000        541539    1751.00
+PBMC                 24  -40             Cycle          M                   25.0000        437698    1531.00
+PBMC                 24  -41             Cycle          M                   25.0000        444457    1562.00
+PBMC                 24  -42             Cycle          M                   24.0000        445515    1622.00
+PBMC                 24  -43             Cycle          M                   24.0000        445509    1617.00
+PBMC                 24  -44             Cycle          M                   25.0000        436534    1495.00
+PBMC                 24  -45             Cycle          M                   24.0000        448616    1688.00
+PBMC                 24  -46             Cycle          M                   24.0000        456216    1764.00
+PBMC                 24  -47             Cycle          M                   24.0000        453355    1709.00
+PBMC                 24  -48             Cycle          M                   24.0000        473388    1889.00
+PBMC                 24  -49             Cycle          M                   24.0000        462814    1789.00
+PBMC                 24  -5              Cycle          M                   25.0000        509386    1701.00
+PBMC                 24  -50             Cycle          M                   24.0000        466075    1784.00
+PBMC                 24  -51             Cycle          M                   24.0000        463131    1895.00
+PBMC                 24  -52             Cycle          M                   22.0000        461258    2866.00
+PBMC                 24  -53             Cycle          M                   24.0000        465917    1880.00
+PBMC                 24  -54             Cycle          M                   24.0000        460830    1806.00
+PBMC                 24  -55             Cycle          M                   24.0000        471924    1972.00
+PBMC                 24  -56             Cycle          M                   24.0000        467386    1817.00
+PBMC                 24  -57             Cycle          M                   24.0000        464368    1889.00
+PBMC                 24  -58             Cycle          M                   24.0000        477424    2011.00
+PBMC                 24  -59             Cycle          M                   24.0000        477683    1994.00
+PBMC                 24  -6              Cycle          M                   25.0000        484166    1425.00
+PBMC                 24  -60             Cycle          M                   24.0000        486354    2020.00
+PBMC                 24  -61             Cycle          M                   22.0000        502325    3409.00
+PBMC                 24  -62             Cycle          M                   24.0000        488953    2091.00
+PBMC                 24  -63             Cycle          M                   24.0000        490226    1998.00
+PBMC                 24  -64             Cycle          M                   24.0000        495053    2090.00
+PBMC                 24  -65             Cycle          M                   24.0000        508871    2267.00
+PBMC                 24  -66             Cycle          M                   24.0000        511684    2207.00
+PBMC                 24  -67             Cycle          M                   24.0000        496335    2037.00
+PBMC                 24  -68             Cycle          M                   24.0000        510794    2235.00
+PBMC                 24  -69             Cycle          M                   23.0000        506051    2295.00
+PBMC                 24  -7              Cycle          M                   25.0000        458721    1451.00
+PBMC                 24  -70             Cycle          M                   21.0000        514040    3923.00
+PBMC                 24  -71             Cycle          M                   23.0000        516737    2323.00
+PBMC                 24  -72             Cycle          M                   24.0000        516147    2277.00
+PBMC                 24  -73             Cycle          M                   23.0000        526945    2369.00
+PBMC                 24  -74             Cycle          M                   24.0000        525168    2307.00
+PBMC                 24  -75             Cycle          M                   24.0000        529524    2350.00
+PBMC                 24  -76             Cycle          M                   23.0000        528126    2394.00
+PBMC                 24  -77             Cycle          M                   24.0000        530659    2222.00
+PBMC                 24  -78             Cycle          M                   24.0000        523815    2301.00
+PBMC                 24  -79             Cycle          M                   24.0000        529132    2307.00
+PBMC                 24  -8              Cycle          M                   25.0000        423908    1225.00
+PBMC                 24  -80             Cycle          M                   24.0000        525872    2234.00
+PBMC                 24  -81             Cycle          M                   23.0000        538607    2441.00
+PBMC                 24  -82             Cycle          M                   23.0000        542440    2464.00
+PBMC                 24  -83             Cycle          M                   23.0000        551310    2513.00
+PBMC                 24  -84             Cycle          M                   23.0000        563429    2688.00
+PBMC                 24  -85             Cycle          M                   23.0000        556245    2548.00
+PBMC                 24  -86             Cycle          M                   23.0000        560894    2638.00
+PBMC                 24  -87             Cycle          M                   24.0000        561426    2505.00
+PBMC                 24  -88             Cycle          M                   23.0000        574703    2699.00
+PBMC                 24  -89             Cycle          M                   23.0000        575216    2801.00
+PBMC                 24  -9              Cycle          M                   25.0000        430241    1328.00
+PBMC                 24  -90             Cycle          M                   23.0000        582879    2735.00
+PBMC                 24  -91             Cycle          M                   23.0000        580808    2695.00
+PBMC                 24  -92             Cycle          M                   23.0000        587720    2817.00
+PBMC                 24  -93             Cycle          M                   23.0000        602188    2955.00
+PBMC                 24  -94             Cycle          M                   23.0000        598915    2910.00
+PBMC                 24  -95             Cycle          M                   23.0000        599457    3060.00
+PBMC                 24  -96             Cycle          M                   23.0000        598415    2932.00
+PBMC                 24  -97             Cycle          M                   23.0000        606814    3019.00
+PBMC                 24  -98             Cycle          M                   23.0000        616303    3082.00
+PBMC                 24  -99             Cycle          M                   23.0000        614010    3054.00
+PBMC                 24  1               Cycle          M                   27.0000       1572979    3409.00
+PBMC                 24  10              Cycle          M                   21.0000        685997    5073.00
+PBMC                 24  100             Cycle          M                   23.0000        517272    2799.00
+PBMC                 24  101             Cycle          M                   23.0000        525682    2799.00
+PBMC                 24  102             Cycle          M                   23.0000        536020    2898.00
+PBMC                 24  103             Cycle          M                   23.0000        539906    3043.00
+PBMC                 24  104             Cycle          M                   23.0000        540237    2977.00
+PBMC                 24  105             Cycle          M                   23.0000        527387    2804.00
+PBMC                 24  106             Cycle          M                   23.0000        526698    2768.00
+PBMC                 24  107             Cycle          M                   23.0000        525220    2904.00
+PBMC                 24  108             Cycle          M                   22.0000        557128    3266.00
+PBMC                 24  109             Cycle          M                   22.0000        551986    3247.00
+PBMC                 24  11              Cycle          M                   20.0000        693044    7522.00
+PBMC                 24  110             Cycle          M                   22.0000        574069    3523.00
+PBMC                 24  111             Cycle          M                   23.0000        511810    2683.00
+PBMC                 24  112             Cycle          M                   22.0000        536685    3122.00
+PBMC                 24  113             Cycle          M                   23.0000        554542    3102.00
+PBMC                 24  114             Cycle          M                   22.0000        553581    3238.00
+PBMC                 24  115             Cycle          M                   22.0000        554361    3343.00
+PBMC                 24  116             Cycle          M                   23.0000        542830    3066.00
+PBMC                 24  117             Cycle          M                   22.0000        568192    3428.00
+PBMC                 24  118             Cycle          M                   22.0000        572110    3412.00
+PBMC                 24  119             Cycle          M                   22.0000        570796    3319.00
+PBMC                 24  12              Cycle          M                   21.0000        711509    5454.00
+PBMC                 24  120             Cycle          M                   22.0000        574211    3411.00
+PBMC                 24  121             Cycle          M                   22.0000        563556    3336.00
+PBMC                 24  122             Cycle          M                   22.0000        566801    3314.00
+PBMC                 24  123             Cycle          M                   22.0000        598811    3865.00
+PBMC                 24  124             Cycle          M                   22.0000        594222    3929.00
+PBMC                 24  125             Cycle          M                   22.0000        580709    3480.00
+PBMC                 24  126             Cycle          M                   22.0000        594469    3719.00
+PBMC                 24  127             Cycle          M                   22.0000        608292    3917.00
+PBMC                 24  128             Cycle          M                   22.0000        599944    3831.00
+PBMC                 24  129             Cycle          M                   22.0000        589316    3594.00
+PBMC                 24  13              Cycle          M                   21.0000        684316    5064.00
+PBMC                 24  130             Cycle          M                   22.0000        586443    3631.00
+PBMC                 24  131             Cycle          M                   22.0000        608239    3940.00
+PBMC                 24  132             Cycle          M                   22.0000        606679    3912.00
+PBMC                 24  133             Cycle          M                   22.0000        602452    3823.00
+PBMC                 24  134             Cycle          M                   22.0000        593429    3755.00
+PBMC                 24  135             Cycle          M                   22.0000        607153    4074.00
+PBMC                 24  136             Cycle          M                   22.0000        627427    4211.00
+PBMC                 24  137             Cycle          M                   22.0000        606425    3882.00
+PBMC                 24  138             Cycle          M                   22.0000        613349    3905.00
+PBMC                 24  139             Cycle          M                   22.0000        623867    4215.00
+PBMC                 24  14              Cycle          M                   22.0000        677685    4475.00
+PBMC                 24  140             Cycle          M                   22.0000        633316    4215.00
+PBMC                 24  141             Cycle          M                   22.0000        616141    3999.00
+PBMC                 24  142             Cycle          M                   22.0000        617551    3953.00
+PBMC                 24  143             Cycle          M                   22.0000        634478    4386.00
+PBMC                 24  144             Cycle          M                   21.0000        673614    5528.00
+PBMC                 24  145             Cycle          M                   21.0000        661554    5166.00
+PBMC                 24  146             Cycle          M                   22.0000        656024    4663.00
+PBMC                 24  147             Cycle          M                   22.0000        647690    4353.00
+PBMC                 24  148             Cycle          M                   22.0000        652434    4580.00
+PBMC                 24  149             Cycle          M                   21.0000        681306    5577.00
+PBMC                 24  15              Cycle          M                   22.0000        669258    4583.00
+PBMC                 24  150             Cycle          M                   21.0000        672549    5526.00
+PBMC                 24  16              Cycle          M                   25.0000        422659    1456.00
+PBMC                 24  17              Cycle          M                   25.0000        419432    1436.00
+PBMC                 24  18              Cycle          M                   25.0000        416108    1346.00
+PBMC                 24  19              Cycle          M                   24.0000        431713    1573.00
+PBMC                 24  2               Cycle          M                   23.0000        659201    3067.00
+PBMC                 24  20              Cycle          M                   24.0000        426485    1540.00
+PBMC                 24  21              Cycle          M                   24.0000        426726    1609.00
+PBMC                 24  22              Cycle          M                   24.0000        416757    1553.00
+PBMC                 24  23              Cycle          M                   25.0000        410781    1431.00
+PBMC                 24  24              Cycle          M                   24.0000        406750    1597.00
+PBMC                 24  25              Cycle          M                   24.0000        407755    1542.00
+PBMC                 24  26              Cycle          M                   25.0000        451113    1383.00
+PBMC                 24  27              Cycle          M                   25.0000        459029    1423.00
+PBMC                 24  28              Cycle          M                   25.0000        465711    1479.00
+PBMC                 24  29              Cycle          M                   25.0000        465984    1486.00
+PBMC                 24  3               Cycle          M                   25.0000        614950    2108.00
+PBMC                 24  30              Cycle          M                   22.0000        479191    3210.00
+PBMC                 24  31              Cycle          M                   25.0000        473271    1506.00
+PBMC                 24  32              Cycle          M                   25.0000        475609    1598.00
+PBMC                 24  33              Cycle          M                   25.0000        476808    1533.00
+PBMC                 24  34              Cycle          M                   25.0000        473524    1662.00
+PBMC                 24  35              Cycle          M                   25.0000        466805    1542.00
+PBMC                 24  36              Cycle          M                   25.0000        457789    1608.00
+PBMC                 24  37              Cycle          M                   25.0000        433200    1519.00
+PBMC                 24  38              Cycle          M                   25.0000        424609    1482.00
+PBMC                 24  39              Cycle          M                   24.0000        426276    1531.00
+PBMC                 24  4               Cycle          M                   23.0000        701272    3802.00
+PBMC                 24  40              Cycle          M                   24.0000        438343    1578.00
+PBMC                 24  41              Cycle          M                   24.0000        437002    1565.00
+PBMC                 24  42              Cycle          M                   24.0000        439390    1609.00
+PBMC                 24  43              Cycle          M                   24.0000        441619    1578.00
+PBMC                 24  44              Cycle          M                   24.0000        447112    1806.00
+PBMC                 24  45              Cycle          M                   24.0000        463362    1838.00
+PBMC                 24  46              Cycle          M                   24.0000        461016    1914.00
+PBMC                 24  47              Cycle          M                   24.0000        469183    1982.00
+PBMC                 24  48              Cycle          M                   21.0000        478514    3452.00
+PBMC                 24  49              Cycle          M                   24.0000        466468    1946.00
+PBMC                 24  5               Cycle          M                   23.0000        756523    4255.00
+PBMC                 24  50              Cycle          M                   23.0000        474787    2149.00
+PBMC                 24  51              Cycle          M                   23.0000        480267    2186.00
+PBMC                 24  52              Cycle          M                   23.0000        482922    2256.00
+PBMC                 24  53              Cycle          M                   24.0000        474731    2044.00
+PBMC                 24  54              Cycle          M                   24.0000        480576    2082.00
+PBMC                 24  55              Cycle          M                   24.0000        484301    2137.00
+PBMC                 24  56              Cycle          M                   22.0000        486203    3413.00
+PBMC                 24  57              Cycle          M                   23.0000        488533    2269.00
+PBMC                 24  58              Cycle          M                   24.0000        491866    2195.00
+PBMC                 24  59              Cycle          M                   23.0000        498818    2301.00
+PBMC                 24  6               Cycle          M                   21.0000        770205    5548.00
+PBMC                 24  60              Cycle          M                   24.0000        497267    2204.00
+PBMC                 24  61              Cycle          M                   23.0000        515339    2450.00
+PBMC                 24  62              Cycle          M                   23.0000        511254    2496.00
+PBMC                 24  63              Cycle          M                   23.0000        507266    2366.00
+PBMC                 24  64              Cycle          M                   23.0000        501889    2301.00
+PBMC                 24  65              Cycle          M                   23.0000        494249    2231.00
+PBMC                 24  66              Cycle          M                   23.0000        501682    2344.00
+PBMC                 24  67              Cycle          M                   23.0000        491979    2350.00
+PBMC                 24  68              Cycle          M                   23.0000        491203    2344.00
+PBMC                 24  69              Cycle          M                   23.0000        489508    2323.00
+PBMC                 24  7               Cycle          M                   22.0000        721960    4303.00
+PBMC                 24  70              Cycle          M                   23.0000        482160    2286.00
+PBMC                 24  71              Cycle          M                   23.0000        487636    2447.00
+PBMC                 24  72              Cycle          M                   23.0000        477687    2415.00
+PBMC                 24  73              Cycle          M                   23.0000        480953    2404.00
+PBMC                 24  74              Cycle          M                   23.0000        480346    2443.00
+PBMC                 24  75              Cycle          M                   23.0000        476603    2373.00
+PBMC                 24  76              Cycle          M                   23.0000        474708    2334.00
+PBMC                 24  77              Cycle          M                   23.0000        492292    2534.00
+PBMC                 24  78              Cycle          M                   23.0000        494886    2589.00
+PBMC                 24  79              Cycle          M                   23.0000        492620    2506.00
+PBMC                 24  8               Cycle          M                   23.0000        642206    3472.00
+PBMC                 24  80              Cycle          M                   23.0000        488522    2534.00
+PBMC                 24  81              Cycle          M                   23.0000        499055    2642.00
+PBMC                 24  82              Cycle          M                   23.0000        510888    2819.00
+PBMC                 24  83              Cycle          M                   23.0000        503963    2667.00
+PBMC                 24  84              Cycle          M                   23.0000        505417    2695.00
+PBMC                 24  85              Cycle          M                   23.0000        516822    2871.00
+PBMC                 24  86              Cycle          M                   23.0000        490070    2460.00
+PBMC                 24  87              Cycle          M                   23.0000        496593    2558.00
+PBMC                 24  88              Cycle          M                   23.0000        496544    2603.00
+PBMC                 24  89              Cycle          M                   23.0000        517924    2760.00
+PBMC                 24  9               Cycle          M                   22.0000        689930    4118.00
+PBMC                 24  90              Cycle          M                   23.0000        522844    2916.00
+PBMC                 24  91              Cycle          M                   23.0000        527306    2889.00
+PBMC                 24  92              Cycle          M                   23.0000        524433    2835.00
+PBMC                 24  93              Cycle          M                   23.0000        525585    2819.00
+PBMC                 24  94              Cycle          M                   23.0000        513838    2761.00
+PBMC                 24  95              Cycle          M                   23.0000        517794    2771.00
+PBMC                 24  96              Cycle          M                   22.0000        533021    3038.00
+PBMC                 24  97              Cycle          M                   23.0000        532647    2963.00
+PBMC                 24  98              Cycle          M                   22.0000        543774    3146.00
+PBMC                 24  99              Cycle          M                   23.0000        536327    2858.00
+PBMC                 24  AA              Context        M                   22.0000      17106738  106965.00
+PBMC                 24  AC              Context        M                   22.0000      16602385   96021.00
+PBMC                 24  AG              Context        M                   26.0000       7947464   18776.00
+PBMC                 24  AT              Context        M                   31.0000       3451510    2715.00
+PBMC                 24  CA              Context        M                   20.0000      14208600  140878.00
+PBMC                 24  CC              Context        M                   23.0000      28338574  134591.00
+PBMC                 24  CG              Context        M                   22.0000       3030357   17628.00
+PBMC                 24  CT              Context        M                   32.0000       4818056    3027.00
+PBMC                 24  GA              Context        M                   26.0000      13630917   33413.00
+PBMC                 24  GC              Context        M                   21.0000       9227438   79012.00
+PBMC                 24  GG              Context        M                   25.0000       7923001   26791.00
+PBMC                 24  GT              Context        M                   26.0000       2791305    7198.00
+PBMC                 24  TA              Context        M                   22.0000       8837602   53760.00
+PBMC                 24  TC              Context        M                   21.0000      14041215  114162.00
+PBMC                 24  TG              Context        M                   30.0000       8638721    9592.00
+PBMC                 24  TT              Context        M                   26.0000       3375746    8213.00
+PBMC                 40  -1              Cycle          M                   35.0000      37986466   11812.00
+PBMC                 40  -10             Cycle          M                   37.0000      39419162    7575.00
+PBMC                 40  -100            Cycle          M                   37.0000      36906793    6953.00
+PBMC                 40  -101            Cycle          M                   37.0000      36789556    6925.00
+PBMC                 40  -102            Cycle          M                   37.0000      36677655    6781.00
+PBMC                 40  -103            Cycle          M                   37.0000      36561185    6815.00
+PBMC                 40  -104            Cycle          M                   37.0000      36431101    6718.00
+PBMC                 40  -105            Cycle          M                   37.0000      36314499    6762.00
+PBMC                 40  -106            Cycle          M                   37.0000      36181073    6651.00
+PBMC                 40  -107            Cycle          M                   37.0000      36026219    6854.00
+PBMC                 40  -108            Cycle          M                   37.0000      35880077    6767.00
+PBMC                 40  -109            Cycle          M                   37.0000      35750588    6825.00
+PBMC                 40  -11             Cycle          M                   37.0000      39334143    7530.00
+PBMC                 40  -110            Cycle          M                   37.0000      35613305    6825.00
+PBMC                 40  -111            Cycle          M                   37.0000      35474353    6777.00
+PBMC                 40  -112            Cycle          M                   35.0000      35316722   12060.00
+PBMC                 40  -113            Cycle          M                   37.0000      35182574    6692.00
+PBMC                 40  -114            Cycle          M                   37.0000      35045762    6673.00
+PBMC                 40  -115            Cycle          M                   37.0000      34875747    6682.00
+PBMC                 40  -116            Cycle          M                   37.0000      34736651    6818.00
+PBMC                 40  -117            Cycle          M                   37.0000      34588681    6679.00
+PBMC                 40  -118            Cycle          M                   37.0000      34426885    6655.00
+PBMC                 40  -119            Cycle          M                   37.0000      34274645    6549.00
+PBMC                 40  -12             Cycle          M                   37.0000      39317677    7636.00
+PBMC                 40  -120            Cycle          M                   37.0000      34095724    6660.00
+PBMC                 40  -121            Cycle          M                   37.0000      33917262    6809.00
+PBMC                 40  -122            Cycle          M                   37.0000      33792860    6466.00
+PBMC                 40  -123            Cycle          M                   37.0000      33638363    6439.00
+PBMC                 40  -124            Cycle          M                   37.0000      33437293    6579.00
+PBMC                 40  -125            Cycle          M                   37.0000      33232638    6554.00
+PBMC                 40  -126            Cycle          M                   37.0000      33060419    6668.00
+PBMC                 40  -127            Cycle          M                   37.0000      32835535    6660.00
+PBMC                 40  -128            Cycle          M                   37.0000      32678094    6611.00
+PBMC                 40  -129            Cycle          M                   37.0000      32501678    6308.00
+PBMC                 40  -13             Cycle          M                   37.0000      39366612    7462.00
+PBMC                 40  -130            Cycle          M                   37.0000      32327262    6331.00
+PBMC                 40  -131            Cycle          M                   37.0000      32134704    6233.00
+PBMC                 40  -132            Cycle          M                   37.0000      31954371    6308.00
+PBMC                 40  -133            Cycle          M                   37.0000      31735818    6305.00
+PBMC                 40  -134            Cycle          M                   37.0000      31521382    6338.00
+PBMC                 40  -135            Cycle          M                   37.0000      31306851    6453.00
+PBMC                 40  -136            Cycle          M                   37.0000      31108025    6350.00
+PBMC                 40  -137            Cycle          M                   37.0000      30913481    6334.00
+PBMC                 40  -138            Cycle          M                   37.0000      30693092    6435.00
+PBMC                 40  -139            Cycle          M                   37.0000      30504725    6291.00
+PBMC                 40  -14             Cycle          M                   37.0000      39401459    7355.00
+PBMC                 40  -140            Cycle          M                   37.0000      30311899    6242.00
+PBMC                 40  -141            Cycle          M                   37.0000      30082758    6272.00
+PBMC                 40  -142            Cycle          M                   37.0000      29840752    6405.00
+PBMC                 40  -143            Cycle          M                   37.0000      29619083    6312.00
+PBMC                 40  -144            Cycle          M                   37.0000      29385483    6527.00
+PBMC                 40  -145            Cycle          M                   36.0000      29182049    6825.00
+PBMC                 40  -146            Cycle          M                   37.0000      28901533    6394.00
+PBMC                 40  -147            Cycle          M                   36.0000      28638329    6936.00
+PBMC                 40  -148            Cycle          M                   36.0000      28405626    6996.00
+PBMC                 40  -149            Cycle          M                   36.0000      28203669    6991.00
+PBMC                 40  -15             Cycle          M                   37.0000      39421494    7200.00
+PBMC                 40  -150            Cycle          M                   35.0000      27988132    8701.00
+PBMC                 40  -16             Cycle          M                   37.0000      39437027    7349.00
+PBMC                 40  -17             Cycle          M                   37.0000      39417984    7794.00
+PBMC                 40  -18             Cycle          M                   37.0000      39419245    7081.00
+PBMC                 40  -19             Cycle          M                   38.0000      39407693    7038.00
+PBMC                 40  -2              Cycle          M                   37.0000      39129153    8501.00
+PBMC                 40  -20             Cycle          M                   37.0000      39370881    7587.00
+PBMC                 40  -21             Cycle          M                   38.0000      39382703    6921.00
+PBMC                 40  -22             Cycle          M                   38.0000      39388518    6873.00
+PBMC                 40  -23             Cycle          M                   38.0000      39374697    6955.00
+PBMC                 40  -24             Cycle          M                   38.0000      39411360    6917.00
+PBMC                 40  -25             Cycle          M                   38.0000      39379229    6886.00
+PBMC                 40  -26             Cycle          M                   38.0000      39302923    6843.00
+PBMC                 40  -27             Cycle          M                   38.0000      39314024    6800.00
+PBMC                 40  -28             Cycle          M                   37.0000      39316356    7077.00
+PBMC                 40  -29             Cycle          M                   38.0000      39327218    6985.00
+PBMC                 40  -3              Cycle          M                   38.0000      39256977    6393.00
+PBMC                 40  -30             Cycle          M                   37.0000      39325074    7063.00
+PBMC                 40  -31             Cycle          M                   37.0000      39291174    7094.00
+PBMC                 40  -32             Cycle          M                   37.0000      39298905    7131.00
+PBMC                 40  -33             Cycle          M                   38.0000      39298383    6994.00
+PBMC                 40  -34             Cycle          M                   37.0000      39295351    7439.00
+PBMC                 40  -35             Cycle          M                   37.0000      39300110    7300.00
+PBMC                 40  -36             Cycle          M                   37.0000      39311907    7188.00
+PBMC                 40  -37             Cycle          M                   37.0000      39284540    7244.00
+PBMC                 40  -38             Cycle          M                   37.0000      39288263    7349.00
+PBMC                 40  -39             Cycle          M                   37.0000      39304409    7492.00
+PBMC                 40  -4              Cycle          M                   38.0000      39238404    6312.00
+PBMC                 40  -40             Cycle          M                   37.0000      39295862    7386.00
+PBMC                 40  -41             Cycle          M                   37.0000      39284944    7271.00
+PBMC                 40  -42             Cycle          M                   37.0000      39285568    7381.00
+PBMC                 40  -43             Cycle          M                   37.0000      39279419    7312.00
+PBMC                 40  -44             Cycle          M                   37.0000      39289614    7224.00
+PBMC                 40  -45             Cycle          M                   37.0000      39274681    7474.00
+PBMC                 40  -46             Cycle          M                   37.0000      39255595    7322.00
+PBMC                 40  -47             Cycle          M                   37.0000      39255562    7233.00
+PBMC                 40  -48             Cycle          M                   37.0000      39234000    7308.00
+PBMC                 40  -49             Cycle          M                   37.0000      39243278    7326.00
+PBMC                 40  -5              Cycle          M                   38.0000      39253724    5911.00
+PBMC                 40  -50             Cycle          M                   37.0000      39237181    7310.00
+PBMC                 40  -51             Cycle          M                   37.0000      39237334    7341.00
+PBMC                 40  -52             Cycle          M                   35.0000      39228101   12412.00
+PBMC                 40  -53             Cycle          M                   37.0000      39209941    7150.00
+PBMC                 40  -54             Cycle          M                   37.0000      39207918    7219.00
+PBMC                 40  -55             Cycle          M                   37.0000      39175566    7214.00
+PBMC                 40  -56             Cycle          M                   37.0000      39167104    7129.00
+PBMC                 40  -57             Cycle          M                   37.0000      39164995    7684.00
+PBMC                 40  -58             Cycle          M                   37.0000      39125925    7219.00
+PBMC                 40  -59             Cycle          M                   37.0000      39114547    7398.00
+PBMC                 40  -6              Cycle          M                   37.0000      39319151    7052.00
+PBMC                 40  -60             Cycle          M                   37.0000      39091909    7272.00
+PBMC                 40  -61             Cycle          M                   35.0000      39041972   11807.00
+PBMC                 40  -62             Cycle          M                   37.0000      39048651    7278.00
+PBMC                 40  -63             Cycle          M                   37.0000      39035696    7349.00
+PBMC                 40  -64             Cycle          M                   37.0000      39000672    7165.00
+PBMC                 40  -65             Cycle          M                   37.0000      38950197    7284.00
+PBMC                 40  -66             Cycle          M                   37.0000      38933412    7310.00
+PBMC                 40  -67             Cycle          M                   37.0000      38928155    7265.00
+PBMC                 40  -68             Cycle          M                   37.0000      38883413    7163.00
+PBMC                 40  -69             Cycle          M                   37.0000      38868724    7286.00
+PBMC                 40  -7              Cycle          M                   37.0000      39368819    7230.00
+PBMC                 40  -70             Cycle          M                   34.0000      38813927   14408.00
+PBMC                 40  -71             Cycle          M                   37.0000      38787080    7157.00
+PBMC                 40  -72             Cycle          M                   37.0000      38768272    7169.00
+PBMC                 40  -73             Cycle          M                   37.0000      38712576    7257.00
+PBMC                 40  -74             Cycle          M                   37.0000      38682494    7269.00
+PBMC                 40  -75             Cycle          M                   37.0000      38641909    7142.00
+PBMC                 40  -76             Cycle          M                   37.0000      38603441    6985.00
+PBMC                 40  -77             Cycle          M                   37.0000      38561641    7064.00
+PBMC                 40  -78             Cycle          M                   38.0000      38536758    6880.00
+PBMC                 40  -79             Cycle          M                   37.0000      38480353    7174.00
+PBMC                 40  -8              Cycle          M                   37.0000      39369563    7095.00
+PBMC                 40  -80             Cycle          M                   37.0000      38443982    7048.00
+PBMC                 40  -81             Cycle          M                   37.0000      38383302    7033.00
+PBMC                 40  -82             Cycle          M                   37.0000      38328238    7084.00
+PBMC                 40  -83             Cycle          M                   37.0000      38266058    7162.00
+PBMC                 40  -84             Cycle          M                   37.0000      38198241    7056.00
+PBMC                 40  -85             Cycle          M                   37.0000      38149738    7046.00
+PBMC                 40  -86             Cycle          M                   37.0000      38084298    7019.00
+PBMC                 40  -87             Cycle          M                   37.0000      38031217    6988.00
+PBMC                 40  -88             Cycle          M                   37.0000      37944734    7124.00
+PBMC                 40  -89             Cycle          M                   37.0000      37882421    6902.00
+PBMC                 40  -9              Cycle          M                   37.0000      39385000    7437.00
+PBMC                 40  -90             Cycle          M                   37.0000      37809317    7055.00
+PBMC                 40  -91             Cycle          M                   37.0000      37732952    7054.00
+PBMC                 40  -92             Cycle          M                   37.0000      37649259    7045.00
+PBMC                 40  -93             Cycle          M                   37.0000      37558456    6985.00
+PBMC                 40  -94             Cycle          M                   37.0000      37484770    7060.00
+PBMC                 40  -95             Cycle          M                   37.0000      37402875    7011.00
+PBMC                 40  -96             Cycle          M                   37.0000      37326681    6924.00
+PBMC                 40  -97             Cycle          M                   37.0000      37219013    6937.00
+PBMC                 40  -98             Cycle          M                   37.0000      37111288    7068.00
+PBMC                 40  -99             Cycle          M                   37.0000      37018645    7003.00
+PBMC                 40  1               Cycle          M                   35.0000      37901060   11090.00
+PBMC                 40  10              Cycle          M                   37.0000      39041984    7907.00
+PBMC                 40  100             Cycle          M                   38.0000      37041387    6365.00
+PBMC                 40  101             Cycle          M                   38.0000      36921701    6509.00
+PBMC                 40  102             Cycle          M                   37.0000      36795660    6635.00
+PBMC                 40  103             Cycle          M                   37.0000      36670985    6651.00
+PBMC                 40  104             Cycle          M                   37.0000      36550685    6608.00
+PBMC                 40  105             Cycle          M                   38.0000      36448612    6387.00
+PBMC                 40  106             Cycle          M                   37.0000      36318508    6544.00
+PBMC                 40  107             Cycle          M                   37.0000      36194895    6510.00
+PBMC                 40  108             Cycle          M                   37.0000      36015863    6832.00
+PBMC                 40  109             Cycle          M                   37.0000      35886547    6673.00
+PBMC                 40  11              Cycle          M                   32.0000      38755483   22853.00
+PBMC                 40  110             Cycle          M                   37.0000      35719496    6785.00
+PBMC                 40  111             Cycle          M                   38.0000      35680310    6273.00
+PBMC                 40  112             Cycle          M                   37.0000      35500731    6722.00
+PBMC                 40  113             Cycle          M                   37.0000      35334110    6559.00
+PBMC                 40  114             Cycle          M                   37.0000      35196943    6653.00
+PBMC                 40  115             Cycle          M                   37.0000      35048173    6625.00
+PBMC                 40  116             Cycle          M                   37.0000      34919238    6446.00
+PBMC                 40  117             Cycle          M                   37.0000      34733865    6647.00
+PBMC                 40  118             Cycle          M                   37.0000      34571774    6416.00
+PBMC                 40  119             Cycle          M                   37.0000      34421588    6560.00
+PBMC                 40  12              Cycle          M                   35.0000      38878871   12663.00
+PBMC                 40  120             Cycle          M                   37.0000      34264239    6550.00
+PBMC                 40  121             Cycle          M                   37.0000      34115620    6444.00
+PBMC                 40  122             Cycle          M                   37.0000      33949371    6440.00
+PBMC                 40  123             Cycle          M                   37.0000      33738263    6873.00
+PBMC                 40  124             Cycle          M                   37.0000      33572999    6730.00
+PBMC                 40  125             Cycle          M                   37.0000      33430409    6486.00
+PBMC                 40  126             Cycle          M                   37.0000      33235098    6569.00
+PBMC                 40  127             Cycle          M                   37.0000      33034884    6546.00
+PBMC                 40  128             Cycle          M                   37.0000      32867862    6511.00
+PBMC                 40  129             Cycle          M                   37.0000      32705092    6330.00
+PBMC                 40  13              Cycle          M                   37.0000      38961469    7475.00
+PBMC                 40  130             Cycle          M                   37.0000      32526673    6375.00
+PBMC                 40  131             Cycle          M                   37.0000      32308711    6485.00
+PBMC                 40  132             Cycle          M                   37.0000      32125707    6524.00
+PBMC                 40  133             Cycle          M                   37.0000      31944319    6368.00
+PBMC                 40  134             Cycle          M                   37.0000      31762940    6247.00
+PBMC                 40  135             Cycle          M                   37.0000      31550271    6439.00
+PBMC                 40  136             Cycle          M                   37.0000      31322302    6346.00
+PBMC                 40  137             Cycle          M                   37.0000      31158356    6299.00
+PBMC                 40  138             Cycle          M                   37.0000      30948320    6255.00
+PBMC                 40  139             Cycle          M                   37.0000      30727747    6341.00
+PBMC                 40  14              Cycle          M                   37.0000      39005807    7077.00
+PBMC                 40  140             Cycle          M                   37.0000      30509030    6326.00
+PBMC                 40  141             Cycle          M                   37.0000      30334664    6145.00
+PBMC                 40  142             Cycle          M                   37.0000      30122058    6199.00
+PBMC                 40  143             Cycle          M                   37.0000      29880538    6097.00
+PBMC                 40  144             Cycle          M                   36.0000      29611585    6744.00
+PBMC                 40  145             Cycle          M                   37.0000      29415162    6565.00
+PBMC                 40  146             Cycle          M                   37.0000      29211060    5900.00
+PBMC                 40  147             Cycle          M                   37.0000      29013381    6097.00
+PBMC                 40  148             Cycle          M                   37.0000      28788554    6128.00
+PBMC                 40  149             Cycle          M                   36.0000      28526177    7021.00
+PBMC                 40  15              Cycle          M                   37.0000      39010389    7233.00
+PBMC                 40  150             Cycle          M                   35.0000      28333849    8589.00
+PBMC                 40  16              Cycle          M                   38.0000      39369328    6143.00
+PBMC                 40  17              Cycle          M                   38.0000      39364330    5880.00
+PBMC                 40  18              Cycle          M                   38.0000      39376311    5804.00
+PBMC                 40  19              Cycle          M                   38.0000      39341957    6032.00
+PBMC                 40  2               Cycle          M                   37.0000      39103932    8721.00
+PBMC                 40  20              Cycle          M                   38.0000      39348787    5802.00
+PBMC                 40  21              Cycle          M                   38.0000      39351381    5758.00
+PBMC                 40  22              Cycle          M                   38.0000      39360368    5807.00
+PBMC                 40  23              Cycle          M                   38.0000      39362984    5897.00
+PBMC                 40  24              Cycle          M                   38.0000      39378708    5918.00
+PBMC                 40  25              Cycle          M                   38.0000      39366873    5794.00
+PBMC                 40  26              Cycle          M                   38.0000      39299407    5687.00
+PBMC                 40  27              Cycle          M                   38.0000      39292641    5718.00
+PBMC                 40  28              Cycle          M                   38.0000      39274652    5703.00
+PBMC                 40  29              Cycle          M                   38.0000      39274516    5748.00
+PBMC                 40  3               Cycle          M                   38.0000      39204874    6542.00
+PBMC                 40  30              Cycle          M                   35.0000      39256907   12911.00
+PBMC                 40  31              Cycle          M                   38.0000      39259595    5763.00
+PBMC                 40  32              Cycle          M                   38.0000      39255476    5751.00
+PBMC                 40  33              Cycle          M                   38.0000      39258493    5713.00
+PBMC                 40  34              Cycle          M                   38.0000      39247988    5880.00
+PBMC                 40  35              Cycle          M                   38.0000      39258203    5818.00
+PBMC                 40  36              Cycle          M                   38.0000      39274056    5748.00
+PBMC                 40  37              Cycle          M                   38.0000      39304493    5759.00
+PBMC                 40  38              Cycle          M                   38.0000      39317085    5715.00
+PBMC                 40  39              Cycle          M                   38.0000      39321642    5654.00
+PBMC                 40  4               Cycle          M                   37.0000      39051482    7058.00
+PBMC                 40  40              Cycle          M                   38.0000      39294339    5855.00
+PBMC                 40  41              Cycle          M                   38.0000      39297568    5884.00
+PBMC                 40  42              Cycle          M                   38.0000      39296454    5949.00
+PBMC                 40  43              Cycle          M                   38.0000      39285028    5881.00
+PBMC                 40  44              Cycle          M                   38.0000      39273640    5965.00
+PBMC                 40  45              Cycle          M                   38.0000      39250764    5866.00
+PBMC                 40  46              Cycle          M                   38.0000      39244230    6034.00
+PBMC                 40  47              Cycle          M                   38.0000      39230672    5907.00
+PBMC                 40  48              Cycle          M                   34.0000      39189415   15548.00
+PBMC                 40  49              Cycle          M                   38.0000      39236193    5969.00
+PBMC                 40  5               Cycle          M                   38.0000      38941623    6515.00
+PBMC                 40  50              Cycle          M                   38.0000      39222245    5902.00
+PBMC                 40  51              Cycle          M                   38.0000      39211852    6089.00
+PBMC                 40  52              Cycle          M                   38.0000      39191015    6007.00
+PBMC                 40  53              Cycle          M                   38.0000      39193630    6066.00
+PBMC                 40  54              Cycle          M                   38.0000      39178787    6105.00
+PBMC                 40  55              Cycle          M                   38.0000      39149564    6058.00
+PBMC                 40  56              Cycle          M                   35.0000      39134908   11883.00
+PBMC                 40  57              Cycle          M                   38.0000      39122149    6183.00
+PBMC                 40  58              Cycle          M                   38.0000      39095719    6129.00
+PBMC                 40  59              Cycle          M                   38.0000      39071173    6250.00
+PBMC                 40  6               Cycle          M                   37.0000      38921850    8376.00
+PBMC                 40  60              Cycle          M                   38.0000      39064103    6074.00
+PBMC                 40  61              Cycle          M                   38.0000      39013913    6281.00
+PBMC                 40  62              Cycle          M                   38.0000      39003742    6174.00
+PBMC                 40  63              Cycle          M                   38.0000      38997430    6237.00
+PBMC                 40  64              Cycle          M                   38.0000      38975933    6231.00
+PBMC                 40  65              Cycle          M                   38.0000      38965904    6125.00
+PBMC                 40  66              Cycle          M                   38.0000      38932748    6358.00
+PBMC                 40  67              Cycle          M                   38.0000      38918320    6331.00
+PBMC                 40  68              Cycle          M                   38.0000      38896965    6399.00
+PBMC                 40  69              Cycle          M                   38.0000      38878189    6388.00
+PBMC                 40  7               Cycle          M                   37.0000      39013276    7969.00
+PBMC                 40  70              Cycle          M                   38.0000      38853222    6496.00
+PBMC                 40  71              Cycle          M                   38.0000      38816064    6321.00
+PBMC                 40  72              Cycle          M                   38.0000      38806223    6408.00
+PBMC                 40  73              Cycle          M                   38.0000      38765716    6534.00
+PBMC                 40  74              Cycle          M                   38.0000      38731776    6348.00
+PBMC                 40  75              Cycle          M                   38.0000      38703453    6316.00
+PBMC                 40  76              Cycle          M                   38.0000      38663373    6387.00
+PBMC                 40  77              Cycle          M                   38.0000      38598552    6339.00
+PBMC                 40  78              Cycle          M                   38.0000      38557714    6506.00
+PBMC                 40  79              Cycle          M                   38.0000      38516609    6275.00
+PBMC                 40  8               Cycle          M                   37.0000      39074350    7012.00
+PBMC                 40  80              Cycle          M                   38.0000      38479367    6436.00
+PBMC                 40  81              Cycle          M                   38.0000      38421703    6430.00
+PBMC                 40  82              Cycle          M                   38.0000      38352237    6568.00
+PBMC                 40  83              Cycle          M                   38.0000      38319407    6606.00
+PBMC                 40  84              Cycle          M                   38.0000      38267093    6603.00
+PBMC                 40  85              Cycle          M                   38.0000      38189649    6646.00
+PBMC                 40  86              Cycle          M                   38.0000      38175403    6373.00
+PBMC                 40  87              Cycle          M                   38.0000      38109907    6413.00
+PBMC                 40  88              Cycle          M                   38.0000      38042811    6457.00
+PBMC                 40  89              Cycle          M                   38.0000      37948490    6575.00
+PBMC                 40  9               Cycle          M                   37.0000      39020542    7504.00
+PBMC                 40  90              Cycle          M                   38.0000      37878328    6542.00
+PBMC                 40  91              Cycle          M                   38.0000      37795641    6509.00
+PBMC                 40  92              Cycle          M                   38.0000      37728162    6471.00
+PBMC                 40  93              Cycle          M                   38.0000      37656295    6566.00
+PBMC                 40  94              Cycle          M                   38.0000      37593361    6491.00
+PBMC                 40  95              Cycle          M                   38.0000      37508334    6360.00
+PBMC                 40  96              Cycle          M                   38.0000      37402643    6646.00
+PBMC                 40  97              Cycle          M                   38.0000      37310758    6661.00
+PBMC                 40  98              Cycle          M                   38.0000      37200555    6612.00
+PBMC                 40  99              Cycle          M                   38.0000      37118731    6597.00
+PBMC                 40  AA              Context        M                   38.0000     758743705  115929.00
+PBMC                 40  AC              Context        M                   38.0000     528908720   93482.00
+PBMC                 40  AG              Context        M                   40.0000     843105288   93428.00
+PBMC                 40  AT              Context        M                   38.0000     579564310  100627.00
+PBMC                 40  CA              Context        M                   36.0000     843855564  190636.00
+PBMC                 40  CC              Context        M                   36.0000     811186618  190812.00
+PBMC                 40  CG              Context        M                   32.0000     226860445  154141.00
+PBMC                 40  CT              Context        M                   38.0000     858213808  144168.00
+PBMC                 40  GA              Context        M                   37.0000     703427755  132519.00
+PBMC                 40  GC              Context        M                   38.0000     687317004   99686.00
+PBMC                 40  GG              Context        M                   38.0000     853436875  123461.00
+PBMC                 40  GT              Context        M                   34.0000     569356934  208617.00
+PBMC                 40  TA              Context        M                   35.0000     434608303  130047.00
+PBMC                 40  TC              Context        M                   38.0000     678282029  115864.00
+PBMC                 40  TG              Context        M                   41.0000     840234626   71967.00
+PBMC                 40  TT              Context        M                   39.0000     774246298   94744.00
+

@@ -1,0 +1,612 @@
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx16g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar CombineGVCFs -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/OC/OC.g.vcf -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/PBMC/blood.g.vcf -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/combined.g.vcf
+02:25:48.685 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:25:48.928 INFO  CombineGVCFs - ------------------------------------------------------------
+02:25:48.931 INFO  CombineGVCFs - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:25:48.931 INFO  CombineGVCFs - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:25:48.931 INFO  CombineGVCFs - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:25:48.931 INFO  CombineGVCFs - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:25:48.932 INFO  CombineGVCFs - Start Date/Time: September 21, 2026 at 2:25:48 AM CST
+02:25:48.932 INFO  CombineGVCFs - ------------------------------------------------------------
+02:25:48.932 INFO  CombineGVCFs - ------------------------------------------------------------
+02:25:48.932 INFO  CombineGVCFs - HTSJDK Version: 4.2.0
+02:25:48.933 INFO  CombineGVCFs - Picard Version: 3.4.0
+02:25:48.933 INFO  CombineGVCFs - Built for Spark Version: 3.5.0
+02:25:48.935 INFO  CombineGVCFs - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:25:48.935 INFO  CombineGVCFs - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:25:48.935 INFO  CombineGVCFs - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:25:48.935 INFO  CombineGVCFs - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:25:48.935 INFO  CombineGVCFs - Deflater: IntelDeflater
+02:25:48.935 INFO  CombineGVCFs - Inflater: IntelInflater
+02:25:48.936 INFO  CombineGVCFs - GCS max retries/reopens: 20
+02:25:48.936 INFO  CombineGVCFs - Requester pays: disabled
+02:25:48.936 INFO  CombineGVCFs - Initializing engine
+02:25:49.126 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/OC/OC.g.vcf
+02:25:49.306 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/PBMC/blood.g.vcf
+02:25:50.209 INFO  CombineGVCFs - Done initializing engine
+02:25:50.231 INFO  ProgressMeter - Starting traversal
+02:25:50.231 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:25:50.309 WARN  ReferenceConfidenceVariantContextMerger - Detected invalid annotations: When trying to merge variant contexts at location chr1:13554 the annotation MLEAC=[0, 0] was not a numerical value and was ignored
+02:26:00.241 INFO  ProgressMeter -       chr12:46768364              0.2                630000        3776978.4
+02:26:10.248 INFO  ProgressMeter -       chr19:35313122              0.3               1422000        4262377.0
+02:26:20.259 INFO  ProgressMeter -       chr4:164916059              0.5               2154000        4303982.9
+02:26:30.269 INFO  ProgressMeter -       chr9:134401877              0.7               2869000        4299415.6
+02:26:32.302 INFO  ProgressMeter -        chrY:13704383              0.7               2992946        4268421.5
+02:26:32.302 INFO  ProgressMeter - Traversal complete. Processed 2992946 total variants in 0.7 minutes.
+02:26:32.591 INFO  CombineGVCFs - Shutting down engine
+[September 21, 2026 at 2:26:32 AM CST] org.broadinstitute.hellbender.tools.walkers.CombineGVCFs done. Elapsed time: 0.73 minutes.
+Runtime.totalMemory()=3095396352
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx16g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar GenotypeGVCFs -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/combined.g.vcf -D /lustre1/share/references/dbsnp_138.hg38.vcf -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:26:34.348 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:26:34.505 INFO  GenotypeGVCFs - ------------------------------------------------------------
+02:26:34.507 INFO  GenotypeGVCFs - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:26:34.508 INFO  GenotypeGVCFs - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:26:34.508 INFO  GenotypeGVCFs - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:26:34.508 INFO  GenotypeGVCFs - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:26:34.508 INFO  GenotypeGVCFs - Start Date/Time: September 21, 2026 at 2:26:34 AM CST
+02:26:34.508 INFO  GenotypeGVCFs - ------------------------------------------------------------
+02:26:34.508 INFO  GenotypeGVCFs - ------------------------------------------------------------
+02:26:34.509 INFO  GenotypeGVCFs - HTSJDK Version: 4.2.0
+02:26:34.509 INFO  GenotypeGVCFs - Picard Version: 3.4.0
+02:26:34.509 INFO  GenotypeGVCFs - Built for Spark Version: 3.5.0
+02:26:34.511 INFO  GenotypeGVCFs - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:26:34.511 INFO  GenotypeGVCFs - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:26:34.511 INFO  GenotypeGVCFs - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:26:34.512 INFO  GenotypeGVCFs - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:26:34.512 INFO  GenotypeGVCFs - Deflater: IntelDeflater
+02:26:34.512 INFO  GenotypeGVCFs - Inflater: IntelInflater
+02:26:34.512 INFO  GenotypeGVCFs - GCS max retries/reopens: 20
+02:26:34.512 INFO  GenotypeGVCFs - Requester pays: disabled
+02:26:34.512 INFO  GenotypeGVCFs - Initializing engine
+02:26:34.684 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/dbsnp_138.hg38.vcf
+02:26:34.888 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/combined.g.vcf
+02:26:35.102 INFO  GenotypeGVCFs - Done initializing engine
+02:26:35.151 INFO  ProgressMeter - Starting traversal
+02:26:35.152 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:26:35.313 WARN  InbreedingCoeff - InbreedingCoeff will not be calculated at position chr1:13649 and possibly subsequent; at least 10 samples must have called genotypes
+02:26:45.154 INFO  ProgressMeter -       chr1:206203843              0.2                212000        1271872.8
+02:26:55.160 INFO  ProgressMeter -       chr11:49119072              0.3                410000        1229569.7
+02:27:05.194 INFO  ProgressMeter -      chr12:132570551              0.5                637000        1272218.9
+02:27:15.207 INFO  ProgressMeter -       chr15:89791010              0.7                861000        1289758.8
+02:27:25.240 INFO  ProgressMeter -        chr18:9255244              0.8               1113000        1333253.5
+02:27:35.261 INFO  ProgressMeter -        chr2:84839471              1.0               1358000        1355537.4
+02:27:45.264 INFO  ProgressMeter -       chr22:17550411              1.2               1556000        1331583.8
+02:27:55.265 INFO  ProgressMeter -        chr4:13626360              1.3               1769000        1324895.1
+02:28:05.270 INFO  ProgressMeter -          chr6:633110              1.5               1962000        1306287.3
+02:28:15.288 INFO  ProgressMeter -       chr7:100806599              1.7               2179000        1305637.4
+02:28:25.290 INFO  ProgressMeter -       chr9:110375302              1.8               2391000        1302559.5
+02:28:30.673 INFO  ProgressMeter -        chrY:11986629              1.9               2595690        1348165.3
+02:28:30.673 INFO  ProgressMeter - Traversal complete. Processed 2595690 total variants in 1.9 minutes.
+02:28:30.832 INFO  GenotypeGVCFs - Shutting down engine
+[September 21, 2026 at 2:28:30 AM CST] org.broadinstitute.hellbender.tools.walkers.GenotypeGVCFs done. Elapsed time: 1.94 minutes.
+Runtime.totalMemory()=2751463424
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx12g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar VariantAnnotator -R /lustre1/share/references/hg38.fa -I /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/1_alignment/OC/OC_sorted.markdup.BQSR.bam -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf -D /lustre1/share/references/dbsnp_138.hg38.vcf -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.anno.vcf
+02:28:32.599 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:28:32.751 INFO  VariantAnnotator - ------------------------------------------------------------
+02:28:32.754 INFO  VariantAnnotator - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:28:32.754 INFO  VariantAnnotator - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:28:32.754 INFO  VariantAnnotator - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:28:32.754 INFO  VariantAnnotator - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:28:32.754 INFO  VariantAnnotator - Start Date/Time: September 21, 2026 at 2:28:32 AM CST
+02:28:32.754 INFO  VariantAnnotator - ------------------------------------------------------------
+02:28:32.754 INFO  VariantAnnotator - ------------------------------------------------------------
+02:28:32.755 INFO  VariantAnnotator - HTSJDK Version: 4.2.0
+02:28:32.755 INFO  VariantAnnotator - Picard Version: 3.4.0
+02:28:32.755 INFO  VariantAnnotator - Built for Spark Version: 3.5.0
+02:28:32.757 INFO  VariantAnnotator - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:28:32.758 INFO  VariantAnnotator - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:28:32.758 INFO  VariantAnnotator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:28:32.758 INFO  VariantAnnotator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:28:32.758 INFO  VariantAnnotator - Deflater: IntelDeflater
+02:28:32.758 INFO  VariantAnnotator - Inflater: IntelInflater
+02:28:32.758 INFO  VariantAnnotator - GCS max retries/reopens: 20
+02:28:32.759 INFO  VariantAnnotator - Requester pays: disabled
+02:28:32.759 INFO  VariantAnnotator - Initializing engine
+02:28:32.956 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/dbsnp_138.hg38.vcf
+02:28:33.138 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:28:33.204 INFO  VariantAnnotator - Done initializing engine
+02:28:33.271 INFO  ProgressMeter - Starting traversal
+02:28:33.272 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:28:44.919 INFO  ProgressMeter -        chr1:54171016              0.2                  2000          10304.9
+02:28:55.584 INFO  ProgressMeter -       chr1:176160140              0.4                  4000          10756.5
+02:29:09.842 INFO  ProgressMeter -       chr10:87022327              0.6                  7000          11484.8
+02:29:25.284 INFO  ProgressMeter -       chr11:65868582              0.9                 10000          11535.8
+02:29:40.400 INFO  ProgressMeter -       chr12:53601069              1.1                 13000          11619.8
+02:29:54.662 INFO  ProgressMeter -       chr14:36683958              1.4                 16000          11795.1
+02:30:06.024 INFO  ProgressMeter -       chr15:51683388              1.5                 18000          11644.0
+02:30:16.040 INFO  ProgressMeter -       chr16:20486749              1.7                 20000          11676.8
+02:30:30.535 INFO  ProgressMeter -       chr17:39997301              2.0                 23000          11768.4
+02:30:44.771 INFO  ProgressMeter -        chr19:2978137              2.2                 26000          11863.3
+02:30:58.215 INFO  ProgressMeter -       chr19:57493563              2.4                 29000          12004.7
+02:31:12.422 INFO  ProgressMeter -       chr2:200507045              2.7                 32000          12064.2
+02:31:22.473 INFO  ProgressMeter -       chr20:45480156              2.8                 34000          12056.7
+02:31:32.594 INFO  ProgressMeter -       chr22:30461461              3.0                 36000          12045.4
+02:31:42.642 INFO  ProgressMeter -        chr3:69104703              3.2                 38000          12039.9
+02:31:56.518 INFO  ProgressMeter -        chr4:78610154              3.4                 41000          12103.6
+02:32:10.943 INFO  ProgressMeter -       chr5:171310021              3.6                 44000          12128.5
+02:32:24.904 INFO  ProgressMeter -         chr7:5880773              3.9                 47000          12174.5
+02:32:35.490 INFO  ProgressMeter -       chr7:116757518              4.0                 49000          12137.8
+02:32:45.580 INFO  ProgressMeter -       chr8:123428096              4.2                 51000          12128.0
+02:32:58.106 INFO  ProgressMeter -         chrX:6533861              4.4                 54000          12234.1
+02:33:03.579 INFO  ProgressMeter -       chrX:153906539              4.5                 55123          12235.6
+02:33:03.580 INFO  ProgressMeter - Traversal complete. Processed 55123 total variants in 4.5 minutes.
+02:33:03.738 INFO  VariantAnnotator - Shutting down engine
+[September 21, 2026 at 2:33:03 AM CST] org.broadinstitute.hellbender.tools.walkers.annotator.VariantAnnotator done. Elapsed time: 4.52 minutes.
+Runtime.totalMemory()=2332033024
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx20g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar VariantRecalibrator -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf --resource:hapmap,known=false,training=true,truth=true,prior=15.0 /lustre1/share/references/hapmap_3.3.hg38.vcf --resource:omni,known=false,training=true,truth=false,prior=12.0 /lustre1/share/references/1000G_omni2.5.hg38.vcf --resource:1000G,known=false,training=true,truth=false,prior=10.0 /lustre1/share/references/1000G_phase1.snps.high_confidence.hg38.vcf --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /lustre1/share/references/dbsnp_138.hg38.vcf -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR -mode SNP -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.recal --tranches-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.tranches --rscript-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.plots.R --dont-run-rscript
+02:33:05.464 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:33:05.627 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:33:05.630 INFO  VariantRecalibrator - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:33:05.630 INFO  VariantRecalibrator - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:33:05.631 INFO  VariantRecalibrator - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:33:05.631 INFO  VariantRecalibrator - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:33:05.631 INFO  VariantRecalibrator - Start Date/Time: September 21, 2026 at 2:33:05 AM CST
+02:33:05.631 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:33:05.631 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:33:05.632 INFO  VariantRecalibrator - HTSJDK Version: 4.2.0
+02:33:05.632 INFO  VariantRecalibrator - Picard Version: 3.4.0
+02:33:05.632 INFO  VariantRecalibrator - Built for Spark Version: 3.5.0
+02:33:05.634 INFO  VariantRecalibrator - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:33:05.634 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:33:05.634 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:33:05.634 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:33:05.635 INFO  VariantRecalibrator - Deflater: IntelDeflater
+02:33:05.635 INFO  VariantRecalibrator - Inflater: IntelInflater
+02:33:05.635 INFO  VariantRecalibrator - GCS max retries/reopens: 20
+02:33:05.635 INFO  VariantRecalibrator - Requester pays: disabled
+02:33:05.635 INFO  VariantRecalibrator - Initializing engine
+02:33:05.802 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/hapmap_3.3.hg38.vcf
+02:33:06.020 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/1000G_omni2.5.hg38.vcf
+02:33:06.162 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/1000G_phase1.snps.high_confidence.hg38.vcf
+02:33:06.271 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/dbsnp_138.hg38.vcf
+02:33:06.396 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:33:06.501 INFO  VariantRecalibrator - Done initializing engine
+02:33:06.506 INFO  TrainingSet - Found hapmap track: 	Known = false 	Training = true 	Truth = true 	Prior = Q15.0
+02:33:06.506 INFO  TrainingSet - Found omni track: 	Known = false 	Training = true 	Truth = false 	Prior = Q12.0
+02:33:06.506 INFO  TrainingSet - Found 1000G track: 	Known = false 	Training = true 	Truth = false 	Prior = Q10.0
+02:33:06.506 INFO  TrainingSet - Found dbsnp track: 	Known = true 	Training = false 	Truth = false 	Prior = Q2.0
+02:33:06.514 WARN  GATKVariantContextUtils - Can't determine output variant file format from output file extension "recal". Defaulting to VCF.
+02:33:06.548 INFO  ProgressMeter - Starting traversal
+02:33:06.549 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:33:16.764 INFO  ProgressMeter -       chr1:228293263              0.2                  5000          29374.3
+02:33:28.824 INFO  ProgressMeter -      chr11:117918527              0.4                 11000          29631.0
+02:33:39.875 INFO  ProgressMeter -       chr14:36683958              0.6                 16000          28806.3
+02:33:49.934 INFO  ProgressMeter -       chr16:77876452              0.7                 21000          29043.0
+02:34:00.859 INFO  ProgressMeter -       chr19:43268150              0.9                 28000          30934.1
+02:34:10.903 INFO  ProgressMeter -       chr2:241099783              1.1                 33000          30767.8
+02:34:22.150 INFO  ProgressMeter -       chr3:130598497              1.3                 39000          30952.4
+02:34:32.797 INFO  ProgressMeter -        chr5:99524154              1.4                 43000          29913.7
+02:34:45.048 INFO  ProgressMeter -        chr7:73342785              1.6                 48000          29238.9
+02:34:56.513 INFO  ProgressMeter -       chr9:119242167              1.8                 53000          28918.6
+02:35:00.359 INFO  ProgressMeter -       chrX:153906539              1.9                 55123          29060.5
+02:35:00.360 INFO  ProgressMeter - Traversal complete. Processed 55123 total variants in 1.9 minutes.
+02:35:00.367 INFO  VariantDataManager - QD: 	 mean = 19.82	 standard deviation = 9.22
+02:35:00.374 INFO  VariantDataManager - MQ: 	 mean = 59.79	 standard deviation = 1.89
+02:35:00.380 INFO  VariantDataManager - MQRankSum: 	 mean = 0.01	 standard deviation = 0.47
+02:35:00.388 INFO  VariantDataManager - ReadPosRankSum: 	 mean = 0.67	 standard deviation = 0.98
+02:35:00.392 INFO  VariantDataManager - FS: 	 mean = 1.04	 standard deviation = 2.08
+02:35:00.395 INFO  VariantDataManager - SOR: 	 mean = 0.81	 standard deviation = 0.30
+02:35:00.454 INFO  VariantDataManager - Annotation order is: [MQ, QD, MQRankSum, ReadPosRankSum, FS, SOR]
+02:35:00.458 INFO  VariantDataManager - Training with 40366 variants after standard deviation thresholding.
+02:35:00.462 INFO  GaussianMixtureModel - Initializing model with 100 k-means iterations...
+02:35:01.802 INFO  VariantRecalibratorEngine - Finished iteration 0.
+02:35:02.548 INFO  VariantRecalibratorEngine - Finished iteration 5. 	Current change in mixture coefficients = 0.31279
+02:35:03.186 INFO  VariantRecalibratorEngine - Finished iteration 10. 	Current change in mixture coefficients = 0.07741
+02:35:03.839 INFO  VariantRecalibratorEngine - Finished iteration 15. 	Current change in mixture coefficients = 0.01933
+02:35:04.481 INFO  VariantRecalibratorEngine - Finished iteration 20. 	Current change in mixture coefficients = 0.00563
+02:35:05.126 INFO  VariantRecalibratorEngine - Finished iteration 25. 	Current change in mixture coefficients = 0.00290
+02:35:05.671 INFO  VariantRecalibratorEngine - Finished iteration 30. 	Current change in mixture coefficients = 0.00604
+02:35:06.127 INFO  VariantRecalibratorEngine - Finished iteration 35. 	Current change in mixture coefficients = 0.00507
+02:35:06.581 INFO  VariantRecalibratorEngine - Finished iteration 40. 	Current change in mixture coefficients = 0.00691
+02:35:07.039 INFO  VariantRecalibratorEngine - Finished iteration 45. 	Current change in mixture coefficients = 0.01197
+02:35:07.498 INFO  VariantRecalibratorEngine - Finished iteration 50. 	Current change in mixture coefficients = 0.00381
+02:35:07.968 INFO  VariantRecalibratorEngine - Finished iteration 55. 	Current change in mixture coefficients = 0.00331
+02:35:08.422 INFO  VariantRecalibratorEngine - Finished iteration 60. 	Current change in mixture coefficients = 0.00186
+02:35:08.422 INFO  VariantRecalibratorEngine - Convergence after 60 iterations!
+02:35:08.516 INFO  VariantRecalibratorEngine - Evaluating full set of 48143 variants...
+02:35:09.367 INFO  VariantDataManager - Selected worst 2293 scoring variants --> variants with LOD <= -5.0000.
+02:35:09.368 INFO  GaussianMixtureModel - Initializing model with 100 k-means iterations...
+02:35:09.383 INFO  VariantRecalibratorEngine - Finished iteration 0.
+02:35:09.390 INFO  VariantRecalibratorEngine - Finished iteration 5. 	Current change in mixture coefficients = 0.12719
+02:35:09.397 INFO  VariantRecalibratorEngine - Finished iteration 10. 	Current change in mixture coefficients = 0.06514
+02:35:09.404 INFO  VariantRecalibratorEngine - Finished iteration 15. 	Current change in mixture coefficients = 0.01256
+02:35:09.410 INFO  VariantRecalibratorEngine - Finished iteration 20. 	Current change in mixture coefficients = 0.00510
+02:35:09.417 INFO  VariantRecalibratorEngine - Finished iteration 25. 	Current change in mixture coefficients = 0.00237
+02:35:09.420 INFO  VariantRecalibratorEngine - Convergence after 27 iterations!
+02:35:09.423 INFO  VariantRecalibratorEngine - Evaluating full set of 48143 variants...
+02:35:09.816 INFO  TrancheManager - Finding 4 tranches for 48143 variants
+02:35:09.855 INFO  TrancheManager -   TruthSensitivityTranche threshold 100.00 => selection metric threshold 0.000
+02:35:09.867 INFO  TrancheManager -   Found tranche for 100.000: 0.000 threshold starting with variant 0; running score is 0.000 
+02:35:09.868 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=100.00 minVQSLod=-1111.3889 known=(45932 @ 2.5226) novel=(2211 @ 1.6498) truthSites(28324 accessible, 28324 called), name=anonymous]
+02:35:09.868 INFO  TrancheManager -   TruthSensitivityTranche threshold 99.90 => selection metric threshold 0.001
+02:35:09.877 INFO  TrancheManager -   Found tranche for 99.900: 0.001 threshold starting with variant 696; running score is 0.001 
+02:35:09.877 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=99.90 minVQSLod=-11.6197 known=(45524 @ 2.5267) novel=(1923 @ 1.8435) truthSites(28324 accessible, 28295 called), name=anonymous]
+02:35:09.877 INFO  TrancheManager -   TruthSensitivityTranche threshold 99.00 => selection metric threshold 0.010
+02:35:09.881 INFO  TrancheManager -   Found tranche for 99.000: 0.010 threshold starting with variant 4721; running score is 0.010 
+02:35:09.882 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=99.00 minVQSLod=0.3659 known=(42417 @ 2.5686) novel=(1005 @ 2.1121) truthSites(28324 accessible, 28040 called), name=anonymous]
+02:35:09.882 INFO  TrancheManager -   TruthSensitivityTranche threshold 90.00 => selection metric threshold 0.100
+02:35:09.886 INFO  TrancheManager -   Found tranche for 90.000: 0.100 threshold starting with variant 11458; running score is 0.100 
+02:35:09.886 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=90.00 minVQSLod=7.1388 known=(36233 @ 2.6342) novel=(452 @ 2.4961) truthSites(28324 accessible, 25491 called), name=anonymous]
+02:35:09.888 INFO  VariantRecalibrator - Writing out recalibration table...
+02:35:10.329 INFO  VariantRecalibrator - Writing out visualization Rscript file...
+02:35:10.357 INFO  VariantRecalibrator - Building MQ x QD plot...
+02:35:10.361 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:10.635 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:10.782 INFO  VariantRecalibrator - Building MQ x MQRankSum plot...
+02:35:10.785 INFO  VariantRecalibratorEngine - Evaluating full set of 3600 variants...
+02:35:11.053 INFO  VariantRecalibratorEngine - Evaluating full set of 3600 variants...
+02:35:11.189 INFO  VariantRecalibrator - Building MQ x ReadPosRankSum plot...
+02:35:11.190 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:11.482 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:11.608 INFO  VariantRecalibrator - Building MQ x FS plot...
+02:35:11.609 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:11.899 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:12.028 INFO  VariantRecalibrator - Building MQ x SOR plot...
+02:35:12.029 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:12.336 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:12.501 INFO  VariantRecalibrator - Building QD x MQRankSum plot...
+02:35:12.502 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:12.797 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:12.922 INFO  VariantRecalibrator - Building QD x ReadPosRankSum plot...
+02:35:12.923 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:13.225 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:13.352 INFO  VariantRecalibrator - Building QD x FS plot...
+02:35:13.353 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:13.652 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:13.779 INFO  VariantRecalibrator - Building QD x SOR plot...
+02:35:13.780 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:14.086 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:14.211 INFO  VariantRecalibrator - Building MQRankSum x ReadPosRankSum plot...
+02:35:14.212 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:14.504 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:14.631 INFO  VariantRecalibrator - Building MQRankSum x FS plot...
+02:35:14.632 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:14.925 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:15.050 INFO  VariantRecalibrator - Building MQRankSum x SOR plot...
+02:35:15.051 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:15.343 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:15.499 INFO  VariantRecalibrator - Building ReadPosRankSum x FS plot...
+02:35:15.500 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:15.798 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:15.924 INFO  VariantRecalibrator - Building ReadPosRankSum x SOR plot...
+02:35:15.925 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:16.227 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:16.352 INFO  VariantRecalibrator - Building FS x SOR plot...
+02:35:16.353 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:16.652 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:16.908 INFO  VariantRecalibrator - Shutting down engine
+[September 21, 2026 at 2:35:16 AM CST] org.broadinstitute.hellbender.tools.walkers.vqsr.VariantRecalibrator done. Elapsed time: 2.19 minutes.
+Runtime.totalMemory()=2516582400
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx16g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar ApplyVQSR -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.VQSR.vcf --truth-sensitivity-filter-level 99.5 --tranches-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.tranches --recal-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.recal --mode SNP
+02:35:18.683 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:35:18.836 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:18.839 INFO  ApplyVQSR - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:35:18.839 INFO  ApplyVQSR - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:35:18.839 INFO  ApplyVQSR - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:35:18.839 INFO  ApplyVQSR - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:35:18.840 INFO  ApplyVQSR - Start Date/Time: September 21, 2026 at 2:35:18 AM CST
+02:35:18.840 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:18.840 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:18.840 INFO  ApplyVQSR - HTSJDK Version: 4.2.0
+02:35:18.841 INFO  ApplyVQSR - Picard Version: 3.4.0
+02:35:18.841 INFO  ApplyVQSR - Built for Spark Version: 3.5.0
+02:35:18.843 INFO  ApplyVQSR - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:35:18.843 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:35:18.843 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:35:18.843 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:35:18.843 INFO  ApplyVQSR - Deflater: IntelDeflater
+02:35:18.843 INFO  ApplyVQSR - Inflater: IntelInflater
+02:35:18.844 INFO  ApplyVQSR - GCS max retries/reopens: 20
+02:35:18.844 INFO  ApplyVQSR - Requester pays: disabled
+02:35:18.844 INFO  ApplyVQSR - Initializing engine
+02:35:18.998 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.recal
+02:35:19.048 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:35:19.098 INFO  ApplyVQSR - Done initializing engine
+02:35:19.102 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=90.00 minVQSLod=7.1388 known=(36233 @ 2.6342) novel=(452 @ 2.4961) truthSites(28324 accessible, 25491 called), name=VQSRTrancheSNP0.00to90.00]
+02:35:19.102 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=99.00 minVQSLod=0.3659 known=(42417 @ 2.5686) novel=(1005 @ 2.1121) truthSites(28324 accessible, 28040 called), name=VQSRTrancheSNP90.00to99.00]
+02:35:19.102 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=99.90 minVQSLod=-11.6197 known=(45524 @ 2.5267) novel=(1923 @ 1.8435) truthSites(28324 accessible, 28295 called), name=VQSRTrancheSNP99.00to99.90]
+02:35:19.103 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=100.00 minVQSLod=-1111.3889 known=(45932 @ 2.5226) novel=(2211 @ 1.6498) truthSites(28324 accessible, 28324 called), name=VQSRTrancheSNP99.90to100.00]
+02:35:19.123 INFO  ApplyVQSR - Keeping all variants in tranche TruthSensitivityTranche targetTruthSensitivity=99.90 minVQSLod=-11.6197 known=(45524 @ 2.5267) novel=(1923 @ 1.8435) truthSites(28324 accessible, 28295 called), name=VQSRTrancheSNP99.00to99.90]
+02:35:19.141 INFO  ProgressMeter - Starting traversal
+02:35:19.142 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:35:20.684 INFO  ProgressMeter -       chrX:153906539              0.0                 55123        2149044.8
+02:35:20.684 INFO  ProgressMeter - Traversal complete. Processed 55123 total variants in 0.0 minutes.
+02:35:20.809 INFO  ApplyVQSR - Shutting down engine
+[September 21, 2026 at 2:35:20 AM CST] org.broadinstitute.hellbender.tools.walkers.vqsr.ApplyVQSR done. Elapsed time: 0.04 minutes.
+Runtime.totalMemory()=1157627904
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx20g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar VariantRecalibrator -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf --resource:mills,known=false,training=true,truth=true,prior=12.0 /lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf --resource:dbsnp,known=true,training=false,truth=false,prior=2.0 /lustre1/share/references/dbsnp_138.hg38.vcf -an QD -an ReadPosRankSum -an FS -an SOR -mode INDEL --max-gaussians 4 -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.recal --tranches-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.tranches --rscript-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.plots.R --dont-run-rscript
+02:35:22.501 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:35:22.670 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:35:22.672 INFO  VariantRecalibrator - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:35:22.673 INFO  VariantRecalibrator - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:35:22.673 INFO  VariantRecalibrator - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:35:22.673 INFO  VariantRecalibrator - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:35:22.673 INFO  VariantRecalibrator - Start Date/Time: September 21, 2026 at 2:35:22 AM CST
+02:35:22.673 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:35:22.673 INFO  VariantRecalibrator - ------------------------------------------------------------
+02:35:22.674 INFO  VariantRecalibrator - HTSJDK Version: 4.2.0
+02:35:22.674 INFO  VariantRecalibrator - Picard Version: 3.4.0
+02:35:22.674 INFO  VariantRecalibrator - Built for Spark Version: 3.5.0
+02:35:22.676 INFO  VariantRecalibrator - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:35:22.676 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:35:22.676 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:35:22.677 INFO  VariantRecalibrator - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:35:22.677 INFO  VariantRecalibrator - Deflater: IntelDeflater
+02:35:22.677 INFO  VariantRecalibrator - Inflater: IntelInflater
+02:35:22.677 INFO  VariantRecalibrator - GCS max retries/reopens: 20
+02:35:22.677 INFO  VariantRecalibrator - Requester pays: disabled
+02:35:22.677 INFO  VariantRecalibrator - Initializing engine
+02:35:22.855 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/Mills_and_1000G_gold_standard.indels.hg38.vcf
+02:35:22.944 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/share/references/dbsnp_138.hg38.vcf
+02:35:23.065 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:35:23.131 INFO  VariantRecalibrator - Done initializing engine
+02:35:23.137 INFO  TrainingSet - Found mills track: 	Known = false 	Training = true 	Truth = true 	Prior = Q12.0
+02:35:23.137 INFO  TrainingSet - Found dbsnp track: 	Known = true 	Training = false 	Truth = false 	Prior = Q2.0
+02:35:23.146 WARN  GATKVariantContextUtils - Can't determine output variant file format from output file extension "recal". Defaulting to VCF.
+02:35:23.179 INFO  ProgressMeter - Starting traversal
+02:35:23.179 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:35:33.184 INFO  ProgressMeter -       chr15:51683388              0.2                 18000         107967.6
+02:35:43.569 INFO  ProgressMeter -        chr3:69104703              0.3                 38000         111825.0
+02:35:53.615 INFO  ProgressMeter -         chrX:6533861              0.5                 54000         106456.4
+02:35:54.227 INFO  ProgressMeter -       chrX:153906539              0.5                 55123         106524.7
+02:35:54.227 INFO  ProgressMeter - Traversal complete. Processed 55123 total variants in 0.5 minutes.
+02:35:54.229 INFO  VariantDataManager - QD: 	 mean = 20.07	 standard deviation = 9.46
+02:35:54.230 INFO  VariantDataManager - ReadPosRankSum: 	 mean = 0.67	 standard deviation = 1.03
+02:35:54.232 INFO  VariantDataManager - FS: 	 mean = 1.62	 standard deviation = 3.99
+02:35:54.233 INFO  VariantDataManager - SOR: 	 mean = 0.86	 standard deviation = 0.46
+02:35:54.254 INFO  VariantDataManager - Annotation order is: [QD, FS, SOR, ReadPosRankSum]
+02:35:54.255 INFO  VariantDataManager - Training with 2903 variants after standard deviation thresholding.
+02:35:54.259 INFO  GaussianMixtureModel - Initializing model with 100 k-means iterations...
+02:35:54.359 INFO  VariantRecalibratorEngine - Finished iteration 0.
+02:35:54.403 INFO  VariantRecalibratorEngine - Finished iteration 5. 	Current change in mixture coefficients = 0.20523
+02:35:54.432 INFO  VariantRecalibratorEngine - Finished iteration 10. 	Current change in mixture coefficients = 0.01829
+02:35:54.458 INFO  VariantRecalibratorEngine - Finished iteration 15. 	Current change in mixture coefficients = 0.01638
+02:35:54.482 INFO  VariantRecalibratorEngine - Finished iteration 20. 	Current change in mixture coefficients = 0.00370
+02:35:54.504 INFO  VariantRecalibratorEngine - Finished iteration 25. 	Current change in mixture coefficients = 0.00376
+02:35:54.525 INFO  VariantRecalibratorEngine - Finished iteration 30. 	Current change in mixture coefficients = 0.00385
+02:35:54.541 INFO  VariantRecalibratorEngine - Finished iteration 35. 	Current change in mixture coefficients = 0.00322
+02:35:54.557 INFO  VariantRecalibratorEngine - Finished iteration 40. 	Current change in mixture coefficients = 0.00243
+02:35:54.567 INFO  VariantRecalibratorEngine - Convergence after 43 iterations!
+02:35:54.577 INFO  VariantRecalibratorEngine - Evaluating full set of 6980 variants...
+02:35:54.607 INFO  VariantDataManager - Selected worst 97 scoring variants --> variants with LOD <= -5.0000.
+02:35:54.608 INFO  GaussianMixtureModel - Initializing model with 100 k-means iterations...
+02:35:54.609 INFO  VariantRecalibratorEngine - Finished iteration 0.
+02:35:54.610 INFO  VariantRecalibratorEngine - Finished iteration 5. 	Current change in mixture coefficients = 0.03291
+02:35:54.611 INFO  VariantRecalibratorEngine - Finished iteration 10. 	Current change in mixture coefficients = 0.00950
+02:35:54.611 INFO  VariantRecalibratorEngine - Finished iteration 15. 	Current change in mixture coefficients = 0.01472
+02:35:54.612 INFO  VariantRecalibratorEngine - Finished iteration 20. 	Current change in mixture coefficients = 0.00668
+02:35:54.612 INFO  VariantRecalibratorEngine - Finished iteration 25. 	Current change in mixture coefficients = 0.00176
+02:35:54.612 INFO  VariantRecalibratorEngine - Convergence after 25 iterations!
+02:35:54.613 INFO  VariantRecalibratorEngine - Evaluating full set of 6980 variants...
+02:35:54.647 INFO  TrancheManager - Finding 4 tranches for 6980 variants
+02:35:54.653 INFO  TrancheManager -   TruthSensitivityTranche threshold 100.00 => selection metric threshold 0.000
+02:35:54.658 INFO  TrancheManager -   Found tranche for 100.000: 0.000 threshold starting with variant 0; running score is 0.000 
+02:35:54.659 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=100.00 minVQSLod=-344.8769 known=(5638 @ 0.0000) novel=(1342 @ 0.0000) truthSites(2909 accessible, 2909 called), name=anonymous]
+02:35:54.659 INFO  TrancheManager -   TruthSensitivityTranche threshold 99.90 => selection metric threshold 0.001
+02:35:54.660 INFO  TrancheManager -   Found tranche for 99.900: 0.001 threshold starting with variant 12; running score is 0.001 
+02:35:54.660 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=99.90 minVQSLod=-22.5845 known=(5635 @ 0.0000) novel=(1333 @ 0.0000) truthSites(2909 accessible, 2906 called), name=anonymous]
+02:35:54.660 INFO  TrancheManager -   TruthSensitivityTranche threshold 99.00 => selection metric threshold 0.010
+02:35:54.661 INFO  TrancheManager -   Found tranche for 99.000: 0.010 threshold starting with variant 439; running score is 0.010 
+02:35:54.661 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=99.00 minVQSLod=-0.2103 known=(5394 @ 0.0000) novel=(1147 @ 0.0000) truthSites(2909 accessible, 2879 called), name=anonymous]
+02:35:54.661 INFO  TrancheManager -   TruthSensitivityTranche threshold 90.00 => selection metric threshold 0.100
+02:35:54.662 INFO  TrancheManager -   Found tranche for 90.000: 0.100 threshold starting with variant 2643; running score is 0.100 
+02:35:54.662 INFO  TrancheManager -   TruthSensitivityTranche is TruthSensitivityTranche targetTruthSensitivity=90.00 minVQSLod=2.1081 known=(3863 @ 0.0000) novel=(474 @ 0.0000) truthSites(2909 accessible, 2618 called), name=anonymous]
+02:35:54.664 INFO  VariantRecalibrator - Writing out recalibration table...
+02:35:54.854 INFO  VariantRecalibrator - Writing out visualization Rscript file...
+02:35:54.875 INFO  VariantRecalibrator - Building QD x FS plot...
+02:35:54.878 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:54.941 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.039 INFO  VariantRecalibrator - Building QD x SOR plot...
+02:35:55.041 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.103 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.184 INFO  VariantRecalibrator - Building QD x ReadPosRankSum plot...
+02:35:55.186 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:55.249 INFO  VariantRecalibratorEngine - Evaluating full set of 3721 variants...
+02:35:55.326 INFO  VariantRecalibrator - Building FS x SOR plot...
+02:35:55.327 INFO  VariantRecalibratorEngine - Evaluating full set of 3600 variants...
+02:35:55.386 INFO  VariantRecalibratorEngine - Evaluating full set of 3600 variants...
+02:35:55.454 INFO  VariantRecalibrator - Building FS x ReadPosRankSum plot...
+02:35:55.455 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.515 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.579 INFO  VariantRecalibrator - Building SOR x ReadPosRankSum plot...
+02:35:55.580 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.641 INFO  VariantRecalibratorEngine - Evaluating full set of 3660 variants...
+02:35:55.707 INFO  VariantRecalibrator - Tranches plot will not be generated since we are running in INDEL mode
+02:35:55.798 INFO  VariantRecalibrator - Shutting down engine
+[September 21, 2026 at 2:35:55 AM CST] org.broadinstitute.hellbender.tools.walkers.vqsr.VariantRecalibrator done. Elapsed time: 0.56 minutes.
+Runtime.totalMemory()=1895825408
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx16g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar ApplyVQSR -R /lustre1/share/references/hg38.fa -V /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.VQSR.vcf --truth-sensitivity-filter-level 99.0 --tranches-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.tranches --recal-file /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.recal --mode INDEL
+02:35:57.666 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+02:35:57.821 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:57.824 INFO  ApplyVQSR - The Genome Analysis Toolkit (GATK) v4.6.2.0
+02:35:57.824 INFO  ApplyVQSR - For support and documentation go to https://software.broadinstitute.org/gatk/
+02:35:57.824 INFO  ApplyVQSR - Executing as bjx131_pkuhpc@s29b00n60 on Linux v4.18.0-477.10.1.el8_8.x86_64 amd64
+02:35:57.824 INFO  ApplyVQSR - Java runtime: OpenJDK 64-Bit Server VM v17.0.3-internal+0-adhoc..src
+02:35:57.825 INFO  ApplyVQSR - Start Date/Time: September 21, 2026 at 2:35:57 AM CST
+02:35:57.825 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:57.825 INFO  ApplyVQSR - ------------------------------------------------------------
+02:35:57.826 INFO  ApplyVQSR - HTSJDK Version: 4.2.0
+02:35:57.826 INFO  ApplyVQSR - Picard Version: 3.4.0
+02:35:57.826 INFO  ApplyVQSR - Built for Spark Version: 3.5.0
+02:35:57.828 INFO  ApplyVQSR - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+02:35:57.828 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+02:35:57.828 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+02:35:57.829 INFO  ApplyVQSR - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+02:35:57.829 INFO  ApplyVQSR - Deflater: IntelDeflater
+02:35:57.829 INFO  ApplyVQSR - Inflater: IntelInflater
+02:35:57.829 INFO  ApplyVQSR - GCS max retries/reopens: 20
+02:35:57.829 INFO  ApplyVQSR - Requester pays: disabled
+02:35:57.830 INFO  ApplyVQSR - Initializing engine
+02:35:57.992 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.recal
+02:35:58.034 INFO  FeatureManager - Using codec VCFCodec to read file file:///lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood_variants.vcf
+02:35:58.102 INFO  ApplyVQSR - Done initializing engine
+02:35:58.106 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=90.00 minVQSLod=2.1081 known=(3863 @ 0.0000) novel=(474 @ 0.0000) truthSites(2909 accessible, 2618 called), name=VQSRTrancheINDEL0.00to90.00]
+02:35:58.106 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=99.00 minVQSLod=-0.2103 known=(5394 @ 0.0000) novel=(1147 @ 0.0000) truthSites(2909 accessible, 2879 called), name=VQSRTrancheINDEL90.00to99.00]
+02:35:58.106 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=99.90 minVQSLod=-22.5845 known=(5635 @ 0.0000) novel=(1333 @ 0.0000) truthSites(2909 accessible, 2906 called), name=VQSRTrancheINDEL99.00to99.90]
+02:35:58.107 INFO  ApplyVQSR - Read tranche TruthSensitivityTranche targetTruthSensitivity=100.00 minVQSLod=-344.8769 known=(5638 @ 0.0000) novel=(1342 @ 0.0000) truthSites(2909 accessible, 2909 called), name=VQSRTrancheINDEL99.90to100.00]
+02:35:58.126 INFO  ApplyVQSR - Keeping all variants in tranche TruthSensitivityTranche targetTruthSensitivity=99.00 minVQSLod=-0.2103 known=(5394 @ 0.0000) novel=(1147 @ 0.0000) truthSites(2909 accessible, 2879 called), name=VQSRTrancheINDEL90.00to99.00]
+02:35:58.142 INFO  ProgressMeter - Starting traversal
+02:35:58.142 INFO  ProgressMeter -        Current Locus  Elapsed Minutes    Variants Processed  Variants/Minute
+02:35:59.423 INFO  ProgressMeter -       chrX:153906539              0.0                 55123        2587934.3
+02:35:59.423 INFO  ProgressMeter - Traversal complete. Processed 55123 total variants in 0.0 minutes.
+02:35:59.562 INFO  ApplyVQSR - Shutting down engine
+[September 21, 2026 at 2:35:59 AM CST] org.broadinstitute.hellbender.tools.walkers.vqsr.ApplyVQSR done. Elapsed time: 0.03 minutes.
+Runtime.totalMemory()=1157627904
+Using GATK jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -Xmx12g -XX:ParallelGCThreads=4 -jar /lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar MergeVcfs -O /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.all.VQSR.vcf -I /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.VQSR.vcf -I /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.VQSR.vcf
+02:36:01.222 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/lustre1/share/miniconda3/envs/wes/share/gatk4-4.6.2.0-1/gatk-package-4.6.2.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+[Mon Sep 21 02:36:01 CST 2026] MergeVcfs --INPUT /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.indel.VQSR.vcf --INPUT /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.snps.VQSR.vcf --OUTPUT /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.all.VQSR.vcf --VERBOSITY INFO --QUIET false --VALIDATION_STRINGENCY STRICT --COMPRESSION_LEVEL 2 --MAX_RECORDS_IN_RAM 500000 --CREATE_INDEX true --CREATE_MD5_FILE false --help false --version false --showHidden false --USE_JDK_DEFLATER false --USE_JDK_INFLATER false
+[Mon Sep 21 02:36:01 CST 2026] Executing as bjx131_pkuhpc@s29b00n60 on Linux 4.18.0-477.10.1.el8_8.x86_64 amd64; OpenJDK 64-Bit Server VM 17.0.3-internal+0-adhoc..src; Deflater: Intel; Inflater: Intel; Provider GCS is available; Picard version: Version:4.6.2.0
+INFO	2026-09-21 02:36:01	MergeVcfs	Processed        10,000 records.  Elapsed time: 00:00:00s.  Time for last 10,000:    0s.  Last read position: chr1:228,293,263
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        20,000 records.  Elapsed time: 00:00:00s.  Time for last 10,000:    0s.  Last read position: chr11:65,868,582
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        30,000 records.  Elapsed time: 00:00:00s.  Time for last 10,000:    0s.  Last read position: chr13:46,553,678
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        40,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr16:20,486,749
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        50,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr18:13,096,437
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        60,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr2:60,918,363
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        70,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr21:41,942,404
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        80,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr4:3,516,005
+INFO	2026-09-21 02:36:02	MergeVcfs	Processed        90,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr6:36,107,442
+INFO	2026-09-21 02:36:03	MergeVcfs	Processed       100,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chr8:22,001,974
+INFO	2026-09-21 02:36:03	MergeVcfs	Processed       110,000 records.  Elapsed time: 00:00:01s.  Time for last 10,000:    0s.  Last read position: chrX:153,906,539
+[Mon Sep 21 02:36:03 CST 2026] picard.vcf.MergeVcfs done. Elapsed time: 0.03 minutes.
+Runtime.totalMemory()=1157627904
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr1	47116574	rs1295463	C	*,T	1127.06	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=79;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.14;QD=15.44;SOR=1.340	GT:AD:DP:GQ:PL	1/2:0,23,17:40:99:1350,499,667,882,0,829	1/2:0,13,20:33:99:1188,642,875,518,0,449>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr1	47116574	rs1295463	C	*,T	1127.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=79;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.14;NEGATIVE_TRAIN_SITE;QD=15.44;SOR=1.340;VQSLOD=-1.151e+00;culprit=MQ	GT:AD:DP:GQ:PL	1/2:0,23,17:40:99:1350,499,667,882,0,829	1/2:0,13,20:33:99:1188,642,875,518,0,449>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr1	146228815	.	G	*,C	2713.61	.	AC=1,2;AF=0.250,0.500;AN=4;BaseQRankSum=-2.330e-01;DP=561;ExcessHet=0.0000;FS=0.560;MLEAC=1,2;MLEAF=0.250,0.500;MQ=53.19;MQRankSum=-6.060e+00;QD=5.52;ReadPosRankSum=2.06;SOR=0.724	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:56,19,66:141:99:1|0:146228812_CGCG_C:1714,1030,4042,0,753,1226:146228812	1|2:101,88,162:351:99:1|0:146228812_CGCG_C:5633,1688,7348,626,0,2902:146228812>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr1	146228815	.	G	*,C	2713.61	PASS	AC=1,2;AF=0.250,0.500;AN=4;BaseQRankSum=-2.330e-01;DP=561;ExcessHet=0.0000;FS=0.560;MLEAC=1,2;MLEAF=0.250,0.500;MQ=53.19;MQRankSum=-6.060e+00;QD=5.52;ReadPosRankSum=2.06;SOR=0.724;VQSLOD=-3.549e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:56,19,66:141:99:1|0:146228812_CGCG_C:1714,1030,4042,0,753,1226:146228812	1|2:101,88,162:351:99:1|0:146228812_CGCG_C:5633,1688,7348,626,0,2902:146228812>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr1	154590149	rs7532276	G	*,C	2651.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=223;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=15.41;SOR=1.694	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,36:50:99:1|0:154590148_CG_C:1989,965,825,356,0,170:154590148	1|2:0,38,84:122:99:1|0:154590148_CG_C:4881,2188,1820,1081,0,687:154590148>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr1	154590149	rs7532276	G	*,C	2651.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=223;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=15.41;SOR=1.694;VQSLOD=0.140;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,36:50:99:1|0:154590148_CG_C:1989,965,825,356,0,170:154590148	1|2:0,38,84:122:99:1|0:154590148_CG_C:4881,2188,1820,1081,0,687:154590148>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr10	87713313	.	A	*,G	75	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=-2.463e+00;DP=86;ExcessHet=1.7609;FS=13.318;MLEAC=1,1;MLEAF=0.250,0.250;MQ=60.00;MQRankSum=0.00;QD=1.83;ReadPosRankSum=-1.027e+00;SOR=1.838	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:7,4,11:22:46:0|1:87713311_GT_G:148,75,286,0,46,451:87713311	0/1:6,13,0:30:99:.:.:266,0,337,364,305,821>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr10	87713313	.	A	*,G	75	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=-2.463e+00;DP=86;ExcessHet=1.7609;FS=13.318;MLEAC=1,1;MLEAF=0.250,0.250;MQ=60.00;MQRankSum=0.00;NEGATIVE_TRAIN_SITE;QD=1.83;ReadPosRankSum=-1.027e+00;SOR=1.838;VQSLOD=0.395;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:7,4,11:22:46:0|1:87713311_GT_G:148,75,286,0,46,451:87713311	0/1:6,13,0:30:99:.:.:266,0,337,364,305,821>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr11	26553236	rs56325113	G	*,T	519.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=262;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=2.39;SOR=0.759	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,74,14:88:99:1|0:26553235_TG_T:3380,431,154,1978,0,1694:26553235	1|2:0,102,27:129:99:1|0:26553235_TG_T:4758,702,359,2866,0,2475:26553235>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr11	26553236	rs56325113	G	*,T	519.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=262;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=2.39;SOR=0.759;VQSLOD=-2.287e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,74,14:88:99:1|0:26553235_TG_T:3380,431,154,1978,0,1694:26553235	1|2:0,102,27:129:99:1|0:26553235_TG_T:4758,702,359,2866,0,2475:26553235>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr11	134985602	rs4937988	C	*,G	859.06	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.457;DB;DP=135;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=49.00;MQRankSum=0.059;QD=7.60;ReadPosRankSum=1.44;SOR=0.912	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:3,7,10:20:99:1|0:134985601_GCA_G:669,265,371,244,0,222:134985601	1|2:1,70,22:93:99:1|0:134985601_GCA_G:2689,608,647,1428,0,1372:134985601>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr11	134985602	rs4937988	C	*,G	859.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.457;DB;DP=135;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=49.00;MQRankSum=0.059;NEGATIVE_TRAIN_SITE;QD=7.60;ReadPosRankSum=1.44;SOR=0.912;VQSLOD=-2.654e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:3,7,10:20:99:1|0:134985601_GCA_G:669,265,371,244,0,222:134985601	1|2:1,70,22:93:99:1|0:134985601_GCA_G:2689,608,647,1428,0,1372:134985601>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr12	51346604	rs907354	C	*,A	4803.06	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=290;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=17.79;SOR=0.769	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,28,77:105:99:1|0:51346603_ACTGG_A:3095,2120,3148,1176,0,945:51346603	1|2:0,71,94:165:99:1|0:51346603_ACTGG_A:5512,2697,3774,2987,0,2697:51346603>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr12	51346604	rs907354	C	*,A	4803.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=290;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;NEGATIVE_TRAIN_SITE;POSITIVE_TRAIN_SITE;QD=17.79;SOR=0.769;VQSLOD=-4.044e-01;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,28,77:105:99:1|0:51346603_ACTGG_A:3095,2120,3148,1176,0,945:51346603	1|2:0,71,94:165:99:1|0:51346603_ACTGG_A:5512,2697,3774,2987,0,2697:51346603>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr12	53105000	rs60453304	A	*,T	1049.02	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.712;DB;DP=156;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=9.62;ReadPosRankSum=-1.229e+00;SOR=0.271	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,31,23:54:99:1|0:53104999_TA_T:1813,617,477,838,0,693:53104999	1|2:1,25,29:55:99:1|0:53104999_TA_T:2130,714,566,678,0,552:53104999>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr12	53105000	rs60453304	A	*,T	1049.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.712;DB;DP=156;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=9.62;ReadPosRankSum=-1.229e+00;SOR=0.271;VQSLOD=5.76;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,31,23:54:99:1|0:53104999_TA_T:1813,617,477,838,0,693:53104999	1|2:1,25,29:55:99:1|0:53104999_TA_T:2130,714,566,678,0,552:53104999>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr12	131913711	rs4964880	C	*,A	2501.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=173;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.85;QD=16.03;SOR=0.828	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,50:64:99:1|0:131913710_AC_A:1934,1192,1091,371,0,182:131913710	1|2:0,26,66:92:99:1|0:131913710_AC_A:3315,1629,1404,762,0,480:131913710>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr12	131913711	rs4964880	C	*,A	2501.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=173;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.85;NEGATIVE_TRAIN_SITE;QD=16.03;SOR=0.828;VQSLOD=-6.801e-01;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,50:64:99:1|0:131913710_AC_A:1934,1192,1091,371,0,182:131913710	1|2:0,26,66:92:99:1|0:131913710_AC_A:3315,1629,1404,762,0,480:131913710>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr13	23320615	rs111358030	G	*,T	40.27	.	AC=3,1;AF=0.750,0.250;AN=4;DB;DP=104;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;QD=0.56;SOR=0.807	GT:AD:DP:GQ:PL	1/2:0,18,6:24:42:1033,140,42,435,0,338	1/1:0,46,2:48:70:2180,171,0,1881,70,1974>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr13	23320615	rs111358030	G	*,T	40.27	PASS	AC=3,1;AF=0.750,0.250;AN=4;DB;DP=104;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=0.56;SOR=0.807;VQSLOD=-2.182e+00;culprit=QD	GT:AD:DP:GQ:PL	1/2:0,18,6:24:42:1033,140,42,435,0,338	1/1:0,46,2:48:70:2180,171,0,1881,70,1974>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr14	50823156	rs1547077	G	*,T	833.06	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=2.67;DB;DP=106;ExcessHet=0.0000;FS=1.080;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=8.59;ReadPosRankSum=2.73;SOR=0.752	GT:AD:DP:GQ:PL	1/2:10,21,17:48:99:567,154,679,267,0,826	1/2:5,18,26:49:99:1239,693,727,310,0,353>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr14	50823156	rs1547077	G	*,T	833.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=2.67;DB;DP=106;ExcessHet=0.0000;FS=1.080;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=8.59;ReadPosRankSum=2.73;SOR=0.752;VQSLOD=6.51;culprit=QD	GT:AD:DP:GQ:PL	1/2:10,21,17:48:99:567,154,679,267,0,826	1/2:5,18,26:49:99:1239,693,727,310,0,353>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr14	77468051	rs28378084	C	*,T	1022.01	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.612;DB;DP=121;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.89;MQRankSum=0.00;QD=10.02;ReadPosRankSum=0.748;SOR=0.786	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:4,16,30:50:99:1|0:77468050_TC_*:1042,542,506,247,0,333:77468050	1|2:3,18,31:52:99:1|0:77468050_TC_*:1072,584,510,281,0,380:77468050>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr14	77468051	rs28378084	C	*,T	1022.01	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.612;DB;DP=121;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.89;MQRankSum=0.00;QD=10.02;ReadPosRankSum=0.748;SOR=0.786;VQSLOD=3.62;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:4,16,30:50:99:1|0:77468050_TC_*:1042,542,506,247,0,333:77468050	1|2:3,18,31:52:99:1|0:77468050_TC_*:1072,584,510,281,0,380:77468050>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr14	90899304	.	A	*,G	30.27	.	AC=3,1;AF=0.750,0.250;AN=4;DP=174;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;QD=0.21;SOR=1.366	GT:AD:DP:GQ:PL	1/1:0,56,6:62:37:2871,219,0,1578,37,1376	1/2:0,72,13:85:32:3690,306,32,2060,0,1803>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr14	90899304	.	A	*,G	30.27	PASS	AC=3,1;AF=0.750,0.250;AN=4;DP=174;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=0.21;SOR=1.366;VQSLOD=-6.947e-01;culprit=QD	GT:AD:DP:GQ:PL	1/1:0,56,6:62:37:2871,219,0,1578,37,1376	1/2:0,72,13:85:32:3690,306,32,2060,0,1803>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr14	90899305	rs117599685	A	*,G	1657.07	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.737;DB;DP=173;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=11.27;ReadPosRankSum=2.02;SOR=0.714	GT:AD:DP:GQ:PL	1/2:9,9,44:62:34:988,733,1124,34,0,81	1/2:13,18,54:85:99:1517,938,1327,218,0,259>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr14	90899305	rs117599685	A	*,G	1657.07	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.737;DB;DP=173;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=11.27;ReadPosRankSum=2.02;SOR=0.714;VQSLOD=7.22;culprit=ReadPosRankSum	GT:AD:DP:GQ:PL	1/2:9,9,44:62:34:988,733,1124,34,0,81	1/2:13,18,54:85:99:1517,938,1327,218,0,259>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr15	40812591	rs78854020	A	*,AAG	964.98	VQSRTrancheINDEL99.00to99.90	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=131;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.75;QD=15.82;SOR=2.760;VQSLOD=-1.303e+00;culprit=FS	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,9:23:99:1|0:40812589_GAA_G:1509,373,283,582,0,509:40812589	1|2:0,20,18:38:99:1|0:40812589_GAA_G:3119,806,676,843,0,694:40812589>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr15	40812591	rs78854020	A	*,AAG	964.98	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=131;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.75;QD=15.82;SOR=2.760	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,14,9:23:99:1|0:40812589_GAA_G:1509,373,283,582,0,509:40812589	1|2:0,20,18:38:99:1|0:40812589_GAA_G:3119,806,676,843,0,694:40812589>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr15	65105010	rs2919338	G	*,A	2328.57	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-7.300e-02;DB;DP=183;ExcessHet=0.0000;FS=6.085;MLEAC=2,2;MLEAF=0.500,0.500;MQ=58.54;MQRankSum=-3.040e-01;QD=15.02;ReadPosRankSum=-8.600e-02;SOR=0.065	GT:AD:DP:GQ:PL	1/2:0,28,48:76:99:2567,1183,992,754,0,535	1/2:3,19,57:82:99:2317,1346,1332,404,0,267>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr15	65105010	rs2919338	G	*,A	2328.57	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-7.300e-02;DB;DP=183;ExcessHet=0.0000;FS=6.085;MLEAC=2,2;MLEAF=0.500,0.500;MQ=58.54;MQRankSum=-3.040e-01;NEGATIVE_TRAIN_SITE;QD=15.02;ReadPosRankSum=-8.600e-02;SOR=0.065;VQSLOD=-1.688e+00;culprit=QD	GT:AD:DP:GQ:PL	1/2:0,28,48:76:99:2567,1183,992,754,0,535	1/2:3,19,57:82:99:2317,1346,1332,404,0,267>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr15	89764963	rs72754548	G	*,A	920.75	.	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=32;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;QD=30.69;SOR=1.765	GT:AD:DP:GQ:PL	1/2:0,3,9:12:43:352,197,183,78,0,43	2/2:0,0,18:18:54:743,755,810,54,54,0>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr15	89764963	rs72754548	G	*,A	920.75	PASS	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=32;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;QD=30.69;SOR=1.765;VQSLOD=6.52;culprit=SOR	GT:AD:DP:GQ:PL	1/2:0,3,9:12:43:352,197,183,78,0,43	2/2:0,0,18:18:54:743,755,810,54,54,0>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr16	71922689	rs75418123	A	*,AAG	2754.98	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=164;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.94;QD=21.19;SOR=1.044;VQSLOD=2.80;culprit=FS	GT:AD:DP:GQ:PL	1/2:0,30,34:64:99:3026,1446,1329,1285,0,1158	1/2:0,30,36:66:99:3490,1558,1420,1309,0,1153>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr16	71922689	rs75418123	A	*,AAG	2754.98	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=164;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.94;QD=21.19;SOR=1.044	GT:AD:DP:GQ:PL	1/2:0,30,34:64:99:3026,1446,1329,1285,0,1158	1/2:0,30,36:66:99:3490,1558,1420,1309,0,1153>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	2691987	rs377576086	A	*,C	1559.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=161;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.79;QD=13.44;SOR=1.569	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,20,12:32:99:0|1:2691973_CCCCCG_*:1685,512,425,874,0,804:2691973	1/2:0,53,31:84:99:.:.:4209,1328,1128,2251,0,2092>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	2691987	rs377576086	A	*,C	1559.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=161;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.79;NEGATIVE_TRAIN_SITE;QD=13.44;SOR=1.569;VQSLOD=-1.704e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,20,12:32:99:0|1:2691973_CCCCCG_*:1685,512,425,874,0,804:2691973	1/2:0,53,31:84:99:.:.:4209,1328,1128,2251,0,2092>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	8149214	rs144904249	A	*,AAAAAC	1630.03	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.789;DB;DP=180;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=12.07;ReadPosRankSum=0.383;SOR=1.044;VQSLOD=1.71;culprit=FS	GT:AD:DP:GQ:PL	1/2:2,28,23:53:99:2038,640,942,1086,0,1018	1/2:3,43,36:82:99:3193,1004,1433,1738,0,1642>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	8149214	rs144904249	A	*,AAAAAC	1630.03	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.789;DB;DP=180;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=12.07;ReadPosRankSum=0.383;SOR=1.044	GT:AD:DP:GQ:PL	1/2:2,28,23:53:99:2038,640,942,1086,0,1018	1/2:3,43,36:82:99:3193,1004,1433,1738,0,1642>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	15740068	rs11429009	A	*,AC	1653.03	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.987;DB;DP=172;ExcessHet=0.0000;FS=2.886;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.28;MQRankSum=-2.120e-01;QD=11.89;ReadPosRankSum=0.611;SOR=0.334;VQSLOD=1.82;culprit=SOR	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:4,29,21:54:99:1|0:15740067_CA_C:1260,488,672,714,0,1061:15740067	1|2:6,33,46:85:99:1|0:15740067_CA_C:1964,1179,1618,736,0,1248:15740067>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	15740068	rs11429009	A	*,AC	1653.03	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.987;DB;DP=172;ExcessHet=0.0000;FS=2.886;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.28;MQRankSum=-2.120e-01;QD=11.89;ReadPosRankSum=0.611;SOR=0.334	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:4,29,21:54:99:1|0:15740067_CA_C:1260,488,672,714,0,1061:15740067	1|2:6,33,46:85:99:1|0:15740067_CA_C:1964,1179,1618,736,0,1248:15740067>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	29684485	.	A	*,T	987.06	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.00;DP=180;ExcessHet=0.0000;FS=2.048;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=7.42;ReadPosRankSum=1.91;SOR=0.833	GT:AD:DP:GQ:PL	1/2:3,19,25:47:99:983,414,546,395,0,329	1/2:16,28,42:94:99:1313,587,1094,332,0,468>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr17	29684485	.	A	*,T	987.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.00;DP=180;ExcessHet=0.0000;FS=2.048;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=7.42;ReadPosRankSum=1.91;SOR=0.833;VQSLOD=6.30;culprit=QD	GT:AD:DP:GQ:PL	1/2:3,19,25:47:99:983,414,546,395,0,329	1/2:16,28,42:94:99:1313,587,1094,332,0,468>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr18	112208	.	G	*,A	64.91	.	AC=2,1;AF=0.500,0.250;AN=4;BaseQRankSum=0.00;DP=8;ExcessHet=0.0000;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=40.00;MQRankSum=0.00;QD=8.11;ReadPosRankSum=1.83;SOR=0.693	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:4,0,2:6:72:0|1:112206_C_T:72,84,252,0,168,162:112206	1|1:0,2,0:2:6:1|1:112208_G_*:90,6,0,90,6,90:112208>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr18	112208	.	G	*,A	64.91	PASS	AC=2,1;AF=0.500,0.250;AN=4;BaseQRankSum=0.00;DP=8;ExcessHet=0.0000;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=40.00;MQRankSum=0.00;QD=8.11;ReadPosRankSum=1.83;SOR=0.693;VQSLOD=-4.317e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:4,0,2:6:72:0|1:112206_C_T:72,84,252,0,168,162:112206	1|1:0,2,0:2:6:1|1:112208_G_*:90,6,0,90,6,90:112208>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr19	1147432	rs56808651	T	*,C	775.77	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=46;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=34.52;QD=18.04;SOR=2.584	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,5,8:13:99:1|0:1147431_AT_A:428,184,186,171,0,136:1147431	1|2:0,5,25:30:51:1|0:1147431_AT_A:961,635,596,144,0,51:1147431>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr19	1147432	rs56808651	T	*,C	775.77	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=46;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=34.52;QD=18.04;SOR=2.584;VQSLOD=-1.111e+01;culprit=MQ	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,5,8:13:99:1|0:1147431_AT_A:428,184,186,171,0,136:1147431	1|2:0,5,25:30:51:1|0:1147431_AT_A:961,635,596,144,0,51:1147431>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr19	8123366	rs10419582	G	*,A	3841.05	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=218;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=20.11;SOR=0.935	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,18,71:89:99:1|0:8123365_AG_A:2550,1682,1782,518,0,241:8123365	1|2:0,14,88:102:99:1|0:8123365_AG_A:3082,2173,2189,458,0,132:8123365>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr19	8123366	rs10419582	G	*,A	3841.05	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=218;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=20.11;SOR=0.935;VQSLOD=1.19;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,18,71:89:99:1|0:8123365_AG_A:2550,1682,1782,518,0,241:8123365	1|2:0,14,88:102:99:1|0:8123365_AG_A:3082,2173,2189,458,0,132:8123365>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	13208879	rs16051	A	*,G	5741.06	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=268;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.92;QD=24.33;SOR=0.818	GT:AD:DP:GQ:PL	1/2:0,13,99:112:99:3019,2608,3936,541,0,228	1/2:0,14,110:124:99:3700,3147,4304,568,0,215>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	13208879	rs16051	A	*,G	5741.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=268;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.92;POSITIVE_TRAIN_SITE;QD=24.33;SOR=0.818;VQSLOD=6.39;culprit=QD	GT:AD:DP:GQ:PL	1/2:0,13,99:112:99:3019,2608,3936,541,0,228	1/2:0,14,110:124:99:3700,3147,4304,568,0,215>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	46312448	rs3752207	A	*,C	4990.06	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=366;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=14.81;SOR=0.723	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,49,67:116:99:1|0:46312446_ATATT_A:3807,1795,2834,2039,0,1818:46312446	1|2:0,115,106:221:99:1|0:46312446_ATATT_A:7947,3209,4146,4838,0,4505:46312446>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	46312448	rs3752207	A	*,C	4990.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=366;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;POSITIVE_TRAIN_SITE;QD=14.81;SOR=0.723;VQSLOD=1.21;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,49,67:116:99:1|0:46312446_ATATT_A:3807,1795,2834,2039,0,1818:46312446	1|2:0,115,106:221:99:1|0:46312446_ATATT_A:7947,3209,4146,4838,0,4505:46312446>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr19	58277252	rs5828755	G	*,GC	4002.03	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=213;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.88;POSITIVE_TRAIN_SITE;QD=23.68;SOR=0.778;VQSLOD=5.36;culprit=FS	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,11,35:46:99:1|0:58277216_GGGCCAGAAGGATCTGAGAGAGTGTGGCCAGCTTGAGCCCTCAGGAGTC_G:1540,1124,1343,420,0,305:58277216	1|2:0,35,88:123:99:1|0:58277216_GGGCCAGAAGGATCTGAGAGAGTGTGGCCAGCTTGAGCCCTCAGGAGTC_G:4314,2892,3512,1471,0,1186:58277216>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr19	58277252	rs5828755	G	*,GC	4002.03	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=213;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.88;QD=23.68;SOR=0.778	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,11,35:46:99:1|0:58277216_GGGCCAGAAGGATCTGAGAGAGTGTGGCCAGCTTGAGCCCTCAGGAGTC_G:1540,1124,1343,420,0,305:58277216	1|2:0,35,88:123:99:1|0:58277216_GGGCCAGAAGGATCTGAGAGAGTGTGGCCAGCTTGAGCCCTCAGGAGTC_G:4314,2892,3512,1471,0,1186:58277216>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	58279888	rs77570482	A	*,T	1340.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=146;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=11.26;SOR=1.059	GT:AD:DP:GQ:PL	1/2:0,24,31:55:99:1887,764,645,699,0,533	1/2:0,33,31:64:99:2536,852,689,1034,0,841>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr19	58279888	rs77570482	A	*,T	1340.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=146;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=11.26;SOR=1.059;VQSLOD=-8.160e-01;culprit=FS	GT:AD:DP:GQ:PL	1/2:0,24,31:55:99:1887,764,645,699,0,533	1/2:0,33,31:64:99:2536,852,689,1034,0,841>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr2	157780625	rs1866885	A	*,G	3120.06	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.842;DB;DP=276;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=12.63;ReadPosRankSum=0.648;SOR=0.743	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:9,19,61:89:99:0|1:157780625_A_*:1673,1105,1446,245,0,240:157780625	1|2:21,23,114:158:99:0|1:157780625_A_*:2721,2029,2800,115,0,240:157780625>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr2	157780625	rs1866885	A	*,G	3120.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=0.842;DB;DP=276;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=12.63;ReadPosRankSum=0.648;SOR=0.743;VQSLOD=7.42;culprit=FS	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:9,19,61:89:99:0|1:157780625_A_*:1673,1105,1446,245,0,240:157780625	1|2:21,23,114:158:99:0|1:157780625_A_*:2721,2029,2800,115,0,240:157780625>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr2	178535859	rs202214630	A	*,G	160	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.402;DB;DP=222;ExcessHet=1.7609;FS=2.547;MLEAC=1,1;MLEAF=0.250,0.250;MQ=60.00;MQRankSum=0.00;QD=0.86;ReadPosRankSum=2.01;SOR=0.524	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:23,11,19:53:99:0|1:178535859_A_*:399,160,696,0,301,744:178535859	0/1:80,28,25:133:99:.:.:587,0,1957,218,1466,2837>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr2	178535859	rs202214630	A	*,G	160	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.402;DB;DP=222;ExcessHet=1.7609;FS=2.547;MLEAC=1,1;MLEAF=0.250,0.250;MQ=60.00;MQRankSum=0.00;QD=0.86;ReadPosRankSum=2.01;SOR=0.524;VQSLOD=2.38;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|2:23,11,19:53:99:0|1:178535859_A_*:399,160,696,0,301,744:178535859	0/1:80,28,25:133:99:.:.:587,0,1957,218,1466,2837>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr2	187428910	rs72904316	T	*,A	54.91	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=55;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.96;QD=1.10;SOR=0.773	GT:AD:DP:GQ:PL	1/2:0,19,4:23:36:902,104,36,631,0,580	1/2:0,24,3:27:13:1182,81,13,846,0,776>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr2	187428910	rs72904316	T	*,A	54.91	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=55;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.96;NEGATIVE_TRAIN_SITE;QD=1.10;SOR=0.773;VQSLOD=-2.135e+00;culprit=QD	GT:AD:DP:GQ:PL	1/2:0,19,4:23:36:902,104,36,631,0,580	1/2:0,24,3:27:13:1182,81,13,846,0,776>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr21	10413783	rs1752238	A	*,G	9965.06	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=438;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.33;QD=23.95;SOR=0.903	GT:AD:DP:GQ:PGT:PID:PL:PS	1/2:0,32,157:189:99:.:.:5049,4154,6580,1335,0,865	1|2:0,29,198:227:99:1|0:10413729_G_A:6588,5825,8364,1204,0,610:10413729>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr21	10413783	rs1752238	A	*,G	9965.06	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=438;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.33;POSITIVE_TRAIN_SITE;QD=23.95;SOR=0.903;VQSLOD=4.21;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1/2:0,32,157:189:99:.:.:5049,4154,6580,1335,0,865	1|2:0,29,198:227:99:1|0:10413729_G_A:6588,5825,8364,1204,0,610:10413729>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	27717847	rs9866625	C	*,A	4234.09	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=1.87;DB;DP=259;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=19.07;ReadPosRankSum=0.996;SOR=0.374	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:1,12,74:87:20:1|0:27717846_AC_A:2936,1804,1680,315,0,20:27717846	1|2:0,26,109:135:99:1|0:27717846_AC_A:4678,2829,2548,736,0,340:27717846>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	27717847	rs9866625	C	*,A	4234.09	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=1.87;DB;DP=259;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=19.07;ReadPosRankSum=0.996;SOR=0.374;VQSLOD=4.64;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:1,12,74:87:20:1|0:27717846_AC_A:2936,1804,1680,315,0,20:27717846	1|2:0,26,109:135:99:1|0:27717846_AC_A:4678,2829,2548,736,0,340:27717846>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr3	30800858	rs142514503	G	*,A	63.04	.	AC=3,1;AF=0.750,0.250;AN=4;BaseQRankSum=1.05;DB;DP=140;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=59.03;MQRankSum=-1.010e-01;QD=0.75;ReadPosRankSum=2.31;SOR=0.871	GT:AD:DP:GQ:PGT:PID:PL:PS	1|1:2,48,0:51:99:1|1:30800856_G_*:2067,130,0,2098,168,2290:30800856	1/2:9,15,10:34:73:.:.:1185,73,395,250,0,1017>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr3	30800858	rs142514503	G	*,A	63.04	PASS	AC=3,1;AF=0.750,0.250;AN=4;BaseQRankSum=1.05;DB;DP=140;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=59.03;MQRankSum=-1.010e-01;NEGATIVE_TRAIN_SITE;QD=0.75;ReadPosRankSum=2.31;SOR=0.871;VQSLOD=-2.208e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|1:2,48,0:51:99:1|1:30800856_G_*:2067,130,0,2098,168,2290:30800856	1/2:9,15,10:34:73:.:.:1185,73,395,250,0,1017>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	49361081	rs892974	C	*,A	1221.19	.	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=68;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=59.80;QD=21.42;SOR=1.047	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,2,22:24:19:1|1:49361080_AC_A:852,633,592,77,19,0:49361080	1|2:0,9,24:33:99:1|0:49361080_AC_A:1155,625,662,214,0,111:49361080>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	49361081	rs892974	C	*,A	1221.19	PASS	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=68;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=59.80;NEGATIVE_TRAIN_SITE;QD=21.42;SOR=1.047;VQSLOD=0.195;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,2,22:24:19:1|1:49361080_AC_A:852,633,592,77,19,0:49361080	1|2:0,9,24:33:99:1|0:49361080_AC_A:1155,625,662,214,0,111:49361080>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	75669017	rs368727349	C	*,A	42	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.144;DB;DP=67;ExcessHet=1.7609;FS=3.906;MLEAC=1,1;MLEAF=0.250,0.250;MQ=48.25;MQRankSum=-1.660e+00;QD=0.74;ReadPosRankSum=0.737;SOR=0.484	GT:AD:DP:GQ:PGT:PID:PL:PS	0|1:16,4,0:23:99:0|1:75668998_G_A:120,0,660,168,672,840:75668998	0/2:28,4,5:40:42:.:.:126,42,1206,0,1008,1161>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	75669017	rs368727349	C	*,A	42	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.144;DB;DP=67;ExcessHet=1.7609;FS=3.906;MLEAC=1,1;MLEAF=0.250,0.250;MQ=48.25;MQRankSum=-1.660e+00;NEGATIVE_TRAIN_SITE;QD=0.74;ReadPosRankSum=0.737;SOR=0.484;VQSLOD=-1.900e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|1:16,4,0:23:99:0|1:75668998_G_A:120,0,660,168,672,840:75668998	0/2:28,4,5:40:42:.:.:126,42,1206,0,1008,1161>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr3	113286907	rs5022662	A	*,T	1432.02	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-5.710e-01;DB;DP=124;ExcessHet=0.0000;FS=3.402;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.87;MQRankSum=0.00;QD=12.35;ReadPosRankSum=1.46;SOR=0.535	GT:AD:DP:GQ:PL	1/2:0,19,26:45:99:1737,689,595,727,0,667	1/2:1,36,34:71:99:2744,1013,831,865,0,701>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr3	113286907	rs5022662	A	*,T	1432.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-5.710e-01;DB;DP=124;ExcessHet=0.0000;FS=3.402;MLEAC=2,2;MLEAF=0.500,0.500;MQ=59.87;MQRankSum=0.00;QD=12.35;ReadPosRankSum=1.46;SOR=0.535;VQSLOD=3.22;culprit=MQ	GT:AD:DP:GQ:PL	1/2:0,19,26:45:99:1737,689,595,727,0,667	1/2:1,36,34:71:99:2744,1013,831,865,0,701>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr3	127692116	rs814130	G	*,T	2101.60	.	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=121;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=59.83;QD=24.72;SOR=1.450	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,2,32:34:41:1|1:127692114_TTG_T:1586,1123,1102,141,41,0:127692114	1|2:0,14,37:51:99:1|0:127692115_TG_T:2282,1149,983,316,0,120:127692115>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr3	127692116	rs814130	G	*,T	2101.60	PASS	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=121;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=59.83;POSITIVE_TRAIN_SITE;QD=24.72;SOR=1.450;VQSLOD=4.22;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,2,32:34:41:1|1:127692114_TTG_T:1586,1123,1102,141,41,0:127692114	1|2:0,14,37:51:99:1|0:127692115_TG_T:2282,1149,983,316,0,120:127692115>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	149968581	rs68033203	C	*,A	98.27	.	AC=3,1;AF=0.750,0.250;AN=4;DB;DP=142;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;QD=0.83;SOR=0.727	GT:AD:DP:GQ:PGT:PID:PL:PS	1/1:0,30,3:33:46:.:.:1334,104,0,976,46,962	1|2:0,72,13:85:99:1|0:149968579_AAC_A:3156,352,100,2219,0,2067:149968579>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr3	149968581	rs68033203	C	*,A	98.27	PASS	AC=3,1;AF=0.750,0.250;AN=4;DB;DP=142;ExcessHet=0.0000;FS=0.000;MLEAC=3,1;MLEAF=0.750,0.250;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=0.83;SOR=0.727;VQSLOD=-2.230e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1/1:0,30,3:33:46:.:.:1334,104,0,976,46,962	1|2:0,72,13:85:99:1|0:149968579_AAC_A:3156,352,100,2219,0,2067:149968579>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr5	173233524	rs55880439	T	*,A	3127.49	.	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=123;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;QD=27.92;SOR=0.884	GT:AD:DP:GQ:PGT:PID:PL:PS	2/2:0,0,53:53:99:.:.:1894,1894,1894,159,159,0	1|2:0,10,49:59:99:1|0:173233523_AT_A:2290,1358,1237,293,0,105:173233523>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr5	173233524	rs55880439	T	*,A	3127.49	PASS	AC=1,3;AF=0.250,0.750;AN=4;DB;DP=123;ExcessHet=0.0000;FS=0.000;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;QD=27.92;SOR=0.884;VQSLOD=8.77;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	2/2:0,0,53:53:99:.:.:1894,1894,1894,159,159,0	1|2:0,10,49:59:99:1|0:173233523_AT_A:2290,1358,1237,293,0,105:173233523>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr6	24418353	rs2753925	A	*,T	1018.02	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=132;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=9.79;SOR=1.094	GT:AD:DP:GQ:PL	1/2:0,22,20:42:99:1625,561,471,763,0,633	1/2:0,39,23:62:99:2419,684,541,1294,0,1111>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr6	24418353	rs2753925	A	*,T	1018.02	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=132;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;NEGATIVE_TRAIN_SITE;QD=9.79;SOR=1.094;VQSLOD=-8.527e-01;culprit=QD	GT:AD:DP:GQ:PL	1/2:0,22,20:42:99:1625,561,471,763,0,633	1/2:0,39,23:62:99:2419,684,541,1294,0,1111>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr7	5880775	rs10235465	T	*,A	3862.04	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=181;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=57.51;QD=25.92;SOR=1.047	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,6,40:46:81:1|0:5880773_AAT_A:1929,1453,1491,245,0,81:5880773	1|2:0,17,86:103:99:1|0:5880774_AT_A:3941,2609,2413,475,0,120:5880774>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <T> and <*> in line <chr7	5880775	rs10235465	T	*,A	3862.04	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=181;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=57.51;QD=25.92;SOR=1.047;VQSLOD=3.25;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,6,40:46:81:1|0:5880773_AAT_A:1929,1453,1491,245,0,81:5880773	1|2:0,17,86:103:99:1|0:5880774_AT_A:3941,2609,2413,475,0,120:5880774>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr7	6402512	rs2303366	C	*,A	39	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.754;DB;DP=37;ExcessHet=1.7609;FS=1.500;MLEAC=1,1;MLEAF=0.250,0.250;MQ=56.41;MQRankSum=1.18;QD=1.18;ReadPosRankSum=1.58;SOR=0.361	GT:AD:DP:GQ:PGT:PID:PL:PS	0|1:2,8,0:10:50:0|1:6402511_AC_A:227,0,50,233,72,305:6402511	0|2:14,4,5:23:39:0|1:6402502_C_CAA:234,39,545,0,378,463:6402502>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <C> and <*> in line <chr7	6402512	rs2303366	C	*,A	39	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.754;DB;DP=37;ExcessHet=1.7609;FS=1.500;MLEAC=1,1;MLEAF=0.250,0.250;MQ=56.41;MQRankSum=1.18;NEGATIVE_TRAIN_SITE;QD=1.18;ReadPosRankSum=1.58;SOR=0.361;VQSLOD=-1.420e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0|1:2,8,0:10:50:0|1:6402511_AC_A:227,0,50,233,72,305:6402511	0|2:14,4,5:23:39:0|1:6402502_C_CAA:234,39,545,0,378,463:6402502>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr7	6758969	.	A	*,ATATT	154.22	PASS	AC=1,1;AF=0.250,0.250;AN=4;DP=23;ExcessHet=0.0000;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=47.84;QD=12.85;SOR=0.804;VQSLOD=2.60;culprit=FS	GT:AD:DP:GQ:PL	0/0:0,0,0:2:9:0,9,35,9,35,35	1/2:0,8,4:15:99:320,144,197,215,0,363>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr7	6758969	.	A	*,ATATT	154.22	.	AC=1,1;AF=0.250,0.250;AN=4;DP=23;ExcessHet=0.0000;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=47.84;QD=12.85;SOR=0.804	GT:AD:DP:GQ:PL	0/0:0,0,0:2:9:0,9,35,9,35,35	1/2:0,8,4:15:99:320,144,197,215,0,363>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr7	100958744	.	A	*,G	795.26	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.626;DP=142;ExcessHet=1.7609;FS=2.255;MLEAC=1,1;MLEAF=0.250,0.250;MQ=58.59;MQRankSum=-1.336e+00;QD=6.26;ReadPosRankSum=2.35;SOR=0.926	GT:AD:DP:GQ:PGT:PID:PL:PS	0/1:15,8,11:35:55:.:.:255,0,832,55,91,347	0|2:53,0,40:93:99:0|1:100958721_G_C:803,1070,3208,0,1454,1202:100958721>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr7	100958744	.	A	*,G	795.26	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=0.626;DP=142;ExcessHet=1.7609;FS=2.255;MLEAC=1,1;MLEAF=0.250,0.250;MQ=58.59;MQRankSum=-1.336e+00;NEGATIVE_TRAIN_SITE;QD=6.26;ReadPosRankSum=2.35;SOR=0.926;VQSLOD=-2.623e+00;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	0/1:15,8,11:35:55:.:.:255,0,832,55,91,347	0|2:53,0,40:93:99:0|1:100958721_G_C:803,1070,3208,0,1454,1202:100958721>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr7	154795797	rs3778731	G	*,A	1081.04	.	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-5.160e-01;DB;DP=141;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=8.65;ReadPosRankSum=-1.405e+00;SOR=0.250	GT:AD:DP:GQ:PL	1/2:1,35,22:58:99:2012,620,890,1442,0,1396	1/2:0,42,25:67:99:2611,658,465,1572,0,1449>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chr7	154795797	rs3778731	G	*,A	1081.04	PASS	AC=2,2;AF=0.500,0.500;AN=4;BaseQRankSum=-5.160e-01;DB;DP=141;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;MQRankSum=0.00;QD=8.65;ReadPosRankSum=-1.405e+00;SOR=0.250;VQSLOD=5.34;culprit=QD	GT:AD:DP:GQ:PL	1/2:1,35,22:58:99:2012,620,890,1442,0,1396	1/2:0,42,25:67:99:2611,658,465,1572,0,1449>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr9	130489245	rs543048	A	*,T	2077.64	.	AC=1,3;AF=0.250,0.750;AN=4;BaseQRankSum=-4.030e-01;DB;DP=123;ExcessHet=0.0000;FS=2.965;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;MQRankSum=0.00;QD=19.42;ReadPosRankSum=1.22;SOR=0.166	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,3,30:33:20:1|1:130489244_TA_T:1060,785,763,107,20,0:130489244	1|2:2,17,55:74:99:1|0:130489244_TA_T:2279,1371,1298,391,0,288:130489244>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chr9	130489245	rs543048	A	*,T	2077.64	PASS	AC=1,3;AF=0.250,0.750;AN=4;BaseQRankSum=-4.030e-01;DB;DP=123;ExcessHet=0.0000;FS=2.965;MLEAC=1,3;MLEAF=0.250,0.750;MQ=60.00;MQRankSum=0.00;POSITIVE_TRAIN_SITE;QD=19.42;ReadPosRankSum=1.22;SOR=0.166;VQSLOD=4.96;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	2|2:0,3,30:33:20:1|1:130489244_TA_T:1060,785,763,107,20,0:130489244	1|2:2,17,55:74:99:1|0:130489244_TA_T:2279,1371,1298,391,0,288:130489244>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chrX	136879428	rs2011584	G	*,T	214.04	.	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=1.85;DB;DP=132;ExcessHet=1.7609;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=59.89;MQRankSum=0.00;QD=2.16;ReadPosRankSum=0.537;SOR=0.684	GT:AD:DP:GQ:PL	0/2:20,7,20:57:99:476,214,944,0,300,392	0/1:22,16,14:64:99:729,0,682,165,166,684>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <G> and <*> in line <chrX	136879428	rs2011584	G	*,T	214.04	PASS	AC=1,1;AF=0.250,0.250;AN=4;BaseQRankSum=1.85;DB;DP=132;ExcessHet=1.7609;FS=0.000;MLEAC=1,1;MLEAF=0.250,0.250;MQ=59.89;MQRankSum=0.00;QD=2.16;ReadPosRankSum=0.537;SOR=0.684;VQSLOD=0.723;culprit=QD	GT:AD:DP:GQ:PL	0/2:20,7,20:57:99:476,214,944,0,300,392	0/1:22,16,14:64:99:729,0,682,165,166,684>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chrX	153783202	rs2314343	A	*,C	3523.99	.	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=193;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;QD=20.73;SOR=1.501	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,11,66:77:99:1|0:153783201_CA_C:2214,1628,1637,337,0,110:153783201	1|2:0,19,74:93:99:1|0:153783201_CA_C:3176,1999,1900,567,0,288:153783201>
+WARNING: invalid allele record found in VCF4 file (ACGT expected): <A> and <*> in line <chrX	153783202	rs2314343	A	*,C	3523.99	PASS	AC=2,2;AF=0.500,0.500;AN=4;DB;DP=193;ExcessHet=0.0000;FS=0.000;MLEAC=2,2;MLEAF=0.500,0.500;MQ=60.00;POSITIVE_TRAIN_SITE;QD=20.73;SOR=1.501;VQSLOD=3.37;culprit=QD	GT:AD:DP:GQ:PGT:PID:PL:PS	1|2:0,11,66:77:99:1|0:153783201_CA_C:2214,1628,1637,337,0,110:153783201	1|2:0,19,74:93:99:1|0:153783201_CA_C:3176,1999,1900,567,0,288:153783201>
+NOTICE: Read 111002 lines and wrote 97590 different variants at 110246 genomic positions (96320 SNPs and 13926 indels)
+NOTICE: Among 110246 different variants at 110246 positions, 56448 are heterozygotes, 41142 are homozygotes
+NOTICE: Among 96320 SNPs, 68420 are transitions, 27708 are transversions (ratio=2.47), 192 have more than 2 alleles
+NOTICE: Output files are written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood.all.avinput.variant_function, /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood.all.avinput.exonic_variant_function
+NOTICE: Reading gene annotation from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVer.txt ... Done with 88819 transcripts (including 21511 without coding sequence annotation) for 28307 unique genes
+NOTICE: Processing next batch with 110174 unique variants in 110174 input lines
+NOTICE: Reading FASTA sequences from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVerMrna.fa ... Done with 24014 sequences
+WARNING: A total of 606 sequences will be ignored due to lack of correct ORF annotation
+NOTICE: Variants with invalid input format are written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood.all.avinput.invalid_input
+NOTICE: the --polish argument is set ON automatically (use --nopolish to change this behavior)
+-----------------------------------------------------------------
+NOTICE: Processing operation=g protocol=refGeneWithVer
+
+NOTICE: Running with system command <annotate_variation.pl -geneanno -buildver hg38 -dbtype refGeneWithVer -outfile /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer -exonsort -nofirstcodondel /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood.all.avinput /lustre1/share/annovar_new/humandb>
+NOTICE: Output files are written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.variant_function, /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.exonic_variant_function
+NOTICE: Reading gene annotation from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVer.txt ... Done with 88819 transcripts (including 21511 without coding sequence annotation) for 28307 unique genes
+NOTICE: Processing next batch with 110174 unique variants in 110174 input lines
+NOTICE: Reading FASTA sequences from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVerMrna.fa ... Done with 24014 sequences
+WARNING: A total of 606 sequences will be ignored due to lack of correct ORF annotation
+NOTICE: Variants with invalid input format are written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.invalid_input
+
+NOTICE: Running with system command <coding_change.pl  /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.exonic_variant_function.orig /lustre1/share/annovar_new/humandb/hg38_refGeneWithVer.txt /lustre1/share/annovar_new/humandb/hg38_refGeneWithVerMrna.fa -alltranscript -out /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.fa -newevf /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.refGeneWithVer.exonic_variant_function>
+-----------------------------------------------------------------
+NOTICE: Multianno output file is written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/3_annotation/OC_blood_anno.hg38_multianno.txt
+NOTICE: the --polish argument is set ON automatically (use --nopolish to change this behavior)
+Error: the required database file /lustre1/share/annovar_new/humandb/hg38_dbnsfp30a.txt does not exist.

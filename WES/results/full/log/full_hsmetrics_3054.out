@@ -1,0 +1,17 @@
+Tool returned:
+1
+[HS 2026-09-21 02:25:49] CollectHsMetrics failed for full_OC
+[HS 2026-09-21 02:25:49] done full_OC
+Tool returned:
+1
+[HS 2026-09-21 02:25:51] CollectHsMetrics failed for full_PBMC
+[HS 2026-09-21 02:25:51] done full_PBMC
+Tool returned:
+1
+[HS 2026-09-21 02:25:53] CollectHsMetrics failed for demo_OC
+[HS 2026-09-21 02:25:53] done demo_OC
+Tool returned:
+1
+[HS 2026-09-21 02:25:55] CollectHsMetrics failed for demo_PBMC
+[HS 2026-09-21 02:25:55] done demo_PBMC
+summary written

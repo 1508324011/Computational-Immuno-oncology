@@ -195,3 +195,27 @@ temp/
 *.old
 *.orig
 *~
+# -----------------------------------------------------------------------------
+# 8. WES/results — curated analysis results (EXPLICIT exception, 2026-09-21)
+# -----------------------------------------------------------------------------
+# Deliberate user decision: the curated two-run analysis outputs under
+# WES/results ARE versioned (small evidence files, reviewed selection,
+# NO raw data — see WES/results/README.md and WES_results_guide.md section 5).
+# Re-allow everything the general output rules above ignore, under this tree:
+!WES/results/**
+
+# Safety net: raw data & regeneration-heavy binaries never enter the repo,
+# not even via the exception above:
+WES/results/**/*.bam
+WES/results/**/*.bai
+WES/results/**/*.sam
+WES/results/**/*.cram
+WES/results/**/*.fastq
+WES/results/**/*.fastq.gz
+WES/results/**/*.fq
+WES/results/**/*.fq.gz
+WES/results/**/*.g.vcf
+WES/results/**/*.g.vcf.idx
+WES/results/**/*.g.vcf.gz
+WES/results/**/f1r2.tar.gz
+WES/results/**/orientation_model.tar.gz

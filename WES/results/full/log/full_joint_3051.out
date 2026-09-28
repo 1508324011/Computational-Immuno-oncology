@@ -1,0 +1,21 @@
+==== [2026-09-21 02:25:45][joint] STAGE 6.3 CombineGVCFs + GenotypeGVCFs ====
+==== [2026-09-21 02:28:30][joint] STAGE 6.4 VariantAnnotator ====
+==== [2026-09-21 02:33:03][joint] STAGE 7.1 SNP VQSR ====
+Tool returned:
+true
+==== [2026-09-21 02:35:20][joint] STAGE 7.2 INDEL VQSR ====
+Tool returned:
+true
+==== [2026-09-21 02:35:59][joint] STAGE 7.3 MergeVcfs ====
+Tool returned:
+0
+PASS variants in merged VCF: 53988
+==== [2026-09-21 02:36:03][joint] STAGE 8.1 convert2annovar ====
+ANNOVAR input: /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/2_variant_call/OC_blood.all.VQSR.vcf
+==== [2026-09-21 02:36:05][joint] STAGE 8.2 gene annotation ====
+==== [2026-09-21 02:36:22][joint] STAGE 8.3 table_annovar (basic protocol) ====
+==== [2026-09-21 02:36:46][joint] STAGE 8.3b table_annovar (richer protocol, verbatim - names not in humandb) ====
+[DEVIATION 2026-09-21 02:36:46][joint] 8.3b rich protocol failed as anticipated: humandb lacks dbnsfp30a/exac03/gnomad_genome/avsnp147 (installed: dbnsfp54a, gnomad211_exome, gnomad41_exome, avsnp151); basic protocol output stands
+==== [2026-09-21 02:36:46][joint] STAGE joint summary ====
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/log/summary_joint.log
+==== [2026-09-21 02:36:47][joint] STAGE joint done ====

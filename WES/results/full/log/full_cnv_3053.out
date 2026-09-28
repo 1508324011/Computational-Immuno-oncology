@@ -1,0 +1,6 @@
+==== [2026-09-21 02:25:45][cnv] STAGE 10.1 prepare target BED ====
+==== [2026-09-21 02:25:45][cnv] STAGE 10.2 cnvkit.py batch ====
+CNVkit batch done
+==== [2026-09-21 02:31:17][cnv] STAGE cnv summary ====
+summary written to /lustre1/user/bjx131_pkuhpc/wes_run_full_20260920/log/summary_cnv.log
+==== [2026-09-21 02:31:17][cnv] STAGE cnv done ====

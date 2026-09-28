@@ -1,0 +1,28 @@
+=== 6.3 joint callset counts ===
+OC_blood_variants.vcf records: 55123
+anno.vcf records: 55123
+=== 7 VQSR status ===
+SNP ok=yes INDEL ok=yes merged=yes
+PASS in merged VQSR vcf: 53988
+--- SNP tranche tail ---
+99.00,42417,1005,2.5686,2.1121,0.3659,VQSRTrancheSNP90.00to99.00,SNP,28324,28040,0.9900
+99.90,45524,1923,2.5267,1.8435,-11.6197,VQSRTrancheSNP99.00to99.90,SNP,28324,28295,0.9990
+100.00,45932,2211,2.5226,1.6498,-1111.3889,VQSRTrancheSNP99.90to100.00,SNP,28324,28324,1.0000
+--- INDEL tranche tail ---
+99.00,5394,1147,0.0000,0.0000,-0.2103,VQSRTrancheINDEL90.00to99.00,INDEL,2909,2879,0.9897
+99.90,5635,1333,0.0000,0.0000,-22.5845,VQSRTrancheINDEL99.00to99.90,INDEL,2909,2906,0.9990
+100.00,5638,1342,0.0000,0.0000,-344.8769,VQSRTrancheINDEL99.90to100.00,INDEL,2909,2909,1.0000
+--- Ti/Tv (bcftools stats) ---
+SN	0	number of samples:	2
+SN	0	number of records:	53988
+SN	0	number of no-ALTs:	0
+SN	0	number of SNPs:	47468
+SN	0	number of MNPs:	0
+SN	0	number of indels:	6541
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	822
+=== 8 ANNOVAR ===
+avinput lines: 110246
+multianno rows: 110284
+multianno columns:
+Chr|Start|End|Ref|Alt|Func.refGeneWithVer|Gene.refGeneWithVer|GeneDetail.refGeneWithVer|ExonicFunc.refGeneWithVer|AAChange.refGeneWithVer

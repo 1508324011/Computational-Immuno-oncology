@@ -1,0 +1,3 @@
+[DEVIATION 2026-09-20 22:45:06][OC] 3.1-3.3 alignment piped: 'bwa mem | samtools sort' replaces roadmap literal SAM->BAM->sort (agreed efficiency deviation; final sorted BAM identical)
+[DEVIATION 2026-09-20 22:46:46][PBMC] 3.1-3.3 alignment piped: 'bwa mem | samtools sort' replaces roadmap literal SAM->BAM->sort (agreed efficiency deviation; final sorted BAM identical)
+[DEVIATION 2026-09-21 02:36:46][joint] 8.3b rich protocol failed as anticipated: humandb lacks dbnsfp30a/exac03/gnomad_genome/avsnp147 (installed: dbnsfp54a, gnomad211_exome, gnomad41_exome, avsnp151); basic protocol output stands

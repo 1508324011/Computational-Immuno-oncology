@@ -1,0 +1,9 @@
+[HS 2026-09-21 08:34:29] CollectHsMetrics failed for full_OC
+[HS 2026-09-21 08:34:29] done full_OC
+[HS 2026-09-21 08:34:30] CollectHsMetrics failed for full_PBMC
+[HS 2026-09-21 08:34:30] done full_PBMC
+[HS 2026-09-21 08:34:32] CollectHsMetrics failed for demo_OC
+[HS 2026-09-21 08:34:32] done demo_OC
+[HS 2026-09-21 08:34:34] CollectHsMetrics failed for demo_PBMC
+[HS 2026-09-21 08:34:34] done demo_PBMC
+summary written

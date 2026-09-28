@@ -1,0 +1,14 @@
+ANNOVAR Version:
+	$Date: 2025-03-02 22:37:01 -0500 (Sun,  2 Mar 2025) $
+ANNOVAR Information:
+	For questions, comments, documentation, bug reports and program update, please visit http://www.openbioinformatics.org/annovar/
+ANNOVAR Command:
+	/lustre1/share/annovar_new/annotate_variation.pl -geneanno -buildver hg38 -dbtype refGeneWithVer /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/3_annotation/OC_blood.all.avinput /lustre1/share/annovar_new/humandb
+ANNOVAR Started:
+	Sun Sep 20 22:41:30 2026
+NOTICE: Output files are written to /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/3_annotation/OC_blood.all.avinput.variant_function, /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/3_annotation/OC_blood.all.avinput.exonic_variant_function
+NOTICE: Reading gene annotation from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVer.txt ... Done with 88819 transcripts (including 21511 without coding sequence annotation) for 28307 unique genes
+NOTICE: Processing next batch with 29562 unique variants in 29562 input lines
+NOTICE: Reading FASTA sequences from /lustre1/share/annovar_new/humandb/hg38_refGeneWithVerMrna.fa ... Done with 12202 sequences
+WARNING: A total of 606 sequences will be ignored due to lack of correct ORF annotation
+NOTICE: Variants with invalid input format are written to /lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914/3_annotation/OC_blood.all.avinput.invalid_input

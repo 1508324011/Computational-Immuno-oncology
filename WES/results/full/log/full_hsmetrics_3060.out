@@ -1,0 +1,10 @@
+[HS 2026-09-21 08:38:49] BedToIntervalList failed
+[HS 2026-09-21 08:38:51] CollectHsMetrics failed for full_OC
+[HS 2026-09-21 08:38:51] done full_OC
+[HS 2026-09-21 08:38:53] CollectHsMetrics failed for full_PBMC
+[HS 2026-09-21 08:38:53] done full_PBMC
+[HS 2026-09-21 08:38:55] CollectHsMetrics failed for demo_OC
+[HS 2026-09-21 08:38:55] done demo_OC
+[HS 2026-09-21 08:38:57] CollectHsMetrics failed for demo_PBMC
+[HS 2026-09-21 08:38:57] done demo_PBMC
+summary written

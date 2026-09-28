@@ -1,0 +1,15 @@
+=== MEAN_TARGET_COVERAGE / PCT 30X / on-target % ===
+demo_OC.hs_metrics.txt: meanCov=0.0 PCT_30X=0.0000 PCT_100X=0.0000 ON_TARGET=0.0000 FOLD_ENRICH=0.0
+demo_PBMC.hs_metrics.txt: meanCov=0.0 PCT_30X=0.0000 PCT_100X=0.0000 ON_TARGET=0.0000 FOLD_ENRICH=0.0
+full_OC.hs_metrics.txt: meanCov=0.0 PCT_30X=0.0000 PCT_100X=0.0000 ON_TARGET=0.0000 FOLD_ENRICH=0.0
+full_PBMC.hs_metrics.txt: meanCov=0.0 PCT_30X=0.0000 PCT_100X=0.0000 ON_TARGET=0.0000 FOLD_ENRICH=0.0
+=== demo joint het/hom ===
+SN	0	number of samples:	2
+SN	0	number of records:	14782
+SN	0	number of no-ALTs:	0
+SN	0	number of SNPs:	13632
+SN	0	number of MNPs:	0
+SN	0	number of indels:	1151
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	8
+SN	0	number of multiallelic SNP sites:	0
