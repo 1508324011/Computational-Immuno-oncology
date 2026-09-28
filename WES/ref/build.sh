@@ -35,6 +35,18 @@ HTMLTITLE="${3:-$TITLE (Corrected & Annotated Edition)}"
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate docs # pandoc 3.11, typst 0.15.1, python 3.6 (system-compatible only!)
 
+# Pre-flight: ' @<alphanum>' (spaced @) parses as a pandoc CITATION -> typst dies
+# with 'document does not contain a bibliography'. Citations are never used in
+# these documents, so fail fast with a clear message instead of a confusing typst
+# error. (Glued '@', e.g. 'minVQSLod@100%', is auto-escaped by pandoc and safe.)
+BAD=$(grep -nE '(^|[[:space:]])@[0-9A-Za-z_]' "$MD" || true)
+if [ -n "$BAD" ]; then
+  echo "ERROR: spaced '@<id>' in $MD -- pandoc parses it as a citation:"
+  echo "$BAD" | head -5
+  echo "Rephrase (e.g. 'X @99%' -> 'X（99%）') or escape as '\\@'."
+  exit 1
+fi
+
 # ---------------------------------------------------------------- HTML -------
 pandoc "$MD" -o "$BASE.html" --standalone --toc --toc-depth=2 \
     --metadata title="$HTMLTITLE" \
@@ -106,7 +118,10 @@ open(path, 'w', encoding='utf-8').write(''.join(parts))
 sys.stderr.write('ZWSP break points inserted\n')
 PYEOF
 
-typst compile "$TYP" "$BASE.pdf"
+# SOURCE_DATE_EPOCH-style deterministic timestamp (default: 2026-09-20, the full-round
+# baseline date of the two-run reproduction) -> byte-reproducible PDFs, no churn on rebuild.
+TS="${SOURCE_DATE_EPOCH:-1784899200}"
+typst compile "$TYP" "$BASE.pdf" --creation-timestamp "$TS"
 echo "== typst compile OK =="
 
 # --------------------------------------------------------- verify: overlaps --

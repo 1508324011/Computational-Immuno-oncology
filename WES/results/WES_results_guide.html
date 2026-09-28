@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>WES 分析结果讲解（两轮实跑产物逐文件导读）</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">WES 分析结果讲解（两轮实跑产物逐文件导读）</h1>
+<p class="subtitle">两轮实跑产物的逐文件导读——怎么看、为什么是这些数、动手验证</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#关于本指南-about-this-guide"
+id="toc-关于本指南-about-this-guide">关于本指南 · About this
+guide</a></li>
+<li><a href="#目录结构-what-is-where"
+id="toc-目录结构-what-is-where">目录结构 · What is where</a></li>
+<li><a href="#逐类讲解-how-to-read-each-artifact"
+id="toc-逐类讲解-how-to-read-each-artifact">逐类讲解 · How to read each
+artifact</a>
+<ul>
+<li><a href="#fastp-报告0_fastq步骤-2"
+id="toc-fastp-报告0_fastq步骤-2">1. fastp
+报告（<code>0_fastq/</code>，步骤 2）</a></li>
+<li><a href="#flagstat1_alignmentflagstat.txt步骤-3.4"
+id="toc-flagstat1_alignmentflagstat.txt步骤-3.4">2.
+flagstat（<code>1_alignment/*flagstat.txt</code>，步骤 3.4）</a></li>
+<li><a href="#markduplicates-指标1_alignmentmarkdup_metrics.txt步骤-4"
+id="toc-markduplicates-指标1_alignmentmarkdup_metrics.txt步骤-4">3.
+MarkDuplicates 指标（<code>1_alignment/*markdup_metrics.txt</code>，步骤
+4）</a></li>
+<li><a href="#bqsr-recal-表1_alignment.recal_data.table步骤-5"
+id="toc-bqsr-recal-表1_alignment.recal_data.table步骤-5">4. BQSR recal
+表（<code>1_alignment/*.recal_data.table</code>，步骤 5）</a></li>
+<li><a href="#胚系变异集-vcf2_variant_call步骤-67"
+id="toc-胚系变异集-vcf2_variant_call步骤-67">5. 胚系变异集
+VCF（<code>2_variant_call/</code>，步骤 6–7）</a></li>
+<li><a href="#vqsr-recal-tranches2_variant_call.recal.tranches步骤-7"
+id="toc-vqsr-recal-tranches2_variant_call.recal.tranches步骤-7">6. VQSR
+recal +
+tranches（<code>2_variant_call/*.recal</code>、<code>*.tranches</code>，步骤
+7）</a></li>
+<li><a href="#annovar-输出3_annotation步骤-8"
+id="toc-annovar-输出3_annotation步骤-8">7. ANNOVAR
+输出（<code>3_annotation/</code>，步骤 8）</a></li>
+<li><a href="#体细胞-vcf5_somatic_tmb步骤-9"
+id="toc-体细胞-vcf5_somatic_tmb步骤-9">8. 体细胞
+VCF（<code>5_somatic_tmb/</code>，步骤 9）</a></li>
+<li><a href="#cnvkit-输出4_cnv步骤-10"
+id="toc-cnvkit-输出4_cnv步骤-10">9. CNVkit
+输出（<code>4_cnv/</code>，步骤 10）</a></li>
+<li><a href="#hsmetricsfullqc.hs_metrics.txt矫正补充步骤"
+id="toc-hsmetricsfullqc.hs_metrics.txt矫正补充步骤">10.
+HsMetrics（<code>full/qc/*.hs_metrics.txt</code>，矫正补充步骤）</a></li>
+<li><a href="#日志与脚本logscripts" id="toc-日志与脚本logscripts">11.
+日志与脚本（<code>log/</code>、<code>scripts/</code>）</a></li>
+</ul></li>
+<li><a href="#两轮对比总表-the-two-rounds-at-a-glance"
+id="toc-两轮对比总表-the-two-rounds-at-a-glance">两轮对比总表 · The two
+rounds at a glance</a></li>
+<li><a href="#未入库的大文件-what-stayed-on-the-cluster"
+id="toc-未入库的大文件-what-stayed-on-the-cluster">未入库的大文件 · What
+stayed on the cluster</a></li>
+<li><a href="#动手练习-exercises-you-can-do-right-here"
+id="toc-动手练习-exercises-you-can-do-right-here">动手练习 · Exercises
+you can do right here</a></li>
+</ul>
+</nav>
+<h1 id="关于本指南-about-this-guide">关于本指南 · About this guide</h1>
+<p>本目录收录的是<strong>我们自己的两轮实跑分析结果</strong>（demo 轮 +
+全量轮），不含任何原始数据—— FASTQ、BAM/SAM、GVCF
+一律未入库（体积与数据政策，见 §5）。每个文件都是真实管线在集群上
+跑出来的产物，<strong>未做任何人工修改</strong>；讲解文档（本文件）教你逐类怎么读。</p>
+<p>三份文档的分工：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文档</th>
+<th>回答的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学生版路线图（<code>WES/ref/WES_roadmap_to_students.*</code>）</td>
+<td>命令怎么打</td>
+</tr>
+<tr>
+<td>矫正增强版（<code>WES/ref/WES_roadmap_corrected*</code>，中英双语）</td>
+<td>命令哪里对哪里错、为什么、实测证据是什么</td>
+</tr>
+<tr>
+<td><strong>本指南 + 本目录的文件</strong></td>
+<td>证据本体——每个结果文件长什么样、怎么读、你能亲手验证什么</td>
+</tr>
+</tbody>
+</table>
+<p>两轮运行：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>数据</th>
+<th>集群运行目录（大文件仍在此）</th>
+<th>SLURM 作业</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td><code>data_new</code>（0.5× 降采样）</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_cluster_20260914</code></td>
+<td>3048</td>
+</tr>
+<tr>
+<td>full</td>
+<td><code>OC_WES_all</code>（全量）</td>
+<td><code>/lustre1/user/bjx131_pkuhpc/wes_run_full_20260920</code></td>
+<td>3049–3061（8 个，依赖链）</td>
+</tr>
+</tbody>
+</table>
+<h1 id="目录结构-what-is-where">目录结构 · What is where</h1>
+<p>目录名与路线图步骤编号一致（<code>0_fastq</code> →
+<code>5_somatic_tmb</code>），可直接对照：</p>
+<pre class="text"><code>WES/results/
+├── demo/                      # 0.5× demo 轮（摘录）
+│   ├── 0_fastq/               #   fastp 报告（OC / PBMC 各一套 html+json）
+│   ├── 1_alignment/           #   flagstat · markdup 指标 · BQSR recal 表（每样本 3 件）
+│   ├── 2_variant_call/        #   联合 VCF(14,782) + SNP/INDEL 两个 VQSR 输出 + 合并产物(29,564!) + recal/tranches
+│   ├── 3_annotation/          #   ANNOVAR multianno(29,602 行=翻倍传播) + avinput 日志
+│   ├── 4_cnv/cnvkit_out/      #   cns/call.cns + 【31 字节的空 antitarget 文件】+ scatter/diagram
+│   ├── 5_somatic_tmb/         #   raw/filtered/pass VCF——全部 0 条变异（这本身就是结果）
+│   ├── scripts/               #   wes_demo_steps3to10.sbatch
+│   └── log/                   #   deviations.log · summary · 3047(set -u 崩溃证据) · 3048 全程日志
+├── full/                      # 全量轮（摘录）
+│   ├── 0_fastq/  1_alignment/ #   同 demo 构（每样本 flagstat/指标/recal）
+│   ├── 2_variant_call/        #   联合 VCF(55,123) + 顺序 VQSR 矫正产物(55,123, 0 孪生) + recal/tranches
+│   ├── 3_annotation/          #   avinput 日志 + invalid_input（大 multianno 未入库，见 §5）
+│   ├── 4_cnv/cnvkit_out/      #   原样 amplicon 模式：cns/call.cns + 空 antitarget + scatter
+│   ├── 4_cnv/cnvkit_out_hybrid/#  矫正 hybrid 模式：cns/call.cns + 2.2MB 真实 antitarget + scatter
+│   ├── 5_somatic_tmb/         #   raw(2,949) → filtered → pass(108) + filteringStats
+│   ├── qc/                    #   4 份 HsMetrics + demo 联合 VCF 的 bcftools stats
+│   ├── scripts/               #   8 个 sbatch 脚本（全部实跑脚本）
+│   └── log/                   #   deviations · 7 份 summary · 全部作业的 .out/.err
+├── README.md
+└── WES_results_guide.{md,html,pdf}   # 本文档</code></pre>
+<h1 id="逐类讲解-how-to-read-each-artifact">逐类讲解 · How to read each
+artifact</h1>
+<h2 id="fastp-报告0_fastq步骤-2">1. fastp
+报告（<code>0_fastq/</code>，步骤 2）</h2>
+<p><strong>是什么：</strong> 每样本一份自包含
+HTML（浏览器直接打开，含全部图表）+ 一份机器可读 JSON。</p>
+<p><strong>三处必看：</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>看什么</th>
+<th>demo 实测</th>
+<th>全量实测</th>
+<th>判断标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q30 比例（修剪后）</td>
+<td>OC 97.0% / PBMC 97.8%</td>
+<td>OC 97.0% / PBMC 97.8%</td>
+<td>≥90–95% 健康；两轮一致=同一文库抽样</td>
+</tr>
+<tr>
+<td>接头残留</td>
+<td>~0</td>
+<td>~0</td>
+<td>应为 0 或接近 0</td>
+</tr>
+<tr>
+<td><strong>插入片段峰值</strong></td>
+<td><strong>150 bp</strong></td>
+<td><strong>150 bp</strong></td>
+<td>应显著大于读长 137 bp——<strong>此处偏短</strong></td>
+</tr>
+</tbody>
+</table>
+<p>插入峰 150 bp 是全套数据最重要的”隐性事实”：2×137 bp
+的读段大量互相重叠，重叠碱基在 覆盖度统计里只算一次（全量轮实测
+<strong>25.6%</strong> 的可用碱基耗于此，见 HsMetrics 一节）——这是 “理论
+~172× 实测只有 54.6×”的三大去向之一。</p>
+<h2 id="flagstat1_alignmentflagstat.txt步骤-3.4">2.
+flagstat（<code>1_alignment/*flagstat.txt</code>，步骤 3.4）</h2>
+<p><strong>是什么：</strong> 比对质量的 13 行汇总。三问：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>问题</th>
+<th>OC（肿瘤）</th>
+<th>PBMC（正常）</th>
+<th>解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>比对率？</td>
+<td>100%（全量轮 79.6M 读段仅 311 条未比对）</td>
+<td>100%</td>
+<td>本数据集发布前已剔除未比对读段；新鲜实验室数据 96–99% 才正常</td>
+</tr>
+<tr>
+<td>properly paired？</td>
+<td>demo 83.29% / 全量 83.22%</td>
+<td>99.4–99.5%</td>
+<td><strong>OC 两轮完全一致——真实肿瘤属性</strong>：15.8%
+读段对配到不同染色体（PBMC 0.43%），重度重排基因组（HGSOC）的签名</td>
+</tr>
+<tr>
+<td>secondary 比对？</td>
+<td>9.1%</td>
+<td>0.18%</td>
+<td>重复序列含量差异，几个百分点属正常</td>
+</tr>
+</tbody>
+</table>
+<h2 id="markduplicates-指标1_alignmentmarkdup_metrics.txt步骤-4">3.
+MarkDuplicates 指标（<code>1_alignment/*markdup_metrics.txt</code>，步骤
+4）</h2>
+<p><strong>是什么：</strong> 每样本的 PCR/光学重复统计表。关键行是
+<code>LIBRARY</code> 数据行和 <code>PERCENT_DUPLICATION</code>。</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>样本</th>
+<th>检查读段对</th>
+<th>重复率</th>
+<th>光学重复占比</th>
+<th>文库复杂度估计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC / PBMC</td>
+<td>—</td>
+<td><strong>0.033% / 0.06%</strong></td>
+<td>—</td>
+<td>抽样必然≈0（0.48%² ≈ 0.002% 的对子双双存活）</td>
+</tr>
+<tr>
+<td>full OC</td>
+<td>36,468,418</td>
+<td><strong>7.08%</strong></td>
+<td>71.8%</td>
+<td>809,511,121</td>
+</tr>
+<tr>
+<td>full PBMC</td>
+<td>51,634,767</td>
+<td><strong>10.77%</strong></td>
+<td>57.4%</td>
+<td>478,822,815</td>
+</tr>
+<tr>
+<td>老师 <code>analysis_full</code>（对照）</td>
+<td>—</td>
+<td>7.39% / 11.01%</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>与老师参考差 0.4 个百分点以内——这是我们的 prep 链忠实复现参考 prep
+的最强单点验证。 <strong>71.8% 是光学重复</strong>说明重复主要来自
+patterned flowcell 相邻簇，不是 PCR 过度扩增。</p>
+<h2 id="bqsr-recal-表1_alignment.recal_data.table步骤-5">4. BQSR recal
+表（<code>1_alignment/*.recal_data.table</code>，步骤 5）</h2>
+<p><strong>是什么：</strong> 机器可读的经验质量模型（ReadGroupTable /
+QualityScoreTable / 各协变量表）。 人读时看 <code>RecalTable0</code> 的
+<code>EstimatedQ</code> vs <code>EmpiricalQuality</code>：系统性差 1–5
+个 Q 属正常且 值得校准。要可视化就跑
+<code>gatk AnalyzeCovariates</code>。两轮的表尺寸几乎一样（108–110
+KB）—— 模型形状相同，只是全量轮每格计数更密；0.5×
+下这些计数薄得校准基本是噪声。</p>
+<h2 id="胚系变异集-vcf2_variant_call步骤-67">5. 胚系变异集
+VCF（<code>2_variant_call/</code>，步骤 6–7）</h2>
+<p><strong>是什么：</strong> HaplotypeCaller GVCF
+流程的最终产出。本目录收录的每一份都有教学点：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>记录数</th>
+<th>为什么收录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>demo/OC_blood_variants.vcf</code></td>
+<td>14,782（13,632 SNP + 1,151 indel）</td>
+<td>原始联合变异集；配套 <code>qc/demo_joint_stats.txt</code>（bcftools
+stats 全景）</td>
+</tr>
+<tr>
+<td><code>demo/OC_blood.snps.VQSR.vcf</code></td>
+<td>14,782</td>
+<td>ApplyVQSR <strong>SNP 模式的输出——注意它不是只有 SNP</strong>，indel
+全部透传（FILTER=<code>.</code>）</td>
+</tr>
+<tr>
+<td><code>demo/OC_blood.indel.VQSR.vcf</code></td>
+<td>14,782</td>
+<td>INDEL 模式同理——这四份文件是理解翻倍 bug 的全套材料</td>
+</tr>
+<tr>
+<td><code>demo/OC_blood.all.VQSR.vcf</code></td>
+<td><strong>29,564 = 2 × 14,782</strong></td>
+<td><strong>路线图 §7.3 的 bug 本体</strong>——每条变异两条记录</td>
+</tr>
+<tr>
+<td><code>full/OC_blood_variants.vcf</code></td>
+<td>55,123</td>
+<td>全量轮原始联合集（双样本、靶区内）</td>
+</tr>
+<tr>
+<td><code>full/OC_blood.all.sequentialVQSR.vcf</code></td>
+<td>55,123（PASS 53,988）</td>
+<td>矫正产物：顺序套用 ApplyVQSR，零未过滤孪生，过滤率 2.1%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>翻倍 bug 亲手验证（三条命令，§6 练习 1
+会用到）：</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-vc</span> <span class="st">&#39;^#&#39;</span> demo/2_variant_call/OC_blood_variants.vcf                      <span class="co"># 14782</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-vc</span> <span class="st">&#39;^#&#39;</span> demo/2_variant_call/OC_blood.all.VQSR.vcf                     <span class="co"># 29564</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">&#39;^#&#39;</span> demo/2_variant_call/OC_blood.all.VQSR.vcf <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f1,2</span> <span class="dt">\</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $1}&#39;</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span>                      <span class="co"># &quot;14782 2&quot; → 每位点恰好 2 条</span></span></code></pre></div>
+<p><strong>关于 “55,123 vs 老师 204,178”：</strong>
+这两个数<strong>不可直接比</strong>。老师的参考 VCF 是 ①单样本 （blood
+的 RG <code>SM</code> 标签误写成 <code>OC</code>，CombineGVCFs
+把两样本塌缩）②全基因组（无 <code>-L</code>，72% 位点在靶区外）③被 §7.3
+bug 翻倍前的原始数。比 callset 前先读 VCF 头的
+<code>##GATKCommandLine</code> 与 <code>#CHROM</code> 行。</p>
+<h2 id="vqsr-recal-tranches2_variant_call.recal.tranches步骤-7">6. VQSR
+recal +
+tranches（<code>2_variant_call/*.recal</code>、<code>*.tranches</code>，步骤
+7）</h2>
+<p><strong>是什么：</strong> <code>*.recal</code>
+是训练出的高斯混合模型（gzip 格式）；<code>*.tranches</code> 只有 ~550
+字节， 是<strong>质量仪表盘</strong>——每行一个敏感度档（90 / 99 / 99.9 /
+100%），列 <code>novelTiTv</code> / <code>minVQSLod</code>。</p>
+<p>三组对照（demo / 我们全量 /
+老师全量）——<strong>这是”模型可信度”最浓缩的一张表</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>证据</th>
+<th>demo（14.8k）</th>
+<th>全量（55.1k）</th>
+<th>老师（204k）</th>
+<th>健康的样子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>truth 位点（hapmap+omni ∩ callset）</td>
+<td>7,388</td>
+<td>28,324</td>
+<td>85,159</td>
+<td>随队列增长</td>
+</tr>
+<tr>
+<td>minVQSLod（100% tranche）</td>
+<td><strong>−5889.9</strong></td>
+<td>−1111.4</td>
+<td>−25.5</td>
+<td>−10 ~ −30 的有界尾部</td>
+</tr>
+<tr>
+<td>novel Ti/Tv（90% tranche）</td>
+<td>2.46（贴着 known 2.71）</td>
+<td>2.50（known 2.63）</td>
+<td>1.69（known 2.34）</td>
+<td>novel 明显低于 known</td>
+</tr>
+</tbody>
+</table>
+<p><strong>怎么读：</strong> demo 的 −5889
+意味着模型在尾部毫无判别力（噪声里分离噪声）；novel Ti/Tv 贴着 known
+更致命——健康 callset 的 novel 变异富集 artifacts，Ti/Tv
+必须<strong>显著低于</strong> known（老师 那组 1.69 vs 2.34
+才是标准样子）。“跑完”≠“能用”，这是 VQSR 教学的核心一课（矫正版
+§7.2）。</p>
+<h2 id="annovar-输出3_annotation步骤-8">7. ANNOVAR
+输出（<code>3_annotation/</code>，步骤 8）</h2>
+<p><strong>是什么：</strong> <code>multianno.txt</code> 每行一个（变异 ×
+转录本），列含 <code>Func</code> / <code>ExonicFunc</code> /
+<code>AAChange</code>。demo 收录的
+<code>OC_blood_anno.hg38_multianno.txt</code> 有 <strong>29,602
+行</strong>——对 14,782 个真实变异——因为输入正是上面那份翻倍 VCF（§7.3
+bug 向下游传播的实证）。全量轮的富注释 （55,165 行 × 146 列，含 gnomAD
+AF / REVEL / CADD / AlphaMissense）体积 27 MB 未入库， 在集群
+<code>wes_run_full_20260920/3_annotation/</code>。</p>
+<p><code>invalid_input</code> 是 convert2annovar
+拒收的行（多为复杂重排区），<code>.log</code> 里有原因——真实数据
+永远有这一项，不是错误。</p>
+<h2 id="体细胞-vcf5_somatic_tmb步骤-9">8. 体细胞
+VCF（<code>5_somatic_tmb/</code>，步骤 9）</h2>
+<p><strong>是什么：</strong> Mutect2 配对检出的 raw → filtered → pass
+三级，加 <code>filteringStats.tsv</code>（每个 过滤器的期望 FDR/FN——比如
+<code>orientation</code> 行的 FDR 0.02 就是方向偏好模型在量化 FFPE 类
+artifact）。</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>raw</th>
+<th>filtered</th>
+<th>PASS</th>
+<th>TMB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo</td>
+<td>0</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td>0.00/Mb —— 0.5× 下无统计功效，<strong>0
+是诚实的结果不是失败</strong></td>
+</tr>
+<tr>
+<td>full</td>
+<td>2,949</td>
+<td>2,949</td>
+<td><strong>108</strong></td>
+<td><strong>108 / 60.5079 Mb = 1.78 mut/Mb</strong> —— 正中 HGSOC 的 1–3
+区间</td>
+</tr>
+</tbody>
+</table>
+<p>PASS 变异的肿瘤 AF 从 0.056 到 0.48（中位
+~0.4，与高纯度肿瘤的杂合克隆突变一致）。被滤 掉的 2,841
+条里，<code>normal_artifact</code>（胚系位点等位分数倾斜）和
+<code>weak_evidence</code>（54.6× 可用
+深度仍是灵敏度天花板）是大头。</p>
+<h2 id="cnvkit-输出4_cnv步骤-10">9. CNVkit
+输出（<code>4_cnv/</code>，步骤 10）</h2>
+<p><strong>是什么：</strong> <code>.cnr</code>=每 bin
+log2；<code>.cns</code>=分割后；<code>.call.cns</code>=整数化拷贝数（<code>cn</code>
+列 0/1/2/3， <code>weight</code>=bin
+支持度）。本目录最大的看点是<strong>同一批
+BAM、两种模式的四组对照文件</strong>：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>对照</th>
+<th>amplicon（路线图原样）</th>
+<th>hybrid（矫正）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>antitargetcoverage.cnn</td>
+<td><strong>31 字节（只剩表头）</strong></td>
+<td><strong>2.2 MB（真实抗靶区 bin）</strong></td>
+</tr>
+<tr>
+<td>call.cns</td>
+<td>290 段，臂级事件全哑火</td>
+<td>357 段，高权重臂级事件</td>
+</tr>
+<tr>
+<td>scatter.png</td>
+<td>事件权重低</td>
+<td>事件清晰</td>
+</tr>
+</tbody>
+</table>
+<p>hybrid 版 <code>call.cns</code>
+里的高权重事件（<code>awk '$NF&gt;1000'</code> 可直接筛出）：
+<strong>chr9:78–138 Mb cn=1（9q 单拷贝缺失，weight
+7,416）</strong>、<strong>chr8 增益 cn=3 含 8q24/MYC （weight
+7,172）</strong>、chr5/20/21 增益、<strong>chrY
+缺失（与女性患者一致）</strong>——一个核型自洽的 HGSOC 图景。demo 轮的
+<code>call.cns</code> 则是反面教材：cn 值
+324/1601/6345——参考为空时的数学 伪象，0.5× 数据 + amplicon
+模式的双重噪声。</p>
+<h2 id="hsmetricsfullqc.hs_metrics.txt矫正补充步骤">10.
+HsMetrics（<code>full/qc/*.hs_metrics.txt</code>，矫正补充步骤）</h2>
+<p><strong>是什么：</strong> CollectHsMetrics
+的靶区覆盖度报告——<strong>整条原版路线图唯一缺失的指标</strong>，
+也是”深度够不够”这个检查清单问题的唯一量化答案。每份 ~60
+列；最要紧的几列：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr>
+<th>样本</th>
+<th>MEAN_TARGET_COV</th>
+<th>≥30X</th>
+<th>ZERO_CVG</th>
+<th>EXC_DUPE</th>
+<th>EXC_OVERLAP</th>
+<th>PCT_SELECTED</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>demo OC / PBMC</td>
+<td>0.3× / 0.5×（中位 <strong>0</strong>）</td>
+<td>0%</td>
+<td>59.4% / 46.6%</td>
+<td>~0.03%</td>
+<td>26.8% / 24.9%</td>
+<td>79.9% / 90.8%</td>
+</tr>
+<tr>
+<td>full OC</td>
+<td><strong>54.6×</strong>（中位 57）</td>
+<td>87.4%</td>
+<td>8.4%</td>
+<td>7.3%</td>
+<td>25.6%</td>
+<td>79.9%</td>
+</tr>
+<tr>
+<td>full PBMC</td>
+<td><strong>91.3×</strong>（中位 96）</td>
+<td>89.6%</td>
+<td>8.1%</td>
+<td>11.0%</td>
+<td>23.0%</td>
+<td>90.7%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>深度去向账本</strong>（full OC）：理论 ~172× → 脱靶（~20%）→
+重复（7.3%）→ 双端重叠（25.6%） → <strong>可用 54.6×</strong>。“付了
+172× 的钱，拿到 54.6× 的深度”——测序预算的实务课。
+<code>qc/demo_joint_stats.txt</code> 是 demo 联合 VCF 的 bcftools stats
+全景（记录数/ SNP/indel/ multiallelic/TiTv/HetHom
+一应俱全），供练习用。</p>
+<h2 id="日志与脚本logscripts">11.
+日志与脚本（<code>log/</code>、<code>scripts/</code>）</h2>
+<ul>
+<li><code>deviations.log</code>：每个预期失败与既定偏差的时间戳记录——两轮运行忠实度的直接证据。</li>
+<li><code>summary_*.log</code>：每步的数字汇总（本指南引用的所有数字的原始出处）。</li>
+<li><code>*.out/.err</code>：SLURM
+作业全程日志。<strong>教学彩蛋</strong>：demo/<code>log/wes_demo_3047.err</code>（124
+字节） 是 <code>set -u</code> 撞上 conda
+激活的崩溃现场；full/<code>log/full_hsmetrics_3058.err</code> 记录了
+CollectHsMetrics
+的参数排障（<code>--INTERVALS</code>→<code>--TARGET_INTERVALS</code>、BED
+转 interval_list）。</li>
+<li><code>scripts/*.sbatch</code>：<strong>全部实跑脚本</strong>（demo 1
+份 + full 8 份）——路线图命令原文 + 最小 SLURM 包装，复现的入口。</li>
+</ul>
+<h1 id="两轮对比总表-the-two-rounds-at-a-glance">两轮对比总表 · The two
+rounds at a glance</h1>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>维度</th>
+<th>demo（0.5×）</th>
+<th>full（可用 54.6×/91.3×）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>目的</td>
+<td>流程机制</td>
+<td>真实生物学</td>
+</tr>
+<tr>
+<td>联合变异集</td>
+<td>14,782</td>
+<td><strong>55,123</strong>（双样本、靶区内）</td>
+</tr>
+<tr>
+<td>§7.3 翻倍 bug</td>
+<td>29,564 = 2×14,782（本目录可亲手验证）</td>
+<td>110,246 = 2×55,123（30 MB VCF 未入库）</td>
+</tr>
+<tr>
+<td>VQSR 可信度</td>
+<td>truth 7,388，尾 −5889，novel 贴 known</td>
+<td>truth 28,324，tranches 正常，顺序矫正滤 2.1%</td>
+</tr>
+<tr>
+<td>ANNOVAR</td>
+<td>基础协议 29,602 行（翻倍传播）；富协议挂（库名不存在）</td>
+<td>矫正库名 55,165 行 × 146 列（集群）</td>
+</tr>
+<tr>
+<td>体细胞 / TMB</td>
+<td>0（无统计功效）</td>
+<td><strong>108 PASS / TMB 1.78 mut/Mb</strong></td>
+</tr>
+<tr>
+<td>CNVkit</td>
+<td>cn=6345 荒谬值</td>
+<td>hybrid 矫正：9q 缺失、chr8 含 MYC 增益、chrY 缺失</td>
+</tr>
+<tr>
+<td>靶区深度</td>
+<td>0.3×/0.5×，中位 0</td>
+<td><strong>54.6×/91.3×</strong></td>
+</tr>
+<tr>
+<td>墙钟</td>
+<td>~25 分钟</td>
+<td>最长链 3h42m（8 作业依赖串联）</td>
+</tr>
+</tbody>
+</table>
+<p>两轮的价值：<strong>数据问题</strong>（0、噪声、荒谬
+cn）与<strong>流程问题</strong>（翻倍 bug、库名、模式）被彻底
+分开——前者换全量数据自然消失，后者换什么数据都在，连老师的参考产物里都有。</p>
+<h1 id="未入库的大文件-what-stayed-on-the-cluster">未入库的大文件 · What
+stayed on the cluster</h1>
+<p>原始数据与超大产物不入库（本目录只放分析结果）；集群路径与去向：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>尺寸</th>
+<th>在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始/clean FASTQ</td>
+<td>3–24 GB/文件</td>
+<td><code>$RUN/0_fastq/</code></td>
+</tr>
+<tr>
+<td>各级 BAM（sorted/markdup/BQSR）</td>
+<td>4–9.4 GB/文件</td>
+<td><code>$RUN/1_alignment/</code></td>
+</tr>
+<tr>
+<td>demo 的 SAM（原版逐字链产物）</td>
+<td>165–225 MB</td>
+<td>demo 运行目录</td>
+</tr>
+<tr>
+<td>GVCF（OC 218 MB / combined 285 MB）</td>
+<td>—</td>
+<td><code>$RUN/2_variant_call/</code>、<code>1_alignment/</code></td>
+</tr>
+<tr>
+<td>full 翻倍 VCF（30 MB）、step1/分型中间 VCF</td>
+<td>14–30 MB</td>
+<td><code>$RUN/2_variant_call/</code></td>
+</tr>
+<tr>
+<td>ANNOVAR 富注释 multianno（146 列）</td>
+<td>27 MB</td>
+<td><code>$RUN/3_annotation/</code></td>
+</tr>
+<tr>
+<td>CNVkit .cnr（每 bin）、coverage .cnn、reference.cnn</td>
+<td>11–20 MB</td>
+<td><code>$RUN/4_cnv/</code></td>
+</tr>
+<tr>
+<td>diagram PDF（两模式）</td>
+<td>6–7 MB</td>
+<td><code>$RUN/4_cnv/cnvkit_out*/</code></td>
+</tr>
+<tr>
+<td>f1r2 / orientation 模型（二进制）</td>
+<td>2 MB</td>
+<td><code>$RUN/5_somatic_tmb/</code></td>
+</tr>
+<tr>
+<td>targets.interval_list / targets.bed</td>
+<td>6–7 MB</td>
+<td><code>$RUN/qc/</code>、<code>4_cnv/</code>（参考区文件，共享区有原件）</td>
+</tr>
+</tbody>
+</table>
+<p>（<code>$RUN</code> = 上表两轮目录。）这些文件都可以用
+<code>scripts/</code> 里的脚本在集群上重新生成。</p>
+<h1 id="动手练习-exercises-you-can-do-right-here">动手练习 · Exercises
+you can do right here</h1>
+<p>不需要集群，只需要本目录 + bcftools/samtools/grep/awk：</p>
+<ol type="1">
+<li><strong>验证 §7.3 翻倍 bug</strong>（§4 的三条命令）：确认 29,564 =
+2 × 14,782、每个位点恰好两条、 且两条的 FILTER
+不同（一条带模型裁决、一条是 <code>.</code>）。</li>
+<li><strong>读 tranches</strong>：打开 demo 与 full 的
+<code>OC_blood.snps.tranches</code>，各找 <code>novelTiTv</code> 随档位
+（90→99→99.9→100%）的变化方向；再对比 <code>minVQSLod</code> 列的
+−5889.9 vs −1111。</li>
+<li><strong>数 Ti/Tv 和
+Het/Hom</strong>：<code>qc/demo_joint_stats.txt</code> 的 TSTV/与 PES
+段——demo 的 het/hom ≈ 0.14（0.5× 基因型崩坏）vs 全量
+1.45（健康），数字就在文件里。</li>
+<li><strong>找最高 AF
+的体细胞变异</strong>：<code>bcftools query -f '%CHROM\t%POS\t[%AF]\n' full/5_somatic_tmb/somatic.pass.vcf.gz | sort -k3 -g | tail</code>；
+再用
+<code>grep -v '^#' full/5_somatic_tmb/somatic.filtered.vcf.gz | grep -c PASS</code>
+复算 TMB 的分子。</li>
+<li><strong>CNV 对比</strong>：对两份 <code>call.cns</code> 各跑
+<code>awk -F'\t' '$NF&gt;1000' ... | head</code>——hybrid 有臂级
+大事件、amplicon 没有；再对 demo 的 <code>call.cns</code> 找 cn&gt;10
+的荒谬段。</li>
+<li><strong>算深度去向账</strong>：用 fastp JSON 里的总碱基 ÷ 60.51 Mb
+得理论深度（full OC ~172×）， 对照
+<code>qc/full_OC.hs_metrics.txt</code> 的 54.6×，把差额拆进 PCT_EXC_*
+三个口袋。</li>
+</ol>
+<hr />
+<p><em>本指南与矫正增强版路线图（<code>WES/ref/WES_roadmap_corrected*</code>）配套阅读效果最佳；全部数字的
+原始出处是两轮运行目录的
+<code>log/summary_*.log</code>（本目录已收录副本）。</em></p>
+</body>
+</html>

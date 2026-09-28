@@ -12,19 +12,25 @@
 ```text
 .
 └── WES/
-    └── ref/                                  # 参考文档 (reference material)
-        ├── WES_roadmap_to_students.html      # 主路线图 (pandoc 导出, 图文完整)
-        ├── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
-        ├── WES_roadmap_english_embedded.html # 英文版 (图片内嵌)
-        ├── WES_roadmap_corrected.html        # 矫正增强版：两轮实跑对照 + 逐坑修复说明
-        ├── WES_roadmap_corrected.pdf         # 同一文档的 PDF 版
-        ├── WES_roadmap_corrected_zh.html     # 同一矫正版的中文版 (正文全中文, 命令原样)
-        ├── WES_roadmap_corrected_zh.pdf      # 中文版 PDF
-        └── build.sh                           # pandoc+typst 构建脚本 (带表格/断行后处理与重叠自检)
+    ├── ref/                                  # 参考文档 (reference material)
+    │   ├── WES_roadmap_to_students.html      # 主路线图 (pandoc 导出, 图文完整)
+    │   ├── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
+    │   ├── WES_roadmap_english_embedded.html # 英文版 (图片内嵌)
+    │   ├── WES_roadmap_corrected.html        # 矫正增强版：两轮实跑对照 + 逐坑修复说明
+    │   ├── WES_roadmap_corrected.pdf         # 同一文档的 PDF 版
+    │   ├── WES_roadmap_corrected_zh.html     # 同一矫正版的中文版 (正文全中文, 命令原样)
+    │   ├── WES_roadmap_corrected_zh.pdf      # 中文版 PDF
+    │   └── build.sh                           # pandoc+typst 构建脚本 (带表格/断行后处理与重叠自检)
+    └── results/                              # 两轮实跑分析产物 (无任何原始数据: FASTQ/BAM/GVCF 不入库)
+        ├── WES_results_guide.{md,html,pdf}  # 逐文件讲解: 怎么读、两轮对比、动手验证翻倍 bug 的命令
+        ├── demo/                            # 0.5× demo 轮摘录 (fastp 报告/指标/VQSR 四件套/空 somatic/噪声 CNV/日志/脚本)
+        └── full/                             # 全量轮摘录 (联合 55,123 + 顺序 VQSR 矫正/108 PASS somatic/amplicon vs hybrid CNV 对照/4 份 HsMetrics/8 个 sbatch/全部作业日志)
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
 > **中文版（WES_roadmap_corrected_zh）**：与英文矫正版内容一致、互为对照；正文全中文，命令/路径/参数原样保留，数字逐一对拍核验。构建：`./build.sh WES_roadmap_corrected_zh.md "WES 全流程分析路线图 · 矫正增强版（中文版）"`（英文版：`./build.sh`）。
+>
+> **分析结果（WES/results/）**：两轮实跑的分析产物摘录（QC 报告、比对/去重指标、VQSR 模型与 tranches、变异集 VCF、体细胞检出、CNV 分段、HsMetrics、全部实跑脚本与作业日志）——**不含任何原始数据**。讲解文档 `WES/results/WES_results_guide.html/pdf` 逐类讲怎么读，含 6 个动手练习（比如用仓库内文件三条命令亲手验证 VQSR 翻倍 bug）。大文件（BAM/GVCF/富注释表）仍在集群运行目录，讲解文档 §5 有清单。
 
 ## WES 路线图内容一览 / What the roadmap covers
 
