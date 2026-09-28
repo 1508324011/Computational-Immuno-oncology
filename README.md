@@ -11,9 +11,9 @@
 
 ```text
 .
-└── WES/
-    ├── ref/                                  # 参考文档 (reference material)
-    │   ├── WES_roadmap_to_students.html      # 主路线图 (pandoc 导出, 图文完整)
+├── WES/
+│   ├── ref/                                  # 参考文档 (reference material)
+│   │   ├── WES_roadmap_to_students.html      # 主路线图 (pandoc 导出, 图文完整)
     │   ├── WES_roadmap_to_students.pdf       # 同一文档的 PDF 版
     │   ├── WES_roadmap_english_embedded.html # 英文版 (图片内嵌)
     │   ├── WES_roadmap_corrected.html        # 矫正增强版：两轮实跑对照 + 逐坑修复说明
@@ -25,6 +25,10 @@
         ├── WES_results_guide.{md,html,pdf}  # 逐文件讲解: 怎么读、两轮对比、动手验证翻倍 bug 的命令
         ├── demo/                            # 0.5× demo 轮摘录 (fastp 报告/指标/VQSR 四件套/空 somatic/噪声 CNV/日志/脚本)
         └── full/                             # 全量轮摘录 (联合 55,123 + 顺序 VQSR 矫正/108 PASS somatic/amplicon vs hybrid CNV 对照/4 份 HsMetrics/8 个 sbatch/全部作业日志)
+└── RNA-seq/                                 # RNA-seq 模块 (首版教材, 待整理)
+    ├── rna_seq.pdf / RNA_seq_tutorial_mini.html  # 教程
+    ├── RNA_seq_homework.html                # 作业
+    └── RNA_seq_code_explaination.pdf         # 代码讲解
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
