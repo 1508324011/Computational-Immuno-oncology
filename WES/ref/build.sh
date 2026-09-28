@@ -41,10 +41,10 @@ conda activate docs # pandoc 3.11, typst 0.15.1, python 3.6 (system-compatible o
 # error. (Glued '@', e.g. 'minVQSLod@100%', is auto-escaped by pandoc and safe.)
 BAD=$(grep -nE '(^|[[:space:]])@[0-9A-Za-z_]' "$MD" || true)
 if [ -n "$BAD" ]; then
-  echo "ERROR: spaced '@<id>' in $MD -- pandoc parses it as a citation:"
-  echo "$BAD" | head -5
-  echo "Rephrase (e.g. 'X @99%' -> 'X（99%）') or escape as '\\@'."
-  exit 1
+    echo "ERROR: spaced '@<id>' in $MD -- pandoc parses it as a citation:"
+    echo "$BAD" | head -5
+    echo "Rephrase (e.g. 'X @99%' -> 'X（99%）') or escape as '\\@'."
+    exit 1
 fi
 
 # ---------------------------------------------------------------- HTML -------
