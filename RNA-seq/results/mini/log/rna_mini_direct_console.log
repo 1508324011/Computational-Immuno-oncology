@@ -1,0 +1,1958 @@
+[2026-09-28 17:41:40] == RNA-seq mini tutorial start (job login60-direct, login60) ==
+[2026-09-28 17:41:40] tools: fastp 0.23.4 | STAR 2.7.11b | salmon salmon 1.10.3 | fastqc FastQC v0.12.1
+[2026-09-28 17:41:40] DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026/{id}); our cluster discipline — no writes to classroom share
+[2026-09-28 17:41:40] DEVIATION: whole tutorial in one sbatch job (tutorial assumes interactive typing on a node); login node only submits
+[2026-09-28 17:41:40] DEVIATION: R section run via Rscript under LC_ALL=C (tutorial: interactive R with the same export as segfault workaround)
+[2026-09-28 17:41:40] DEVIATION: KEGG block kept commented exactly as tutorial section 9; the consolidated 'CODES' cell wraps it in ''' which is invalid R syntax (doc bug, recorded)
+[2026-09-28 17:41:40] DEVIATION: diagnostic prints added in R (sample order, DEG counts) — additive only, no analysis logic changed
+[2026-09-28 17:41:40] DEVIATION: SLURM submission broken cluster-wide since the restructure week (all combos rejected, queue empty, 9/20-proven WES scripts rejected too) -> tutorial-native interactive mode: direct single-thread run on login60, well within the instructor's 30-concurrent-students load-test envelope (STAR mini index 381M, salmon 16M, node 45G free / load 1.5)
+[2026-09-28 17:41:40] step 0: rsync mini fastq
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3%    0.00kB/s    0:00:00          949,805 100%  218.64MB/s    0:00:00 (xfr#1, to-chk=11/12)
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%    7.81MB/s    0:00:00          965,560 100%   92.08MB/s    0:00:00 (xfr#2, to-chk=10/12)
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3%    3.12MB/s    0:00:00          953,709 100%   56.85MB/s    0:00:00 (xfr#3, to-chk=9/12)
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%    1.95MB/s    0:00:00          969,188 100%   44.01MB/s    0:00:00 (xfr#4, to-chk=8/12)
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3%    1.49MB/s    0:00:00          948,839 100%   33.51MB/s    0:00:00 (xfr#5, to-chk=7/12)
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%    1.16MB/s    0:00:00          964,217 100%   28.74MB/s    0:00:00 (xfr#6, to-chk=6/12)
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3% 1000.00kB/s    0:00:00        1,009,523 100%   20.48MB/s    0:00:00 (xfr#7, to-chk=5/12)
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%  680.85kB/s    0:00:01        1,032,956 100%   18.59MB/s    0:00:00 (xfr#8, to-chk=4/12)
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3%  603.77kB/s    0:00:01        1,013,717 100%   16.39MB/s    0:00:00 (xfr#9, to-chk=3/12)
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%  542.37kB/s    0:00:01        1,032,656 100%   15.39MB/s    0:00:00 (xfr#10, to-chk=2/12)
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+         32,768   3%  492.31kB/s    0:00:01        1,009,248 100%   12.18MB/s    0:00:00 (xfr#11, to-chk=1/12)
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+         32,768   3%  405.06kB/s    0:00:02        1,027,738 100%   10.54MB/s    0:00:00 (xfr#12, to-chk=0/12)
+[2026-09-28 17:41:40]   -> 12 fastq.gz files
+[2026-09-28 17:41:40] step 1: fastqc batch
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 70% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 40% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 40% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 65% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 70% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 70% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 40% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 35% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 70% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 20% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 30% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 40% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 50% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 60% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 70% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 80% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 90% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Approx 100% complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Analysis complete for HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 40% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Option d is ambiguous (delete, dir, dup_length)
+application/gzip
+Started analysis of UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+null
+Failed to process .
+java.io.FileNotFoundException: . (Is a directory)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:77)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+	at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:163)
+	at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:125)
+	at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+Approx 10% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 20% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 30% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 40% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 50% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 60% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 70% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 80% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 90% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Approx 100% complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+Analysis complete for UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz
+[2026-09-28 17:42:10]   -> 12 fastqc zips
+[2026-09-28 17:42:10] step 1b: Total Sequences (all fastqc zips)
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+[2026-09-28 17:42:10] DEVIATION: Total-Sequences extraction looped over all 12 files (tutorial: single example, 'replacing with your file name')
+[2026-09-28 17:42:10] step 2: fastp batch
+Detecting adapter sequence for read1...
+GCCTTATGTGATAGATGCCTCTTTAAAATATCTAAGTGCTGGGGTTATGAGTAGGGATGA
+
+Detecting adapter sequence for read2...
+TCCCAATTATCCATAAAACTGTAACTAAGTGAGGCTCTCTCATTGGTTTATACTTCAATA
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 988443(98.8443%)
+Q30 bases: 953918(95.3918%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 981177(98.1177%)
+Q30 bases: 940813(94.0813%)
+
+Read1 after filtering:
+total reads: 9700
+total bases: 966438
+Q20 bases: 956879(99.0109%)
+Q30 bases: 924509(95.6615%)
+
+Read2 after filtering:
+total reads: 9700
+total bases: 966040
+Q20 bases: 952362(98.5841%)
+Q30 bases: 913562(94.5677%)
+
+Filtering result:
+reads passed filter: 19400
+reads failed due to low quality: 172
+reads failed due to too many N: 0
+reads failed due to too short: 428
+reads with adapter trimmed: 648
+bases trimmed due to adapters: 27797
+
+Duplication rate: 2.22%
+
+Insert size peak (evaluated by paired-end reads): 140
+
+JSON report: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz -I HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz -o HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json -h HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 1 seconds
+Detecting adapter sequence for read1...
+GCCTTATGTGATAGATGCCTCTTTAAAATATCTAAGTGCTGGGGTTATGAGTAGGGATGA
+
+Detecting adapter sequence for read2...
+CCCAATTATCCATAAAACTGTAACTAAGTGAGGCTCTCTCATTGGTTTATACTTCAATAT
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 987779(98.7779%)
+Q30 bases: 952266(95.2266%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 981702(98.1702%)
+Q30 bases: 940300(94.03%)
+
+Read1 after filtering:
+total reads: 9702
+total bases: 966726
+Q20 bases: 956804(98.9736%)
+Q30 bases: 923443(95.5227%)
+
+Read2 after filtering:
+total reads: 9702
+total bases: 966488
+Q20 bases: 952737(98.5772%)
+Q30 bases: 913421(94.5093%)
+
+Filtering result:
+reads passed filter: 19404
+reads failed due to low quality: 182
+reads failed due to too many N: 0
+reads failed due to too short: 414
+reads with adapter trimmed: 670
+bases trimmed due to adapters: 27456
+
+Duplication rate: 1.88%
+
+Insert size peak (evaluated by paired-end reads): 123
+
+JSON report: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz -I HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz -o HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json -h HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 0 seconds
+Detecting adapter sequence for read1...
+GCCTTATGTGATAGATGCCTCTTTAAAATATCTAAGTGCTGGGGTTATGAGTAGGGATGA
+
+Detecting adapter sequence for read2...
+GGCTGAAAGCCCTAACTTAATGGACGGGAGGTATCCCAATAGGAGGTTTCCTCCTATGGT
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 988141(98.8141%)
+Q30 bases: 953816(95.3816%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 980244(98.0244%)
+Q30 bases: 939768(93.9768%)
+
+Read1 after filtering:
+total reads: 9659
+total bases: 961715
+Q20 bases: 952244(99.0152%)
+Q30 bases: 920636(95.7286%)
+
+Read2 after filtering:
+total reads: 9659
+total bases: 965340
+Q20 bases: 951956(98.6135%)
+Q30 bases: 913686(94.6491%)
+
+Filtering result:
+reads passed filter: 19318
+reads failed due to low quality: 204
+reads failed due to too many N: 0
+reads failed due to too short: 478
+reads with adapter trimmed: 582
+bases trimmed due to adapters: 23844
+
+Duplication rate: 1.8%
+
+Insert size peak (evaluated by paired-end reads): 141
+
+JSON report: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz -I HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz -o HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.json -h HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 1 seconds
+Detecting adapter sequence for read1...
+GCCTTATGTGATAGATGCCTCTTTAAAATATCTAAGTGCTGGGGTTATGAGTAGGGATGA
+
+Detecting adapter sequence for read2...
+CCCAATTATCCATAAAACTGTAACTAAGTGAGGCTCTCTCATTGGTTTATACTTCAATAT
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 980770(98.077%)
+Q30 bases: 926505(92.6505%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 963981(96.3981%)
+Q30 bases: 894964(89.4964%)
+
+Read1 after filtering:
+total reads: 9660
+total bases: 962954
+Q20 bases: 947929(98.4397%)
+Q30 bases: 898482(93.3048%)
+
+Read2 after filtering:
+total reads: 9660
+total bases: 962791
+Q20 bases: 937614(97.385%)
+Q30 bases: 872563(90.6285%)
+
+Filtering result:
+reads passed filter: 19320
+reads failed due to low quality: 354
+reads failed due to too many N: 0
+reads failed due to too short: 326
+reads with adapter trimmed: 494
+bases trimmed due to adapters: 23147
+
+Duplication rate: 1.48%
+
+Insert size peak (evaluated by paired-end reads): 130
+
+JSON report: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz -I UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz -o UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json -h UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 1 seconds
+Detecting adapter sequence for read1...
+CCGCTTTGATATTCTCTGCATCCTATTTAGGGCTATTGATATTTAACAAATATCCAGCAA
+
+Detecting adapter sequence for read2...
+CAATTATCCATAAAACTGTAACTAAGTGAGGCTCTCTCATTGGTTTATACTTCAATATAA
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 980149(98.0149%)
+Q30 bases: 924409(92.4409%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 964839(96.4839%)
+Q30 bases: 896914(89.6914%)
+
+Read1 after filtering:
+total reads: 9613
+total bases: 961179
+Q20 bases: 945551(98.3741%)
+Q30 bases: 894322(93.0443%)
+
+Read2 after filtering:
+total reads: 9613
+total bases: 958170
+Q20 bases: 933298(97.4042%)
+Q30 bases: 869172(90.7117%)
+
+Filtering result:
+reads passed filter: 19226
+reads failed due to low quality: 346
+reads failed due to too many N: 0
+reads failed due to too short: 428
+reads with adapter trimmed: 431
+bases trimmed due to adapters: 21009
+
+Duplication rate: 1.99%
+
+Insert size peak (evaluated by paired-end reads): 140
+
+JSON report: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz -I UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz -o UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json -h UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 0 seconds
+Detecting adapter sequence for read1...
+ATGCCTTATGTGATAGATGCCTCTTTAAAATATCTAAGTGCTGGGGTTATGAGTAGGGAT
+
+Detecting adapter sequence for read2...
+CCAATTATCCATAAAACTGTAACTAAGTGAGGCTCTCTCATTGGTTTATACTTCAATATA
+
+Read1 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 980410(98.041%)
+Q30 bases: 925538(92.5538%)
+
+Read2 before filtering:
+total reads: 10000
+total bases: 1000000
+Q20 bases: 967207(96.7207%)
+Q30 bases: 901410(90.141%)
+
+Read1 after filtering:
+total reads: 9656
+total bases: 962877
+Q20 bases: 947538(98.407%)
+Q30 bases: 897266(93.1859%)
+
+Read2 after filtering:
+total reads: 9656
+total bases: 962295
+Q20 bases: 939354(97.616%)
+Q30 bases: 877101(91.1468%)
+
+Filtering result:
+reads passed filter: 19312
+reads failed due to low quality: 344
+reads failed due to too many N: 0
+reads failed due to too short: 344
+reads with adapter trimmed: 519
+bases trimmed due to adapters: 21704
+
+Duplication rate: 1.83%
+
+Insert size peak (evaluated by paired-end reads): 117
+
+JSON report: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json
+HTML report: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html
+
+fastp -i UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz -I UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz -o UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz -O UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --detect_adapter_for_pe -l 25 -j UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.json -h UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.fastp.html 
+fastp v0.23.4, time used: 1 seconds
+[2026-09-28 17:42:14]   -> 12 trimmed fastq files
+[2026-09-28 17:42:14] step 3: STAR batch
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:14 ..... started STAR run
+Sep 28 17:42:14 ..... loading genome
+Sep 28 17:42:14 ..... started mapping
+Sep 28 17:42:18 ..... finished mapping
+Sep 28 17:42:18 ..... finished successfully
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:18 ..... started STAR run
+Sep 28 17:42:18 ..... loading genome
+Sep 28 17:42:18 ..... started mapping
+Sep 28 17:42:22 ..... finished mapping
+Sep 28 17:42:22 ..... finished successfully
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:22 ..... started STAR run
+Sep 28 17:42:22 ..... loading genome
+Sep 28 17:42:23 ..... started mapping
+Sep 28 17:42:27 ..... finished mapping
+Sep 28 17:42:27 ..... finished successfully
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:27 ..... started STAR run
+Sep 28 17:42:27 ..... loading genome
+Sep 28 17:42:27 ..... started mapping
+Sep 28 17:42:31 ..... finished mapping
+Sep 28 17:42:31 ..... finished successfully
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:31 ..... started STAR run
+Sep 28 17:42:31 ..... loading genome
+Sep 28 17:42:31 ..... started mapping
+Sep 28 17:42:35 ..... finished mapping
+Sep 28 17:42:35 ..... finished successfully
+	/lustre1/share/miniconda3/envs/RNA-seq/bin/STAR-avx --runThreadN 1 --genomeDir /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index --readFilesIn UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz --outFileNamePrefix UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22 --readFilesCommand zcat --outSAMtype BAM Unsorted --outFilterType BySJout --alignSJoverhangMin 8 --outFilterMultimapNmax 20 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --quantMode TranscriptomeSAM --outSAMattributes NH HI AS NM MD
+	STAR version: 2.7.11b   compiled: 2024-07-03T14:41:31+0000 :/opt/conda/conda-bld/star_1720017372352/work/source
+Sep 28 17:42:35 ..... started STAR run
+Sep 28 17:42:35 ..... loading genome
+Sep 28 17:42:35 ..... started mapping
+Sep 28 17:42:40 ..... finished mapping
+Sep 28 17:42:40 ..... finished successfully
+[2026-09-28 17:42:40]   -> 6 transcriptome BAMs
+[2026-09-28 17:42:40]   STAR mapping rates:
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5165  % of reads mapped to multiple loci |	0.68% 
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5145  % of reads mapped to multiple loci |	0.68% 
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5151  % of reads mapped to multiple loci |	0.48% 
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4517  % of reads mapped to multiple loci |	2.02% 
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4801  % of reads mapped to multiple loci |	2.08% 
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4351  % of reads mapped to multiple loci |	1.90% 
+[2026-09-28 17:42:40] step 4: multiqc
+
+/// MultiQC 🔍 v1.25
+
+     version_check | MultiQC Version v1.35 now available!
+       file_search | Search path: /lustre1/user/bjx131_pkuhpc/rna_run_mini_20260921
+
+              star | Found 6 reports
+             fastp | Found 6 reports
+            fastqc | Found 12 reports
+
+     write_results | Data        : multiqc_report/multiqc_data
+     write_results | Report      : multiqc_report/multiqc_report.html
+           multiqc | MultiQC complete
+[2026-09-28 17:42:45]   -> multiqc_report/ present: yes
+[2026-09-28 17:42:45] step 5: salmon align-mode batch
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:42:45.871] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:42:45.871] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:42:45.877] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 3378 [0;32mreads in current round[0;0m
+killing thread 0 . . . [2026-09-28 17:42:46.397] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+donekilling thread 1 . . . done
+
+# observed = 3378 / # required = 50000000[A[A[A[A[A
+
+
+
+[2026-09-28 17:42:46.620] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 3378
+# of uniquely mapped reads : 971
+# ambiguously mapped reads : 2407
+
+
+
+[2026-09-28 17:42:46.626] [jointLog] [info] Computed 1,216 rich equivalence classes for further processing
+[2026-09-28 17:42:46.626] [jointLog] [info] Counted 3,378 total reads in the equivalence classes 
+[2026-09-28 17:42:46.627] [jointLog] [warning] Only 3378 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:42:46.627] [jointLog] [info] starting optimizer
+[2026-09-28 17:42:46.631] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:42:46.631] [jointLog] [info] iteration = 0 | max rel diff. = 32.8856
+[2026-09-28 17:42:46.634] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:42:48.797] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:42:48.798] [jointLog] [info] processed bias for 1.1% of the transcripts
+[2026-09-28 17:42:48.895] [jointLog] [info] processed bias for 10.3% of the transcripts
+[2026-09-28 17:42:49.071] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:42:49.274] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:42:49.421] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2026-09-28 17:42:49.594] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:42:49.788] [jointLog] [info] processed bias for 60.4% of the transcripts
+[2026-09-28 17:42:49.992] [jointLog] [info] processed bias for 70.2% of the transcripts
+[2026-09-28 17:42:50.172] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:42:50.371] [jointLog] [info] processed bias for 90.3% of the transcripts
+[2026-09-28 17:42:50.545] [jointLog] [info] processed bias for 99.9% of the transcripts
+[2026-09-28 17:42:50.548] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:42:50.575] [jointLog] [info] iteration = 100 | max rel diff. = 0.00126619
+[2026-09-28 17:42:50.575] [jointLog] [info] finished optimizer
+[2026-09-28 17:42:50.575] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:42:52.472] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:42:52.472] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:42:52.478] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 3400 [0;32mreads in current round[0;0m
+killing thread 0 . . . donekilling thread 1 . . . [2026-09-28 17:42:52.986] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+done
+
+# observed = 3400 / # required = 50000000[A[A[A[A[A
+
+
+
+[2026-09-28 17:42:53.206] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 3400
+# of uniquely mapped reads : 989
+# ambiguously mapped reads : 2411
+
+
+
+[2026-09-28 17:42:53.212] [jointLog] [info] Computed 1,237 rich equivalence classes for further processing
+[2026-09-28 17:42:53.212] [jointLog] [info] Counted 3,400 total reads in the equivalence classes 
+[2026-09-28 17:42:53.213] [jointLog] [warning] Only 3400 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:42:53.213] [jointLog] [info] starting optimizer
+[2026-09-28 17:42:53.216] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:42:53.216] [jointLog] [info] iteration = 0 | max rel diff. = 25.1364
+[2026-09-28 17:42:53.219] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:42:55.180] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:42:55.180] [jointLog] [info] processed bias for 1.0% of the transcripts
+[2026-09-28 17:42:55.284] [jointLog] [info] processed bias for 10.7% of the transcripts
+[2026-09-28 17:42:55.457] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:42:55.637] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2026-09-28 17:42:55.759] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:42:55.945] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:42:56.119] [jointLog] [info] processed bias for 60.2% of the transcripts
+[2026-09-28 17:42:56.308] [jointLog] [info] processed bias for 70.5% of the transcripts
+[2026-09-28 17:42:56.451] [jointLog] [info] processed bias for 80.2% of the transcripts
+[2026-09-28 17:42:56.631] [jointLog] [info] processed bias for 89.9% of the transcripts
+[2026-09-28 17:42:56.779] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:42:56.781] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:42:56.807] [jointLog] [info] iteration = 100 | max rel diff. = 0.00555556
+[2026-09-28 17:42:56.808] [jointLog] [info] finished optimizer
+[2026-09-28 17:42:56.808] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:42:58.545] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:42:58.545] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:42:58.550] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 3350 [0;32mreads in current round[0;0m
+killing thread 0 . . . [2026-09-28 17:42:59.058] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+donekilling thread 1 . . . done
+
+# observed = 3350 / # required = 50000000[A[A[A[A[A
+
+
+
+[2026-09-28 17:42:59.277] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 3350
+# of uniquely mapped reads : 980
+# ambiguously mapped reads : 2370
+
+
+
+[2026-09-28 17:42:59.283] [jointLog] [info] Computed 1,204 rich equivalence classes for further processing
+[2026-09-28 17:42:59.283] [jointLog] [info] Counted 3,350 total reads in the equivalence classes 
+[2026-09-28 17:42:59.284] [jointLog] [warning] Only 3350 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:42:59.284] [jointLog] [info] starting optimizer
+[2026-09-28 17:42:59.287] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:42:59.287] [jointLog] [info] iteration = 0 | max rel diff. = 52.011
+[2026-09-28 17:42:59.290] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:01.229] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:01.229] [jointLog] [info] processed bias for 1.5% of the transcripts
+[2026-09-28 17:43:01.329] [jointLog] [info] processed bias for 11.1% of the transcripts
+[2026-09-28 17:43:01.493] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:01.656] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:43:01.787] [jointLog] [info] processed bias for 40.2% of the transcripts
+[2026-09-28 17:43:01.938] [jointLog] [info] processed bias for 50.5% of the transcripts
+[2026-09-28 17:43:02.120] [jointLog] [info] processed bias for 60.2% of the transcripts
+[2026-09-28 17:43:02.317] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2026-09-28 17:43:02.466] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:43:02.665] [jointLog] [info] processed bias for 89.9% of the transcripts
+[2026-09-28 17:43:02.792] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:02.796] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:02.822] [jointLog] [info] iteration = 100 | max rel diff. = 0.003142
+[2026-09-28 17:43:02.822] [jointLog] [info] finished optimizer
+[2026-09-28 17:43:02.822] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:43:04.655] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:43:04.655] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:43:04.660] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 2995 [0;32mreads in current round[0;0m
+killing thread 0 . . . [2026-09-28 17:43:05.177] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+donekilling thread 1 . . . done
+
+# observed = 2995 / # required = 50000000[A[A[A[A[A
+
+
+
+[2026-09-28 17:43:05.402] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 2995
+# of uniquely mapped reads : 884
+# ambiguously mapped reads : 2111
+
+
+
+[2026-09-28 17:43:05.408] [jointLog] [info] Computed 1,134 rich equivalence classes for further processing
+[2026-09-28 17:43:05.408] [jointLog] [info] Counted 2,995 total reads in the equivalence classes 
+[2026-09-28 17:43:05.409] [jointLog] [warning] Only 2995 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:05.410] [jointLog] [info] starting optimizer
+[2026-09-28 17:43:05.413] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:05.413] [jointLog] [info] iteration = 0 | max rel diff. = 38.7002
+[2026-09-28 17:43:05.416] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:07.333] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:07.333] [jointLog] [info] processed bias for 0.6% of the transcripts
+[2026-09-28 17:43:07.421] [jointLog] [info] processed bias for 11.0% of the transcripts
+[2026-09-28 17:43:07.586] [jointLog] [info] processed bias for 20.1% of the transcripts
+[2026-09-28 17:43:07.732] [jointLog] [info] processed bias for 30.4% of the transcripts
+[2026-09-28 17:43:07.852] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:43:08.029] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:43:08.224] [jointLog] [info] processed bias for 60.5% of the transcripts
+[2026-09-28 17:43:08.370] [jointLog] [info] processed bias for 70.4% of the transcripts
+[2026-09-28 17:43:08.552] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:08.730] [jointLog] [info] processed bias for 90.2% of the transcripts
+[2026-09-28 17:43:08.862] [jointLog] [info] processed bias for 99.9% of the transcripts
+[2026-09-28 17:43:08.867] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:08.892] [jointLog] [info] iteration = 100 | max rel diff. = 0.0517476
+[2026-09-28 17:43:08.902] [jointLog] [info] iteration = 141 | max rel diff. = 0.00097127
+[2026-09-28 17:43:08.903] [jointLog] [info] finished optimizer
+[2026-09-28 17:43:08.903] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:43:10.765] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:43:10.765] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:43:10.770] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+[2026-09-28 17:43:11.337] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 2759 [0;32mreads in current round[0;0m
+killing thread 0 . . . donekilling thread 1 . . . done
+
+# observed = 2759 / # required = 50000000[A[A[A[A[A
+
+
+
+[2026-09-28 17:43:11.560] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 2759
+# of uniquely mapped reads : 817
+# ambiguously mapped reads : 1942
+
+
+
+[2026-09-28 17:43:11.567] [jointLog] [info] Computed 1,125 rich equivalence classes for further processing
+[2026-09-28 17:43:11.567] [jointLog] [info] Counted 2,759 total reads in the equivalence classes 
+[2026-09-28 17:43:11.568] [jointLog] [warning] Only 2759 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:11.568] [jointLog] [info] starting optimizer
+[2026-09-28 17:43:11.571] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:11.572] [jointLog] [info] iteration = 0 | max rel diff. = 17.6373
+[2026-09-28 17:43:11.575] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:13.267] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:13.267] [jointLog] [info] processed bias for 0.7% of the transcripts
+[2026-09-28 17:43:13.343] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2026-09-28 17:43:13.502] [jointLog] [info] processed bias for 20.2% of the transcripts
+[2026-09-28 17:43:13.644] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:43:13.756] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:43:13.920] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:43:14.081] [jointLog] [info] processed bias for 60.3% of the transcripts
+[2026-09-28 17:43:14.230] [jointLog] [info] processed bias for 70.2% of the transcripts
+[2026-09-28 17:43:14.371] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:14.494] [jointLog] [info] processed bias for 90.1% of the transcripts
+[2026-09-28 17:43:14.644] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:14.674] [jointLog] [info] iteration = 100 | max rel diff. = 0.0286635
+[2026-09-28 17:43:14.682] [jointLog] [info] iteration = 123 | max rel diff. = 0.00792232
+[2026-09-28 17:43:14.683] [jointLog] [info] finished optimizer
+[2026-09-28 17:43:14.683] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+salmon requires at least 2 threads --- setting # of threads = 2
+# salmon (alignment-based) v1.10.3
+# [ program ] => salmon 
+# [ command ] => quant 
+# [ targets ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa }
+# [ libType ] => { A }
+# [ alignments ] => { UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam }
+# [ output ] => { UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant }
+# [ gcBias ] => { }
+# [ seqBias ] => { }
+# [ threads ] => { 1 }
+Logs will be written to UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant/logs
+[2026-09-28 17:43:16.344] [jointLog] [info] setting maxHashResizeThreads to 2
+Library format { type:paired end, relative orientation:inward, strandedness:unstranded }
+[2026-09-28 17:43:16.344] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:16.349] [jointLog] [info] numQuantThreads = 2
+parseThreads = 2
+Checking that provided alignment files have consistent headers . . . done
+Populating targets from aln = "UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam", fasta = "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa" . . .done
+
+
+
+
+[0;32mprocessed[0;31m 0 [0;32mreads in current round[0;0m[0;32mprocessed[0;31m 2894 [0;32mreads in current round[0;0m
+killing thread 0 . . . donekilling thread 1 . . . done
+
+# observed = 2894 / # required = 50000000[A[A[A[A[A[2026-09-28 17:43:16.855] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+[2026-09-28 17:43:17.070] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 2894
+# of uniquely mapped reads : 779
+# ambiguously mapped reads : 2115
+
+
+
+
+
+
+
+[2026-09-28 17:43:17.076] [jointLog] [info] Computed 1,154 rich equivalence classes for further processing
+[2026-09-28 17:43:17.076] [jointLog] [info] Counted 2,894 total reads in the equivalence classes 
+[2026-09-28 17:43:17.077] [jointLog] [warning] Only 2894 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:17.077] [jointLog] [info] starting optimizer
+[2026-09-28 17:43:17.080] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:17.080] [jointLog] [info] iteration = 0 | max rel diff. = 36.0824
+[2026-09-28 17:43:17.083] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:18.794] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:18.794] [jointLog] [info] processed bias for 0.6% of the transcripts
+[2026-09-28 17:43:18.880] [jointLog] [info] processed bias for 10.7% of the transcripts
+[2026-09-28 17:43:19.038] [jointLog] [info] processed bias for 20.1% of the transcripts
+[2026-09-28 17:43:19.181] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:43:19.289] [jointLog] [info] processed bias for 40.5% of the transcripts
+[2026-09-28 17:43:19.470] [jointLog] [info] processed bias for 50.1% of the transcripts
+[2026-09-28 17:43:19.640] [jointLog] [info] processed bias for 60.1% of the transcripts
+[2026-09-28 17:43:19.792] [jointLog] [info] processed bias for 70.2% of the transcripts
+[2026-09-28 17:43:19.910] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:43:20.048] [jointLog] [info] processed bias for 90.1% of the transcripts
+[2026-09-28 17:43:20.191] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:20.195] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:20.222] [jointLog] [info] iteration = 100 | max rel diff. = 0.0311867
+[2026-09-28 17:43:20.228] [jointLog] [info] iteration = 120 | max rel diff. = 0.00401182
+[2026-09-28 17:43:20.228] [jointLog] [info] finished optimizer
+[2026-09-28 17:43:20.228] [jointLog] [info] writing output
+
+Freeing memory used by read queue . . . 
+Joined parsing thread . . . "UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam" 
+Closed all files . . . 
+Emptied frag queue. . . 
+Emptied Alignment Group Pool. . 
+Emptied Alignment Group Queue. . . done
+Processed: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22
+[2026-09-28 17:43:21] DEVIATION: align-mode run per batch_salmon_align.sh (--gcBias --seqBias); tutorial's single-sample demo command omits both flags — doc inconsistency, batch version used
+[2026-09-28 17:43:21] step 6: salmon direct-mode batch
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:43:23.962] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:23.962] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:23.962] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:23.962] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:23.962] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:23.962] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:23.963] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:23.963] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 11.354 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 149.14 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 20.026 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 1.2521 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 8.1411 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 903.69 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 6.4598 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.5534 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 34.645 us
+-----------------------------------------
+[2026-09-28 17:43:23.993] [jointLog] [info] done
+[2026-09-28 17:43:24.032] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:24.080] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:43:24.349] [jointLog] [info] Computed 1,316 rich equivalence classes for further processing
+[2026-09-28 17:43:24.349] [jointLog] [info] Counted 3,543 total reads in the equivalence classes 
+[2026-09-28 17:43:24.350] [jointLog] [info] Number of mappings discarded because of alignment score : 2,075
+[2026-09-28 17:43:24.350] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 270
+[2026-09-28 17:43:24.350] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:24.350] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 28
+[2026-09-28 17:43:24.350] [jointLog] [warning] Only 3543 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:24.350] [jointLog] [info] Mapping rate = 36.5258%
+
+[2026-09-28 17:43:24.350] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:24.352] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:24.355] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:24.355] [jointLog] [info] iteration = 0 | max rel diff. = 54.2733
+[2026-09-28 17:43:24.359] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:28.768] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:28.768] [jointLog] [info] processed bias for 1.0% of the transcripts
+[2026-09-28 17:43:29.203] [jointLog] [info] processed bias for 10.2% of the transcripts
+[2026-09-28 17:43:29.450] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:29.739] [jointLog] [info] processed bias for 30.4% of the transcripts
+[2026-09-28 17:43:30.074] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2026-09-28 17:43:30.496] [jointLog] [info] processed bias for 50.1% of the transcripts
+[2026-09-28 17:43:30.713] [jointLog] [info] processed bias for 59.9% of the transcripts
+[2026-09-28 17:43:31.040] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2026-09-28 17:43:31.527] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:31.882] [jointLog] [info] processed bias for 90.2% of the transcripts
+[2026-09-28 17:43:32.266] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:32.269] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:32.311] [jointLog] [info] iteration = 100 | max rel diff. = 0.0133404
+[2026-09-28 17:43:32.327] [jointLog] [info] iteration = 137 | max rel diff. = 0.000521429
+[2026-09-28 17:43:32.328] [jointLog] [info] Finished optimizer
+[2026-09-28 17:43:32.328] [jointLog] [info] writing output 
+
+[2026-09-28 17:43:32.338] [jointLog] [warning] NOTE: Read Lib [[ HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:43:33.746] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:33.746] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:33.746] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:33.746] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:33.746] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:33.746] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:33.747] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:33.747] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 11.62 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 179.06 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 28.821 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 1.5142 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 8.1679 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 978.15 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 7.3183 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.7316 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 34.212 us
+-----------------------------------------
+[2026-09-28 17:43:33.779] [jointLog] [info] done
+[2026-09-28 17:43:33.820] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:33.871] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:43:34.117] [jointLog] [info] Computed 1,324 rich equivalence classes for further processing
+[2026-09-28 17:43:34.117] [jointLog] [info] Counted 3,543 total reads in the equivalence classes 
+[2026-09-28 17:43:34.118] [jointLog] [info] Number of mappings discarded because of alignment score : 1,989
+[2026-09-28 17:43:34.118] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 259
+[2026-09-28 17:43:34.118] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:34.118] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 38
+[2026-09-28 17:43:34.119] [jointLog] [warning] Only 3543 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:34.119] [jointLog] [info] Mapping rate = 36.5182%
+
+[2026-09-28 17:43:34.119] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:34.120] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:34.123] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:34.124] [jointLog] [info] iteration = 0 | max rel diff. = 65.3333
+[2026-09-28 17:43:34.128] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:38.328] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:38.328] [jointLog] [info] processed bias for 0.8% of the transcripts
+[2026-09-28 17:43:38.766] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2026-09-28 17:43:38.999] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:39.225] [jointLog] [info] processed bias for 30.7% of the transcripts
+[2026-09-28 17:43:39.570] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2026-09-28 17:43:39.942] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:43:40.165] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2026-09-28 17:43:40.501] [jointLog] [info] processed bias for 70.1% of the transcripts
+[2026-09-28 17:43:40.977] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:41.350] [jointLog] [info] processed bias for 90.2% of the transcripts
+[2026-09-28 17:43:41.668] [jointLog] [info] processed bias for 99.9% of the transcripts
+[2026-09-28 17:43:41.673] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:41.717] [jointLog] [info] iteration = 100 | max rel diff. = 2.25847
+[2026-09-28 17:43:41.718] [jointLog] [info] iteration = 104 | max rel diff. = 0.00900715
+[2026-09-28 17:43:41.719] [jointLog] [info] Finished optimizer
+[2026-09-28 17:43:41.719] [jointLog] [info] writing output 
+
+[2026-09-28 17:43:41.729] [jointLog] [warning] NOTE: Read Lib [[ HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:43:42.847] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:42.847] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:42.847] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:42.847] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:42.847] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:42.847] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:42.847] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:42.847] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 11.622 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 186.49 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 25.792 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 1.4271 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 8.6066 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 946.68 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 7.1168 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.8812 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 45.713 us
+-----------------------------------------
+[2026-09-28 17:43:42.880] [jointLog] [info] done
+[2026-09-28 17:43:42.918] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:42.968] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:43:43.242] [jointLog] [info] Computed 1,292 rich equivalence classes for further processing
+[2026-09-28 17:43:43.242] [jointLog] [info] Counted 3,511 total reads in the equivalence classes 
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of mappings discarded because of alignment score : 2,220
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 260
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 29
+[2026-09-28 17:43:43.244] [jointLog] [warning] Only 3511 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:43.244] [jointLog] [info] Mapping rate = 36.3495%
+
+[2026-09-28 17:43:43.244] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:43.245] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:43.248] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:43.249] [jointLog] [info] iteration = 0 | max rel diff. = 54.6322
+[2026-09-28 17:43:43.253] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:47.624] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:47.626] [jointLog] [info] processed bias for 0.2% of the transcripts
+[2026-09-28 17:43:48.102] [jointLog] [info] processed bias for 10.2% of the transcripts
+[2026-09-28 17:43:48.307] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:48.609] [jointLog] [info] processed bias for 30.4% of the transcripts
+[2026-09-28 17:43:48.997] [jointLog] [info] processed bias for 39.9% of the transcripts
+[2026-09-28 17:43:49.352] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:43:49.567] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2026-09-28 17:43:49.892] [jointLog] [info] processed bias for 69.9% of the transcripts
+[2026-09-28 17:43:50.439] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:50.755] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2026-09-28 17:43:51.094] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:51.098] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:51.141] [jointLog] [info] iteration = 100 | max rel diff. = 0.0426672
+[2026-09-28 17:43:51.149] [jointLog] [info] iteration = 117 | max rel diff. = 0.0083768
+[2026-09-28 17:43:51.150] [jointLog] [info] Finished optimizer
+[2026-09-28 17:43:51.150] [jointLog] [info] writing output 
+
+[2026-09-28 17:43:51.169] [jointLog] [warning] NOTE: Read Lib [[ HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:43:54.532] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:54.532] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:54.532] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:54.532] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:54.532] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:54.532] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:54.532] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:54.533] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 11.304 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 140.79 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 17.314 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 1.2914 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 8.0336 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 874.24 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 6.5937 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.5509 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 45.348 us
+-----------------------------------------
+[2026-09-28 17:43:54.563] [jointLog] [info] done
+[2026-09-28 17:43:54.602] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:54.651] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:43:54.931] [jointLog] [info] Computed 1,245 rich equivalence classes for further processing
+[2026-09-28 17:43:54.931] [jointLog] [info] Counted 3,260 total reads in the equivalence classes 
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of mappings discarded because of alignment score : 2,237
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 284
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 26
+[2026-09-28 17:43:54.933] [jointLog] [warning] Only 3260 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:54.933] [jointLog] [info] Mapping rate = 33.7474%
+
+[2026-09-28 17:43:54.933] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:54.935] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:54.937] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:54.938] [jointLog] [info] iteration = 0 | max rel diff. = 42.2743
+[2026-09-28 17:43:54.943] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:58.900] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:58.901] [jointLog] [info] processed bias for 0.2% of the transcripts
+[2026-09-28 17:43:59.264] [jointLog] [info] processed bias for 10.2% of the transcripts
+[2026-09-28 17:43:59.509] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:59.812] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:44:00.118] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:44:00.471] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:44:00.667] [jointLog] [info] processed bias for 59.9% of the transcripts
+[2026-09-28 17:44:00.993] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2026-09-28 17:44:01.431] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:44:01.799] [jointLog] [info] processed bias for 90.2% of the transcripts
+[2026-09-28 17:44:02.056] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:44:02.093] [jointLog] [info] iteration = 100 | max rel diff. = 0.00941887
+[2026-09-28 17:44:02.094] [jointLog] [info] Finished optimizer
+[2026-09-28 17:44:02.094] [jointLog] [info] writing output 
+
+[2026-09-28 17:44:02.105] [jointLog] [warning] NOTE: Read Lib [[ UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:44:03.270] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:44:03.270] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:44:03.270] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:44:03.270] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:44:03.270] [jointLog] [info] parsing read library format
+[2026-09-28 17:44:03.270] [jointLog] [info] There is 1 library.
+[2026-09-28 17:44:03.270] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:44:03.270] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 16.068 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 231.26 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 29.421 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 2.1067 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 12.398 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 987.84 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 7.5116 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.8224 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 47.132 us
+-----------------------------------------
+[2026-09-28 17:44:03.312] [jointLog] [info] done
+[2026-09-28 17:44:03.354] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:44:03.409] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:44:03.714] [jointLog] [info] Computed 1,248 rich equivalence classes for further processing
+[2026-09-28 17:44:03.714] [jointLog] [info] Counted 2,996 total reads in the equivalence classes 
+[2026-09-28 17:44:03.715] [jointLog] [info] Number of mappings discarded because of alignment score : 2,236
+[2026-09-28 17:44:03.715] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 306
+[2026-09-28 17:44:03.715] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:44:03.715] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 25
+[2026-09-28 17:44:03.716] [jointLog] [warning] Only 2996 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:44:03.716] [jointLog] [info] Mapping rate = 31.1661%
+
+[2026-09-28 17:44:03.716] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:44:03.717] [jointLog] [info] Starting optimizer
+[2026-09-28 17:44:03.720] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:44:03.721] [jointLog] [info] iteration = 0 | max rel diff. = 55.5102
+[2026-09-28 17:44:03.726] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:44:07.949] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:44:07.950] [jointLog] [info] processed bias for 0.1% of the transcripts
+[2026-09-28 17:44:08.336] [jointLog] [info] processed bias for 10.1% of the transcripts
+[2026-09-28 17:44:08.552] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:44:08.880] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2026-09-28 17:44:09.195] [jointLog] [info] processed bias for 39.9% of the transcripts
+[2026-09-28 17:44:09.583] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:44:09.832] [jointLog] [info] processed bias for 59.9% of the transcripts
+[2026-09-28 17:44:10.197] [jointLog] [info] processed bias for 69.9% of the transcripts
+[2026-09-28 17:44:10.650] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:44:10.979] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2026-09-28 17:44:11.289] [jointLog] [info] processed bias for 99.9% of the transcripts
+[2026-09-28 17:44:11.290] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:44:11.333] [jointLog] [info] iteration = 100 | max rel diff. = 0.00391286
+[2026-09-28 17:44:11.333] [jointLog] [info] Finished optimizer
+[2026-09-28 17:44:11.333] [jointLog] [info] writing output 
+
+[2026-09-28 17:44:11.345] [jointLog] [warning] NOTE: Read Lib [[ UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Version Server Response: Not Found
+### salmon (selective-alignment-based) v1.10.3
+### [ program ] => salmon 
+### [ command ] => quant 
+### [ index ] => { /lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index }
+### [ libType ] => { A }
+### [ mates1 ] => { UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz }
+### [ mates2 ] => { UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz }
+### [ validateMappings ] => { }
+### [ gcBias ] => { }
+### [ seqBias ] => { }
+### [ threads ] => { 1 }
+### [ output ] => { UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant }
+Logs will be written to UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/logs
+[2026-09-28 17:44:12.468] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:44:12.468] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:44:12.468] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:44:12.469] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:44:12.469] [jointLog] [info] parsing read library format
+[2026-09-28 17:44:12.469] [jointLog] [info] There is 1 library.
+[2026-09-28 17:44:12.469] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:44:12.469] [jointLog] [info] Loading dense pufferfish index.
+-----------------------------------------
+| Loading contig table | Time = 10.328 ms
+-----------------------------------------
+size = 28443
+-----------------------------------------
+| Loading contig offsets | Time = 145.38 us
+-----------------------------------------
+-----------------------------------------
+| Loading reference lengths | Time = 17.01 us
+-----------------------------------------
+-----------------------------------------
+| Loading mphf table | Time = 1.4672 ms
+-----------------------------------------
+size = 4146722
+Number of ones: 28442
+Number of ones per inventory item: 512
+Inventory entries filled: 56
+-----------------------------------------
+| Loading contig boundaries | Time = 7.9723 ms
+-----------------------------------------
+size = 4146722
+-----------------------------------------
+| Loading sequence | Time = 817.02 us
+-----------------------------------------
+size = 3293462
+-----------------------------------------
+| Loading positions | Time = 6.117 ms
+-----------------------------------------
+size = 8191078
+-----------------------------------------
+| Loading reference sequence | Time = 1.4245 ms
+-----------------------------------------
+-----------------------------------------
+| Loading reference accumulative lengths | Time = 58.916 us
+-----------------------------------------
+[2026-09-28 17:44:12.498] [jointLog] [info] done
+[2026-09-28 17:44:12.533] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:44:12.586] [jointLog] [info] Number of decoys : 0
+
+
+
+
+
+
+
+
+
+
+
+
+[2026-09-28 17:44:12.824] [jointLog] [info] Computed 1,247 rich equivalence classes for further processing
+[2026-09-28 17:44:12.824] [jointLog] [info] Counted 3,106 total reads in the equivalence classes 
+[2026-09-28 17:44:12.825] [jointLog] [info] Number of mappings discarded because of alignment score : 2,003
+[2026-09-28 17:44:12.825] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 234
+[2026-09-28 17:44:12.825] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:44:12.825] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 20
+[2026-09-28 17:44:12.825] [jointLog] [warning] Only 3106 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:44:12.825] [jointLog] [info] Mapping rate = 32.1665%
+
+[2026-09-28 17:44:12.825] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:44:12.827] [jointLog] [info] Starting optimizer
+[2026-09-28 17:44:12.830] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:44:12.830] [jointLog] [info] iteration = 0 | max rel diff. = 38.8949
+[2026-09-28 17:44:12.834] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:44:16.336] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:44:16.337] [jointLog] [info] processed bias for 0.2% of the transcripts
+[2026-09-28 17:44:16.710] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2026-09-28 17:44:16.908] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:44:17.156] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2026-09-28 17:44:17.410] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:44:17.721] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:44:17.909] [jointLog] [info] processed bias for 59.9% of the transcripts
+[2026-09-28 17:44:18.205] [jointLog] [info] processed bias for 69.9% of the transcripts
+[2026-09-28 17:44:18.637] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:44:18.910] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2026-09-28 17:44:19.158] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:44:19.161] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:44:19.201] [jointLog] [info] iteration = 100 | max rel diff. = 0.0168873
+[2026-09-28 17:44:19.214] [jointLog] [info] iteration = 130 | max rel diff. = 0.00444045
+[2026-09-28 17:44:19.214] [jointLog] [info] Finished optimizer
+[2026-09-28 17:44:19.214] [jointLog] [info] writing output 
+
+[2026-09-28 17:44:19.225] [jointLog] [warning] NOTE: Read Lib [[ UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+
+Processed: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22
+[2026-09-28 17:44:20] step 7: R analysis (Rscript, LC_ALL=C)
+Loading required package: limma
+
+clusterProfiler v4.12.6 Learn more at https://yulab-smu.top/contribution-knowledge-mining/
+
+Please cite:
+
+T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan,
+X Fu, S Liu, X Bo, and G Yu. clusterProfiler 4.0: A universal
+enrichment tool for interpreting omics data. The Innovation. 2021,
+2(3):100141
+
+Attaching package: 'clusterProfiler'
+
+The following object is masked from 'package:biomaRt':
+
+    select
+
+The following object is masked from 'package:stats':
+
+    filter
+
+Loading required package: AnnotationDbi
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: 'BiocGenerics'
+
+The following object is masked from 'package:limma':
+
+    plotMA
+
+The following objects are masked from 'package:stats':
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from 'package:base':
+
+    Filter, Find, Map, Position, Reduce, anyDuplicated, aperm, append,
+    as.data.frame, basename, cbind, colnames, dirname, do.call,
+    duplicated, eval, evalq, get, grep, grepl, intersect, is.unsorted,
+    lapply, mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+    pmin.int, rank, rbind, rownames, sapply, setdiff, table, tapply,
+    union, unique, unsplit, which.max, which.min
+
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation("Biobase")', and for packages 'citation("pkgname")'.
+
+Loading required package: IRanges
+Loading required package: S4Vectors
+
+Attaching package: 'S4Vectors'
+
+The following object is masked from 'package:clusterProfiler':
+
+    rename
+
+The following object is masked from 'package:utils':
+
+    findMatches
+
+The following objects are masked from 'package:base':
+
+    I, expand.grid, unname
+
+
+Attaching package: 'IRanges'
+
+The following object is masked from 'package:clusterProfiler':
+
+    slice
+
+
+Attaching package: 'AnnotationDbi'
+
+The following object is masked from 'package:clusterProfiler':
+
+    select
+
+
+Loading required package: GenomicRanges
+Loading required package: GenomeInfoDb
+== salmon_files (order feeds the design matrix) ==
+[1] "./HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+[2] "./HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+[3] "./HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+[4] "./UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+[5] "./UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+[6] "./UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/quant.sf"
+reading in files with read_tsv
+1 2 3 4 5 6 
+== sample columns (must be HBR,HBR,HBR,UHR,UHR,UHR) ==
+NULL
+== transcripts kept: 111 of 4989 ==
+   sample condition
+1 Sample1       HBR
+2 Sample2       HBR
+3 Sample3       HBR
+4 Sample4       UHR
+5 Sample5       UHR
+6 Sample6       UHR
+== regulation summary ==
+
+down-regulated        not sig   up-regulated 
+            30             66             15 
+[1] "IGLC2"    "MIAT"     "MYH9"     "YWHAH"    "MAPK8IP2" "ACO2"    
+Matched: 111 / 111 
+Warning message:
+ggrepel: 9 unlabeled data points (too many overlaps). Consider increasing max.overlaps 
+null device 
+          1 
+== up-regulated genes for enrichment: 15 ==
+Warning message:
+`aes_string()` was deprecated in ggplot2 3.0.0.
+i Please use tidy evaluation idioms with `aes()`.
+i See also `vignette("ggplot2-in-packages")` for more information.
+i The deprecated feature was likely used in the enrichplot package.
+  Please report the issue at
+  <https://github.com/GuangchuangYu/enrichplot/issues>. 
+null device 
+          1 
+== R analysis done: volcano_plot.pdf, GO_dotplot_up_regulate.pdf, heatmap_DEG_mini_final.pdf ==
+[2026-09-28 17:45:43]   R PDF outputs: GO_dotplot_up_regulate.pdf heatmap_DEG_mini_final.pdf volcano_plot.pdf 
+[2026-09-28 17:45:43] == RNA-seq mini tutorial done ==

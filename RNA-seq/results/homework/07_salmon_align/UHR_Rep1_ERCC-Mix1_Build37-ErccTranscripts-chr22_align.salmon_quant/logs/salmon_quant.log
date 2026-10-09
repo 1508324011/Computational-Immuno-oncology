@@ -1,0 +1,50 @@
+[2026-10-09 14:59:21.929] [jointLog] [info] setting maxHashResizeThreads to 8
+[2026-10-09 14:59:21.929] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-10-09 14:59:22.229] [jointLog] [info] numQuantThreads = 4
+[2026-10-09 14:59:27.204] [jointLog] [info] replaced 201,317 non-ACGT nucleotides with random nucleotides
+[2026-10-09 14:59:27.469] [fileLog] [info] quantification processed 0 fragments so far
+
+[2026-10-09 14:59:27.470] [fileLog] [info] quantification processed 67767 fragments so far
+
+[2026-10-09 14:59:27.603] [jointLog] [info] Automatically detected most likely library type as ISR
+
+[2026-10-09 14:59:28.355] [jointLog] [info] Thread saw mini-batch with a maximum of 10.00% zero probability fragments
+[2026-10-09 14:59:28.359] [jointLog] [info] Thread saw mini-batch with a maximum of 3.00% zero probability fragments
+[2026-10-09 14:59:28.392] [jointLog] [info] Thread saw mini-batch with a maximum of 3.40% zero probability fragments
+[2026-10-09 14:59:28.394] [jointLog] [info] Thread saw mini-batch with a maximum of 8.00% zero probability fragments
+[2026-10-09 14:59:28.394] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 67767
+# of uniquely mapped reads : 18335
+# ambiguously mapped reads : 49432
+
+
+
+[2026-10-09 14:59:28.404] [jointLog] [info] Computed 6,242 rich equivalence classes for further processing
+[2026-10-09 14:59:28.404] [jointLog] [info] Counted 67,002 total reads in the equivalence classes 
+[2026-10-09 14:59:28.419] [jointLog] [warning] Only 67767 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-10-09 14:59:28.420] [jointLog] [info] starting optimizer
+[2026-10-09 14:59:28.486] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-10-09 14:59:28.492] [jointLog] [info] iteration = 0 | max rel diff. = 27.6064
+[2026-10-09 14:59:28.547] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-10-09 14:59:29.766] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-10-09 14:59:29.767] [jointLog] [info] processed bias for 4.6% of the transcripts
+[2026-10-09 14:59:29.769] [jointLog] [info] processed bias for 14.0% of the transcripts
+[2026-10-09 14:59:29.771] [jointLog] [info] processed bias for 20.6% of the transcripts
+[2026-10-09 14:59:29.773] [jointLog] [info] processed bias for 31.7% of the transcripts
+[2026-10-09 14:59:29.778] [jointLog] [info] processed bias for 53.3% of the transcripts
+[2026-10-09 14:59:29.779] [jointLog] [info] processed bias for 58.1% of the transcripts
+[2026-10-09 14:59:29.781] [jointLog] [info] processed bias for 67.3% of the transcripts
+[2026-10-09 14:59:29.782] [jointLog] [info] processed bias for 72.8% of the transcripts
+[2026-10-09 14:59:29.784] [jointLog] [info] processed bias for 82.2% of the transcripts
+[2026-10-09 14:59:29.787] [jointLog] [info] processed bias for 94.8% of the transcripts
+[2026-10-09 14:59:30.796] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-10-09 14:59:31.306] [jointLog] [info] iteration = 100 | max rel diff. = 3.59671
+[2026-10-09 14:59:31.874] [jointLog] [info] iteration = 200 | max rel diff. = 0.0366481
+[2026-10-09 14:59:32.381] [jointLog] [info] iteration = 291 | max rel diff. = 0.00577364
+[2026-10-09 14:59:32.409] [jointLog] [info] finished optimizer
+[2026-10-09 14:59:32.409] [jointLog] [info] writing output

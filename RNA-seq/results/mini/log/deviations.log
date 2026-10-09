@@ -1,0 +1,8 @@
+[2026-09-28 17:41:40] DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026/{id}); our cluster discipline — no writes to classroom share
+[2026-09-28 17:41:40] DEVIATION: whole tutorial in one sbatch job (tutorial assumes interactive typing on a node); login node only submits
+[2026-09-28 17:41:40] DEVIATION: R section run via Rscript under LC_ALL=C (tutorial: interactive R with the same export as segfault workaround)
+[2026-09-28 17:41:40] DEVIATION: KEGG block kept commented exactly as tutorial section 9; the consolidated 'CODES' cell wraps it in ''' which is invalid R syntax (doc bug, recorded)
+[2026-09-28 17:41:40] DEVIATION: diagnostic prints added in R (sample order, DEG counts) — additive only, no analysis logic changed
+[2026-09-28 17:41:40] DEVIATION: SLURM submission broken cluster-wide since the restructure week (all combos rejected, queue empty, 9/20-proven WES scripts rejected too) -> tutorial-native interactive mode: direct single-thread run on login60, well within the instructor's 30-concurrent-students load-test envelope (STAR mini index 381M, salmon 16M, node 45G free / load 1.5)
+[2026-09-28 17:42:10] DEVIATION: Total-Sequences extraction looped over all 12 files (tutorial: single example, 'replacing with your file name')
+[2026-09-28 17:43:21] DEVIATION: align-mode run per batch_salmon_align.sh (--gcBias --seqBias); tutorial's single-sample demo command omits both flags — doc inconsistency, batch version used

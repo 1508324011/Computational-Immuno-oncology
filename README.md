@@ -2,7 +2,7 @@
 
 可复现的课堂内容仓库 / Reproducible course materials for computational immuno-oncology teaching.
 
-> 当前内容：**Whole-Exome Sequencing (WES) 数据分析完整路线图**。
+> 当前内容：**WES（全外显子组测序）与 RNA-seq（转录组）两个模块的完整路线图与双轮实跑结果**。
 > 后续将逐步加入免疫肿瘤学其他模块（TCR/BCR 分析、新抗原预测、肿瘤免疫微环境等）。
 
 ---
@@ -25,16 +25,27 @@
         ├── WES_results_guide.{md,html,pdf}  # 逐文件讲解: 怎么读、两轮对比、动手验证翻倍 bug 的命令
         ├── demo/                            # 0.5× demo 轮摘录 (fastp 报告/指标/VQSR 四件套/空 somatic/噪声 CNV/日志/脚本)
         └── full/                             # 全量轮摘录 (联合 55,123 + 顺序 VQSR 矫正/108 PASS somatic/amplicon vs hybrid CNV 对照/4 份 HsMetrics/8 个 sbatch/全部作业日志)
-└── RNA-seq/                                 # RNA-seq 模块 (首版教材, 待整理)
+└── RNA-seq/                                 # RNA-seq 模块 (SEQC 双轮实跑完成)
     ├── rna_seq.pdf / RNA_seq_tutorial_mini.html  # 教程
     ├── RNA_seq_homework.html                # 作业
-    └── RNA_seq_code_explaination.pdf         # 代码讲解
+    ├── RNA_seq_code_explaination.pdf         # 代码讲解
+    ├── ref/                                  # 矫正增强文档 (构建走 WES/ref/build.sh)
+    │   ├── RNA_seq_tutorial_corrected{.md,.html,.pdf}      # 矫正增强版：两轮实跑对照 + 15 条坑位取证
+    │   ├── RNA_seq_tutorial_corrected_zh{.md,.html,.pdf}   # 同一矫正版的中文版
+    │   └── RNA_seq_results_guide{.md,.html,.pdf}           # 两轮结果逐类导读 + 7 个动手练习
+    └── results/                              # 两轮实跑分析产物 (无任何原始数据: FASTQ/BAM 不入库)
+        ├── mini/                             # mini 轮 (10k reads/样本, chr22 索引, ~4 分钟, 111/4989 转录本, DEG 45)
+        └── homework/                        # 全量轮 (全 GRCh38 索引, 13 分钟, 831/231448 转录本, DEG 319, 含热图 NA bug 证据对与矫正版)
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
 > **中文版（WES_roadmap_corrected_zh）**：与英文矫正版内容一致、互为对照；正文全中文，命令/路径/参数原样保留，数字逐一对拍核验。构建：`./build.sh WES_roadmap_corrected_zh.md "WES 全流程分析路线图 · 矫正增强版（中文版）"`（英文版：`./build.sh`）。
 >
 > **分析结果（WES/results/）**：两轮实跑的分析产物摘录（QC 报告、比对/去重指标、VQSR 模型与 tranches、变异集 VCF、体细胞检出、CNV 分段、HsMetrics、全部实跑脚本与作业日志）——**不含任何原始数据**。讲解文档 `WES/results/WES_results_guide.html/pdf` 逐类讲怎么读，含 6 个动手练习（比如用仓库内文件三条命令亲手验证 VQSR 翻倍 bug）。大文件（BAM/GVCF/富注释表）仍在集群运行目录，讲解文档 §5 有清单。
+
+> **矫正增强版（RNA_seq_tutorial_corrected）**：把 mini 教程与 homework 作业在集群上**原样跑两轮**（mini 轮 2026-09-21 + 全量轮 2026-10-09，均按教程原生方式登录节点串行跑）后写成的修复与讲解版——每步含原理/实跑数字/坑与矫正/调优扩展，带 15 条问题登记表（含热图全 NA 沉默 bug、''' 伪注释、双模式映射率口径等，每条带证据）。中文版 `_zh` 与英文版数字逐一对拍一致。构建：`WES/ref/build.sh ../../RNA-seq/ref/RNA_seq_tutorial_corrected.md "RNA-seq 全流程教程 · 矫正增强版"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **分析结果（RNA-seq/results/）**：两轮实跑的分析产物（fastqc/fastp 报告、STAR 指标与 SJ 表、multiqc、salmon 双模式定量与映射率证据、R 段四张 PDF 含**热图 NA bug 证据对**、全部脚本与日志）——**不含任何原始数据**。讲解文档 `RNA-seq/ref/RNA_seq_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 1 三条命令在仓库内亲手复现热图 50×NA bug）。大文件（FASTQ/BAM/完整 salmon 目录）仍在集群运行目录，讲解文档 §4 有清单。
 
 ## WES 路线图内容一览 / What the roadmap covers
 

@@ -1,0 +1,7 @@
+Sample	Uniquely mapped	Mapped to multiple loci	Mapped to too many loci	Unmapped: too short
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22	60665.0	1274.0	1.0	55120.0
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22	73687.0	1583.0	1.0	67251.0
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22	66305.0	1356.0	4.0	60418.0
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22	100759.0	6168.0	1.0	115489.0
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22	76838.0	4788.0	3.0	76891.0
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22	80513.0	5011.0	2.0	95142.0

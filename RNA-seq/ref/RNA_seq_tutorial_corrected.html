@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RNA-seq 全流程教程 · 矫正增强版 (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RNA-seq 全流程教程 · 矫正增强版 (Corrected &amp;
+Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rna-seq-全流程教程-矫正增强版corrected-annotated-edition"
+id="toc-rna-seq-全流程教程-矫正增强版corrected-annotated-edition">RNA-seq
+全流程教程 · 矫正增强版（Corrected &amp; Annotated Edition）</a>
+<ul>
+<li><a href="#关于本版about-this-edition"
+id="toc-关于本版about-this-edition">0. 关于本版（About this
+edition）</a></li>
+<li><a href="#问题清单速览issues-at-a-glance"
+id="toc-问题清单速览issues-at-a-glance">1. 问题清单速览（Issues at a
+glance）</a></li>
+<li><a href="#环境与数据environment-and-data"
+id="toc-环境与数据environment-and-data">2. 环境与数据（Environment and
+data）</a></li>
+<li><a href="#数据获取与原始质控rsync-fastqc"
+id="toc-数据获取与原始质控rsync-fastqc">3. 数据获取与原始质控（rsync +
+fastqc）</a></li>
+<li><a href="#接头与质量修剪fastp" id="toc-接头与质量修剪fastp">4.
+接头与质量修剪（fastp）</a></li>
+<li><a href="#剪接比对star" id="toc-剪接比对star">5.
+剪接比对（STAR）</a></li>
+<li><a href="#汇总质控multiqc" id="toc-汇总质控multiqc">6.
+汇总质控（multiqc）</a></li>
+<li><a href="#定量-i比对模式salmon-align-mode"
+id="toc-定量-i比对模式salmon-align-mode">7. 定量 I：比对模式（salmon
+align mode）</a></li>
+<li><a href="#定量-ii选择性比对模式salmon-quasi---validatemappings"
+id="toc-定量-ii选择性比对模式salmon-quasi---validatemappings">8. 定量
+II：选择性比对模式（salmon quasi /
+<code>--validateMappings</code>）</a></li>
+<li><a href="#读入定量结果并过滤tximport-edger"
+id="toc-读入定量结果并过滤tximport-edger">9.
+读入定量结果并过滤（tximport → edgeR）</a></li>
+<li><a href="#差异表达注释与火山图glmlrt-volcano"
+id="toc-差异表达注释与火山图glmlrt-volcano">10.
+差异表达、注释与火山图（glmLRT + volcano）</a></li>
+<li><a href="#富集分析go-and-the-kegg-that-never-runs"
+id="toc-富集分析go-and-the-kegg-that-never-runs">11. 富集分析（GO — and
+the KEGG that never runs）</a></li>
+<li><a href="#热图沉默的全-na-坑the-silent-all-na-bug"
+id="toc-热图沉默的全-na-坑the-silent-all-na-bug">12. 热图——沉默的全 NA
+坑（the silent all-NA bug）</a></li>
+<li><a href="#双轮对比mini-vs-homeworkfull-side-by-side"
+id="toc-双轮对比mini-vs-homeworkfull-side-by-side">13. 双轮对比（mini vs
+homework/full, side by side)</a></li>
+<li><a href="#检查清单产物清单与总结checklist-outputs-summary"
+id="toc-检查清单产物清单与总结checklist-outputs-summary">14.
+检查清单、产物清单与总结（Checklist, outputs, summary）</a></li>
+<li><a
+href="#附录-a.-偏差日志both-rounds-condensed-but-verbatim-faithful"
+id="toc-附录-a.-偏差日志both-rounds-condensed-but-verbatim-faithful">附录
+A. 偏差日志（both rounds, condensed but verbatim-faithful）</a></li>
+<li><a
+href="#附录-b.-教师参考产物-vs-印刷版文档evidence-all-paths-verbatim"
+id="toc-附录-b.-教师参考产物-vs-印刷版文档evidence-all-paths-verbatim">附录
+B. 教师参考产物 vs 印刷版文档（evidence, all paths verbatim)</a></li>
+<li><a href="#附录-c.-复现reproduction"
+id="toc-附录-c.-复现reproduction">附录 C. 复现（reproduction)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="rna-seq-全流程教程-矫正增强版corrected-annotated-edition">RNA-seq
+全流程教程 · 矫正增强版（Corrected &amp; Annotated Edition）</h1>
+<p>: Document version 1.0 · 2026-10-09 · reproduced from
+<code>RNA_seq_tutorial_mini.html</code> and
+<code>RNA_seq_homework.html</code> (course originals), with a two-round
+full-pipeline reproduction (mini 2026-09-21, homework/full 2026-10-09)
+and every deviation verified, recorded, and corrected.</p>
+<h2 id="关于本版about-this-edition">0. 关于本版（About this
+edition）</h2>
+<p>This edition is the RNA-seq counterpart of the WES corrected roadmap
+(<code>WES/ref/WES_roadmap_corrected.md</code>). It mirrors the course
+originals command-for-command, then adds what the originals do not
+carry: per-step rationale, real measured numbers from two complete runs,
+a pitfall registry with root causes, and corrections that were actually
+executed and verified.</p>
+<p><strong>Sources (course originals, kept untouched):</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RNA_seq_tutorial_mini.html</code></td>
+<td>9-step mini pipeline (10k reads/sample), the in-class executable
+path</td>
+</tr>
+<tr>
+<td><code>RNA_seq_homework.html</code></td>
+<td>Same pipeline at full read depth on the full GRCh38 index</td>
+</tr>
+<tr>
+<td><code>rna_seq.pdf</code></td>
+<td>14-page theory slides (RNA-seq principles, STAR/Salmon positioning,
+R basics)</td>
+</tr>
+<tr>
+<td><code>RNA_seq_code_explaination.pdf</code></td>
+<td>9-page line-by-line command commentary</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The two-round reproduction</strong> (both rounds: commands
+verbatim, minimal wrapping, every deviation logged):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Date</th>
+<th>Data</th>
+<th>STAR index</th>
+<th>Where it ran</th>
+<th>Runtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>2026-09-21</td>
+<td>12 fastq × 10,000 reads (20 MB)</td>
+<td>chr22 mini (381 MB)</td>
+<td>login node, serial</td>
+<td>~4 min</td>
+</tr>
+<tr>
+<td>homework (full)</td>
+<td>2026-10-09</td>
+<td>12 fastq, 118k–227k read pairs (112 MB)</td>
+<td>full GRCh38 (~31 GB RAM)</td>
+<td>login node, serial</td>
+<td>13 min</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where the rounds ran, and why.</strong> The tutorial’s native
+mode is interactive execution on the login node — the two HTML documents
+contain no <code>sbatch</code>/<code>srun</code>/SLURM references at
+all; the only cluster-touching command is the initial <code>ssh</code>.
+The teacher’s own load test
+(<code>02_simulate_30_students_pipeline.sh</code>, artifacts under
+<code>/lustre1/share/RNA_seq_class/loadtest/mini30_20260928_*</code>)
+simulated 30 students running this pipeline <strong>concurrently on the
+login node</strong>, which is direct evidence that the course design
+expects login-node execution. The mini round ran during a campus-wide
+SLURM submission outage (every <code>sbatch</code> rejected with
+<code>Invalid account or account/partition combination</code>;
+<code>sacct</code> empty since 9/15; the WES scripts that had run
+successfully on 9/20 were also rejected — cluster-side reconfiguration,
+recorded in the round’s deviations log). The homework round ran on the
+login node by explicit directive, although SLURM had recovered by probe
+time (test-only allocation succeeded on cn-long). Both choices are
+recorded in each round’s <code>log/deviations.log</code>.</p>
+<p><strong>What “corrected” means here</strong> (same discipline as the
+WES edition): run the printed commands as written, log every pitfall
+encountered or predicted, then fix and verify the fixes with real
+outputs — the fix evidence is in this repository, not just described.
+Numbers in this document are measured values from the two runs, not
+estimates.</p>
+<p><strong>How to read each step:</strong> every pipeline step carries
+the same block set — <em>Original</em> (the printed command, verbatim),
+<em>Rationale</em> (what the tool and its key parameters actually do),
+<em>What we ran</em> (measured numbers from both rounds),
+<em>Pitfalls</em> (verified, with evidence), <em>Interpretation</em>,
+<em>Tuning</em>, and <em>Extensions</em> (where to go next when this
+step is routine).</p>
+<h2 id="问题清单速览issues-at-a-glance">1. 问题清单速览（Issues at a
+glance）</h2>
+<p>Verified pitfalls in the course originals. Full evidence and
+corrections are in the step sections; the two most consequential
+(RNA-08/10) have dedicated sections.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Where</th>
+<th>Symptom / root cause</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RNA-01</td>
+<td>R sample_info</td>
+<td>Sample identity is <strong>positional end-to-end</strong>:
+<code>condition</code> assumes <code>list.files()</code> returns HBR×3
+then UHR×3 (alphabetical luck), and unnamed files give
+<code>colnames = NULL</code>, so edgeR names samples Sample1–6</td>
+<td>Name samples explicitly; assert order before building the design
+matrix</td>
+</tr>
+<tr>
+<td>RNA-02</td>
+<td>mini salmon single-sample</td>
+<td>Demo cell omits <code>--gcBias --seqBias</code> but the batch script
+includes them → systematic correction difference between demo and batch
+outputs</td>
+<td>Use the batch parameters everywhere</td>
+</tr>
+<tr>
+<td>RNA-03</td>
+<td>homework salmon single-sample</td>
+<td>Align-mode demo cell has a mangled filename (UHR sample name + a
+pasted HBR <code>_ERCC-Mix2...chr22</code> suffix) → file not found</td>
+<td>Batch script is correct; use it</td>
+</tr>
+<tr>
+<td>RNA-04</td>
+<td>homework batch_salmon_quasi</td>
+<td><code>for r1 in *read1.fastq.gz</code> matches only
+<strong>raw</strong> reads — quasi mode quantifies
+<strong>untrimmed</strong> data (mini direct mode used trimmed)</td>
+<td>Run as written, record; or point the glob at
+<code>*.read1.trimmed.fastq.gz</code></td>
+</tr>
+<tr>
+<td>RNA-05</td>
+<td>homework batch_STAR.sh</td>
+<td>Shebang printed as <code>!/bin/bash</code> (missing
+<code>#</code>)</td>
+<td>Cosmetic; run via <code>bash script.sh</code></td>
+</tr>
+<tr>
+<td>RNA-06</td>
+<td>homework multiqc cell</td>
+<td>Placeholder path
+<code>/lustre1/share/RNA_seq_student/yourfold</code></td>
+<td>Point at the real working directory</td>
+</tr>
+<tr>
+<td>RNA-07</td>
+<td>consolidated “CODES” cell (both docs)</td>
+<td>KEGG block wrapped in <code>'''</code> — <strong>not an R
+comment</strong>; parses as one giant string literal (silently no-ops)
+and any apostrophe inside would close the string early, turning the rest
+into live code</td>
+<td>The step-by-step cells correctly use <code>#</code>; treat the
+consolidated cell as non-executable</td>
+</tr>
+<tr>
+<td>RNA-08</td>
+<td>homework consolidated “CODES” cell</td>
+<td>Still filters <code>"_direct"</code> (mini naming) — homework
+outputs are <code>_quasi</code> → zero files found, downstream
+failure</td>
+<td>Use the step-by-step path (<code>grepl("quasi")</code>)</td>
+</tr>
+<tr>
+<td>RNA-09</td>
+<td>homework heatmap block</td>
+<td><code>gene_map</code> keyed by <strong>versioned</strong>
+<code>transcript_id</code>, looked up with
+<strong>version-stripped</strong> rownames → every label misses → all 50
+rows render as “NA”, silently</td>
+<td>Strip versions from the map keys as well (one line); verified 0/50
+NA</td>
+</tr>
+<tr>
+<td>RNA-10</td>
+<td>teacher reference outputs</td>
+<td>Teacher’s <code>heatmap_DEG.pdf</code> row labels are
+<strong>versioned ENST IDs</strong> — neither gene names nor the all-NA
+the printed code produces: the reference run used a third code
+variant</td>
+<td>Compare against reference with care; see Appendix B</td>
+</tr>
+<tr>
+<td>RNA-11</td>
+<td>teacher <code>class.R</code></td>
+<td><code>salmon_files &lt;- salmon_files[-2]</code> drops the 2nd
+sample — cleanup of teacher’s own duplicate directory, not a method</td>
+<td>Do not replicate; be aware when diffing against reference</td>
+</tr>
+<tr>
+<td>RNA-12</td>
+<td>interpretation pitfall</td>
+<td>Quasi/direct mode maps only 30–37% of reads (selective alignment is
+conservative); align mode reports 100% (input BAM is pre-aligned) — the
+two are not comparable denominators</td>
+<td>Compare rates only within a mode</td>
+</tr>
+<tr>
+<td>RNA-13</td>
+<td>both docs</td>
+<td><code>--runThreadN 1</code> in single-sample demos vs <code>4</code>
+in the batch script — 1 is a 30-student classroom load decision, not a
+technical limit</td>
+<td>Solo runs may raise threads (mind the shared login node)</td>
+</tr>
+<tr>
+<td>RNA-14</td>
+<td>R startup</td>
+<td><code>address (nil) ... Segmentation fault</code> in R on this
+cluster unless <code>LC_ALL=C</code>/<code>LANG=C</code> are exported
+first</td>
+<td>Export both before <code>R</code>/<code>Rscript</code> (tutorial
+notes this; keep it)</td>
+</tr>
+<tr>
+<td>RNA-15</td>
+<td>volcano plot</td>
+<td><code>ggrepel: N unlabeled data points (too many overlaps)</code> —
+informational (9 in mini, 280 in full), labels are just decluttered</td>
+<td>Benign; raise <code>max.overlaps</code> if more labels are
+wanted</td>
+</tr>
+</tbody>
+</table>
+<h2 id="环境与数据environment-and-data">2. 环境与数据（Environment and
+data）</h2>
+<p><strong>Original (setup cells, both docs):</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> .....</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /lustre1/share/RNA_seq_student_2026_homework/{studentId}_{name}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /lustre1/share/RNA_seq_student_2026_homework/{studentId}_{name}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate RNA-seq</span></code></pre></div>
+<p><strong>Rationale.</strong> The shared environment
+(<code>/lustre1/share/miniconda3/envs/RNA-seq</code>) carries every tool
+the pipeline needs, pinned by the course: fastp 0.23.4, FastQC 0.12.1,
+STAR 2.7.11b, salmon 1.10.3, multiqc, samtools, gffread, and R 4.4.0
+with
+edgeR/limma/tximport/ggplot2/ggrepel/pheatmap/clusterProfiler/org.Hs.eg.db/biomaRt.
+Activating it (instead of installing per-student) is what makes a
+30-student classroom feasible and what the teacher’s load test
+validates.</p>
+<p><strong>The dataset is SEQC — the only RNA-seq set with a truth
+label.</strong> Six paired-end libraries: <strong>HBR ×3</strong> (Human
+Brain Reference) and <strong>UHR ×3</strong> (Universal Human Reference
+RNA), each spiked with ERCC controls at two mixes (HBR = Mix2, UHR =
+Mix1). “Differential expression” here has a known answer: brain-enriched
+genes are high in HBR, and UHR — a pooled-tissue mix that includes
+immune-cell RNA — carries high immunoglobulin transcripts. Every
+downstream sanity check in this edition leans on that truth (section
+10). The <code>chr22</code>/<code>ErccTranscripts</code> in filenames
+marks that the shipped FASTQs were pre-filtered to chr22 (+ ERCC)
+content.</p>
+<p><strong>Teacher-built assets (do not rebuild — the originals mark
+index-building cells <code>Do NOT RUN</code>):</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Path</th>
+<th>Size</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chr22 mini STAR index</td>
+<td><code>/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index</code></td>
+<td>381 MB</td>
+<td>mini round STAR</td>
+</tr>
+<tr>
+<td>chr22 mini salmon index</td>
+<td><code>.../mini_ref_chr22/salmon_index</code></td>
+<td>small</td>
+<td>mini round direct mode</td>
+</tr>
+<tr>
+<td>chr22 transcriptome fasta</td>
+<td><code>.../mini_ref_chr22/chr22.transcripts.fa</code></td>
+<td>small</td>
+<td>mini round align mode</td>
+</tr>
+<tr>
+<td>full GRCh38 STAR index</td>
+<td><code>/lustre1/share/RNA_seq/genome</code></td>
+<td>SA 24.9 GB + Genome 3.2 GB + SAindex 1.6 GB (≈31 GB RAM to
+load)</td>
+<td>homework round STAR</td>
+</tr>
+<tr>
+<td>full transcriptome fasta</td>
+<td><code>/lustre1/share/RNA_seq/genome/GRCh38_no_alt_analysis_set_gencode.v36.transcripts.fa</code></td>
+<td>368 MB</td>
+<td>homework align mode</td>
+</tr>
+<tr>
+<td>full salmon index (k31)</td>
+<td><code>/lustre1/share/RNA_seq/genome/salmon_index</code></td>
+<td>801 MB</td>
+<td>homework quasi mode</td>
+</tr>
+<tr>
+<td>gene annotation RDS</td>
+<td><code>/lustre1/share/RNA_seq_class/genome/gene_anno_gencode.v36.rds</code></td>
+<td>—</td>
+<td>R annotation (transcript_id → gene_name)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data scale (measured, both rounds):</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Files</th>
+<th>Reads per sample (pairs)</th>
+<th>fastp kept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>12 × 10,000 reads</td>
+<td>10,000 reads (5,000 pairs)</td>
+<td>— (trimmed lightly)</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>12 fastq.gz (112 MB)</td>
+<td>HBR 118,571–144,826; UHR 162,373–227,392</td>
+<td>97.4–98.7%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据获取与原始质控rsync-fastqc">3. 数据获取与原始质控（rsync +
+fastqc）</h2>
+<p><strong>Original (homework; mini is identical in shape):</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">--progress</span> /lustre1/share/RNA_seq/RNA_seq_files/<span class="pp">*</span>.fastq.gz .</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">&quot;*.fastq.gz&quot;</span> <span class="at">-exec</span> fastqc {} <span class="at">-d</span> . <span class="at">-o</span> . <span class="dt">\;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">totalreads</span><span class="op">=</span><span class="va">$(</span><span class="fu">unzip</span> <span class="at">-c</span> HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip <span class="pp">*</span>/fastqc_data.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;Total Sequences&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 2<span class="va">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Total Sequences: </span><span class="va">$totalreads</span><span class="st">&quot;</span></span></code></pre></div>
+<p><strong>Rationale.</strong> <code>rsync</code> (not <code>cp</code>)
+gives progress and resumability over Lustre. FastQC per file yields the
+standard module battery (per-base quality, adapter traces, duplication,
+GC); the homework note <code>DO NOT UNZIP</code> matters twice over —
+the reads must stay gzipped for <code>--readFilesCommand zcat</code>
+later, and <code>unzip -c</code> reads <code>fastqc_data.txt</code>
+<strong>out of the zip without extracting anything</strong>.</p>
+<p><strong>What we ran.</strong> Both rounds: 12 fastqc zips.
+<code>Total Sequences</code> per file confirmed the scales above (mini:
+10,000 per file; homework: read1 = read2 counts, 118,571…227,392 per
+file).</p>
+<p><strong>Pitfalls.</strong> None at this step beyond the obvious
+(running fastqc from the wrong directory silently finds nothing; the
+<code>find -exec</code> runs serially — fine at this size).</p>
+<p><strong>Tuning.</strong> FastQC accepts <code>-t</code> threads; at
+12 files it is unnecessary. <strong>Extensions.</strong> multiqc
+(section 6) aggregates these reports; <code>fastq_screen</code> would
+add contamination profiling.</p>
+<h2 id="接头与质量修剪fastp">4. 接头与质量修剪（fastp）</h2>
+<p><strong>Original (batch cell; single-sample demo cell is the same
+command one-off):</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="pp">*</span>.read1.fastq.gz</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span> .read1.fastq.gz<span class="va">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">read1_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.fastq.gz&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">read2_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.fastq.gz&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_read1</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.trimmed.fastq.gz&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_read2</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.trimmed.fastq.gz&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">json_report</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.fastp.json&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">html_report</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.fastp.html&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastp</span> <span class="at">-i</span> <span class="st">&quot;</span><span class="va">$read1_file</span><span class="st">&quot;</span> <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$read2_file</span><span class="st">&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$output_read1</span><span class="st">&quot;</span> <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$output_read2</span><span class="st">&quot;</span> <span class="at">--detect_adapter_for_pe</span> <span class="at">-l</span> 25 <span class="at">-j</span> <span class="st">&quot;</span><span class="va">$json_report</span><span class="st">&quot;</span> <span class="at">-h</span> <span class="st">&quot;</span><span class="va">$html_report</span><span class="st">&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>Rationale.</strong> <code>--detect_adapter_for_pe</code>
+infers the adapter pair from PE read overlap — no adapter sequence needs
+to be known ahead. <code>-l 25</code> discards reads shorter than 25 bp
+after trimming (STAR degrades on very short inputs). The per-sample
+JSON/HTML pair is what multiqc will consume.</p>
+<p><strong>What we ran (homework round, all six samples):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Reads in</th>
+<th>Reads out</th>
+<th>Kept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBR_Rep1</td>
+<td>237,142</td>
+<td>234,120</td>
+<td>98.7%</td>
+</tr>
+<tr>
+<td>HBR_Rep2</td>
+<td>289,652</td>
+<td>285,044</td>
+<td>98.4%</td>
+</tr>
+<tr>
+<td>HBR_Rep3</td>
+<td>259,572</td>
+<td>256,166</td>
+<td>98.7%</td>
+</tr>
+<tr>
+<td>UHR_Rep1</td>
+<td>454,784</td>
+<td>444,834</td>
+<td>97.8%</td>
+</tr>
+<tr>
+<td>UHR_Rep2</td>
+<td>324,746</td>
+<td>317,040</td>
+<td>97.6%</td>
+</tr>
+<tr>
+<td>UHR_Rep3</td>
+<td>370,884</td>
+<td>361,336</td>
+<td>97.4%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation.</strong> ~97–99% survival means the libraries
+are clean: adapter content low, quality high — consistent with a
+commercial reference RNA lot. UHR trims slightly more than HBR (pool
+composition, slightly more short fragments).</p>
+<p><strong>Pitfalls.</strong> None new; note that the trimmed filenames
+(<code>*.read1.trimmed.fastq.gz</code>) are what STAR’s loop matches,
+while the homework quasi-mode loop matches the <strong>raw</strong>
+names (RNA-04) — the two globs encode two different preprocessing
+intents.</p>
+<p><strong>Tuning.</strong>
+<code>--qualified_quality_phasing</code>/<code>--cut_front</code> etc.
+exist but SEQC libraries need none of them. <strong>Extensions.</strong>
+cutadapt/trim-galore are equivalent alternatives;
+<code>--overlap_len</code> tightening helps when PE overlap detection
+over-trims.</p>
+<h2 id="剪接比对star">5. 剪接比对（STAR）</h2>
+<p><strong>Original (homework batch script; single-sample demo identical
+except <code>--runThreadN 1</code>):</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">GENOMEDIR</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="pp">*</span>.read1.trimmed.fastq.gz</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span> .read1.trimmed.fastq.gz<span class="va">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">read1_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.trimmed.fastq.gz&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">read2_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.trimmed.fastq.gz&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_prefix</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">--genomeDir</span> <span class="va">$GENOMEDIR</span> <span class="dt">\</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">--readFilesIn</span> <span class="st">&quot;</span><span class="va">$read1_file</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$read2_file</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFileNamePrefix</span> <span class="st">&quot;</span><span class="va">$output_prefix</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">--readFilesCommand</span> zcat <span class="dt">\</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outSAMtype</span> BAM Unsorted <span class="dt">\</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterType</span> BySJout <span class="dt">\</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignSJoverhangMin</span> 8 <span class="dt">\</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterMultimapNmax</span> 20 <span class="dt">\</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignSJDBoverhangMin</span> 1 <span class="at">--outFilterMismatchNmax</span> 999 <span class="dt">\</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterMismatchNoverReadLmax</span> 0.04 <span class="dt">\</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignIntronMin</span> 20 <span class="dt">\</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignIntronMax</span> 1000000 <span class="dt">\</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignMatesGapMax</span> 1000000 <span class="dt">\</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">--quantMode</span> TranscriptomeSAM <span class="dt">\</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outSAMattributes</span> NH HI AS NM MD</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>Rationale (parameters that matter).</strong> STAR is
+splice-aware: it seeds with exact k-mers (default 50 for 100 bp reads),
+extends, and scores spliced alignments against a splice-junction
+database built into the index. <code>--outFilterType BySJout</code>
+keeps an intron-containing alignment only if its junction is supported
+by at least one <em>other</em> read (or the annotated SJ database) — the
+main junk-intron filter. <code>--alignSJoverhangMin 8</code> requires ≥8
+bases on each side of a <em>novel</em> junction.
+<code>--outFilterMultimapNmax 20</code> allows up to 20 loci
+(immunoglobulin and repetitive regions genuinely multi-map).
+<code>--outFilterMismatchNmax 999</code> +
+<code>--outFilterMismatchNoverReadLmax 0.04</code> together cap
+mismatches at 4% of read length. Intron bounds 20…1,000,000 and
+mates-gap 1 Mb are the GENCODE-compatible envelope.
+<code>--quantMode TranscriptomeSAM</code> is <strong>the step’s
+load-bearing choice</strong>: it additionally emits
+<code>&lt;prefix&gt;Aligned.toTranscriptome.out.bam</code>, coordinates
+converted to transcript space — the exact input salmon’s align mode
+consumes (section 7). <code>--outSAMattributes NH HI AS NM MD</code>
+emits multimapping hierarchy and mismatch tags that downstream tools
+expect.</p>
+<p><strong>What we ran (unique / multi / unmapped-too-short, per
+sample):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>Sample</th>
+<th>Unique %</th>
+<th>Multi-loci %</th>
+<th>Too short %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>HBR_Rep1</td>
+<td>53.25</td>
+<td>0.68</td>
+<td>12.48</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>HBR_Rep2</td>
+<td>53.03</td>
+<td>0.68</td>
+<td>11.98</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>HBR_Rep3</td>
+<td>53.33</td>
+<td>0.48</td>
+<td>12.90</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep1</td>
+<td>46.76</td>
+<td>2.02</td>
+<td>11.86</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep2</td>
+<td>49.94</td>
+<td>2.08</td>
+<td>11.49</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep3</td>
+<td>45.06</td>
+<td>1.90</td>
+<td>12.87</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep1</td>
+<td>51.82</td>
+<td>1.09</td>
+<td>47.08</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep2</td>
+<td>51.70</td>
+<td>1.11</td>
+<td>47.19</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep3</td>
+<td>51.77</td>
+<td>1.06</td>
+<td>47.17</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep1</td>
+<td>45.30</td>
+<td>2.77</td>
+<td>51.92</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep2</td>
+<td>48.47</td>
+<td>3.02</td>
+<td>48.50</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep3</td>
+<td>44.56</td>
+<td>2.77</td>
+<td>52.66</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation.</strong> Three signals, all stable across
+rounds and depths: (1) <strong>HBR maps ~5 points better than
+UHR</strong> — the brain reference is a single-tissue RNA with fewer
+immunoglobulin/repetitive transcripts; UHR’s pool includes IG genes that
+genuinely multi-map (UHR multi-loci 1.9–3.0% vs HBR 0.5–1.1%). (2)
+<strong>Unique rates are identical between the 10k-read mini and the
+100k+ read full round</strong> (HBR 53.0–53.3 vs 51.7–51.8; UHR
+45.1–49.9 vs 44.6–48.5) — the profile is a property of the reads, not of
+depth. (3) The homework round’s ~47–53% “unmapped: too short” (vs 11–13%
+in mini, same reads, different index) is a property of the
+<strong>full-genome index + BySJout combination</strong> on this
+pre-filtered library content: reads whose best full-genome alignment
+falls below the filter thresholds are dropped as “too short”. The mini
+chr22 index reproduces the course’s own numbers; the full index trades
+coverage for stringency. Record, don’t panic: the uniquely-mapped
+fraction that feeds quantification is consistent.</p>
+<p><strong>Pitfalls.</strong> RNA-05 (shebang <code>!/bin/bash</code> in
+the printed batch script — cosmetic). RNA-13 (thread count 1 vs 4 —
+classroom load design; our homework round used 4 with a memory guard:
+before every STAR invocation, wait until <code>MemAvailable</code> ≥ 37
+GB, because loading the full index costs ~31 GB and the login node is
+shared). The mini index needs only ~0.4 GB — that round needed no
+guard.</p>
+<p><strong>Tuning.</strong> <code>--runThreadN</code> up on a quiet
+node; <code>--twopassMode Basic</code> improves novel-junction
+sensitivity at ~2× cost;
+<code>--outSAMtype BAM SortedByCoordinate</code> saves a samtools sort
+if genome-coordinate tools come next.</p>
+<p><strong>Extensions.</strong> samtools
+<code>sort</code>/<code>index</code> + <code>flagstat</code> for BAM QC;
+RSeQC (<code>infer_experiment</code>, <code>inner_distance</code>) for
+strandedness and insert profiles; <code>--quantMode GeneCounts</code>
+for a quick raw count matrix alongside the transcriptome BAM.</p>
+<h2 id="汇总质控multiqc">6. 汇总质控（multiqc）</h2>
+<p><strong>Original (homework cell; mini uses the real working
+directory):</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> /lustre1/share/RNA_seq_student/yourfold</span></code></pre></div>
+<p><strong>Rationale.</strong> multiqc walks a directory tree,
+recognizes tool outputs it knows (fastqc zips, fastp JSON/HTML, STAR
+<code>Log.final.out</code>, salmon <code>quant.sf</code>, …), and merges
+them into one report with per-sample columns — the fastest way to see
+all twelve fastq files and six samples side by side.</p>
+<p><strong>What we ran.</strong>
+<code>multiqc "$PWD" -o multiqc_report</code> (RNA-06: the printed path
+is a placeholder — <code>yourfold</code> is literally “your folder”).
+Both rounds produced the aggregated report; the STAR and fastp numbers
+quoted in this document are cross-checkable there.</p>
+<p><strong>Pitfalls.</strong> RNA-06 (placeholder path). Also note:
+multiqc only reports what it finds under the given path — pointing it at
+the wrong directory “succeeds” with an empty report rather than
+failing.</p>
+<p><strong>Tuning.</strong> <code>-f</code> to rebuild,
+<code>--cl</code> to embed the command line in the report, a
+<code>multiqc_config.yaml</code> to pin module order for teaching.
+<strong>Extensions.</strong> <code>--pdf</code> export; running multiqc
+at the end and at the mid-pipeline point (post-STAR) gives before/after
+views.</p>
+<h2 id="定量-i比对模式salmon-align-mode">7. 定量 I：比对模式（salmon
+align mode）</h2>
+<p><strong>Original (homework batch cell — the correct one; see RNA-03
+for the single-sample cell’s mangled filename):</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">TRANSCRIPTOME</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome/GRCh38_no_alt_analysis_set_gencode.v36.transcripts.fa&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bam_file <span class="kw">in</span> <span class="pp">*</span>Aligned.toTranscriptome.out.bam<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample_name</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$bam_file</span><span class="st">&quot;</span> Aligned.toTranscriptome.out.bam<span class="va">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">salmon</span> quant <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$TRANSCRIPTOME</span><span class="st">&quot;</span> <span class="at">--libType</span> A <span class="at">-a</span> <span class="st">&quot;</span><span class="va">$bam_file</span><span class="st">&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${sample_name}</span><span class="st">_align.salmon_quant&quot;</span> <span class="at">--gcBias</span> <span class="at">--seqBias</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;Processed: </span><span class="va">$sample_name</span><span class="st">&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>Rationale.</strong> This is <em>alignment-based</em>
+quantification: STAR already decided where each read goes; salmon’s
+align mode (<code>-a</code>) takes the transcriptome-coordinate BAM,
+assigns multi-mapping reads fractionally by EM, and estimates abundance
+per transcript. <code>--gcBias --seqBias</code> correct observed
+sequence-content and GC biases from the alignments themselves.
+<code>-t</code> is the transcriptome fasta the BAM’s transcript names
+refer to; <code>--libType A</code> lets salmon infer the library
+type.</p>
+<p><strong>What we ran.</strong> All six samples in both rounds;
+<strong>100.0% of fragments “mapped” in every sample</strong> — which is
+exactly what it sounds like and not a quality number: the input BAM
+contains only fragments STAR already aligned, so the denominator is
+“aligned fragments”, not “reads in the library” (RNA-12).</p>
+<p><strong>Pitfalls.</strong> RNA-03 (the single-sample demo cell’s
+filename is a UHR/HBR paste-mix — copy it and it fails at
+file-not-found). RNA-02 (the mini single-sample cell omits
+<code>--gcBias --seqBias</code> while its batch cell includes them —
+quantifying one sample by the demo command and the rest by the batch
+script produces systematically different corrections across
+samples).</p>
+<p><strong>Interpretation.</strong> Align mode inherits every STAR
+decision (junction filters, multimap caps, the too-short drops). Its
+counts are “STAR’s view of the transcriptome”; quasi mode (section 8) is
+salmon’s own, more conservative view — that contrast is the point of
+running both.</p>
+<p><strong>Tuning.</strong> <code>-p</code> threads;
+<code>--posBias</code> if positional attenuation is suspected.
+<strong>Extensions.</strong> RSEM is the classical alternative for the
+same BAM; <code>--numBootstraps</code> adds uncertainty replicates
+tximport can consume.</p>
+<h2 id="定量-ii选择性比对模式salmon-quasi---validatemappings">8. 定量
+II：选择性比对模式（salmon quasi /
+<code>--validateMappings</code>）</h2>
+<p><strong>Original (homework batch cell):</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">INDEX</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome/salmon_index&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r1 <span class="kw">in</span> <span class="pp">*</span>read1.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$r1</span><span class="st">&quot;</span> .read1.fastq.gz<span class="va">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">r2</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.fastq.gz&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">salmon</span> quant <span class="at">-i</span> <span class="va">$INDEX</span> <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">-l</span> A <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">-1</span> <span class="st">&quot;</span><span class="va">$r1</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">-2</span> <span class="st">&quot;</span><span class="va">$r2</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">--validateMappings</span> <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">--gcBias</span> <span class="at">--seqBias</span> <span class="dt">\</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">-p</span> 8 <span class="dt">\</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${base}</span><span class="st">_quasi.salmon_quant&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;Processed: </span><span class="va">$base</span><span class="st">&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>Rationale.</strong> Quasi mode maps raw reads directly
+against a transcriptome index (no genome, no junctions to discover).
+<code>--validateMappings</code> (salmon ≥1.0’s default mapping engine)
+validates candidate mappings by selective alignment — an alignment-score
+threshold decides membership instead of a plain k-mer hash hit, which is
+why its mapping rate reads <em>lower</em> than STAR’s: reads without a
+good transcriptome alignment are discarded rather than force-placed.</p>
+<p><strong>What we ran (mapping rates,
+<code>num_mapped / num_processed</code> from
+<code>aux_info/meta_info.json</code>):</strong></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>Round</th>
+<th>Mode</th>
+<th>HBR_Rep1</th>
+<th>HBR_Rep2</th>
+<th>HBR_Rep3</th>
+<th>UHR_Rep1</th>
+<th>UHR_Rep2</th>
+<th>UHR_Rep3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>direct (trimmed reads)</td>
+<td>36.5%</td>
+<td>36.5%</td>
+<td>36.4%</td>
+<td>33.8%</td>
+<td>31.2%</td>
+<td>32.2%</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>quasi (raw reads, as written)</td>
+<td>35.2%</td>
+<td>35.3%</td>
+<td>35.1%</td>
+<td>32.6%</td>
+<td>30.3%</td>
+<td>32.0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pitfalls.</strong> RNA-04 is the important one:
+<code>for r1 in *read1.fastq.gz</code> matches only the
+<strong>raw</strong> files (<code>*.read1.trimmed.fastq.gz</code> ends
+differently), so the homework quasi mode quantifies
+<strong>untrimmed</strong> reads while the mini direct mode quantifies
+trimmed — we ran it as written and recorded it (adapter fragments are
+short enough that mapping rates barely move, but the preprocessing story
+differs between the two documents). Also RNA-12: 30–37% here versus 100%
+in align mode is a <strong>denominator difference</strong>, not a
+quality collapse.</p>
+<p><strong>Interpretation.</strong> Two independent effects set the ~1/3
+rate: the reads are pre-filtered to chr22+ERCC content while the index
+is the full 231,448-transcript GENCODE v36 (salmon discards what doesn’t
+align well anywhere), and selective alignment is score-thresholded. The
+rates are remarkably stable across rounds (35.1–36.5% HBR, 30.3–33.8%
+UHR) — again a property of the libraries, reproducible at two
+depths.</p>
+<p><strong>Tuning.</strong> <code>-p 8</code> is printed in the homework
+batch cell — on a shared login node that is already a real thread
+budget. <strong>Extensions.</strong> <code>--numBootstraps 100</code> +
+tximport’s <code>countsFromAbundance</code> path gives bootstrap-aware
+variance; <code>--seqBias</code> interacts with fragment-length
+distributions — check <code>fldLen.png</code> in the output when
+QC-ing.</p>
+<h2 id="读入定量结果并过滤tximport-edger">9.
+读入定量结果并过滤（tximport → edgeR）</h2>
+<p><strong>Original (R cells, step-by-step path):</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>salmon_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;quant</span><span class="sc">\\</span><span class="st">.sf$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>salmon_files <span class="ot">&lt;-</span> salmon_files[<span class="fu">grepl</span>(<span class="st">&quot;quasi&quot;</span>, salmon_files)]     <span class="co"># homework; mini greps &quot;_direct&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>txi <span class="ot">&lt;-</span> <span class="fu">tximport</span>(salmon_files, <span class="at">type =</span> <span class="st">&quot;salmon&quot;</span>, <span class="at">txOut =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>dge <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(<span class="at">counts =</span> txi<span class="sc">$</span>counts)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>counts_threshold <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>samples_threshold <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(dge<span class="sc">$</span>counts <span class="sc">&gt;=</span> counts_threshold) <span class="sc">&gt;=</span> samples_threshold</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>dge_filtered <span class="ot">&lt;-</span> dge[keep, ]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sample_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample =</span> <span class="fu">colnames</span>(dge_filtered),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;HBR&quot;</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;UHR&quot;</span>, <span class="dv">3</span>)))  <span class="co"># change based on samples</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>condition, <span class="at">data =</span> sample_info)</span></code></pre></div>
+<p><strong>Rationale.</strong> <code>tximport</code> gathers per-sample
+<code>quant.sf</code> (Name, Length, TPM, NumReads) into one matrix;
+<code>txOut = TRUE</code> keeps the rows at <strong>transcript
+level</strong> (231,448 rows against the full index). The filter
+(<code>≥10 counts in ≥2 samples</code>) kills rows too sparse to model —
+at this library size that is almost everything, by construction of the
+dataset (chr22+ERCC-origin reads against a whole-transcriptome
+index).</p>
+<p><strong>What we ran (and what to check before the design matrix —
+RNA-01):</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Check</th>
+<th>mini</th>
+<th>homework</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>transcripts in index</td>
+<td>4,989 (chr22 mini)</td>
+<td>231,448 (full GENCODE v36)</td>
+</tr>
+<tr>
+<td>transcripts kept</td>
+<td>111</td>
+<td>831</td>
+</tr>
+<tr>
+<td><code>colnames(txi$counts)</code></td>
+<td><code>NULL</code> → Sample1–6</td>
+<td><code>NULL</code> → Sample1–6</td>
+</tr>
+<tr>
+<td>order that saved the day</td>
+<td>HBR×3 then UHR×3 (alphabetical)</td>
+<td>HBR×3 then UHR×3 (alphabetical)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pitfalls.</strong> RNA-01 is the structural one, in three
+links: (1) <code>list.files()</code> returns alphabetical order and the
+printed <code>condition</code> vector hard-codes HBR-first — correct
+<strong>only by luck of the filenames</strong>; (2) because the files
+are passed unnamed, <code>colnames</code> is <code>NULL</code> and edgeR
+invents Sample1–6 — sample identity is purely positional from here on;
+(3) nothing downstream (design matrix, contrasts,
+<code>sample_info</code> rownames in the heatmap) can catch a
+permutation. The fix that costs one line:
+<code>names(salmon_files) &lt;- sub("...sample pattern...", ..., salmon_files)</code>
+and build <code>condition</code> from those names. Both rounds’ checks
+printed above — order held both times, recorded, not assumed. RNA-14:
+<code>export LC_ALL=C; export LANG=C</code> before R (the tutorial
+carries this itself).</p>
+<p><strong>Interpretation.</strong> 111/4,989 and 831/231,448 look like
+different survival rates but are the same phenomenon at two index
+breadths: ~2% of rows pass in both. Depth sets <em>how many</em>
+transcripts clear 10 counts (111 → 831), the index sets the
+denominator.</p>
+<p><strong>Tuning.</strong> Raising <code>counts_threshold</code> with
+depth (10 is for this teaching scale; whole-transcriptome studies
+commonly require ≥10–20 CPM-like floors). <strong>Extensions.</strong>
+<code>txOut = FALSE</code> + a <code>tx2gene</code> frame aggregates to
+gene level before edgeR (the more common production path); DESeq2 with
+<code>tximport</code> is the drop-in alternative;
+<code>rtracklayer</code>/<code>biomaRt</code> (already loaded by the
+tutorial) can rebuild the annotation.</p>
+<h2 id="差异表达注释与火山图glmlrt-volcano">10.
+差异表达、注释与火山图（glmLRT + volcano）</h2>
+<p><strong>Original (R cells):</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dge_filtered <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(dge_filtered, design)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmFit</span>(dge_filtered, design)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">glmLRT</span>(fit)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>results_table <span class="ot">&lt;-</span> <span class="fu">topTags</span>(results, <span class="at">n =</span> <span class="cn">Inf</span>)<span class="sc">$</span>table</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>regulate <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> results_table<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="st">&quot;up-regulated&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">ifelse</span>(results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> results_table<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">&quot;down-regulated&quot;</span>, <span class="st">&quot;not sig&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gene_anno <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;/lustre1/share/RNA_seq_class/genome/gene_anno_gencode.v36.rds&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rownames_nover <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">rownames</span>(results_table))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>anno_transcript_nover <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, gene_anno<span class="sc">$</span>transcript_id)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>match_index <span class="ot">&lt;-</span> <span class="fu">match</span>(rownames_nover, anno_transcript_nover)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>gene_name <span class="ot">&lt;-</span> gene_anno<span class="sc">$</span>gene_name[match_index]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(results_table<span class="sc">$</span>regulate <span class="sc">!=</span> <span class="st">&quot;not sig&quot;</span>, results_table<span class="sc">$</span>gene_name, <span class="cn">NA_character_</span>)</span></code></pre></div>
+<p><strong>Rationale.</strong> edgeR’s generalized-linear-model path:
+<code>estimateDisp</code> estimates the negative-binomial dispersion,
+<code>glmFit</code> fits, <code>glmLRT</code> likelihood-ratio-tests the
+last term (here <code>conditionUHR</code>). The <code>regulate</code>
+rule is a conjunction: FDR &lt; 0.05 <strong>and</strong> |logFC| &gt; 1
+— statistical significance and effect size together, which is why the
+volcano’s dashed lines sit at ±1 and −log10(0.05). The annotation block
+strips GENCODE version suffixes (<code>ENST00000615943.1</code> →
+<code>ENST00000615943</code>) <strong>on both sides</strong> before
+<code>match()</code> — note this is exactly the discipline the heatmap
+block forgets (section 12).</p>
+<p><strong>What we ran:</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>mini</th>
+<th>homework (full)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>up-regulated</td>
+<td>15</td>
+<td>171</td>
+</tr>
+<tr>
+<td>down-regulated</td>
+<td>30</td>
+<td>148</td>
+</tr>
+<tr>
+<td>not significant</td>
+<td>66</td>
+<td>512</td>
+</tr>
+<tr>
+<td>Matched (gene_name)</td>
+<td>111 / 111</td>
+<td>831 / 831</td>
+</tr>
+<tr>
+<td>top up (by FDR)</td>
+<td>IGLC2 (logFC ≈ +10.3, FDR ≈ 1e-145), IGLC3, XBP1, MYH9</td>
+<td>IGLC2, IGLC3, …</td>
+</tr>
+<tr>
+<td>top down</td>
+<td>MIAT (≈ −8.5), YWHAH, MAPK8IP2, ACO2, SYNGR1, SEPTIN3, CBX7</td>
+<td>SYNGR1, SEPTIN3, YWHAH, RPL3, CBX6, …</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation — the SEQC truth check.</strong> Every
+direction matches the known answer: <strong>UHR up</strong>:
+immunoglobulin lambda chains IGLC2/IGLC3 (UHR’s pool includes
+immune-cell RNA) — textbook; <strong>HBR up (i.e., UHR-down)</strong>:
+MIAT, YWHAH, MAPK8IP2, ACO2, SYNGR1, SEPTIN3 — brain-enriched
+transcripts. The top gene is the same transcript at both depths (IGLC2,
+|logFC| &gt; 10 at FDR ~1e-145) — the signal was already saturated at
+10k reads; depth bought <em>more</em> called genes (45 → 319), not a
+different answer. That is the core lesson of the mini/homework
+pairing.</p>
+<p><strong>Pitfalls.</strong> RNA-15
+(<code>ggrepel: 9 / 280 unlabeled data points</code> — decluttering,
+benign). glmLRT takes the fitted object; passing extra arguments changes
+the tested term (caught and corrected during our mini-round harvest —
+the tutorial’s own call <code>glmLRT(fit)</code> is the right one).</p>
+<p><strong>Tuning.</strong> <code>topTags(n = Inf)</code> then sorting
+by logFC shows strong-effect genes the FDR sort hides.
+<strong>Extensions.</strong> <code>decideTests</code> + Venn across
+contrasts; <code>topTags</code> with <code>adjust.method = "BH"</code>
+is the default FDR here.</p>
+<h2 id="富集分析go-and-the-kegg-that-never-runs">11. 富集分析（GO — and
+the KEGG that never runs）</h2>
+<p><strong>Original (step-by-step cells — the executable
+path):</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> results_table<span class="sc">$</span>gene_name[results_table<span class="sc">$</span>regulate <span class="sc">==</span> <span class="st">&quot;up-regulated&quot;</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> gene_list[<span class="sc">!</span>(<span class="fu">is.na</span>(gene_list) <span class="sc">|</span> gene_list <span class="sc">==</span> <span class="st">&quot;&quot;</span>)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#KEGG analysis</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#entrez_ids &lt;- mapIds(...)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#kegg_enrich &lt;- enrichKEGG(...)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#go analysis</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>go_enrich <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene =</span> gene_list, <span class="at">OrgDb =</span> org.Hs.eg.db, <span class="at">keyType =</span> <span class="st">&quot;SYMBOL&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ont =</span> <span class="st">&quot;ALL&quot;</span>, <span class="at">pvalueCutoff =</span> <span class="dv">1</span>, <span class="at">qvalueCutoff =</span> <span class="dv">1</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>go_dotplot <span class="ot">&lt;-</span> <span class="fu">dotplot</span>(go_enrich, <span class="at">showCategory =</span> <span class="dv">10</span>, <span class="at">title =</span> <span class="st">&quot;GO Enrichment&quot;</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;GO_dotplot_up_regulate.pdf&quot;</span>, <span class="at">plot =</span> go_dotplot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><strong>Rationale.</strong> Enrichment asks whether the up-regulated
+gene set is annotation-fold-enriched versus the background.
+<code>keyType = "SYMBOL"</code> feeds gene symbols directly (no manual
+ID conversion); <code>ont = "ALL"</code> pools BP+MF+CC;
+<code>pvalueCutoff = 1</code> disables the display-side cutoff so the
+top-10 sort is by actual significance.</p>
+<p><strong>What we ran.</strong> 15 up genes (mini) / 171 (homework).
+Homework top GO categories (p.adjust 0.0075–0.0088): <em>viral RNA
+genome replication</em>, <em>single-stranded viral RNA replication via
+double-stranded DNA intermediate</em>, <em>glycosyl compound catabolic
+process</em>, <em>protein targeting to mitochondrion</em>, <em>DNA
+dealkylation</em>, <em>cytidine catabolic process</em>, <em>cytidine
+deamination</em>, <em>cytidine-to-uridine editing</em>. The same top
+categories appear in the teacher’s reference <code>GO_dotplot.pdf</code>
+(<em>viral RNA genome replication</em>, <em>glycosyl compound catabolic
+process</em>, p.adjust 0.0075) — cross-validated against the reference,
+not just self-consistent.</p>
+<p><strong>Pitfalls — RNA-07/08, both about the consolidated “CODES”
+cell.</strong> The step-by-step cells comment KEGG out with
+<code>#</code> (correct). The consolidated cell instead wraps the whole
+KEGG block in <code>''' … '''</code>. In R, <code>'''</code> is
+<strong>not</strong> a comment: it parses as an empty string
+<code>''</code> followed by a string-opener <code>'</code>, so the
+entire block becomes <strong>one giant string literal</strong> that R
+evaluates and auto-prints — it <em>accidentally</em> behaves like a
+block comment, doing nothing. The failure mode is latent: any apostrophe
+inside the block would close the string early and the remaining code
+becomes <strong>live</strong>. Treat <code>'''</code> blocks as
+non-executable prose, always. And RNA-08: the homework’s consolidated
+cell still filters <code>"_direct"</code> (the mini naming) — with
+homework outputs named <code>_quasi</code> it finds zero files and dies
+at tximport; the step-by-step path (<code>grepl("quasi")</code>) is the
+executable one.</p>
+<p><strong>Interpretation.</strong> The
+cytidine-deamination/cytidine-to-uridine-editing cluster is not noise:
+immunoglobulin-expressing cells run AID/APOBEC-driven cytidine
+deamination for affinity maturation — the GO readout of the same IG
+signal the volcano shows. The “viral RNA genome replication” style
+categories are an annotation-side effect of the IG/ERV-region genes in
+the up set (read with the teacher’s reference, which shows the
+same).</p>
+<p><strong>Tuning.</strong> <code>enrichKEGG</code> needs ENTREZ IDs
+(the commented block does the conversion) and network access to KEGG
+REST — the reason it’s the step usually left off in class.
+<strong>Extensions.</strong> <code>compareCluster</code> across
+up/down/both sets; GSEA (<code>gseGO</code>) on the whole ranked table
+uses more than the top set.</p>
+<h2 id="热图沉默的全-na-坑the-silent-all-na-bug">12. 热图——沉默的全 NA
+坑（the silent all-NA bug）</h2>
+<p><strong>Original (homework heatmap block, verbatim):</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>logCPM_scaled <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dge_filtered, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">prior.count =</span> <span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(logCPM_scaled) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">rownames</span>(logCPM_scaled))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>degs <span class="ot">&lt;-</span> results_table[results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(results_table<span class="sc">$</span>logFC) <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>top50 <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">rownames</span>(degs[<span class="fu">order</span>(degs<span class="sc">$</span>FDR), ]), <span class="dv">50</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>top50_clean <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, top50)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>logCPM_scaled_sub <span class="ot">&lt;-</span> logCPM_scaled[top50_clean, ]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>gene_map <span class="ot">&lt;-</span> <span class="fu">setNames</span>(gene_anno<span class="sc">$</span>gene_name, gene_anno<span class="sc">$</span>transcript_id)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(logCPM_scaled_sub) <span class="ot">&lt;-</span> gene_map[<span class="fu">rownames</span>(logCPM_scaled_sub)]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sample_info) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(logCPM_scaled)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;heatmap_DEG.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(logCPM_scaled_sub, <span class="at">cluster_rows =</span> <span class="cn">TRUE</span>, <span class="at">cluster_cols =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">show_rownames =</span> <span class="cn">TRUE</span>, <span class="at">annotation_col =</span> sample_info,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Heatmap of Differentially Expressed Genes&quot;</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<p><strong>The bug chain, link by link.</strong> Line 2 strips versions
+from the rownames (<code>ENST00000390323.5</code> →
+<code>ENST00000390323</code>); line 6 builds <code>gene_map</code> with
+<strong>versioned</strong> keys
+(<code>setNames(gene_anno$gene_name, gene_anno$transcript_id)</code> —
+no stripping); line 7 looks the stripped names up in the versioned map →
+<strong>every lookup misses</strong>; assigning an all-<code>NA</code>
+vector to rownames is legal in R; pheatmap renders it — <strong>fifty
+rows labeled “NA”, no error, no warning</strong>.
+<code>pdftotext heatmap_DEG.pdf</code> from our real run shows exactly
+50 × <code>NA</code>. This is the same version-mismatch class as the
+annotation block in section 10, which gets it right by stripping both
+sides before <code>match()</code> — and the mini version’s heatmap block
+gets it right too (a <code>clean_id()</code> helper applied to
+<em>both</em> the data rows and the annotation IDs, plus
+<code>make.unique()</code> and <code>labels_row =</code>).</p>
+<p><strong>The one-line correction (executed and verified):</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gene_map <span class="ot">&lt;-</span> <span class="fu">setNames</span>(gene_anno<span class="sc">$</span>gene_name, <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, gene_anno<span class="sc">$</span>transcript_id))</span></code></pre></div>
+<p>Our corrected run (<code>heatmap_DEG_corrected.pdf</code>): <strong>0
+of 50 NA</strong>, row labels IGLC2, IGLC3, MCM5, SERPIND1, LIF, … — the
+real top-DEG genes.</p>
+<p><strong>Pitfalls.</strong> RNA-09 (above). RNA-10: the teacher’s
+reference <code>heatmap_DEG.pdf</code> has <strong>versioned ENST IDs as
+row labels</strong> — neither gene names (mini-style) nor all-NA
+(printed-homework-style): the reference run used yet another code
+variant, so it is not a valid oracle for this block (Appendix B). The
+homework block also drops the mini version’s <code>scale = "row"</code>
+— rows are raw logCPM, so a highly expressed gene visually swamps the
+pattern scale=“row” would show.</p>
+<p><strong>Interpretation.</strong> The heatmap’s job here is the visual
+assertion of the DEG story: samples cluster by condition (HBR vs UHR
+columns separate), top genes split into the two direction blocks. Labels
+are the only thing the bug broke — the numbers, clustering, and
+annotation bar were always right, which is precisely why it survived
+into the printed handout.</p>
+<p><strong>Tuning.</strong> <code>scale = "row"</code> (z-scores per
+row), <code>cutree_rows</code> to force block structure,
+<code>gaps_col = 3</code> between the two conditions.
+<strong>Extensions.</strong> <code>ComplexHeatmap</code> for
+annotation-heavy figures; <code>label_maxsize</code>/fontsize when 50
+labels crowd.</p>
+<h2 id="双轮对比mini-vs-homeworkfull-side-by-side">13. 双轮对比（mini vs
+homework/full, side by side)</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>mini (2026-09-21)</th>
+<th>homework/full (2026-10-09)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reads per sample</td>
+<td>10,000</td>
+<td>118,571–227,392 pairs</td>
+</tr>
+<tr>
+<td>STAR index</td>
+<td>chr22 mini, 381 MB</td>
+<td>full GRCh38, ~31 GB RAM</td>
+</tr>
+<tr>
+<td>STAR unique (HBR / UHR)</td>
+<td>53.0–53.3% / 45.1–49.9%</td>
+<td>51.7–51.8% / 44.6–48.5%</td>
+</tr>
+<tr>
+<td>STAR too short</td>
+<td>11.5–12.9%</td>
+<td>47.1–52.7% (full index + BySJout stringency)</td>
+</tr>
+<tr>
+<td>salmon align mode</td>
+<td>100% (aligned-fragment denominator)</td>
+<td>100% (same)</td>
+</tr>
+<tr>
+<td>salmon direct/quasi</td>
+<td>31.2–36.5% (trimmed)</td>
+<td>30.3–35.3% (raw, as written)</td>
+</tr>
+<tr>
+<td>transcripts in index</td>
+<td>4,989</td>
+<td>231,448</td>
+</tr>
+<tr>
+<td>transcripts kept (≥10 counts, ≥2 samples)</td>
+<td>111 (2.2%)</td>
+<td>831 (0.36%)</td>
+</tr>
+<tr>
+<td>DEG (FDR&lt;0.05 and |logFC|&gt;1)</td>
+<td>45 (15 up / 30 down)</td>
+<td>319 (171 up / 148 down)</td>
+</tr>
+<tr>
+<td>top gene both directions</td>
+<td>IGLC2 (+10.3) / MIAT (−8.5)</td>
+<td>IGLC2 / SYNGR1-cluster</td>
+</tr>
+<tr>
+<td>Matched annotation</td>
+<td>111/111</td>
+<td>831/831</td>
+</tr>
+<tr>
+<td>GO top terms</td>
+<td>(small set)</td>
+<td>viral RNA genome replication etc., match teacher reference</td>
+</tr>
+<tr>
+<td>heatmap labels</td>
+<td>gene names (correct block)</td>
+<td>all “NA” as printed → corrected 0/50 NA</td>
+</tr>
+<tr>
+<td>wall time</td>
+<td>~4 min</td>
+<td>13 min</td>
+</tr>
+<tr>
+<td>where</td>
+<td>login node, serial</td>
+<td>login node, serial (memory-guarded STAR)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What scales and what doesn’t.</strong> Wall time grew 4 → 13
+min (index load dominates; the full index is ~80× the mini one). DEG
+count grew 45 → 319 (depth buys calls). The <em>answers</em> didn’t
+move: mapping-rate profiles, top genes, and directions are
+depth-invariant — which is the whole point of running the mini first.
+The one thing that flipped between rounds was an artifact of the
+<em>documents</em>, not the data: the mini heatmap block annotates
+correctly, the homework block doesn’t.</p>
+<h2 id="检查清单产物清单与总结checklist-outputs-summary">14.
+检查清单、产物清单与总结（Checklist, outputs, summary）</h2>
+<p><strong>检查清单 (checklist — with both rounds’ measured
+answers):</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Check</th>
+<th>mini</th>
+<th>full</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ck1</td>
+<td>sample order before design matrix (HBR×3 first?)</td>
+<td>held</td>
+<td>held</td>
+</tr>
+<tr>
+<td>ck2</td>
+<td><code>colnames(txi$counts)</code> NULL → Sample1–6 (positional
+identity)</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck3</td>
+<td>STAR unique rate in 44–54% band, HBR above UHR</td>
+<td>45.1–53.3%</td>
+<td>44.6–51.8%</td>
+</tr>
+<tr>
+<td>ck4</td>
+<td>multi-loci low, UHR &gt; HBR (IG content)</td>
+<td>0.5–2.1%</td>
+<td>1.1–3.0%</td>
+</tr>
+<tr>
+<td>ck5</td>
+<td>quasi mapping 30–37%, align 100% (different denominators — don’t
+compare)</td>
+<td>31.2–36.5%</td>
+<td>30.3–35.3%</td>
+</tr>
+<tr>
+<td>ck6</td>
+<td>kept transcripts ~2% and ~0.4% of index at the two breadths</td>
+<td>111/4,989</td>
+<td>831/231,448</td>
+</tr>
+<tr>
+<td>ck7</td>
+<td>DEG direction matches SEQC truth (IGL up in UHR, brain genes
+down)</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck8</td>
+<td>top gene identical across depths</td>
+<td>IGLC2</td>
+<td>IGLC2</td>
+</tr>
+<tr>
+<td>ck9</td>
+<td><code>Matched: n/n</code> printed by the annotation block</td>
+<td>111/111</td>
+<td>831/831</td>
+</tr>
+<tr>
+<td>ck10</td>
+<td>GO top terms vs teacher reference</td>
+<td>—</td>
+<td>match (viral RNA genome replication, p.adjust ~0.008)</td>
+</tr>
+<tr>
+<td>ck11</td>
+<td>heatmap labels are gene names, not “NA”</td>
+<td>yes (correct block)</td>
+<td>0/50 NA <strong>after correction</strong> (50/50 NA as printed)</td>
+</tr>
+<tr>
+<td>ck12</td>
+<td><code>LC_ALL=C</code>/<code>LANG=C</code> exported before R</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck13</td>
+<td>ggrepel “unlabeled” warnings noted benign</td>
+<td>9</td>
+<td>280</td>
+</tr>
+</tbody>
+</table>
+<p><strong>产物清单 (outputs):</strong> both rounds’ artifacts live in
+the repository under <code>RNA-seq/results/</code> (analysis products
+only — no raw reads, no BAMs): fastqc/fastp reports, STAR
+<code>Log.final.out</code> ×6 each, multiqc reports, salmon
+<code>quant.sf</code> for all 24 quantifications, the R analysis log,
+the four homework-round PDFs (volcano / GO / <strong>heatmap as printed,
+all-NA</strong> / <strong>heatmap corrected, 0-NA</strong>) plus the
+three mini-round PDFs, and both rounds’ full <code>summary</code> +
+<code>deviations</code> logs and runner scripts. The heavy intermediates
+(BAMs, trimmed/ raw FASTQs, full salmon directories) stay in the cluster
+run directories
+(<code>/lustre1/user/bjx131_pkuhpc/rna_run_mini_20260921/</code>,
+<code>/lustre1/user/bjx131_pkuhpc/rna_run_homework_20261009/</code>).</p>
+<p><strong>总结.</strong> The pipeline is sound; the pitfalls are in the
+hand-written seams around it — sample identity carried only by position
+and alphabetical luck, two salmon modes whose mapping rates share no
+denominator, a quasi-mode loop that quietly quantifies raw reads, and a
+heatmap annotation rewrite that silently renders 50 unlabeled rows.
+Every one of them was reproduced on real runs, and every fix was
+executed and verified. The SEQC dataset did its job throughout: the
+biological answer (IGLC2 up, brain genes down) was stable at both depths
+and matched the teacher’s reference wherever the reference was
+comparable — which, as Appendix B shows, is itself something to verify,
+not assume.</p>
+<h2
+id="附录-a.-偏差日志both-rounds-condensed-but-verbatim-faithful">附录 A.
+偏差日志（both rounds, condensed but verbatim-faithful）</h2>
+<p>Full logs: <code>RNA-seq/results/mini/log/</code> and
+<code>RNA-seq/results/homework/log/</code> (summary + deviations + R
+analysis).</p>
+<p><strong>mini round (2026-09-21) — selection:</strong></p>
+<pre class="text"><code>DEVIATION: workdir = own run dir (tutorial: classroom share dir); no writes to the classroom share
+DEVIATION: tutorial-native interactive mode: serial single-process run on the login node —
+  campus-wide SLURM submission outage (all sbatch rejected; sacct empty since 9/15; the WES
+  scripts that ran successfully on 9/20 also rejected → cluster-side, not ours)
+DEVIATION: SLURM env-var guard + deviation logging added to the teacher&#39;s load-test script shape
+DEVIATION: single consolidated runner script (tutorial assumes interactive typing)
+FINDING: sample order fragility holds (list.files alphabetical, HBR×3 first, condition correct)
+FINDING: tximport unnamed files → colnames NULL → edgeR Sample1-6 (positional dependence)
+FINDING: KEGG block is a doc bug (step-by-step cells comment it with #; consolidated wraps in &#39;&#39;&#39;)
+FINDING: ggrepel 9 unlabeled benign</code></pre>
+<p><strong>homework round (2026-10-09) — selection:</strong></p>
+<pre class="text"><code>DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026_homework/{id})
+DEVIATION: tutorial-native interactive mode on the login node, per user directive 2026-10-09 —
+  SLURM had RECOVERED by probe time (test-only alloc OK on cn-long) but the tutorial&#39;s own
+  design is direct interactive execution; recorded, not used this round
+DEVIATION: restart guards (skip steps whose outputs exist); STAR memory guard (wait for
+  MemAvailable ≥ 37 GB before each invocation — index ~31 GB on a shared login node)
+DEVIATION: STAR --runThreadN 4 per the homework batch script (single-sample demo cell says 1)
+DEVIATION: multiqc: doc cell has placeholder path; used $PWD like the mini version
+DEVIATION: salmon quasi mode runs on RAW reads (glob *read1.fastq.gz matches only untrimmed) —
+  inconsistent with mini&#39;s direct mode on trimmed; run AS WRITTEN, recorded
+DEVIATION: R step-by-step path used (grepl(&quot;quasi&quot;)); consolidated CODES cell still filters
+  &quot;_direct&quot; (mini naming) AND wraps KEGG in &#39;&#39;&#39; (invalid R) — unusable for homework outputs
+FINDING: heatmap row labels ALL &quot;NA&quot; (gene_map keyed by versioned transcript_id, looked up
+  with version-stripped rownames) — silent; correction pass heatmap_DEG_corrected.pdf: 0/50 NA
+FINDING: quasi mapping rate 30–35% on raw reads (mini direct ~32%, consistent)
+FINDING: teacher reference heatmap rows are versioned ENST IDs — teacher&#39;s actual run used a
+  third code variant; third teacher-vs-doc deviation (cf. class.R salmon_files[-2], the
+  mangled single-sample salmon filename)
+RESULT: GO dotplot top categories match teacher reference (viral RNA genome replication,
+  glycosyl compound catabolic process; p.adjust 0.0075 vs 0.0082–0.0088) — cross-validated</code></pre>
+<h2
+id="附录-b.-教师参考产物-vs-印刷版文档evidence-all-paths-verbatim">附录
+B. 教师参考产物 vs 印刷版文档（evidence, all paths verbatim)</h2>
+<p>The teacher’s own run left artifacts in
+<code>/lustre1/share/RNA_seq/</code>. Three independent deviations from
+the printed documents:</p>
+<ol type="1">
+<li><strong>The reference heatmap is a third variant.</strong>
+<code>/lustre1/share/RNA_seq/heatmap_DEG.pdf</code> row labels are
+versioned ENST IDs (e.g. <code>ENST00000407418.8</code>). The printed
+homework block produces all-“NA” labels (RNA-09, reproduced); the mini
+block produces gene names. The reference matches neither — its code kept
+the versioned ENST rownames and never renamed them.</li>
+<li><strong><code>class.R</code> drops a sample.</strong>
+<code>salmon_files &lt;- salmon_files[-2]</code> — the 2nd
+quantification directory is removed before tximport. Consistent with
+cleanup of a duplicated directory in the teacher’s own run area (the
+share contains both <code>UHR_Rep3...chr22Aligned...bam</code> and a
+doubled-name
+<code>UHR_Rep3...chr22_ERCC-Mix2...chr22Aligned...bam</code>), not with
+any method in the printed documents.</li>
+<li><strong>The mangled single-sample salmon cell was actually
+run.</strong> The doubled-name BAMs above are exactly what the
+homework’s single-sample align cell (RNA-03, UHR name + pasted HBR
+<code>_ERCC-Mix2...chr22</code> suffix) produces — the reference area
+carries the bug’s own output filename.</li>
+</ol>
+<p>Where the reference <em>is</em> comparable, it agrees with our runs:
+<code>GO_dotplot.pdf</code> top categories and p.adjust match ours
+(Appendix A, RESULT). The WES edition’s lesson repeats verbatim:
+reference artifacts are evidence of <em>someone’s actual commands</em>,
+not a proof of the printed ones — diff against them only where the code
+path is known.</p>
+<h2 id="附录-c.-复现reproduction">附录 C. 复现（reproduction)</h2>
+<p>Both rounds’ runner scripts and the R scripts are stored verbatim in
+<code>RNA-seq/results/mini/scripts/</code> and
+<code>RNA-seq/results/homework/scripts/</code>, next to their full logs.
+The homework runner documents its own wrapping deviations in its header
+comment (SLURM header kept for provenance only — the round ran
+tutorial-native on the login node). Re-running the mini round takes ~4
+minutes and needs only the shared environment; re-running the homework
+round takes ~13 minutes serial and needs ~31 GB free for each STAR
+invocation.</p>
+</body>
+</html>

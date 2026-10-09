@@ -1,0 +1,11 @@
+{
+    "salmon_version": "1.10.3",
+    "targets": "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/chr22.transcripts.fa",
+    "libType": "A",
+    "alignments": "UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam",
+    "output": "UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant",
+    "gcBias": [],
+    "seqBias": [],
+    "threads": "1",
+    "auxDir": "aux_info"
+}

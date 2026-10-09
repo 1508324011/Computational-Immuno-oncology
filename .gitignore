@@ -219,3 +219,26 @@ WES/results/**/*.g.vcf.idx
 WES/results/**/*.g.vcf.gz
 WES/results/**/f1r2.tar.gz
 WES/results/**/orientation_model.tar.gz
+# -----------------------------------------------------------------------------
+# 9. RNA-seq/results — curated analysis results (EXPLICIT exception, 2026-10-09)
+# -----------------------------------------------------------------------------
+# Same deliberate policy as section 8 (WES/results): the curated two-round
+# RNA-seq analysis outputs ARE versioned (QC reports, metrics, logs, scripts,
+# salmon quant.sf of the quasi mode as .gz, R PDFs — see
+# RNA-seq/ref/RNA_seq_tutorial_corrected.md section 14 and
+# RNA-seq/ref/RNA_seq_results_guide.md). NO raw data.
+!RNA-seq/results/**
+
+# Safety net (mirrors section 8): raw data & heavy intermediates never enter,
+# not even via the exception above:
+RNA-seq/results/**/*.bam
+RNA-seq/results/**/*.bai
+RNA-seq/results/**/*.sam
+RNA-seq/results/**/*.cram
+RNA-seq/results/**/*.fastq
+RNA-seq/results/**/*.fastq.gz
+RNA-seq/results/**/*.fq
+RNA-seq/results/**/*.fq.gz
+RNA-seq/results/**/*.g.vcf
+RNA-seq/results/**/*.g.vcf.idx
+RNA-seq/results/**/*.g.vcf.gz

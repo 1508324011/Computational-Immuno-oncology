@@ -1,0 +1,22 @@
+{
+    "read_files": "[ HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.fastq.gz, HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.fastq.gz]",
+    "expected_format": "ISR",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 41720,
+    "num_assigned_fragments": 41720,
+    "num_frags_with_concordant_consistent_mappings": 40420,
+    "num_frags_with_inconsistent_or_orphan_mappings": 1762,
+    "strand_mapping_bias": 0.019645888915837983,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 810,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 40420,
+    "SF": 538,
+    "SR": 414,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

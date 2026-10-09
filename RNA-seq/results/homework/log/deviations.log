@@ -1,0 +1,19 @@
+[2026-10-09 14:49:56] DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026_homework/{id}); no writes to classroom share
+[2026-10-09 14:49:56] DEVIATION: tutorial-native interactive mode: serial single-process run on login node, per user directive 2026-10-09 — SLURM had RECOVERED by probe time (test-only alloc OK on cn-long) but the tutorial's own design is direct interactive execution; recorded, not used this round
+[2026-10-09 14:49:56] DEVIATION: single consolidated runner script (tutorial assumes interactive typing)
+[2026-10-09 14:49:56] DEVIATION: restart guards added: steps whose outputs already exist are skipped (additive wrapper for a multi-hour serial run)
+[2026-10-09 14:49:56] DEVIATION: STAR memory guard added before each invocation: wait until MemAvailable >= 37G (index SA 25G + Genome 3.2G + SAindex 1.6G ~ 31G RAM on a shared login node)
+[2026-10-09 14:49:56] DEVIATION: STAR --runThreadN 4 per the homework batch_STAR.sh (single-sample demo cell says 1; batch cell is the homework path)
+[2026-10-09 14:49:56] DEVIATION: batch_STAR.sh in the doc lost the '#' of its shebang (!/bin/bash) — cosmetic doc bug, recorded; loop body used verbatim
+[2026-10-09 14:49:56] DEVIATION: multiqc: doc cell has placeholder path /lustre1/share/RNA_seq_student/yourfold; used $PWD like the mini version
+[2026-10-09 14:49:56] DEVIATION: Total-Sequences extraction looped over all 12 files (tutorial: single example)
+[2026-10-09 14:49:56] DEVIATION: single-sample salmon align cell has a mangled filename (HBR/UHR mix in name); the batch_salmon_align.sh version is correct and used
+[2026-10-09 14:49:56] DEVIATION: salmon quasi mode runs on RAW reads (glob '*read1.fastq.gz' matches only untrimmed files) — inconsistent with mini version's direct mode on trimmed reads; run AS WRITTEN, recorded
+[2026-10-09 14:49:56] DEVIATION: R section: step-by-step path used (salmon_files filtered by grepl('quasi')); the consolidated CODES cell still filters '_direct' (mini naming) AND wraps KEGG in ''' (invalid R) — unusable for homework outputs, doc bug recorded
+[2026-10-09 14:49:56] DEVIATION: KEGG block kept commented exactly as written
+[2026-10-09 14:49:56] DEVIATION: diagnostic prints added in R (sample order, kept transcripts, DEG counts) — additive only
+[2026-10-09 14:49:56] DEVIATION: teacher reference class.R contains salmon_files[-2] (drops 2nd sample) — teacher-side quirk, NOT replicated here; noted for the corrected edition
+[2026-10-09 15:10] FINDING: heatmap row labels are ALL 'NA' in heatmap_DEG.pdf — homework block 10 (heatmap) strips transcript versions from rownames but looks them up in gene_map keyed by versioned gene_anno$transcript_id (setNames without stripping) → every lookup misses; silent doc bug, renders 50x 'NA' labels; mini version's heatmap handled this correctly (clean_id + anno_transcript_nover match); correction pass follows (heatmap_DEG_corrected.pdf)
+[2026-10-09 15:10] FINDING: quasi-mode mapping rate only 30-35% on raw reads (consistent with mini direct-mode ~32%) — --validateMappings tightened scoring; align-mode comparison harvested too
+[2026-10-09 15:40] FINDING: teacher reference heatmap (/lustre1/share/RNA_seq/heatmap_DEG.pdf) row labels are VERSIONED ENST transcript IDs (e.g. ENST00000407418.8), neither gene names nor the all-NA the printed homework code produces — teacher's actual run differed from the printed code (third teacher-reference-vs-doc deviation class, cf. class.R salmon_files[-2]; same pattern as WES blood.g.vcf SM-tag finding)
+[2026-10-09 15:40] RESULT: GO dotplot top categories match teacher reference (viral RNA genome replication, glycosyl compound catabolic process; p.adjust 0.0075 vs 0.0082-0.0088) — cross-validated

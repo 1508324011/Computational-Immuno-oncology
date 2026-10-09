@@ -1,0 +1,22 @@
+{
+    "read_files": "[ UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz, UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz]",
+    "expected_format": "ISR",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 74163,
+    "num_assigned_fragments": 74163,
+    "num_frags_with_concordant_consistent_mappings": 72186,
+    "num_frags_with_inconsistent_or_orphan_mappings": 2268,
+    "strand_mapping_bias": 0.007042834740983246,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 512,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 72186,
+    "SF": 932,
+    "SR": 824,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

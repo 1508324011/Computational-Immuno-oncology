@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RNA-seq 全流程教程 · 矫正增强版（中文版） (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RNA-seq 全流程教程 · 矫正增强版（中文版） (Corrected
+&amp; Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rna-seq-全流程教程-矫正增强版中文版"
+id="toc-rna-seq-全流程教程-矫正增强版中文版">RNA-seq 全流程教程 ·
+矫正增强版（中文版）</a>
+<ul>
+<li><a href="#关于本版" id="toc-关于本版">0. 关于本版</a></li>
+<li><a href="#问题清单速览" id="toc-问题清单速览">1.
+问题清单速览</a></li>
+<li><a href="#环境与数据" id="toc-环境与数据">2. 环境与数据</a></li>
+<li><a href="#数据获取与原始质控" id="toc-数据获取与原始质控">3.
+数据获取与原始质控</a></li>
+<li><a href="#接头与质量修剪" id="toc-接头与质量修剪">4.
+接头与质量修剪</a></li>
+<li><a href="#剪接比对star" id="toc-剪接比对star">5.
+剪接比对（STAR）</a></li>
+<li><a href="#汇总质控multiqc" id="toc-汇总质控multiqc">6.
+汇总质控（multiqc）</a></li>
+<li><a href="#定量-i比对模式salmon-align"
+id="toc-定量-i比对模式salmon-align">7. 定量 I：比对模式（salmon
+align）</a></li>
+<li><a href="#定量-ii选择性比对模式salmon-quasi---validatemappings"
+id="toc-定量-ii选择性比对模式salmon-quasi---validatemappings">8. 定量
+II：选择性比对模式（salmon quasi /
+<code>--validateMappings</code>）</a></li>
+<li><a href="#差异表达注释与火山图glmlrt-volcano"
+id="toc-差异表达注释与火山图glmlrt-volcano">10.
+差异表达、注释与火山图（glmLRT + volcano）</a></li>
+<li><a href="#富集分析go以及永远跑不起来的-kegg"
+id="toc-富集分析go以及永远跑不起来的-kegg">11.
+富集分析（GO——以及永远跑不起来的 KEGG）</a></li>
+<li><a href="#热图沉默的全-na-坑" id="toc-热图沉默的全-na-坑">12.
+热图——沉默的全 NA 坑</a></li>
+<li><a href="#双轮对比mini-vs-homework全量"
+id="toc-双轮对比mini-vs-homework全量">13. 双轮对比（mini vs
+homework/全量）</a></li>
+<li><a href="#检查清单产物清单与总结"
+id="toc-检查清单产物清单与总结">14. 检查清单、产物清单与总结</a></li>
+<li><a href="#附录-a.-偏差日志两轮节选但忠实原文"
+id="toc-附录-a.-偏差日志两轮节选但忠实原文">附录 A.
+偏差日志（两轮，节选但忠实原文）</a></li>
+<li><a href="#附录-b.-教师参考产物-vs-印刷版文档取证路径原文"
+id="toc-附录-b.-教师参考产物-vs-印刷版文档取证路径原文">附录 B.
+教师参考产物 vs 印刷版文档（取证，路径原文）</a></li>
+<li><a href="#附录-c.-复现" id="toc-附录-c.-复现">附录 C. 复现</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="rna-seq-全流程教程-矫正增强版中文版">RNA-seq 全流程教程 ·
+矫正增强版（中文版）</h1>
+<p>: 文档版本 1.0 · 2026-10-09 · 以
+<code>RNA_seq_tutorial_mini.html</code> 与
+<code>RNA_seq_homework.html</code>（课程原件）为底本复现，辅以两轮全链路实跑（mini
+轮 2026-09-21、homework/全量轮
+2026-10-09），所有偏差逐条实证、记录并矫正。命令、路径、参数一律保持原文；关键数字与英文版（<code>RNA_seq_tutorial_corrected.md</code>）逐一对拍一致。</p>
+<h2 id="关于本版">0. 关于本版</h2>
+<p>本版是 WES
+矫正版路线图（<code>WES/ref/WES_roadmap_corrected.md</code>）的 RNA-seq
+对应篇：课程原件的命令原文照录，再补上原件没有的东西——每一步的原理讲解、两轮实跑的实测数字、带根因的坑位登记表，以及<strong>实际执行并验证过</strong>的矫正。</p>
+<p><strong>底本（课程原件，保持原样）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RNA_seq_tutorial_mini.html</code></td>
+<td>9 步 mini 管线（每样本 1 万条读段），课堂可执行路径</td>
+</tr>
+<tr>
+<td><code>RNA_seq_homework.html</code></td>
+<td>同一管线的全量版（全深度读段 + 完整 GRCh38 索引）</td>
+</tr>
+<tr>
+<td><code>rna_seq.pdf</code></td>
+<td>14 页理论课幻灯（RNA-seq 原理、STAR/Salmon 定位、R 基础）</td>
+</tr>
+<tr>
+<td><code>RNA_seq_code_explaination.pdf</code></td>
+<td>9 页逐行命令讲解</td>
+</tr>
+</tbody>
+</table>
+<p><strong>两轮复现</strong>（两轮均：命令原文、最小包装、偏差全记录）：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>日期</th>
+<th>数据</th>
+<th>STAR 索引</th>
+<th>运行位置</th>
+<th>耗时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>2026-09-21</td>
+<td>12 个 fastq × 10,000 reads（20 MB）</td>
+<td>chr22 mini（381 MB）</td>
+<td>登录节点，串行</td>
+<td>~4 分钟</td>
+</tr>
+<tr>
+<td>homework（全量）</td>
+<td>2026-10-09</td>
+<td>12 个 fastq，11.8万–22.7万读对（112 MB）</td>
+<td>完整 GRCh38（约 31 GB 内存）</td>
+<td>登录节点，串行</td>
+<td>13 分钟</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么在登录节点跑。</strong>
+教程的原生模式就是登录节点交互式执行——两份 HTML 里没有任何
+sbatch/srun/SLURM 字样，与集群相关的命令只有开头一句
+<code>ssh</code>。教师自己的负载测试脚本（<code>02_simulate_30_students_pipeline.sh</code>，产物在
+<code>/lustre1/share/RNA_seq_class/loadtest/mini30_20260928_*</code>）模拟的就是
+<strong>30
+个学生同时在登录节点跑这条管线</strong>——这是课程设计预期登录节点运行的直接证据。mini
+轮适逢全校性 SLURM 提交瘫痪（所有 sbatch 报
+<code>Invalid account or account/partition combination</code>；sacct 自
+9/15 起零记录；9/20 跑成功过的 WES
+脚本原样重提同样被拒——集群侧重组所致，已记入该轮偏差日志）。homework
+轮按明确指令在登录节点跑——尽管开跑前探测时 SLURM 已恢复（test-only 可在
+cn-long 分配）。两次选择都记录在各自的
+<code>log/deviations.log</code>。</p>
+<p><strong>“矫正”的含义</strong>（与 WES
+版同一纪律）：照印刷版命令原样跑、把踩到/预见的坑全部记录在案，然后用真实产物执行并验证修复——修复的证据在本仓库里，不是口头描述。本文所有数字均来自两轮实跑的测量值，不是估计值。</p>
+<p><strong>每步的读法：</strong>
+每个管线步骤都带同一组小节——<em>原文</em>（印刷版命令原样）、<em>原理</em>（工具与关键参数到底在做什么）、<em>实跑</em>（两轮实测数字）、<em>坑</em>（已实证，带证据）、<em>解读</em>、<em>调优</em>、<em>扩展</em>（这步熟练后往哪走）。</p>
+<h2 id="问题清单速览">1. 问题清单速览</h2>
+<p>课程原件中已实证的坑。完整证据与矫正见各步骤小节；两条最重要的（RNA-07/09）有专门章节。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>编号</th>
+<th>位置</th>
+<th>症状 / 根因</th>
+<th>矫正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RNA-01</td>
+<td>R sample_info</td>
+<td>样本身份<strong>全程只靠位置</strong>：<code>condition</code> 假定
+<code>list.files()</code> 恰好返回 HBR×3
+在前（字母序运气），文件未命名使 <code>colnames = NULL</code>，edgeR
+造出 Sample1–6</td>
+<td>显式命名样本；建设计矩阵前先断言顺序</td>
+</tr>
+<tr>
+<td>RNA-02</td>
+<td>mini 单样本 salmon</td>
+<td>演示单元格缺 <code>--gcBias --seqBias</code>，批量脚本却带 →
+演示与批量输出存在系统性校正差异</td>
+<td>全部用批量脚本的参数</td>
+</tr>
+<tr>
+<td>RNA-03</td>
+<td>homework 单样本 salmon</td>
+<td>align 模式演示单元格文件名拼接错乱（UHR 样本名 + 粘贴来的 HBR
+<code>_ERCC-Mix2...chr22</code> 后缀）→ 找不到文件</td>
+<td>批量脚本是对的；用批量</td>
+</tr>
+<tr>
+<td>RNA-04</td>
+<td>homework batch_salmon_quasi</td>
+<td><code>for r1 in *read1.fastq.gz</code>
+只匹配<strong>原始</strong>读段——quasi
+模式定量的是<strong>未修剪</strong>数据（mini 的 direct 模式用的是
+trimmed）</td>
+<td>照原文跑并记录；或把 glob 指向
+<code>*.read1.trimmed.fastq.gz</code></td>
+</tr>
+<tr>
+<td>RNA-05</td>
+<td>homework batch_STAR.sh</td>
+<td>shebang 印成 <code>!/bin/bash</code>（丢了 <code>#</code>）</td>
+<td>化妆性问题；用 <code>bash script.sh</code> 跑</td>
+</tr>
+<tr>
+<td>RNA-06</td>
+<td>homework multiqc 单元格</td>
+<td>占位路径 <code>/lustre1/share/RNA_seq_student/yourfold</code></td>
+<td>指向真实工作目录</td>
+</tr>
+<tr>
+<td>RNA-07</td>
+<td>合并版 “CODES” 单元格（两份文档都有）</td>
+<td>KEGG 块被 <code>''' … '''</code> 包住——<strong>R
+里这不是注释</strong>：整体解析成一个巨型字符串字面量（静默空操作），块内一旦出现单引号就会提前闭串、剩余代码变成<strong>活代码</strong></td>
+<td>分步单元格用 <code>#</code>
+注释是对的；合并版单元格一律当非可执行文本</td>
+</tr>
+<tr>
+<td>RNA-08</td>
+<td>homework 合并版 “CODES” 单元格</td>
+<td>仍在过滤 <code>"_direct"</code>（mini 命名）——homework 产物叫
+<code>_quasi</code> → 找到 0 个文件，下游崩</td>
+<td>走分步路径（<code>grepl("quasi")</code>）</td>
+</tr>
+<tr>
+<td>RNA-09</td>
+<td>homework 热图块</td>
+<td><code>gene_map</code> 用<strong>带版本号</strong>的
+<code>transcript_id</code> 做键，查询用的 rownames 却已剥版本号 →
+全部落空 → 50 行标签全渲染成 “NA”，静默无报错</td>
+<td>map 键同样剥版本号（一行修复）；已验证 0/50 NA</td>
+</tr>
+<tr>
+<td>RNA-10</td>
+<td>教师参考产物</td>
+<td>教师 <code>heatmap_DEG.pdf</code> 的行标签是<strong>带版本号的 ENST
+ID</strong>——既不是基因名也不是印刷版代码会产出的全
+NA：参考跑用的是第三种代码变体</td>
+<td>参考产物不能当这块的对照基准；见附录 B</td>
+</tr>
+<tr>
+<td>RNA-11</td>
+<td>教师 <code>class.R</code></td>
+<td><code>salmon_files &lt;- salmon_files[-2]</code> 丢掉第 2
+个样本——教师自己目录的清理动作，不是方法</td>
+<td>不要照抄；与参考对拍时留意</td>
+</tr>
+<tr>
+<td>RNA-12</td>
+<td>解读坑</td>
+<td>quasi/direct 模式映射率仅 30–37%（选择性比对偏保守）；align 模式报
+100%（输入 BAM 本来就是已比对片段）——两者分母不可比</td>
+<td>只在同一模式内部比较映射率</td>
+</tr>
+<tr>
+<td>RNA-13</td>
+<td>两份文档</td>
+<td>单样本演示 <code>--runThreadN 1</code> vs 批量脚本 <code>4</code>——1
+是 30 人课堂的负载决定，不是技术上限</td>
+<td>独跑可放开线程（注意共享登录节点）</td>
+</tr>
+<tr>
+<td>RNA-14</td>
+<td>R 启动</td>
+<td>本集群上 R 不先 <code>export LC_ALL=C</code>/<code>LANG=C</code>
+会段错误（<code>address (nil) ... Segmentation fault</code>）</td>
+<td>进 R 前导出两个变量（教程自带此说明，保留）</td>
+</tr>
+<tr>
+<td>RNA-15</td>
+<td>火山图</td>
+<td><code>ggrepel: N unlabeled data points</code>——信息性提示（mini 9
+条、全量 280 条），只是去拥挤</td>
+<td>良性；想多标就调大 <code>max.overlaps</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="环境与数据">2. 环境与数据</h2>
+<p><strong>原文（两份文档的设置单元格）：</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> .....</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> /lustre1/share/RNA_seq_student_2026_homework/{studentId}_{name}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /lustre1/share/RNA_seq_student_2026_homework/{studentId}_{name}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate RNA-seq</span></code></pre></div>
+<p><strong>原理。</strong>
+共享环境（<code>/lustre1/share/miniconda3/envs/RNA-seq</code>）带齐了管线所需全部工具，由课程钉死版本：fastp
+0.23.4、FastQC 0.12.1、STAR 2.7.11b、salmon
+1.10.3、multiqc、samtools、gffread，以及 R
+4.4.0（edgeR/limma/tximport/ggplot2/ggrepel/pheatmap/clusterProfiler/org.Hs.eg.db/biomaRt
+全装）。用共享环境而不是每人自装，是 30
+人课堂能跑起来的前提，也是教师负载测试所验证的对象。</p>
+<p><strong>数据是 SEQC——唯一带真值标签的 RNA-seq 数据集。</strong>
+六个双端文库：<strong>HBR ×3</strong>（Human Brain Reference，脑参考
+RNA）与 <strong>UHR ×3</strong>（Universal Human Reference RNA，通用参考
+RNA），各掺 ERCC 对照（HBR 用 Mix2、UHR 用
+Mix1）。这里的”差异表达”有已知答案：脑富集基因在 HBR 高；UHR
+是多组织混样（含免疫细胞
+RNA），免疫球蛋白转录本高。本版后面所有结果核验都靠这个真值（第 10
+节）。文件名里的 <code>chr22</code>/<code>ErccTranscripts</code> 标明
+FASTQ 已被预筛到 chr22（+ ERCC）内容。</p>
+<p><strong>教师预建资源（不要重建——原件把建索引单元格标了
+<code>Do NOT RUN</code>）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>资源</th>
+<th>路径</th>
+<th>大小</th>
+<th>谁用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chr22 mini STAR 索引</td>
+<td><code>/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/star_index</code></td>
+<td>381 MB</td>
+<td>mini 轮 STAR</td>
+</tr>
+<tr>
+<td>chr22 mini salmon 索引</td>
+<td><code>.../mini_ref_chr22/salmon_index</code></td>
+<td>小</td>
+<td>mini 轮 direct 模式</td>
+</tr>
+<tr>
+<td>chr22 转录本 fasta</td>
+<td><code>.../mini_ref_chr22/chr22.transcripts.fa</code></td>
+<td>小</td>
+<td>mini 轮 align 模式</td>
+</tr>
+<tr>
+<td>完整 GRCh38 STAR 索引</td>
+<td><code>/lustre1/share/RNA_seq/genome</code></td>
+<td>SA 24.9 GB + Genome 3.2 GB + SAindex 1.6 GB（加载约 31 GB
+内存）</td>
+<td>homework 轮 STAR</td>
+</tr>
+<tr>
+<td>完整转录本 fasta</td>
+<td><code>/lustre1/share/RNA_seq/genome/GRCh38_no_alt_analysis_set_gencode.v36.transcripts.fa</code></td>
+<td>368 MB</td>
+<td>homework align 模式</td>
+</tr>
+<tr>
+<td>完整 salmon 索引（k31）</td>
+<td><code>/lustre1/share/RNA_seq/genome/salmon_index</code></td>
+<td>801 MB</td>
+<td>homework quasi 模式</td>
+</tr>
+<tr>
+<td>基因注释 RDS</td>
+<td><code>/lustre1/share/RNA_seq_class/genome/gene_anno_gencode.v36.rds</code></td>
+<td>—</td>
+<td>R 注释（transcript_id → gene_name）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>数据规模（两轮实测）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>文件</th>
+<th>每样本读对</th>
+<th>fastp 保留</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>12 × 10,000 reads</td>
+<td>10,000 reads（5,000 对）</td>
+<td>—（轻度修剪）</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>12 个 fastq.gz（112 MB）</td>
+<td>HBR 118,571–144,826；UHR 162,373–227,392</td>
+<td>97.4–98.7%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据获取与原始质控">3. 数据获取与原始质控</h2>
+<p><strong>原文（homework；mini 形状一致）：</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">--progress</span> /lustre1/share/RNA_seq/RNA_seq_files/<span class="pp">*</span>.fastq.gz .</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">&quot;*.fastq.gz&quot;</span> <span class="at">-exec</span> fastqc {} <span class="at">-d</span> . <span class="at">-o</span> . <span class="dt">\;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">totalreads</span><span class="op">=</span><span class="va">$(</span><span class="fu">unzip</span> <span class="at">-c</span> HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip <span class="pp">*</span>/fastqc_data.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;Total Sequences&#39;</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 2<span class="va">)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Total Sequences: </span><span class="va">$totalreads</span><span class="st">&quot;</span></span></code></pre></div>
+<p><strong>原理。</strong> 用 <code>rsync</code> 而不是
+<code>cp</code>：走 Lustre 有进度条、可断点续传。逐文件 FastQC
+出标准模块组（每碱基质量、接头痕迹、重复率、GC）；homework 那句
+<code>DO NOT UNZIP</code> 一语双关——读段必须保持 gzipped（后面 STAR 要
+<code>--readFilesCommand zcat</code>），而 <code>unzip -c</code>
+是<strong>不解压</strong>直接从 zip 里流式读
+<code>fastqc_data.txt</code>。</p>
+<p><strong>实跑。</strong> 两轮各 12 个 fastqc zip。逐文件
+<code>Total Sequences</code> 确认了上面规模表（mini 每文件
+10,000；homework read1 = read2 计数，每文件 118,571…227,392）。</p>
+<p><strong>坑。</strong> 这步没有新增坑（常见坑：在错误目录跑 fastqc
+会静默什么都找不到；<code>find -exec</code>
+是串行——这个量级无所谓）。</p>
+<p><strong>调优。</strong> FastQC 有 <code>-t</code> 线程参数；12
+个文件用不上。<strong>扩展。</strong> multiqc（第 6
+节）会汇总这些报告；<code>fastq_screen</code> 可加污染筛查。</p>
+<h2 id="接头与质量修剪">4. 接头与质量修剪</h2>
+<p><strong>原文（批量单元格；单样本演示是同一条命令的单次形式）：</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="pp">*</span>.read1.fastq.gz</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span> .read1.fastq.gz<span class="va">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">read1_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.fastq.gz&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">read2_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.fastq.gz&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_read1</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.trimmed.fastq.gz&quot;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_read2</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.trimmed.fastq.gz&quot;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">json_report</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.fastp.json&quot;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">html_report</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.fastp.html&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">fastp</span> <span class="at">-i</span> <span class="st">&quot;</span><span class="va">$read1_file</span><span class="st">&quot;</span> <span class="at">-I</span> <span class="st">&quot;</span><span class="va">$read2_file</span><span class="st">&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$output_read1</span><span class="st">&quot;</span> <span class="at">-O</span> <span class="st">&quot;</span><span class="va">$output_read2</span><span class="st">&quot;</span> <span class="at">--detect_adapter_for_pe</span> <span class="at">-l</span> 25 <span class="at">-j</span> <span class="st">&quot;</span><span class="va">$json_report</span><span class="st">&quot;</span> <span class="at">-h</span> <span class="st">&quot;</span><span class="va">$html_report</span><span class="st">&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>原理。</strong> <code>--detect_adapter_for_pe</code>
+靠双端读段重叠区自动推断接头对——不需要预先知道接头序列。<code>-l 25</code>
+在修剪后丢弃短于 25 bp 的读段（STAR 对超短输入会退化）。每样本的
+JSON/HTML 一对，正是后面 multiqc 要吃的。</p>
+<p><strong>实跑（homework 轮，六个样本）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>样本</th>
+<th>读入</th>
+<th>读出</th>
+<th>保留</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBR_Rep1</td>
+<td>237,142</td>
+<td>234,120</td>
+<td>98.7%</td>
+</tr>
+<tr>
+<td>HBR_Rep2</td>
+<td>289,652</td>
+<td>285,044</td>
+<td>98.4%</td>
+</tr>
+<tr>
+<td>HBR_Rep3</td>
+<td>259,572</td>
+<td>256,166</td>
+<td>98.7%</td>
+</tr>
+<tr>
+<td>UHR_Rep1</td>
+<td>454,784</td>
+<td>444,834</td>
+<td>97.8%</td>
+</tr>
+<tr>
+<td>UHR_Rep2</td>
+<td>324,746</td>
+<td>317,040</td>
+<td>97.6%</td>
+</tr>
+<tr>
+<td>UHR_Rep3</td>
+<td>370,884</td>
+<td>361,336</td>
+<td>97.4%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解读。</strong> 保留率 97–99%
+说明文库干净：接头少、质量高——与商品化参考 RNA 一致。UHR 修剪略多于
+HBR（混样成分，短片段稍多）。</p>
+<p><strong>坑。</strong> 本步无新坑；注意 trimmed
+文件名（<code>*.read1.trimmed.fastq.gz</code>）是 STAR
+循环匹配的目标，而 homework quasi
+模式循环匹配的是<strong>原始</strong>名（RNA-04）——两个 glob
+编码了两种不同的预处理意图。</p>
+<p><strong>调优。</strong>
+<code>--qualified_quality_phasing</code>/<code>--cut_front</code>
+等参数存在，但 SEQC 文库都用不上。<strong>扩展。</strong>
+cutadapt/trim-galore 是等价替代；双端重叠检测若过度修剪，收紧
+<code>--overlap_len</code>。</p>
+<h2 id="剪接比对star">5. 剪接比对（STAR）</h2>
+<p><strong>原文（homework 批量脚本；单样本演示除
+<code>--runThreadN 1</code> 外一致）：</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">GENOMEDIR</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="pp">*</span>.read1.trimmed.fastq.gz</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span> .read1.trimmed.fastq.gz<span class="va">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">read1_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read1.trimmed.fastq.gz&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">read2_file</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.trimmed.fastq.gz&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">output_prefix</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">&quot;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="dt">\</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">--genomeDir</span> <span class="va">$GENOMEDIR</span> <span class="dt">\</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">--readFilesIn</span> <span class="st">&quot;</span><span class="va">$read1_file</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">$read2_file</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFileNamePrefix</span> <span class="st">&quot;</span><span class="va">$output_prefix</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">--readFilesCommand</span> zcat <span class="dt">\</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outSAMtype</span> BAM Unsorted <span class="dt">\</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterType</span> BySJout <span class="dt">\</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignSJoverhangMin</span> 8 <span class="dt">\</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterMultimapNmax</span> 20 <span class="dt">\</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignSJDBoverhangMin</span> 1 <span class="at">--outFilterMismatchNmax</span> 999 <span class="dt">\</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outFilterMismatchNoverReadLmax</span> 0.04 <span class="dt">\</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignIntronMin</span> 20 <span class="dt">\</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignIntronMax</span> 1000000 <span class="dt">\</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">--alignMatesGapMax</span> 1000000 <span class="dt">\</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">--quantMode</span> TranscriptomeSAM <span class="dt">\</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">--outSAMattributes</span> NH HI AS NM MD</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>原理（起作用的参数）。</strong> STAR 是剪接感知的：先精确
+k-mer 播种（100 bp 读段默认
+50），再延伸，并对照索引内置的剪接位点库给含内含子的比对打分。<code>--outFilterType BySJout</code>：含内含子的比对，其剪接位点必须有至少一条<strong>其他</strong>读段（或注释
+SJ
+库）支持才保留——过滤垃圾内含子的主力。<code>--alignSJoverhangMin 8</code>：<strong>新</strong>
+junction 两侧各需 ≥8 bp
+悬挂。<code>--outFilterMultimapNmax 20</code>：最多 20
+个位点（免疫球蛋白与重复区是真的多比对）。<code>--outFilterMismatchNmax 999</code>
+加
+<code>--outFilterMismatchNoverReadLmax 0.04</code>：合并起来把错配上限定在读段长度的
+4%。内含子 20…1,000,000 与 mates-gap 1 Mb 是 GENCODE
+兼容包络。<code>--quantMode TranscriptomeSAM</code>
+是<strong>本步的承重选择</strong>：额外产出
+<code>&lt;prefix&gt;Aligned.toTranscriptome.out.bam</code>（坐标换算到转录本空间）——正是
+salmon align 模式（第 7
+节）要吃的输入。<code>--outSAMattributes NH HI AS NM MD</code>
+输出多比对层级与错配标签，下游工具要。</p>
+<p><strong>实跑（unique / multi / 太短，逐样本）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>轮次</th>
+<th>样本</th>
+<th>Unique %</th>
+<th>多位点 %</th>
+<th>太短 %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>HBR_Rep1</td>
+<td>53.25</td>
+<td>0.68</td>
+<td>12.48</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>HBR_Rep2</td>
+<td>53.03</td>
+<td>0.68</td>
+<td>11.98</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>HBR_Rep3</td>
+<td>53.33</td>
+<td>0.48</td>
+<td>12.90</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep1</td>
+<td>46.76</td>
+<td>2.02</td>
+<td>11.86</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep2</td>
+<td>49.94</td>
+<td>2.08</td>
+<td>11.49</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>UHR_Rep3</td>
+<td>45.06</td>
+<td>1.90</td>
+<td>12.87</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep1</td>
+<td>51.82</td>
+<td>1.09</td>
+<td>47.08</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep2</td>
+<td>51.70</td>
+<td>1.11</td>
+<td>47.19</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>HBR_Rep3</td>
+<td>51.77</td>
+<td>1.06</td>
+<td>47.17</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep1</td>
+<td>45.30</td>
+<td>2.77</td>
+<td>51.92</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep2</td>
+<td>48.47</td>
+<td>3.02</td>
+<td>48.50</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>UHR_Rep3</td>
+<td>44.56</td>
+<td>2.77</td>
+<td>52.66</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解读。</strong> 三个信号，全部跨轮跨深度稳定：(1) <strong>HBR
+比 UHR 高约 5 个点</strong>——脑参考是单组织
+RNA，免疫球蛋白/重复转录本少；UHR 混样含 IG 基因，天然多比对（UHR 多位点
+1.9–3.0% vs HBR 0.5–1.1%）。(2) <strong>1 万条读段的 mini 与 10 万+
+对的全量轮 unique 率几乎相同</strong>（HBR 53.0–53.3 vs 51.7–51.8；UHR
+45.1–49.9 vs 44.6–48.5）——比对画像由读段性质决定，与深度无关。(3)
+homework 轮 ~47–53% 的 “unmapped: too short”（mini 同一批读段仅
+11–13%，差别在索引）是<strong>全基因组索引 + BySJout
+组合</strong>在预筛文库上的属性：最优全基因组比对低于过滤阈值的读段被记成”太短”。mini
+的 chr22
+索引复现的是课程自己的数字；全量索引用覆盖换严格度。记录即可不必慌：进入定量的
+unique 比对部分是一致的。</p>
+<p><strong>坑。</strong> RNA-05（印刷版批量脚本 shebang 丢了
+<code>#</code>——化妆性）。RNA-13（线程 1 vs 4——课堂负载设计；我们
+homework 轮用 4 并加内存守卫：每次 STAR 调用前等待
+<code>MemAvailable</code> ≥ 37 GB，因为加载全量索引要 ~31 GB
+且登录节点共享）。mini 索引只要 ~0.4 GB——那轮不需要守卫。</p>
+<p><strong>调优。</strong> 节点空闲时上调
+<code>--runThreadN</code>；<code>--twopassMode Basic</code> 提升新
+junction 灵敏度（约 2 倍耗时）；后面要跑基因组坐标工具的话
+<code>--outSAMtype BAM SortedByCoordinate</code> 可省一次 samtools
+sort。</p>
+<p><strong>扩展。</strong> samtools <code>sort</code>/<code>index</code>
++ <code>flagstat</code> 做 BAM
+QC；RSeQC（<code>infer_experiment</code>、<code>inner_distance</code>）查链特异性与插入分布；<code>--quantMode GeneCounts</code>
+在转录本 BAM 之外顺手出一份原始计数矩阵。</p>
+<h2 id="汇总质控multiqc">6. 汇总质控（multiqc）</h2>
+<p><strong>原文（homework 单元格；mini 用真实工作目录）：</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> /lustre1/share/RNA_seq_student/yourfold</span></code></pre></div>
+<p><strong>原理。</strong> multiqc
+扫一遍目录树，认出它认识的工具产物（fastqc zip、fastp JSON/HTML、STAR
+<code>Log.final.out</code>、salmon <code>quant.sf</code>
+等），合并成一份按样本分列的报告——一眼看全 12 个 fastq 与 6
+个样本的最快方式。</p>
+<p><strong>实跑。</strong>
+<code>multiqc "$PWD" -o multiqc_report</code>（RNA-06：印刷路径是占位符——<code>yourfold</code>
+字面就是”你的目录”）。两轮都产出了汇总报告；本文引用的 STAR 与 fastp
+数字都可在其中交叉核对。</p>
+<p><strong>坑。</strong> RNA-06（占位路径）。另注意：multiqc
+只汇报指定路径下找到的东西——指错目录会”成功”地产出空报告而不是报错。</p>
+<p><strong>调优。</strong> <code>-f</code> 重建、<code>--cl</code>
+把命令行嵌进报告、写个 <code>multiqc_config.yaml</code>
+钉死教学用的模块顺序。<strong>扩展。</strong> <code>--pdf</code>
+导出；管线中点（STAR 后）与终点各跑一次得到前后对照视图。</p>
+<h2 id="定量-i比对模式salmon-align">7. 定量 I：比对模式（salmon
+align）</h2>
+<p><strong>原文（homework
+批量单元格——正确版；单样本单元格的拼接错乱文件名见
+RNA-03）：</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">TRANSCRIPTOME</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome/GRCh38_no_alt_analysis_set_gencode.v36.transcripts.fa&quot;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> bam_file <span class="kw">in</span> <span class="pp">*</span>Aligned.toTranscriptome.out.bam<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample_name</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$bam_file</span><span class="st">&quot;</span> Aligned.toTranscriptome.out.bam<span class="va">)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">salmon</span> quant <span class="at">-t</span> <span class="st">&quot;</span><span class="va">$TRANSCRIPTOME</span><span class="st">&quot;</span> <span class="at">--libType</span> A <span class="at">-a</span> <span class="st">&quot;</span><span class="va">$bam_file</span><span class="st">&quot;</span> <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${sample_name}</span><span class="st">_align.salmon_quant&quot;</span> <span class="at">--gcBias</span> <span class="at">--seqBias</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;Processed: </span><span class="va">$sample_name</span><span class="st">&quot;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>原理。</strong>
+这是<strong>基于比对</strong>的定量：读段落在哪已由 STAR 决定；salmon 的
+align 模式（<code>-a</code>）吃转录本坐标 BAM，把多比对读段按 EM
+做分数分配，估计每条转录本的丰度。<code>--gcBias --seqBias</code>
+从比对本身估计并校正序列内容与 GC 偏好。<code>-t</code> 是 BAM
+里转录本名所指的转录本 fasta；<code>--libType A</code> 让 salmon
+自己推文库类型。</p>
+<p><strong>实跑。</strong> 两轮各六样本，全部 <strong>100.0%
+片段”mapped”</strong>——这不是质量数字：输入 BAM 里只有 STAR
+已比对的片段，分母是”已比对片段”而非”文库读段”（RNA-12）。</p>
+<p><strong>坑。</strong> RNA-03（单样本演示单元格的文件名是 UHR/HBR
+粘贴混排——照抄就在找不到文件处报错）。RNA-02（mini 单样本单元格缺
+<code>--gcBias --seqBias</code>、批量带——一个样本用演示命令、其余用批量脚本，会造成跨样本的系统性校正差异）。</p>
+<p><strong>解读。</strong> align 模式继承 STAR 的全部决定（junction
+过滤、多比对上限、“太短”丢弃）。它的计数是”STAR 眼中的转录本组”；quasi
+模式（第 8 节）是 salmon
+自己的、更保守的视角——两种都跑的意义就在这个对照。</p>
+<p><strong>调优。</strong> <code>-p</code> 线程；怀疑位置衰减加
+<code>--posBias</code>。<strong>扩展。</strong> RSEM 是同类 BAM
+的经典替代；<code>--numBootstraps</code> 加不确定性重采样，tximport
+可接。</p>
+<h2 id="定量-ii选择性比对模式salmon-quasi---validatemappings">8. 定量
+II：选择性比对模式（salmon quasi /
+<code>--validateMappings</code>）</h2>
+<p><strong>原文（homework 批量单元格）：</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">INDEX</span><span class="op">=</span><span class="st">&quot;/lustre1/share/RNA_seq/genome/salmon_index&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r1 <span class="kw">in</span> <span class="pp">*</span>read1.fastq.gz<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">&quot;</span><span class="va">$r1</span><span class="st">&quot;</span> .read1.fastq.gz<span class="va">)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">r2</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${base}</span><span class="st">.read2.fastq.gz&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">salmon</span> quant <span class="at">-i</span> <span class="va">$INDEX</span> <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">-l</span> A <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">-1</span> <span class="st">&quot;</span><span class="va">$r1</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">-2</span> <span class="st">&quot;</span><span class="va">$r2</span><span class="st">&quot;</span> <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">--validateMappings</span> <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">--gcBias</span> <span class="at">--seqBias</span> <span class="dt">\</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">-p</span> 8 <span class="dt">\</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">-o</span> <span class="st">&quot;</span><span class="va">${base}</span><span class="st">_quasi.salmon_quant&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">&quot;Processed: </span><span class="va">$base</span><span class="st">&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p><strong>原理。</strong> quasi
+模式把原始读段直接对到转录本索引（没有基因组、无需发现
+junction）。<code>--validateMappings</code>（salmon ≥1.0
+的默认引擎）用选择性比对验证候选映射——由比对分数阈值决定取舍而非纯 k-mer
+命中，所以映射率读起来比 STAR
+<strong>低</strong>：没有好比对的读段被丢弃而不是硬塞。</p>
+<p><strong>实跑（映射率，取自各目录 <code>aux_info/meta_info.json</code>
+的 <code>num_mapped / num_processed</code>）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>模式</th>
+<th>HBR_Rep1</th>
+<th>HBR_Rep2</th>
+<th>HBR_Rep3</th>
+<th>UHR_Rep1</th>
+<th>UHR_Rep2</th>
+<th>UHR_Rep3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mini</td>
+<td>direct（trimmed 读段）</td>
+<td>36.5%</td>
+<td>36.5%</td>
+<td>36.4%</td>
+<td>33.8%</td>
+<td>31.2%</td>
+<td>32.2%</td>
+</tr>
+<tr>
+<td>homework</td>
+<td>quasi（原始读段，照原文）</td>
+<td>35.2%</td>
+<td>35.3%</td>
+<td>35.1%</td>
+<td>32.6%</td>
+<td>30.3%</td>
+<td>32.0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>坑。</strong> RNA-04
+是重点：<code>for r1 in *read1.fastq.gz</code>
+只匹配<strong>原始</strong>文件（<code>*.read1.trimmed.fastq.gz</code>
+结尾不同），所以 homework 的 quasi
+模式定量的是<strong>未修剪</strong>读段，而 mini 的 direct 模式定量的是
+trimmed——我们照原文跑了并记录（接头片段短，映射率几乎不动，但两份文档的预处理故事不一致）。另有
+RNA-12：这里的 30–37% 对 align 模式的 100%
+是<strong>分母不同</strong>，不是质量崩塌。</p>
+<p><strong>解读。</strong> ~1/3 的映射率由两个独立因素决定：读段被预筛到
+chr22+ERCC 内容而索引是 231,448 条转录本的全 GENCODE v36（salmon
+丢弃无处可比的读段），加上选择性比对的分数阈值。比率跨轮惊人稳定（HBR
+35.1–36.5%、UHR 30.3–33.8%）——还是文库性质，两个深度都可复现。</p>
+<p><strong>调优。</strong> <code>-p 8</code> 是 homework
+批量单元格印的数——在共享登录节点上这已经是实打实的线程预算。<strong>扩展。</strong>
+<code>--numBootstraps 100</code> 配 tximport 的
+<code>countsFromAbundance</code>
+得到带自助方差的定量；<code>--seqBias</code> 与片段长度分布有交互——QC
+时看输出里的 <code>fldLen.png</code>。 ## 9.
+读入定量结果并过滤（tximport → edgeR）</p>
+<p><strong>原文（R 单元格，分步路径）：</strong></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>salmon_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">&quot;quant</span><span class="sc">\\</span><span class="st">.sf$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>salmon_files <span class="ot">&lt;-</span> salmon_files[<span class="fu">grepl</span>(<span class="st">&quot;quasi&quot;</span>, salmon_files)]     <span class="co"># homework；mini 过滤 &quot;_direct&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>txi <span class="ot">&lt;-</span> <span class="fu">tximport</span>(salmon_files, <span class="at">type =</span> <span class="st">&quot;salmon&quot;</span>, <span class="at">txOut =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>dge <span class="ot">&lt;-</span> <span class="fu">DGEList</span>(<span class="at">counts =</span> txi<span class="sc">$</span>counts)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>counts_threshold <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>samples_threshold <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(dge<span class="sc">$</span>counts <span class="sc">&gt;=</span> counts_threshold) <span class="sc">&gt;=</span> samples_threshold</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>dge_filtered <span class="ot">&lt;-</span> dge[keep, ]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sample_info <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample =</span> <span class="fu">colnames</span>(dge_filtered),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;HBR&quot;</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">&quot;UHR&quot;</span>, <span class="dv">3</span>)))  <span class="co"># change based on samples</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>condition, <span class="at">data =</span> sample_info)</span></code></pre></div>
+<p><strong>原理。</strong> <code>tximport</code> 把各样本的
+<code>quant.sf</code>（Name、Length、TPM、NumReads）收进一个矩阵；<code>txOut = TRUE</code>
+保持<strong>转录本层级</strong>的行（全量索引 231,448
+行）。过滤（<code>≥10 counts 且 ≥2 样本</code>）删掉稀疏到没法建模的行——在本文库规模下那是几乎全部，这是数据集构造使然（chr22+ERCC
+来源的读段对全转录本索引）。</p>
+<p><strong>实跑（建设计矩阵之前该查的东西——RNA-01）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>检查</th>
+<th>mini</th>
+<th>homework</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>索引内转录本数</td>
+<td>4,989（chr22 mini）</td>
+<td>231,448（全 GENCODE v36）</td>
+</tr>
+<tr>
+<td>过滤后保留</td>
+<td>111</td>
+<td>831</td>
+</tr>
+<tr>
+<td><code>colnames(txi$counts)</code></td>
+<td><code>NULL</code> → Sample1–6</td>
+<td><code>NULL</code> → Sample1–6</td>
+</tr>
+<tr>
+<td>救了场的那点运气</td>
+<td>HBR×3 在前（字母序）</td>
+<td>HBR×3 在前（字母序）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>坑。</strong> RNA-01 是结构性问题，共三环：(1)
+<code>list.files()</code> 返回字母序，而印刷版 <code>condition</code>
+向量写死 HBR 在前——<strong>只靠文件名的字母序运气</strong>才对；(2)
+文件未命名传入，<code>colnames</code> 是 <code>NULL</code>，edgeR 造出
+Sample1–6——样本身份从此纯靠位置；(3) 下游（设计矩阵、对比、热图
+<code>sample_info</code> 行名）没有任何东西能拦住一次错位。一行修复：给
+<code>salmon_files</code> 命名，再由名字构造
+<code>condition</code>。两轮的检查输出如上——顺序两次都成立，是记录而非假设。RNA-14：进
+R 前 <code>export LC_ALL=C; export LANG=C</code>（教程自带此说明）。</p>
+<p><strong>解读。</strong> 111/4,989 与 831/231,448
+看似存活率不同，实为同一现象在两种索引广度下：两轮都只有 ~2%
+的行过关。深度决定<strong>多少</strong>转录本过 10 counts（111 →
+831），索引决定分母。</p>
+<p><strong>调优。</strong> 随深度上调 <code>counts_threshold</code>（10
+是本教学规模；全转录本研究常用 ≥10–20 的 CPM
+类门槛）。<strong>扩展。</strong> <code>txOut = FALSE</code> 配
+<code>tx2gene</code> 表在建 edgeR
+前聚合到基因层级（更常见的生产路径）；DESeq2 配 <code>tximport</code>
+是即插即用的替代；<code>rtracklayer</code>/<code>biomaRt</code>（教程已加载）可重建注释。</p>
+<h2 id="差异表达注释与火山图glmlrt-volcano">10.
+差异表达、注释与火山图（glmLRT + volcano）</h2>
+<p><strong>原文（R 单元格）：</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dge_filtered <span class="ot">&lt;-</span> <span class="fu">estimateDisp</span>(dge_filtered, design)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glmFit</span>(dge_filtered, design)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">glmLRT</span>(fit)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>results_table <span class="ot">&lt;-</span> <span class="fu">topTags</span>(results, <span class="at">n =</span> <span class="cn">Inf</span>)<span class="sc">$</span>table</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>regulate <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> results_table<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">1</span>, <span class="st">&quot;up-regulated&quot;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">ifelse</span>(results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> results_table<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span>, <span class="st">&quot;down-regulated&quot;</span>, <span class="st">&quot;not sig&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gene_anno <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;/lustre1/share/RNA_seq_class/genome/gene_anno_gencode.v36.rds&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rownames_nover <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">rownames</span>(results_table))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>anno_transcript_nover <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, gene_anno<span class="sc">$</span>transcript_id)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>match_index <span class="ot">&lt;-</span> <span class="fu">match</span>(rownames_nover, anno_transcript_nover)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>gene_name <span class="ot">&lt;-</span> gene_anno<span class="sc">$</span>gene_name[match_index]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>results_table<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(results_table<span class="sc">$</span>regulate <span class="sc">!=</span> <span class="st">&quot;not sig&quot;</span>, results_table<span class="sc">$</span>gene_name, <span class="cn">NA_character_</span>)</span></code></pre></div>
+<p><strong>原理。</strong> edgeR
+的广义线性模型路径：<code>estimateDisp</code>
+估计负二项离散度，<code>glmFit</code> 拟合，<code>glmLRT</code>
+对最后一个模型项做似然比检验（这里是
+<code>conditionUHR</code>）。<code>regulate</code> 规则是合取：FDR &lt;
+0.05 <strong>且</strong> |logFC| &gt;
+1——统计显著与效应量一起卡，这也是火山图虚线画在 ±1 与 −log10(0.05)
+的原因。注释块把 GENCODE 版本后缀剥掉（<code>ENST00000615943.1</code> →
+<code>ENST00000615943</code>），<strong>两侧都剥</strong>再做
+<code>match()</code>——注意这正是热图块忘掉的那条纪律（第 12 节）。</p>
+<p><strong>实跑：</strong></p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>mini</th>
+<th>homework（全量）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>up-regulated</td>
+<td>15</td>
+<td>171</td>
+</tr>
+<tr>
+<td>down-regulated</td>
+<td>30</td>
+<td>148</td>
+</tr>
+<tr>
+<td>not sig</td>
+<td>66</td>
+<td>512</td>
+</tr>
+<tr>
+<td>Matched（gene_name）</td>
+<td>111 / 111</td>
+<td>831 / 831</td>
+</tr>
+<tr>
+<td>top up（按 FDR）</td>
+<td>IGLC2（logFC ≈ +10.3，FDR ≈ 1e-145）、IGLC3、XBP1、MYH9</td>
+<td>IGLC2、IGLC3、…</td>
+</tr>
+<tr>
+<td>top down</td>
+<td>MIAT（≈ −8.5）、YWHAH、MAPK8IP2、ACO2、SYNGR1、SEPTIN3、CBX7</td>
+<td>SYNGR1、SEPTIN3、YWHAH、RPL3、CBX6、…</td>
+</tr>
+</tbody>
+</table>
+<p><strong>解读——SEQC 真值核验。</strong>
+每个方向都与已知答案一致：<strong>UHR 上调</strong>：免疫球蛋白 lambda
+链 IGLC2/IGLC3（UHR 混样含免疫细胞 RNA）——教科书级；<strong>HBR 高（即
+UHR
+下调）</strong>：MIAT、YWHAH、MAPK8IP2、ACO2、SYNGR1、SEPTIN3——脑富集转录本。两个深度下
+top 基因是同一条转录本（IGLC2，|logFC| &gt; 10、FDR ~1e-145）——信号在 1
+万读段时已饱和；深度买到的是<strong>更多</strong>被检出的基因（45 →
+319），不是不同答案。这正是 mini/homework 配对的核心课程点。</p>
+<p><strong>坑。</strong>
+RNA-15（<code>ggrepel: 9 / 280 unlabeled</code>——去拥挤提示，良性）。glmLRT
+收拟合对象；多传参数会改变被检验项（mini
+轮收割时踩过并当场纠正——教程原文 <code>glmLRT(fit)</code>
+才是对的）。</p>
+<p><strong>调优。</strong> <code>topTags(n = Inf)</code> 再按 logFC
+排序，能看见被 FDR 排序遮住的大效应基因。<strong>扩展。</strong>
+<code>decideTests</code> 跨对比做 Venn；<code>topTags</code> 默认 BH
+校正就是这里的 FDR。</p>
+<h2 id="富集分析go以及永远跑不起来的-kegg">11.
+富集分析（GO——以及永远跑不起来的 KEGG）</h2>
+<p><strong>原文（分步单元格——可执行路径）：</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> results_table<span class="sc">$</span>gene_name[results_table<span class="sc">$</span>regulate <span class="sc">==</span> <span class="st">&quot;up-regulated&quot;</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> gene_list[<span class="sc">!</span>(<span class="fu">is.na</span>(gene_list) <span class="sc">|</span> gene_list <span class="sc">==</span> <span class="st">&quot;&quot;</span>)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#KEGG analysis</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#entrez_ids &lt;- mapIds(...)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#kegg_enrich &lt;- enrichKEGG(...)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#go analysis</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>go_enrich <span class="ot">&lt;-</span> <span class="fu">enrichGO</span>(<span class="at">gene =</span> gene_list, <span class="at">OrgDb =</span> org.Hs.eg.db, <span class="at">keyType =</span> <span class="st">&quot;SYMBOL&quot;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ont =</span> <span class="st">&quot;ALL&quot;</span>, <span class="at">pvalueCutoff =</span> <span class="dv">1</span>, <span class="at">qvalueCutoff =</span> <span class="dv">1</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>go_dotplot <span class="ot">&lt;-</span> <span class="fu">dotplot</span>(go_enrich, <span class="at">showCategory =</span> <span class="dv">10</span>, <span class="at">title =</span> <span class="st">&quot;GO Enrichment&quot;</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;GO_dotplot_up_regulate.pdf&quot;</span>, <span class="at">plot =</span> go_dotplot, <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><strong>原理。</strong>
+富集问的是：上调基因集相对背景在注释条目上是否过度代表。<code>keyType = "SYMBOL"</code>
+直接喂基因符号（免手工转 ID）；<code>ont = "ALL"</code> 合并
+BP+MF+CC；<code>pvalueCutoff = 1</code> 关掉展示侧阈值，让 top-10
+按真实显著性排序。</p>
+<p><strong>实跑。</strong> mini 15 个上调基因 / homework 171
+个。homework top GO 条目（p.adjust 0.0075–0.0088）：<em>viral RNA genome
+replication</em>、<em>single-stranded viral RNA replication via
+double-stranded DNA intermediate</em>、<em>glycosyl compound catabolic
+process</em>、<em>protein targeting to mitochondrion</em>、<em>DNA
+dealkylation</em>、<em>cytidine catabolic process</em>、<em>cytidine
+deamination</em>、<em>cytidine-to-uridine editing</em>。教师参考
+<code>GO_dotplot.pdf</code> 的 top 条目相同（<em>viral RNA genome
+replication</em>、<em>glycosyl compound catabolic process</em>，p.adjust
+0.0075）——与参考交叉验证通过，不只是自洽。</p>
+<p><strong>坑——RNA-07/08，都在合并版 “CODES” 单元格上。</strong>
+分步单元格用 <code>#</code> 注释掉 KEGG（正确）。合并版单元格却把整个
+KEGG 块包进 <code>''' … '''</code>。R 里 <code>'''</code>
+<strong>不是</strong>注释：它解析成空串 <code>''</code> 加一个开串符
+<code>'</code>，于是整块变成<strong>一个巨型字符串字面量</strong>，被 R
+求值后自动打印——它<strong>碰巧</strong>表现得像个块注释，什么都不做。失效模式是潜伏的：块内一旦出现单引号就会提前闭串，剩余代码全部变成<strong>活代码</strong>。一律把
+<code>'''</code> 块当非可执行文本。RNA-08：homework
+的合并版单元格还在过滤 <code>"_direct"</code>（mini 命名）——homework
+产物叫 <code>_quasi</code>，它找到零个文件、死在
+tximport；分步路径（<code>grepl("quasi")</code>）才是可执行的。</p>
+<p><strong>解读。</strong> cytidine deamination / cytidine-to-uridine
+editing 一簇不是噪声：表达免疫球蛋白的细胞靠 AID/APOBEC
+驱动的胞嘧啶脱氨做亲和成熟——GO 读出的正是火山图上同一个 IG
+信号。<em>viral RNA genome replication</em> 一类条目是上调集里 IG/ERV
+区基因的注释侧效应（教师参考同样显示，可对照读）。</p>
+<p><strong>调优。</strong> <code>enrichKEGG</code> 需要 ENTREZ
+ID（被注释的块里做了转换）且要访问 KEGG REST
+网络——这就是它常被课堂略过的原因。<strong>扩展。</strong>
+<code>compareCluster</code>
+跨上调/下调/并集比较；GSEA（<code>gseGO</code>）吃整个排序表，用的信息比
+top 集多。</p>
+<h2 id="热图沉默的全-na-坑">12. 热图——沉默的全 NA 坑</h2>
+<p><strong>原文（homework 热图块，逐字）：</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>logCPM_scaled <span class="ot">&lt;-</span> <span class="fu">cpm</span>(dge_filtered, <span class="at">log =</span> <span class="cn">TRUE</span>, <span class="at">prior.count =</span> <span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(logCPM_scaled) <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">rownames</span>(logCPM_scaled))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>degs <span class="ot">&lt;-</span> results_table[results_table<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> <span class="fu">abs</span>(results_table<span class="sc">$</span>logFC) <span class="sc">&gt;</span> <span class="dv">1</span>, ]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>top50 <span class="ot">&lt;-</span> <span class="fu">head</span>(<span class="fu">rownames</span>(degs[<span class="fu">order</span>(degs<span class="sc">$</span>FDR), ]), <span class="dv">50</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>top50_clean <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, top50)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>logCPM_scaled_sub <span class="ot">&lt;-</span> logCPM_scaled[top50_clean, ]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>gene_map <span class="ot">&lt;-</span> <span class="fu">setNames</span>(gene_anno<span class="sc">$</span>gene_name, gene_anno<span class="sc">$</span>transcript_id)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(logCPM_scaled_sub) <span class="ot">&lt;-</span> gene_map[<span class="fu">rownames</span>(logCPM_scaled_sub)]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sample_info) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(logCPM_scaled)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;heatmap_DEG.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">8</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(logCPM_scaled_sub, <span class="at">cluster_rows =</span> <span class="cn">TRUE</span>, <span class="at">cluster_cols =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">show_rownames =</span> <span class="cn">TRUE</span>, <span class="at">annotation_col =</span> sample_info,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Heatmap of Differentially Expressed Genes&quot;</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<p><strong>坑链，一环一环。</strong> 第 2 行把 rownames
+剥掉版本号（<code>ENST00000390323.5</code> →
+<code>ENST00000390323</code>）；第 6 行建 <code>gene_map</code>
+用的是<strong>带版本号</strong>的键（<code>setNames(gene_anno$gene_name, gene_anno$transcript_id)</code>——没剥）；第
+7 行拿剥过号的 rownames 查带号的 map → <strong>全部落空</strong>；把全
+<code>NA</code> 向量赋给 rownames 在 R 里合法；pheatmap
+照样渲染——<strong>五十行全标 “NA”，无报错无警告</strong>。我们实跑产出的
+<code>heatmap_DEG.pdf</code> 用 <code>pdftotext</code> 抽出来正好 50 个
+<code>NA</code>。这与第 10
+节注释块是同一类版本号错配——那块两侧都剥所以对——mini
+版的热图块也是对的（一个 <code>clean_id()</code>
+帮手同时作用于<strong>数据行与注释 ID</strong>，外加
+<code>make.unique()</code> 和 <code>labels_row =</code>）。</p>
+<p><strong>一行矫正（已执行并验证）：</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gene_map <span class="ot">&lt;-</span> <span class="fu">setNames</span>(gene_anno<span class="sc">$</span>gene_name, <span class="fu">sub</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">..*$&quot;</span>, <span class="st">&quot;&quot;</span>, gene_anno<span class="sc">$</span>transcript_id))</span></code></pre></div>
+<p>矫正后运行（<code>heatmap_DEG_corrected.pdf</code>）：<strong>0/50
+NA</strong>，行标签是 IGLC2、IGLC3、MCM5、SERPIND1、LIF、…——真实的 top
+DEG 基因。</p>
+<p><strong>坑。</strong> RNA-09（上述）。RNA-10：教师参考
+<code>heatmap_DEG.pdf</code> 的行标签是<strong>带版本号的 ENST
+ID</strong>——既非基因名（mini 风格）也非全 NA（印刷版 homework
+风格）：参考跑用的是又一种代码变体，不能当这块的对拍基准（附录
+B）。homework 块还丢了 mini 版的 <code>scale = "row"</code>——行是裸
+logCPM，高表达基因会把 scale=“row” 才能显示的图案在视觉上淹没。</p>
+<p><strong>解读。</strong> 热图在这条管线里的任务是给 DEG
+结论做可视化断言：样本按条件聚（HBR/UHR 列分开）、top
+基因分成两个方向块。这个坑只弄坏了标签——数字、聚类、注释条一直是对的，而这恰恰是它能一路存活进印刷讲义的原因。</p>
+<p><strong>调优。</strong> <code>scale = "row"</code>（逐行 z
+分）、<code>cutree_rows</code> 强制块结构、两个条件之间
+<code>gaps_col = 3</code>。<strong>扩展。</strong> 注释多时换
+<code>ComplexHeatmap</code>；50 个标签挤时调字号。</p>
+<h2 id="双轮对比mini-vs-homework全量">13. 双轮对比（mini vs
+homework/全量）</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>mini（2026-09-21）</th>
+<th>homework/全量（2026-10-09）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每样本读段</td>
+<td>10,000</td>
+<td>118,571–227,392 对</td>
+</tr>
+<tr>
+<td>STAR 索引</td>
+<td>chr22 mini，381 MB</td>
+<td>全 GRCh38，约 31 GB 内存</td>
+</tr>
+<tr>
+<td>STAR unique（HBR / UHR）</td>
+<td>53.0–53.3% / 45.1–49.9%</td>
+<td>51.7–51.8% / 44.6–48.5%</td>
+</tr>
+<tr>
+<td>STAR 太短</td>
+<td>11.5–12.9%</td>
+<td>47.1–52.7%（全量索引 + BySJout 严格度）</td>
+</tr>
+<tr>
+<td>salmon align 模式</td>
+<td>100%（已比对片段分母）</td>
+<td>100%（同）</td>
+</tr>
+<tr>
+<td>salmon direct/quasi</td>
+<td>31.2–36.5%（trimmed）</td>
+<td>30.3–35.3%（原始读段，照原文）</td>
+</tr>
+<tr>
+<td>索引内转录本</td>
+<td>4,989</td>
+<td>231,448</td>
+</tr>
+<tr>
+<td>过滤后保留（≥10 counts 且 ≥2 样本）</td>
+<td>111（2.2%）</td>
+<td>831（0.36%）</td>
+</tr>
+<tr>
+<td>DEG（FDR&lt;0.05 且 |logFC|&gt;1）</td>
+<td>45（15 上 / 30 下）</td>
+<td>319（171 上 / 148 下）</td>
+</tr>
+<tr>
+<td>两个方向的 top 基因</td>
+<td>IGLC2（+10.3）/ MIAT（−8.5）</td>
+<td>IGLC2 / SYNGR1 一簇</td>
+</tr>
+<tr>
+<td>注释 Matched</td>
+<td>111/111</td>
+<td>831/831</td>
+</tr>
+<tr>
+<td>GO top 条目</td>
+<td>（集小）</td>
+<td>viral RNA genome replication 等，与教师参考一致</td>
+</tr>
+<tr>
+<td>热图标签</td>
+<td>基因名（正确块）</td>
+<td>照原文全 “NA” → 矫正后 0/50 NA</td>
+</tr>
+<tr>
+<td>墙钟时间</td>
+<td>~4 分钟</td>
+<td>13 分钟</td>
+</tr>
+<tr>
+<td>跑在哪</td>
+<td>登录节点，串行</td>
+<td>登录节点，串行（STAR 带内存守卫）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>什么在缩放、什么不在。</strong> 墙钟 4 → 13
+分钟（索引加载主导；全量索引是 mini 的 ~80 倍）。DEG 数 45 →
+319（深度买到检出）。<strong>答案</strong>没动：映射率画像、top
+基因、方向全部随深度不变——这正是先跑 mini
+的意义所在。两轮之间唯一翻转的东西来自<strong>文档</strong>而不是数据：mini
+的热图块注释正确，homework 的不正确。</p>
+<h2 id="检查清单产物清单与总结">14. 检查清单、产物清单与总结</h2>
+<p><strong>检查清单（附两轮实测答案）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>检查项</th>
+<th>mini</th>
+<th>全量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ck1</td>
+<td>建矩阵前样本顺序（HBR×3 在前？）</td>
+<td>成立</td>
+<td>成立</td>
+</tr>
+<tr>
+<td>ck2</td>
+<td><code>colnames(txi$counts)</code> NULL → Sample1–6（位置身份）</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck3</td>
+<td>STAR unique 落在 44–54% 区间，HBR 高于 UHR</td>
+<td>45.1–53.3%</td>
+<td>44.6–51.8%</td>
+</tr>
+<tr>
+<td>ck4</td>
+<td>多位点低，UHR &gt; HBR（IG 成分）</td>
+<td>0.5–2.1%</td>
+<td>1.1–3.0%</td>
+</tr>
+<tr>
+<td>ck5</td>
+<td>quasi 映射 30–37%、align 100%（分母不同——别互比）</td>
+<td>31.2–36.5%</td>
+<td>30.3–35.3%</td>
+</tr>
+<tr>
+<td>ck6</td>
+<td>两种索引广度下保留率 ~2% 与 ~0.4%</td>
+<td>111/4,989</td>
+<td>831/231,448</td>
+</tr>
+<tr>
+<td>ck7</td>
+<td>DEG 方向符合 SEQC 真值（UHR 中 IGL 上调、脑基因下调）</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck8</td>
+<td>两个深度 top 基因一致</td>
+<td>IGLC2</td>
+<td>IGLC2</td>
+</tr>
+<tr>
+<td>ck9</td>
+<td>注释块打出 <code>Matched: n/n</code></td>
+<td>111/111</td>
+<td>831/831</td>
+</tr>
+<tr>
+<td>ck10</td>
+<td>GO top 条目对教师参考</td>
+<td>—</td>
+<td>一致（viral RNA genome replication，p.adjust ~0.008）</td>
+</tr>
+<tr>
+<td>ck11</td>
+<td>热图标签是基因名不是 “NA”</td>
+<td>是（正确的块）</td>
+<td>矫正后 0/50 NA（照原文 50/50 NA）</td>
+</tr>
+<tr>
+<td>ck12</td>
+<td>进 R 前 <code>LC_ALL=C</code>/<code>LANG=C</code> 已导出</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck13</td>
+<td>ggrepel “unlabeled” 警告记录为良性</td>
+<td>9</td>
+<td>280</td>
+</tr>
+</tbody>
+</table>
+<p><strong>产物清单：</strong> 两轮的分析产物都在仓库
+<code>RNA-seq/results/</code> 下（只放分析产物——无原始读段、无
+BAM）：fastqc/fastp 报告、各 6 份 STAR
+<code>Log.final.out</code>、multiqc 报告、全部 24 份定量的
+<code>quant.sf</code>、R 分析日志、homework 轮四张 PDF（火山 / GO /
+<strong>照原文热图，全 NA</strong> / <strong>矫正热图，0 NA</strong>）加
+mini 轮三张 PDF，以及两轮完整的 <code>summary</code> +
+<code>deviations</code> 日志与运行脚本。重型中间产物（BAM、原始/trimmed
+FASTQ、完整 salmon
+目录）留在集群运行目录（<code>/lustre1/user/bjx131_pkuhpc/rna_run_mini_20260921/</code>、<code>/lustre1/user/bjx131_pkuhpc/rna_run_homework_20261009/</code>）。</p>
+<p><strong>总结。</strong>
+管线本身是健全的；坑全在管外围手写接缝上——样本身份只靠位置与字母序运气、两个
+salmon 模式的映射率分母不可比、quasi
+循环悄悄定量了原始读段、热图注释重写静默渲染出 50
+行无标签。每一条都在真实运行中复现，每个修复都执行并验证过。SEQC
+数据集全程尽到了职责：生物学答案（IGLC2
+上调、脑基因下调）在两个深度下稳定，且在参考可对拍处与教师参考一致——而如附录
+B 所示，“参考可对拍”这件事本身也是需要核验的，不是想当然。</p>
+<h2 id="附录-a.-偏差日志两轮节选但忠实原文">附录 A.
+偏差日志（两轮，节选但忠实原文）</h2>
+<p>完整日志：<code>RNA-seq/results/mini/log/</code> 与
+<code>RNA-seq/results/homework/log/</code>（summary + deviations + R
+分析）。</p>
+<p><strong>mini 轮（2026-09-21）——节选：</strong></p>
+<pre class="text"><code>DEVIATION: workdir = own run dir (tutorial: classroom share dir); no writes to the classroom share
+DEVIATION: tutorial-native interactive mode: serial single-process run on the login node —
+  campus-wide SLURM submission outage (all sbatch rejected; sacct empty since 9/15; the WES
+  scripts that ran successfully on 9/20 also rejected → cluster-side, not ours)
+DEVIATION: SLURM env-var guard + deviation logging added to the teacher&#39;s load-test script shape
+DEVIATION: single consolidated runner script (tutorial assumes interactive typing)
+FINDING: sample order fragility holds (list.files alphabetical, HBR×3 first, condition correct)
+FINDING: tximport unnamed files → colnames NULL → edgeR Sample1-6 (positional dependence)
+FINDING: KEGG block is a doc bug (step-by-step cells comment it with #; consolidated wraps in &#39;&#39;&#39;)
+FINDING: ggrepel 9 unlabeled benign</code></pre>
+<p><strong>homework 轮（2026-10-09）——节选：</strong></p>
+<pre class="text"><code>DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026_homework/{id})
+DEVIATION: tutorial-native interactive mode on the login node, per user directive 2026-10-09 —
+  SLURM had RECOVERED by probe time (test-only alloc OK on cn-long) but the tutorial&#39;s own
+  design is direct interactive execution; recorded, not used this round
+DEVIATION: restart guards (skip steps whose outputs exist); STAR memory guard (wait for
+  MemAvailable ≥ 37 GB before each invocation — index ~31 GB on a shared login node)
+DEVIATION: STAR --runThreadN 4 per the homework batch script (single-sample demo cell says 1)
+DEVIATION: multiqc: doc cell has placeholder path; used $PWD like the mini version
+DEVIATION: salmon quasi mode runs on RAW reads (glob *read1.fastq.gz matches only untrimmed) —
+  inconsistent with mini&#39;s direct mode on trimmed; run AS WRITTEN, recorded
+DEVIATION: R step-by-step path used (grepl(&quot;quasi&quot;)); consolidated CODES cell still filters
+  &quot;_direct&quot; (mini naming) AND wraps KEGG in &#39;&#39;&#39; (invalid R) — unusable for homework outputs
+FINDING: heatmap row labels ALL &quot;NA&quot; (gene_map keyed by versioned transcript_id, looked up
+  with version-stripped rownames) — silent; correction pass heatmap_DEG_corrected.pdf: 0/50 NA
+FINDING: quasi mapping rate 30–35% on raw reads (mini direct ~32%, consistent)
+FINDING: teacher reference heatmap rows are versioned ENST IDs — teacher&#39;s actual run used a
+  third code variant; third teacher-vs-doc deviation (cf. class.R salmon_files[-2], the
+  mangled single-sample salmon filename)
+RESULT: GO dotplot top categories match teacher reference (viral RNA genome replication,
+  glycosyl compound catabolic process; p.adjust 0.0075 vs 0.0082–0.0088) — cross-validated</code></pre>
+<h2 id="附录-b.-教师参考产物-vs-印刷版文档取证路径原文">附录 B.
+教师参考产物 vs 印刷版文档（取证，路径原文）</h2>
+<p>教师自己的运行在 <code>/lustre1/share/RNA_seq/</code>
+留下了产物。与印刷版文档相对，三处独立偏离：</p>
+<ol type="1">
+<li><strong>参考热图是第三种变体。</strong>
+<code>/lustre1/share/RNA_seq/heatmap_DEG.pdf</code> 的行标签是带版本号的
+ENST ID（如 <code>ENST00000407418.8</code>）。印刷版 homework
+块产出的是全 “NA”（RNA-09，已复现）；mini
+块产出基因名。参考两者都不是——它那份代码保留了带版本号的 ENST
+行名、从未改名。</li>
+<li><strong><code>class.R</code> 丢了一个样本。</strong>
+<code>salmon_files &lt;- salmon_files[-2]</code>——tximport 前删掉第 2
+个定量目录。与教师自己运行区里重复目录的清理一致（共享目录里同时有
+<code>UHR_Rep3...chr22Aligned...bam</code> 和双名
+<code>UHR_Rep3...chr22_ERCC-Mix2...chr22Aligned...bam</code>），而与印刷文档里的任何方法都对不上。</li>
+<li><strong>拼接错乱的单样本 salmon 单元格真被跑过。</strong> 上面的双名
+BAM 正是 homework 单样本 align 单元格（RNA-03，UHR 名 + 粘贴的 HBR
+<code>_ERCC-Mix2...chr22</code> 后缀）会产出的文件名——参考区里留着这个
+bug 自己的输出文件名。</li>
+</ol>
+<p>参考<strong>可</strong>对拍的地方与我们的结果一致：<code>GO_dotplot.pdf</code>
+的 top 条目与 p.adjust 和我们吻合（附录 A 的 RESULT）。WES
+版的教训原文重演：参考产物是<strong>某人实际命令</strong>的证据，不是印刷版命令正确的证明——只在代码路径已知处与它对拍。</p>
+<h2 id="附录-c.-复现">附录 C. 复现</h2>
+<p>两轮的运行脚本与 R 脚本原样存放在
+<code>RNA-seq/results/mini/scripts/</code> 与
+<code>RNA-seq/results/homework/scripts/</code>，旁边是完整日志。homework
+运行脚本在自己的头注释里写明了它的包装偏差（SLURM
+头仅为溯源保留——该轮按教程原生方式在登录节点跑）。复跑 mini 轮约 4
+分钟、只需共享环境；复跑 homework 轮串行约 13 分钟、每次 STAR 调用需 ~31
+GB 空闲内存。</p>
+</body>
+</html>

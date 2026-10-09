@@ -1,0 +1,10 @@
+{
+    "salmon_version": "1.10.3",
+    "targets": "/lustre1/share/RNA_seq/genome/GRCh38_no_alt_analysis_set_gencode.v36.transcripts.fa",
+    "libType": "A",
+    "alignments": "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Aligned.toTranscriptome.out.bam",
+    "output": "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_align.salmon_quant",
+    "gcBias": [],
+    "seqBias": [],
+    "auxDir": "aux_info"
+}

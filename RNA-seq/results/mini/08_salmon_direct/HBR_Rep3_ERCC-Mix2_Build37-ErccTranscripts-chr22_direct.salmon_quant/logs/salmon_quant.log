@@ -1,0 +1,54 @@
+[2026-09-28 17:43:42.847] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:42.847] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:42.847] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:42.847] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:42.847] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:42.847] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:42.847] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:42.847] [jointLog] [info] Loading dense pufferfish index.
+[2026-09-28 17:43:42.880] [jointLog] [info] done
+[2026-09-28 17:43:42.918] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:42.968] [jointLog] [info] Number of decoys : 0
+[2026-09-28 17:43:43.243] [fileLog] [info] 
+At end of round 0
+==================
+Observed 9659 total fragments (9659 in most recent round)
+
+[2026-09-28 17:43:43.242] [jointLog] [info] Computed 1,292 rich equivalence classes for further processing
+[2026-09-28 17:43:43.242] [jointLog] [info] Counted 3,511 total reads in the equivalence classes 
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of mappings discarded because of alignment score : 2,220
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 260
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:43.243] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 29
+[2026-09-28 17:43:43.244] [jointLog] [warning] Only 3511 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:43.244] [jointLog] [info] Mapping rate = 36.3495%
+
+[2026-09-28 17:43:43.244] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:43.245] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:43.248] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:43.249] [jointLog] [info] iteration = 0 | max rel diff. = 54.6322
+[2026-09-28 17:43:43.253] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:47.624] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:47.626] [jointLog] [info] processed bias for 0.2% of the transcripts
+[2026-09-28 17:43:48.102] [jointLog] [info] processed bias for 10.2% of the transcripts
+[2026-09-28 17:43:48.307] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:48.609] [jointLog] [info] processed bias for 30.4% of the transcripts
+[2026-09-28 17:43:48.997] [jointLog] [info] processed bias for 39.9% of the transcripts
+[2026-09-28 17:43:49.352] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:43:49.567] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2026-09-28 17:43:49.892] [jointLog] [info] processed bias for 69.9% of the transcripts
+[2026-09-28 17:43:50.439] [jointLog] [info] processed bias for 79.9% of the transcripts
+[2026-09-28 17:43:50.755] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2026-09-28 17:43:51.094] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:51.098] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:43:51.141] [jointLog] [info] iteration = 100 | max rel diff. = 0.0426672
+[2026-09-28 17:43:51.149] [jointLog] [info] iteration = 117 | max rel diff. = 0.0083768
+[2026-09-28 17:43:51.150] [jointLog] [info] Finished optimizer
+[2026-09-28 17:43:51.150] [jointLog] [info] writing output 
+
+[2026-09-28 17:43:51.169] [jointLog] [warning] NOTE: Read Lib [[ HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+

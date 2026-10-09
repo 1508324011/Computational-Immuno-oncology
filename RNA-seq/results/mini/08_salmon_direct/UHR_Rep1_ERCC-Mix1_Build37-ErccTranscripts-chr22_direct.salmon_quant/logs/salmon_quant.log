@@ -1,0 +1,52 @@
+[2026-09-28 17:43:54.532] [jointLog] [info] setting maxHashResizeThreads to 1
+[2026-09-28 17:43:54.532] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:43:54.532] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2026-09-28 17:43:54.532] [jointLog] [info] Setting consensusSlack to selective-alignment default of 0.35.
+[2026-09-28 17:43:54.532] [jointLog] [info] parsing read library format
+[2026-09-28 17:43:54.532] [jointLog] [info] There is 1 library.
+[2026-09-28 17:43:54.532] [jointLog] [info] Loading pufferfish index
+[2026-09-28 17:43:54.533] [jointLog] [info] Loading dense pufferfish index.
+[2026-09-28 17:43:54.563] [jointLog] [info] done
+[2026-09-28 17:43:54.602] [jointLog] [info] Index contained 4,989 targets
+[2026-09-28 17:43:54.651] [jointLog] [info] Number of decoys : 0
+[2026-09-28 17:43:54.932] [fileLog] [info] 
+At end of round 0
+==================
+Observed 9660 total fragments (9660 in most recent round)
+
+[2026-09-28 17:43:54.931] [jointLog] [info] Computed 1,245 rich equivalence classes for further processing
+[2026-09-28 17:43:54.931] [jointLog] [info] Counted 3,260 total reads in the equivalence classes 
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of mappings discarded because of alignment score : 2,237
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments entirely discarded because of alignment score : 284
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments discarded because they are best-mapped to decoys : 0
+[2026-09-28 17:43:54.932] [jointLog] [info] Number of fragments discarded because they have only dovetail (discordant) mappings to valid targets : 26
+[2026-09-28 17:43:54.933] [jointLog] [warning] Only 3260 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:43:54.933] [jointLog] [info] Mapping rate = 33.7474%
+
+[2026-09-28 17:43:54.933] [jointLog] [info] finished quantifyLibrary()
+[2026-09-28 17:43:54.935] [jointLog] [info] Starting optimizer
+[2026-09-28 17:43:54.937] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:43:54.938] [jointLog] [info] iteration = 0 | max rel diff. = 42.2743
+[2026-09-28 17:43:54.943] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:43:58.900] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:43:58.901] [jointLog] [info] processed bias for 0.2% of the transcripts
+[2026-09-28 17:43:59.264] [jointLog] [info] processed bias for 10.2% of the transcripts
+[2026-09-28 17:43:59.509] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:43:59.812] [jointLog] [info] processed bias for 30.1% of the transcripts
+[2026-09-28 17:44:00.118] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:44:00.471] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:44:00.667] [jointLog] [info] processed bias for 59.9% of the transcripts
+[2026-09-28 17:44:00.993] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2026-09-28 17:44:01.431] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2026-09-28 17:44:01.799] [jointLog] [info] processed bias for 90.2% of the transcripts
+[2026-09-28 17:44:02.056] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:44:02.093] [jointLog] [info] iteration = 100 | max rel diff. = 0.00941887
+[2026-09-28 17:44:02.094] [jointLog] [info] Finished optimizer
+[2026-09-28 17:44:02.094] [jointLog] [info] writing output 
+
+[2026-09-28 17:44:02.105] [jointLog] [warning] NOTE: Read Lib [[ UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz, UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz]] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant/lib_format_counts.json for details
+

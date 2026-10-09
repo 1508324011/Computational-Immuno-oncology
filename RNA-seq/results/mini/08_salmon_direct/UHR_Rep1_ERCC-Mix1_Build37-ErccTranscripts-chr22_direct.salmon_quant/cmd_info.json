@@ -1,0 +1,13 @@
+{
+    "salmon_version": "1.10.3",
+    "index": "/lustre1/share/RNA_seq_class/genome/mini_ref_chr22/salmon_index",
+    "libType": "A",
+    "mates1": "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.trimmed.fastq.gz",
+    "mates2": "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.trimmed.fastq.gz",
+    "validateMappings": [],
+    "gcBias": [],
+    "seqBias": [],
+    "threads": "1",
+    "output": "UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22_direct.salmon_quant",
+    "auxDir": "aux_info"
+}

@@ -1,0 +1,43 @@
+[2026-09-28 17:42:52.472] [jointLog] [info] setting maxHashResizeThreads to 2
+[2026-09-28 17:42:52.472] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2026-09-28 17:42:52.478] [jointLog] [info] numQuantThreads = 2
+[2026-09-28 17:42:53.144] [fileLog] [info] quantification processed 0 fragments so far
+
+[2026-09-28 17:42:53.144] [fileLog] [info] quantification processed 3400 fragments so far
+
+[2026-09-28 17:42:52.986] [jointLog] [info] replaced 0 non-ACGT nucleotides with random nucleotides
+[2026-09-28 17:42:53.206] [jointLog] [info] 
+
+
+Completed first pass through the alignment file.
+Total # of mapped reads : 3400
+# of uniquely mapped reads : 989
+# ambiguously mapped reads : 2411
+
+
+
+[2026-09-28 17:42:53.212] [jointLog] [info] Computed 1,237 rich equivalence classes for further processing
+[2026-09-28 17:42:53.212] [jointLog] [info] Counted 3,400 total reads in the equivalence classes 
+[2026-09-28 17:42:53.213] [jointLog] [warning] Only 3400 fragments were mapped, but the number of burn-in fragments was set to 5000000.
+The effective lengths have been computed using the observed mappings.
+
+[2026-09-28 17:42:53.213] [jointLog] [info] starting optimizer
+[2026-09-28 17:42:53.216] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2026-09-28 17:42:53.216] [jointLog] [info] iteration = 0 | max rel diff. = 25.1364
+[2026-09-28 17:42:53.219] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2026-09-28 17:42:55.180] [jointLog] [info] Computed expected counts (for bias correction)
+[2026-09-28 17:42:55.180] [jointLog] [info] processed bias for 1.0% of the transcripts
+[2026-09-28 17:42:55.284] [jointLog] [info] processed bias for 10.7% of the transcripts
+[2026-09-28 17:42:55.457] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2026-09-28 17:42:55.637] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2026-09-28 17:42:55.759] [jointLog] [info] processed bias for 40.1% of the transcripts
+[2026-09-28 17:42:55.945] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2026-09-28 17:42:56.119] [jointLog] [info] processed bias for 60.2% of the transcripts
+[2026-09-28 17:42:56.308] [jointLog] [info] processed bias for 70.5% of the transcripts
+[2026-09-28 17:42:56.451] [jointLog] [info] processed bias for 80.2% of the transcripts
+[2026-09-28 17:42:56.631] [jointLog] [info] processed bias for 89.9% of the transcripts
+[2026-09-28 17:42:56.779] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:42:56.781] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2026-09-28 17:42:56.807] [jointLog] [info] iteration = 100 | max rel diff. = 0.00555556
+[2026-09-28 17:42:56.808] [jointLog] [info] finished optimizer
+[2026-09-28 17:42:56.808] [jointLog] [info] writing output

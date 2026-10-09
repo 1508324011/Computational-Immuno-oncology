@@ -1,0 +1,70 @@
+[2026-10-09 14:49:54] == RNA-seq HOMEWORK start (login60-direct, login60) ==
+[2026-10-09 14:49:56] tools: fastp 0.23.4 | STAR 2.7.11b | salmon salmon 1.10.3 | fastqc FastQC v0.12.1
+[2026-10-09 14:49:56] DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026_homework/{id}); no writes to classroom share
+[2026-10-09 14:49:56] DEVIATION: tutorial-native interactive mode: serial single-process run on login node, per user directive 2026-10-09 — SLURM had RECOVERED by probe time (test-only alloc OK on cn-long) but the tutorial's own design is direct interactive execution; recorded, not used this round
+[2026-10-09 14:49:56] DEVIATION: single consolidated runner script (tutorial assumes interactive typing)
+[2026-10-09 14:49:56] DEVIATION: restart guards added: steps whose outputs already exist are skipped (additive wrapper for a multi-hour serial run)
+[2026-10-09 14:49:56] DEVIATION: STAR memory guard added before each invocation: wait until MemAvailable >= 37G (index SA 25G + Genome 3.2G + SAindex 1.6G ~ 31G RAM on a shared login node)
+[2026-10-09 14:49:56] DEVIATION: STAR --runThreadN 4 per the homework batch_STAR.sh (single-sample demo cell says 1; batch cell is the homework path)
+[2026-10-09 14:49:56] DEVIATION: batch_STAR.sh in the doc lost the '#' of its shebang (!/bin/bash) — cosmetic doc bug, recorded; loop body used verbatim
+[2026-10-09 14:49:56] DEVIATION: multiqc: doc cell has placeholder path /lustre1/share/RNA_seq_student/yourfold; used $PWD like the mini version
+[2026-10-09 14:49:56] DEVIATION: Total-Sequences extraction looped over all 12 files (tutorial: single example)
+[2026-10-09 14:49:56] DEVIATION: single-sample salmon align cell has a mangled filename (HBR/UHR mix in name); the batch_salmon_align.sh version is correct and used
+[2026-10-09 14:49:56] DEVIATION: salmon quasi mode runs on RAW reads (glob '*read1.fastq.gz' matches only untrimmed files) — inconsistent with mini version's direct mode on trimmed reads; run AS WRITTEN, recorded
+[2026-10-09 14:49:56] DEVIATION: R section: step-by-step path used (salmon_files filtered by grepl('quasi')); the consolidated CODES cell still filters '_direct' (mini naming) AND wraps KEGG in ''' (invalid R) — unusable for homework outputs, doc bug recorded
+[2026-10-09 14:49:56] DEVIATION: KEGG block kept commented exactly as written
+[2026-10-09 14:49:56] DEVIATION: diagnostic prints added in R (sample order, kept transcripts, DEG counts) — additive only
+[2026-10-09 14:49:56] DEVIATION: teacher reference class.R contains salmon_files[-2] (drops 2nd sample) — teacher-side quirk, NOT replicated here; noted for the corrected edition
+[2026-10-09 14:49:56] step 0: rsync homework fastq (112M source)
+[2026-10-09 14:49:57]   -> 12 fastq.gz files
+[2026-10-09 14:49:57] step 1: fastqc batch (serial as written)
+[2026-10-09 14:50:43]   -> 12 fastqc zips
+[2026-10-09 14:50:43] step 1b: Total Sequences (all fastqc zips)
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 118571
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 118571
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 144826
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 144826
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 129786
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 129786
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 227392
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 227392
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 162373
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 162373
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 185442
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 185442
+[2026-10-09 14:50:43] step 2: fastp batch
+[2026-10-09 14:51:08]   -> 12 trimmed fastq files
+[2026-10-09 14:51:08] step 3: STAR batch (full GRCh38 index ~31G, serial, guarded)
+[2026-10-09 14:51:08]   STAR HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22 (MemAvailable 50G)
+[2026-10-09 14:52:25]   STAR HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22 (MemAvailable 49G)
+[2026-10-09 14:53:28]   STAR HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22 (MemAvailable 50G)
+[2026-10-09 14:54:36]   STAR UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22 (MemAvailable 50G)
+[2026-10-09 14:55:51]   STAR UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22 (MemAvailable 50G)
+[2026-10-09 14:57:01]   STAR UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22 (MemAvailable 49G)
+[2026-10-09 14:58:15]   -> 6 transcriptome BAMs
+[2026-10-09 14:58:15]   STAR mapping rates:
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	60665  % of reads mapped to multiple loci |	1.09% 
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	73687  % of reads mapped to multiple loci |	1.11% 
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	66305  % of reads mapped to multiple loci |	1.06% 
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	100759  % of reads mapped to multiple loci |	2.77% 
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	76838  % of reads mapped to multiple loci |	3.02% 
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	80513  % of reads mapped to multiple loci |	2.77% 
+[2026-10-09 14:58:15] step 4: multiqc
+[2026-10-09 14:58:35]   -> multiqc_report/ present: yes
+[2026-10-09 14:58:35] step 5: salmon align-mode batch
+Processed: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22
+[2026-10-09 14:59:59] step 6: salmon quasi-mode batch (raw reads, -p 8, as written)
+Processed: HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22
+Processed: UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22
+[2026-10-09 15:01:20] step 7: R analysis (Rscript, LC_ALL=C, quasi pattern)
+[2026-10-09 15:03:02]   R PDF outputs: GO_dotplot_up_regulate.pdf heatmap_DEG.pdf volcano_plot.pdf 
+[2026-10-09 15:03:02] == RNA-seq HOMEWORK done ==

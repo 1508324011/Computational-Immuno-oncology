@@ -1,0 +1,13 @@
+Sample	Unique Reads	Duplicate Reads
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1	7550.0	2450.0
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2	7541.0	2459.0
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1	7527.0	2473.0
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2	7531.0	2469.0
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1	7547.0	2453.0
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2	7545.0	2455.0
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1	7236.0	2764.0
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2	7275.0	2725.0
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1	7469.0	2531.0
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2	7446.0	2554.0
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1	7247.0	2753.0
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2	7129.0	2871.0

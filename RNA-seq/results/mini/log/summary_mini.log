@@ -1,0 +1,45 @@
+[2026-09-28 17:41:40] == RNA-seq mini tutorial start (job login60-direct, login60) ==
+[2026-09-28 17:41:40] tools: fastp 0.23.4 | STAR 2.7.11b | salmon salmon 1.10.3 | fastqc FastQC v0.12.1
+[2026-09-28 17:41:40] DEVIATION: workdir = own run dir (tutorial: /lustre1/share/RNA_seq_student_2026/{id}); our cluster discipline — no writes to classroom share
+[2026-09-28 17:41:40] DEVIATION: whole tutorial in one sbatch job (tutorial assumes interactive typing on a node); login node only submits
+[2026-09-28 17:41:40] DEVIATION: R section run via Rscript under LC_ALL=C (tutorial: interactive R with the same export as segfault workaround)
+[2026-09-28 17:41:40] DEVIATION: KEGG block kept commented exactly as tutorial section 9; the consolidated 'CODES' cell wraps it in ''' which is invalid R syntax (doc bug, recorded)
+[2026-09-28 17:41:40] DEVIATION: diagnostic prints added in R (sample order, DEG counts) — additive only, no analysis logic changed
+[2026-09-28 17:41:40] DEVIATION: SLURM submission broken cluster-wide since the restructure week (all combos rejected, queue empty, 9/20-proven WES scripts rejected too) -> tutorial-native interactive mode: direct single-thread run on login60, well within the instructor's 30-concurrent-students load-test envelope (STAR mini index 381M, salmon 16M, node 45G free / load 1.5)
+[2026-09-28 17:41:40] step 0: rsync mini fastq
+[2026-09-28 17:41:40]   -> 12 fastq.gz files
+[2026-09-28 17:41:40] step 1: fastqc batch
+[2026-09-28 17:42:10]   -> 12 fastqc zips
+[2026-09-28 17:42:10] step 1b: Total Sequences (all fastqc zips)
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1_fastqc.zip: 10000
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2_fastqc.zip: 10000
+[2026-09-28 17:42:10] DEVIATION: Total-Sequences extraction looped over all 12 files (tutorial: single example, 'replacing with your file name')
+[2026-09-28 17:42:10] step 2: fastp batch
+[2026-09-28 17:42:14]   -> 12 trimmed fastq files
+[2026-09-28 17:42:14] step 3: STAR batch
+[2026-09-28 17:42:40]   -> 6 transcriptome BAMs
+[2026-09-28 17:42:40]   STAR mapping rates:
+  HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5165  % of reads mapped to multiple loci |	0.68% 
+  HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5145  % of reads mapped to multiple loci |	0.68% 
+  HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	5151  % of reads mapped to multiple loci |	0.48% 
+  UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4517  % of reads mapped to multiple loci |	2.02% 
+  UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4801  % of reads mapped to multiple loci |	2.08% 
+  UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22Log.final.out:  Uniquely mapped reads number |	4351  % of reads mapped to multiple loci |	1.90% 
+[2026-09-28 17:42:40] step 4: multiqc
+[2026-09-28 17:42:45]   -> multiqc_report/ present: yes
+[2026-09-28 17:42:45] step 5: salmon align-mode batch
+[2026-09-28 17:43:21] DEVIATION: align-mode run per batch_salmon_align.sh (--gcBias --seqBias); tutorial's single-sample demo command omits both flags — doc inconsistency, batch version used
+[2026-09-28 17:43:21] step 6: salmon direct-mode batch
+[2026-09-28 17:44:20] step 7: R analysis (Rscript, LC_ALL=C)
+[2026-09-28 17:45:43]   R PDF outputs: GO_dotplot_up_regulate.pdf heatmap_DEG_mini_final.pdf volcano_plot.pdf 
+[2026-09-28 17:45:43] == RNA-seq mini tutorial done ==

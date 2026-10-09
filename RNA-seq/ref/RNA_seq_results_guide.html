@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RNA-seq 两轮实跑结果讲解（results guide） (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RNA-seq 两轮实跑结果讲解（results guide） (Corrected
+&amp; Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rna-seq-两轮实跑结果讲解results-guide"
+id="toc-rna-seq-两轮实跑结果讲解results-guide">RNA-seq
+两轮实跑结果讲解（results guide）</a>
+<ul>
+<li><a href="#这批结果是什么" id="toc-这批结果是什么">1.
+这批结果是什么</a></li>
+<li><a href="#逐类导读" id="toc-逐类导读">2. 逐类导读</a></li>
+<li><a href="#动手练习全部仓库内可完成"
+id="toc-动手练习全部仓库内可完成">3.
+动手练习（全部仓库内可完成）</a></li>
+<li><a href="#未入库的大文件在哪" id="toc-未入库的大文件在哪">4.
+未入库的大文件在哪</a></li>
+<li><a href="#一句话总结" id="toc-一句话总结">5. 一句话总结</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="rna-seq-两轮实跑结果讲解results-guide">RNA-seq
+两轮实跑结果讲解（results guide）</h1>
+<p>: 配套 <code>RNA-seq/results/</code>（mini 轮 +
+homework/全量轮两轮入库产物）的逐类导读与动手练习。所有练习都能只在仓库内完成——不需要集群、不需要原始数据。每步原理与命令讲解见
+<code>RNA_seq_tutorial_corrected.md</code>（中文版
+<code>_zh.md</code>）。</p>
+<h2 id="这批结果是什么">1. 这批结果是什么</h2>
+<p>两轮全链路实跑（fastqc → fastp → STAR → multiqc → salmon 双模式 → R
+差异表达/富集/热图），命令照教程原文、只加最小包装，全部偏差记录在
+<code>*/log/deviations.log</code>。一轮是 mini（每样本 1 万读段、chr22
+mini 索引、约 4 分钟），一轮是全量（每样本 11.8万–22.7万读对、完整
+GRCh38 索引、约 31 GB 内存、13
+分钟）。两轮都按教程原生方式在登录节点串行跑（理由与取证见矫正版第 0
+节）。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>关键数字</th>
+<th>mini</th>
+<th>homework/全量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STAR unique（HBR/UHR）</td>
+<td>53.0–53.3% / 45.1–49.9%</td>
+<td>51.7–51.8% / 44.6–48.5%</td>
+</tr>
+<tr>
+<td>过滤后转录本</td>
+<td>111 / 4,989</td>
+<td>831 / 231,448</td>
+</tr>
+<tr>
+<td>DEG（FDR&lt;0.05 且 |logFC|&gt;1）</td>
+<td>45（15 上 / 30 下）</td>
+<td>319（171 上 / 148 下）</td>
+</tr>
+<tr>
+<td>top 基因</td>
+<td>IGLC2（+10.3）/ MIAT（−8.5）</td>
+<td>IGLC2 / SYNGR1 一簇</td>
+</tr>
+<tr>
+<td>热图标签</td>
+<td>基因名（mini 版代码正确）</td>
+<td>照原文全 “NA” → 矫正 0/50 NA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="逐类导读">2. 逐类导读</h2>
+<p><strong>02_fastqc/（fastqc zip ×12/轮）</strong>：zip 内含
+<code>fastqc_data.txt</code> 与完整 html，故未单独收散装 html。逐文件
+<code>Total Sequences</code> 是规模核验的第一手出处——homework 轮 read1
+与 read2 计数一致（118,571…227,392/文件）。</p>
+<p><strong>04_fastp/（json+html 对 ×12/轮）</strong>：json
+是机读版修剪统计；<code>summary.before_filtering.total_reads</code> 与
+<code>after_filtering.total_reads</code>
+相除即保留率（97.4–98.7%）。</p>
+<p><strong>05_STAR/（Log.final.out + SJ.out.tab 各
+6/轮）</strong>：<code>Log.final.out</code>
+是比对画像的唯一权威出处——三行关键值：<code>Uniquely mapped reads %</code>、<code>% of reads mapped to multiple loci</code>、<code>% of reads unmapped: too short</code>。全量轮的”太短
+47–53%“（mini 轮仅 11–13%）是<strong>全基因组索引 + BySJout
+过滤组合</strong>的属性，不是跑错（矫正版第 5
+节解读）。<code>SJ.out.tab</code> 是剪接位点表（0 列=染色体，第 6
+列=注释状态 0=novel/1=annotated/2=genome-annotated）。</p>
+<p><strong>06_multiqc/</strong>：<code>multiqc_report.html.gz</code>
+是汇总报告（fastqc+fastp+STAR+salmon 全在一个页面；gzip
+无损入库——<code>gzip -cd</code> 即可浏览器打开，字节与集群原件一致已 cmp
+验证）；<code>multiqc_data/</code>
+是解析后的数据表（<code>multiqc_star.txt</code>、<code>multiqc_fastp.txt</code>
+等，纯文本可直接 <code>column -t</code> 看）——不看 html
+也能从这里核出本文所有数字。</p>
+<p><strong>07_salmon_align/ 与 08_salmon_quasi|direct/</strong>：每个
+<code>*_salmon_quant</code> 目录里最有用的是
+<code>aux_info/meta_info.json</code>——<code>num_mapped</code>/<code>num_processed</code>
+就是映射率。<strong>align 模式 100% 不是质量满分</strong>：输入 BAM 只有
+STAR 已比对片段，分母是”已比对片段”（矫正版 RNA-12）；quasi/direct 的
+30–37% 才是”读段对索引”的口径。homework 轮 quasi 的
+<code>quant.sf</code> 以 <code>.gz</code> 入库（231,448 行 × 4
+列：Name/Length/EffectiveLength/TPM/NumReads——注意实际 5 列含
+EffectiveLength），是 R 段计数的直接输入；align 模式的
+quant.sf（下游不用）未入库、其目录保留其余全部文件。</p>
+<p><strong>09_R/</strong>：两轮的图。<strong>homework
+轮有一对热图证据</strong>：<code>heatmap_DEG.pdf</code>（照教程原文跑出，50
+行标签全部是 “NA”——沉默 bug 的直接产物）与
+<code>heatmap_DEG_corrected.pdf</code>（一行修复后，50
+行全是真实基因名）。mini 轮的 <code>heatmap_DEG_mini_final.pdf</code>
+标签正常——mini 版热图代码本来就正确，作业版是被重写坏的。</p>
+<p><strong>scripts/ 与 log/</strong>：运行脚本原样（含 sbatch
+头——homework 轮实际是教程原生登录节点跑，SLURM
+头仅溯源保留）；<code>log/</code> 是
+summary（逐步时间戳）、deviations（全部偏差与实锤发现）、R
+分析日志（kept/DEG/Matched/top 基因的原始打印）。</p>
+<h2 id="动手练习全部仓库内可完成">3. 动手练习（全部仓库内可完成）</h2>
+<p><strong>练习 1——亲手复现热图 NA bug
+证据</strong>（本仓库最有价值的一对文件）：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results/homework/09_R</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pdftotext</span> heatmap_DEG.pdf <span class="at">-</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">&#39;^NA$&#39;</span>          <span class="co"># → 50（照教程原文）</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pdftotext</span> heatmap_DEG_corrected.pdf <span class="at">-</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-c</span> <span class="st">&#39;^NA$&#39;</span> <span class="co"># → 0（一行矫正后）</span></span></code></pre></div>
+<p>对照矫正版第 12 节的坑链：为什么 R 一个报错都没报？</p>
+<p><strong>练习 2——从 meta_info.json 核出两个口径的映射率</strong>：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> d <span class="kw">in</span> homework/08_salmon_quasi/<span class="pp">*</span>_quasi.salmon_quant<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;import json; m=json.load(open(&#39;</span><span class="va">$d</span><span class="st">/aux_info/meta_info.json&#39;)); print(&#39;</span><span class="va">$d</span><span class="st">&#39;.split(&#39;/&#39;)[-1][:7], round(100*m[&#39;num_mapped&#39;]/m[&#39;num_processed&#39;],2),&#39;%&#39;)&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># quasi：30.3–35.3%；再对 homework/07_salmon_align 同法 → 100%</span></span></code></pre></div>
+<p>两列数字放一起就是 RNA-12 的教训：分母不同，不能互比。</p>
+<p><strong>练习 3——从 Log.final.out 重算比对画像表</strong>：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> homework/05_STAR/<span class="pp">*</span>Log.final.out<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">basename</span> <span class="va">$f</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c1-7</span><span class="va">)</span><span class="st"> </span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-E</span> <span class="st">&#39;Uniquely mapped reads % |mapped to multiple loci |too short &#39;</span> <span class="va">$f</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-oE</span> <span class="st">&#39;[0-9]+\.[0-9]+%&#39;</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;\n&#39;</span> <span class="st">&#39; &#39;</span><span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p>对照矫正版第 5 节实跑表逐行核对（HBR 51.7–51.8 / UHR
+44.6–48.5）。</p>
+<p><strong>练习 4——fastp 保留率</strong>：</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results/homework/04_fastp</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">import json,glob</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">for f in sorted(glob.glob(&#39;*.fastp.json&#39;)):</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">    s=json.load(open(f))[&#39;summary&#39;]</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">    print(f.split(&#39;_ERCC&#39;)[0], s[&#39;before_filtering&#39;][&#39;total_reads&#39;],&#39;-&gt;&#39;,s[&#39;after_filtering&#39;][&#39;total_reads&#39;])&quot;</span></span></code></pre></div>
+<p><strong>练习 5——SEQC 真值自检</strong>：看两轮
+<code>09_R/volcano_plot.pdf</code> 的标签（或 <code>log/</code> 里 R
+分析日志的 top 基因打印）——上调的是不是 IGLC2/IGLC3（UHR
+的免疫球蛋白信号）、下调的是不是 SYNGR1/YWHAH/MIAT 一簇（HBR
+脑富集）？两轮方向完全一致、top
+基因同名——这就是”深度买检出数、不买不同答案”。</p>
+<p><strong>练习 6——样本身份为什么只靠位置</strong>：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results/homework/08_salmon_quasi <span class="kw">&amp;&amp;</span> <span class="fu">ls</span> <span class="at">-d</span> <span class="pp">*</span>_quasi.salmon_quant</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 字母序恰好 HBR×3 在前、UHR×3 在后——教程的 condition 向量因此恰好对</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 若文件名换个前缀，设计矩阵静默错位（矫正版 RNA-01）</span></span></code></pre></div>
+<p><strong>练习 7——解开 quant.sf.gz 看计数矩阵的样子</strong>：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RNA-seq/results/homework/08_salmon_quasi</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-cd</span> <span class="pp">*</span>_quasi.salmon_quant/quant.sf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-5</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gzip</span> <span class="at">-cd</span> <span class="pp">*</span>_quasi.salmon_quant/quant.sf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span>   <span class="co"># → 231,449（表头+全转录本）</span></span></code></pre></div>
+<h2 id="未入库的大文件在哪">4. 未入库的大文件在哪</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>类别</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始/trimmed FASTQ、STAR BAM（基因组+转录本坐标）、完整 salmon
+目录</td>
+<td>两轮集群运行目录（<code>/lustre1/user/bjx131_pkuhpc/rna_run_mini_20260921/</code>、<code>rna_run_homework_20261009/</code>）</td>
+</tr>
+<tr>
+<td>STAR 索引（chr22 mini 381 MB / 全 GRCh38 ≈31 GB 内存）</td>
+<td><code>/lustre1/share/RNA_seq_class/genome/</code>、<code>/lustre1/share/RNA_seq/genome/</code>（教师预建）</td>
+</tr>
+<tr>
+<td>salmon 索引、转录本 fasta、注释 RDS</td>
+<td>同上（教师预建）</td>
+</tr>
+<tr>
+<td>教师参考产物（GO_dotplot、带 ENST 行名的热图等）</td>
+<td><code>/lustre1/share/RNA_seq/</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="一句话总结">5. 一句话总结</h2>
+<p>管线产物本身都健全（两轮数字互相咬合、与教师参考在可对拍处一致）；真正值得学的东西在<strong>接缝</strong>里——位置身份、双模式映射率口径、版本号键错配、’’’
+伪注释——而它们的证据全部可以在本仓库内亲手复现。</p>
+</body>
+</html>

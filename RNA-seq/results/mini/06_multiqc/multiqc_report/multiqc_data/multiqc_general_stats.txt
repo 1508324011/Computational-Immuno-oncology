@@ -1,0 +1,19 @@
+Sample	star-total_reads	star-mapped	star-mapped_percent	star-uniquely_mapped	star-uniquely_mapped_percent	star-multimapped	fastp-pct_duplication	fastp-after_filtering_q30_rate	fastp-after_filtering_q30_bases	fastp-filtering_result_passed_filter_reads	fastp-after_filtering_gc_content	fastp-pct_surviving	fastp-pct_adapter	fastqc-percent_duplicates	fastqc-percent_gc	fastqc-avg_sequence_length	fastqc-median_sequence_length	fastqc-percent_fails	fastqc-total_sequences
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22	0.0097	0.0052309999999999995	53.93	0.0051649999999999995	53.25	6.599999999999999e-05													
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1							2.22	95.1147	1.838071	0.0194	50.6938	97.0	3.2399999999999998	24.5	50.0	100.0	100	9.090909090909092	0.01
+HBR_Rep1_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2														24.599999999999994	50.0	100.0	100	0.0	0.01
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22	0.009701999999999999	0.0052109999999999995	53.71	0.005144999999999999	53.03	6.599999999999999e-05													
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1							1.8800000000000001	95.01610000000001	1.8368639999999998	0.019403999999999998	50.806200000000004	97.02	3.35	24.739999999999995	50.0	100.0	100	9.090909090909092	0.01
+HBR_Rep2_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2														24.689999999999998	50.0	100.0	100	0.0	0.01
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22	0.009659	0.005196999999999999	53.809999999999995	0.005151	53.33	4.6e-05													
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read1							1.7999999999999998	95.1878	1.834322	0.019318	50.629999999999995	96.59	2.91	24.539999999999992	50.0	100.0	100	9.090909090909092	0.01
+HBR_Rep3_ERCC-Mix2_Build37-ErccTranscripts-chr22.read2														24.55000000000001	50.0	100.0	100	0.0	0.01
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22	0.00966	0.004712	48.78	0.004517	46.76	0.000195													
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1							1.48	91.9667	1.771045	0.01932	49.6715	96.6	2.4699999999999998	27.64	49.0	100.0	100	9.090909090909092	0.01
+UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2														27.25	49.0	100.0	100	0.0	0.01
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22	0.009613	0.005000999999999999	52.019999999999996	0.004801	49.94	0.00019999999999999998													
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1							1.9900000000000002	91.8798	1.763494	0.019226	49.1135	96.13000000000001	2.155	25.319999999999993	48.0	100.0	100	9.090909090909092	0.01
+UHR_Rep2_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2														25.549999999999997	48.0	100.0	100	9.090909090909092	0.01
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22	0.009656	0.004534	46.96	0.004351	45.06	0.000183													
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1							1.83	92.1667	1.774367	0.019312	49.6724	96.56	2.595	27.53	49.0	100.0	100	9.090909090909092	0.01
+UHR_Rep3_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2														28.710000000000008	49.0	100.0	100	0.0	0.01

@@ -1,0 +1,5 @@
+[2026-10-09 14:58:30,991] multiqc.core.version_check                         [WARNING]  MultiQC Version v1.35 now available!
+[2026-10-09 14:58:30,992] multiqc.core.file_search                           [INFO   ]  Search path: /lustre1/user/bjx131_pkuhpc/rna_run_homework_20261009
+[2026-10-09 14:58:31,889] multiqc.modules.star.star                          [INFO   ]  Found 6 reports
+[2026-10-09 14:58:32,902] multiqc.modules.fastp.fastp                        [INFO   ]  Found 6 reports
+[2026-10-09 14:58:33,056] multiqc.modules.fastqc.fastqc                      [INFO   ]  Found 12 reports
