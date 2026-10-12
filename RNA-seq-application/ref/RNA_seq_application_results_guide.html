@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RNA-seq 下游应用分析结果讲解 (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RNA-seq 下游应用分析结果讲解 (Corrected &amp;
+Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rna-seq-下游应用分析结果讲解results-guide"
+id="toc-rna-seq-下游应用分析结果讲解results-guide">RNA-seq
+下游应用分析结果讲解（results guide）</a>
+<ul>
+<li><a href="#这批结果是什么" id="toc-这批结果是什么">1.
+这批结果是什么</a></li>
+<li><a href="#逐类导读" id="toc-逐类导读">2. 逐类导读</a></li>
+<li><a href="#动手练习全部仓库内可完成"
+id="toc-动手练习全部仓库内可完成">3.
+动手练习（全部仓库内可完成）</a></li>
+<li><a href="#未入库的大文件在哪" id="toc-未入库的大文件在哪">4.
+未入库的大文件在哪</a></li>
+<li><a href="#一句话总结" id="toc-一句话总结">5. 一句话总结</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="rna-seq-下游应用分析结果讲解results-guide">RNA-seq
+下游应用分析结果讲解（results guide）</h1>
+<p>: 2026-10-12 · Lesson 3 (RNA-seq-application)
+的实跑产物导读。配套矫正增强版见
+<code>RNA_seq_application_corrected.{md,html,pdf}</code>（双语）。</p>
+<h2 id="这批结果是什么">1. 这批结果是什么</h2>
+<p>这是第三节课（RNA-seq
+下游应用分析）在登录节点按教材原样实跑的全部产物：四个
+Part（基因相关性、生存分析、免疫浸润、TIDE），共 31
+个文件。<strong>不含任何原始数据</strong>——表达矩阵和随访表在共享只读路径
+<code>/lustre1/share/rnaimmune/</code>，未复制进仓库；这里的都是分析产出（图、去卷积结果表、TIDE
+输出、脚本、日志）。</p>
+<h2 id="逐类导读">2. 逐类导读</h2>
+<h3 id="gene_correlation-part-1">02_gene_correlation/ —— Part 1</h3>
+<ul>
+<li><code>GZMA_cor_PRF1.png</code>：GZMA vs PRF1 散点 + Pearson/Spearman
+标注。两个杀伤效应基因强共表达（Pearson r=0.71，Spearman ρ=0.93）。</li>
+<li><code>CTLA4_cor_CYT.png</code>：CTLA4 vs CYT 签名散点。注意
+Pearson–Spearman 分裂（r=0.16 p=0.32 vs ρ=0.80
+p≈0）——离群/非线性单调的教科书特征。</li>
+</ul>
+<h3 id="survival_analysis-part-2">03_survival_analysis/ —— Part 2</h3>
+<ul>
+<li><code>survival_CYT.png</code>：KM 曲线，CYT high/low 各 21 例，带
+log-rank p、置信区间、风险表。</li>
+<li><code>cox.png</code>：多变量 Cox
+森林图（Age/Gender/Stage/CYT/CYT_level/CTLA4），6
+协变量均不显著（队列小+CYT 重复入模共线），Concordance=0.679。</li>
+</ul>
+<h3 id="immune_infiltration-part-3重点">04_immune_infiltration/ —— Part
+3（重点）</h3>
+<ul>
+<li><code>qts_barplot.png</code>：quanTIseq
+堆叠柱（<strong>绝对分数法才能这样画</strong>），前 10
+样本，按细胞型着色。</li>
+<li><code>qts_scatterplot.png</code>：quanTIseq 点/分面图（每细胞型自由
+y 轴，对任何方法都安全）。</li>
+<li><code>qts_heatmap.png</code> /
+<code>qts_heatmap_row_scaled.png</code>：quanTIseq 热图，未缩放 vs 按行
+z-score。后者是公平跨样本比较。</li>
+<li><code>deconv_methods/*.tsv</code>：七种去卷积方法的结果表（MCPcounter
+为 NULL 占位+阻塞说明，其余六法完整）。<code>res_quantiseq.tsv</code>
+是首次调用，<code>res_quantiseq_rmgenes.tsv</code> 是删 6 个 B
+细胞基因后的覆盖版（下游图用此版）。</li>
+<li><code>CIBERSORT-Results.txt</code>：CIBERSORT.R 源码向 cwd
+写的原始输出（42 样本 × 22 型 + P/Correlation/RMSE 列）。</li>
+<li><code>mcp_counter_blocked.txt</code>：APP-01 阻塞记录（conda
+MCPcounter 1.1.0 http 硬编码 → 登录节点 reset）。</li>
+<li><code>log_part3.txt</code>：完整运行日志。</li>
+</ul>
+<h3 id="tide-part-4">05_tide/ —— Part 4</h3>
+<ul>
+<li><code>res_tide.txt</code>：我们自己跑 <code>tidepy</code> 的输出（42
+样本 × 14 列，字节尺寸与教师预跑副本一致）。</li>
+<li><code>tide_heatmap.png</code>：TIDE 各指标热图（按行
+z-score），列注释含真实/预测应答、CTL.flag、No.benefits、Age/Gender/Stage。</li>
+<li><code>tide_predicted_responder.png</code> /
+<code>tide_responder.png</code>：TIDE 分柱图，按 CTL.flag
+分面，分别按<strong>预测</strong>与<strong>真实</strong>应答着色——对比即读预测
+vs 真实。</li>
+<li><code>roc.png</code> / <code>roc_smooth.png</code>：ROC
+曲线，AUC=0.7872（原始）/ 0.7718（平滑）。</li>
+<li><code>log_tidepy.txt</code>：tidepy 运行日志（含三行预期
+<code>[WARN]</code>）。</li>
+</ul>
+<h3 id="scripts">*/scripts/</h3>
+<p>每个 Part 一个脚本（<code>.R</code> 或
+<code>.sh</code>），代码逐字取自教材，文件头登记所有偏差（交互式→Rscript、setwd、LC_ALL=C、跨
+Part 对象重派生、MCPcounter tryCatch 等）。</p>
+<h2 id="动手练习全部仓库内可完成">3. 动手练习（全部仓库内可完成）</h2>
+<p><strong>练习 1 —— MCPcounter 阻塞复现</strong></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> mcp_counter_blocked.txt                       <span class="co"># 读阻塞记录</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 亲手验证 http vs https：</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">&quot;http: %{http_code}\n&quot;</span> <span class="at">--max-time</span> 15 <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">&quot;https: %{http_code}\n&quot;</span> <span class="at">--max-time</span> 15 <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：http 000（reset），https 200</span></span></code></pre></div>
+<p><strong>练习 2 —— 六法维度核对</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/deconv_methods</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> res_<span class="pp">*</span>.tsv<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">: &quot;</span><span class="kw">;</span> <span class="fu">head</span> <span class="at">-1</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;{print NF-1&quot; 样本&quot;}&#39;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;  细胞型=&quot;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(($(</span><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span><span class="va">)</span><span class="op">-</span><span class="dv">1</span><span class="va">))</span><span class="st">&quot;</span><span class="kw">;</span> <span class="cf">done</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：epic 8型、quantiseq 11型、xcell 39型、cibersort 22型、cibersort_abs 22型、timer 6型、mcp_counter 占位</span></span></code></pre></div>
+<p><strong>练习 3 —— TIDE 输出与教师副本字节比对</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-c</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide/res_tide.txt <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      /lustre1/share/rnaimmune/res_tide.txt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：两者都 10259 字节</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="op">&lt;(</span><span class="fu">head</span> <span class="at">-1</span> .../05_tide/res_tide.txt<span class="op">)</span> <span class="op">&lt;(</span><span class="fu">head</span> <span class="at">-1</span> /lustre1/share/rnaimmune/res_tide.txt<span class="op">)</span>  <span class="co"># 表头应一致</span></span></code></pre></div>
+<p><strong>练习 4 —— Pearson–Spearman 分裂亲眼确认</strong> 打开
+<code>02_gene_correlation/CTLA4_cor_CYT.png</code>，对照矫正版 §3
+的数字表：Pearson r=0.16（p=0.3247，不显著）与 Spearman
+ρ=0.80（p≈0）并存——散点上能看到秩关系强但线性关系被离群点拉偏。</p>
+<p><strong>练习 5 —— TIDE 分数与应答方向</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># TIDE&lt;0 预测应答：看预测应答者的 TIDE 分符号</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;NR&gt;1{print $1, $3, $2}&#39;</span> res_tide.txt <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k2</span> <span class="at">-n</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-10</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 前几行（TIDE 最负）应多为 Responder=True</span></span></code></pre></div>
+<p><strong>练习 6 —— Cox 共线性亲验</strong> 重跑 Part 2 脚本但去掉
+<code>CYT_level</code>（公式改
+<code>~ Age + Gender + Stage + CYT + CTLA4</code>），对比
+<code>summary(cox_model)</code> 的标准误——CYT 的 se
+应缩小（因不再与自身的二值化共线）。</p>
+<p><strong>练习 7 —— 绝对分数 vs 相对口径可视化对照</strong> 打开
+<code>qts_barplot.png</code>（堆叠柱，和为 1，仅对 quanTIseq
+这类绝对法正确）和 <code>qts_scatterplot.png</code>（点图，自由 y
+轴，任何方法都安全）。对照矫正版 §5 的”输出口径”表，理解为何
+MCP-counter/xCell/TIMER 不能画堆叠柱。</p>
+<h2 id="未入库的大文件在哪">4. 未入库的大文件在哪</h2>
+<p>本模块<strong>无大文件</strong>——所有产出都是小图、小表、小日志，已全部入库。原始数据（表达矩阵、随访表）在共享只读路径
+<code>/lustre1/share/rnaimmune/</code>，未复制（也无需复制，教材命令直接读该路径）。</p>
+<h2 id="一句话总结">5. 一句话总结</h2>
+<p>第三节课是纯下游 R 分析 + 一行 tidepy，登录节点 ~6 分钟跑完，31
+个产出文件全部入库；唯一阻塞是 conda MCPcounter 1.1.0 的 http
+硬编码（已记录、未绕过），六法齐全，TIDE 输出与教师副本字节一致，ROC AUC
+0.79 复现原文。</p>
+</body>
+</html>

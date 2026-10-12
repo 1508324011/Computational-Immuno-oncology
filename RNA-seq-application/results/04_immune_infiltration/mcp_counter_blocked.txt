@@ -1,0 +1,2 @@
+[2026-10-12 17:46:25.247669] MCPcounter blocked: Recv failure: Connection reset by peer
+  conda MCPcounter 1.1.0 hardcodes http://raw.githubusercontent.com markers; login node resets http. https reachable but tutorial code as-written uses the http default.

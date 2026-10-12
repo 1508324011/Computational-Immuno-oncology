@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RNA-seq 下游应用分析 · 矫正增强版（中文版） (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">RNA-seq 下游应用分析 · 矫正增强版（中文版） (Corrected
+&amp; Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#rna-seq-下游应用分析-矫正增强版中文版"
+id="toc-rna-seq-下游应用分析-矫正增强版中文版">RNA-seq 下游应用分析 ·
+矫正增强版（中文版）</a>
+<ul>
+<li><a href="#关于本版" id="toc-关于本版">0. 关于本版</a></li>
+<li><a href="#问题清单速览" id="toc-问题清单速览">1.
+问题清单速览</a></li>
+<li><a href="#环境与数据" id="toc-环境与数据">2. 环境与数据</a></li>
+<li><a href="#part-1-基因相关性代码块-610"
+id="toc-part-1-基因相关性代码块-610">3. Part 1 —— 基因相关性（代码块
+6–10）</a></li>
+<li><a href="#part-2-生存分析代码块-1116"
+id="toc-part-2-生存分析代码块-1116">4. Part 2 —— 生存分析（代码块
+11–16）</a></li>
+<li><a href="#part-3-免疫浸润代码块-1726"
+id="toc-part-3-免疫浸润代码块-1726">5. Part 3 —— 免疫浸润（代码块
+17–26）</a></li>
+<li><a href="#part-4-tide代码块-2733" id="toc-part-4-tide代码块-2733">6.
+Part 4 —— TIDE（代码块 27–33）</a></li>
+<li><a href="#检查清单产物清单与总结" id="toc-检查清单产物清单与总结">7.
+检查清单、产物清单与总结</a></li>
+<li><a href="#附录-a.-偏差日志本次精简但忠实原文"
+id="toc-附录-a.-偏差日志本次精简但忠实原文">附录 A.
+偏差日志（本次，精简但忠实原文）</a></li>
+<li><a href="#附录-b.-复现" id="toc-附录-b.-复现">附录 B. 复现</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="rna-seq-下游应用分析-矫正增强版中文版">RNA-seq 下游应用分析 ·
+矫正增强版（中文版）</h1>
+<p>: 文档版本 1.0 · 2026-10-12 · 由
+<code>RNA-seq-application.html</code>（第三节课教材原文）全流程登录节点复现后写成，所有偏差已验证、记录并矫正。</p>
+<h2 id="关于本版">0. 关于本版</h2>
+<p>本版是第三节课的矫正增强文档，与 WES
+矫正版（<code>WES/ref/WES_roadmap_corrected.md</code>）和 RNA-seq
+上游教程矫正版（<code>RNA-seq/ref/RNA_seq_tutorial_corrected.md</code>）同一体系。它逐字照搬教材原文命令，再补上原文没有的东西：每步原理、实测数字、根因已查证的坑登记表、以及实际执行并验证过的矫正。</p>
+<p><strong>教材原文（保持不动）：</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RNA-seq-application.html</code></td>
+<td>第三节课：RNA-seq
+下游应用分析（基因相关性、生存分析、免疫浸润、TIDE）—— Part 0 环境准备 +
+4 个 Part，共 33 个代码块</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本次复现</strong>（命令原样、最小包装、所有偏差入档）：</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>轮次</th>
+<th>日期</th>
+<th>数据</th>
+<th>跑在哪</th>
+<th>耗时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全量</td>
+<td>2026-10-12</td>
+<td>Van Allen 2015 黑色素瘤队列（42 患者，19,289 基因 × 42 样本）</td>
+<td>登录节点串行（R 4.3.3 + tidepy）</td>
+<td>~6 分钟（Part 3 占大头）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>为什么在登录节点跑。</strong> 第三节课全程是 R 分析（Part
+1–3）加 Part 4 的一行 shell（<code>tidepy</code>）—— 教材里没有任何
+FASTQ、比对、sbatch 提交的步骤。这与第二节课 RNA-seq
+上游同属登录节点串行纪律（项目记忆：两份 RNA-seq HTML 不含任何
+sbatch/srun/slurm 字样；教师 30 人并发负载测试就在登录节点）。2026-10-12
+集群全集群 SLURM 提交瘫痪仍在持续（所有 sbatch
+被拒），但第三节课不碰调度器，不受影响。</p>
+<p><strong>“矫正”在此的含义</strong>（与 WES、RNA-seq
+版同一纪律）：照原文命令跑，把遇到或预见的坑全部入档，再实际执行并验证矫正——证据在仓库里，不是嘴上说。本文所有数字均为实测值。</p>
+<p><strong>每步怎么读：</strong> 每个 Part
+都带同一组块——<em>原文</em>（教材命令，逐字）、<em>原理</em>（工具与关键参数到底做什么）、<em>我们跑了什么</em>（实测数字）、<em>坑</em>（已验证，带证据）、<em>结果解读</em>、<em>参数调优</em>、<em>扩展用法</em>。</p>
+<h2 id="问题清单速览">1. 问题清单速览</h2>
+<p>教材原文中已验证的坑。完整证据与矫正见各 Part
+小节；最关键的（APP-01）有专门讨论。</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>编号</th>
+<th>位置</th>
+<th>症状 / 根因</th>
+<th>矫正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>APP-01</td>
+<td>Part 3，MCPcounter</td>
+<td><code>MCPcounter::MCPcounter.estimate</code> 把标志基因集硬编码成
+<code>read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"))</code>
+—— <strong>http</strong>（非 https）运行时从 GitHub 拉。conda 装的
+MCPcounter 1.1.0 <strong>不带本地副本</strong>（<code>data/</code> 只有
+<code>MCPcounterExampleData</code> 和
+<code>null_models</code>）。本登录节点到
+<code>raw.githubusercontent.com</code> 的 http
+连接被重置（<code>Connection reset by peer</code>）；https 可达，HTTP
+200，1.7 秒</td>
+<td>按原样执行指令，这是硬阻塞：MCPcounter
+记为阻塞，其余六种去卷积方法照原文跑。一行修复存在（用 https
+把两个标志文件下到本地一次，作为
+<code>genes=</code>/<code>probesets=</code> 显式参数传入）——见 Part
+3</td>
+</tr>
+<tr>
+<td>APP-02</td>
+<td>Part 3，EPIC</td>
+<td><code>Warning: The optimization didn't fully converge for some samples (Pat02 …)</code>
+—— EPIC 对部分样本的非负最小二乘未完全收敛</td>
+<td>良性；EPIC 会打印 <code>fit.gof</code>
+供检查。结果照常产出，是该方法的预期输出</td>
+</tr>
+<tr>
+<td>APP-03</td>
+<td>Part 3，xCell</td>
+<td><code>Calling gsva(expr=., gset.idx.list=., method=., ...) is deprecated</code>
+—— xCell 包装器以旧式位置参数调 GSVA</td>
+<td>依赖链弃用警告，良性；结果不受影响</td>
+</tr>
+<tr>
+<td>APP-04</td>
+<td>Part 4，tidepy</td>
+<td>三行 <code>[WARN]</code>：5.73 % 基因 Entrez 转换后缺失；&gt;80 %
+基因阳性表达；“Start normalizing … log2(x+1) … subtract average”。这些是
+<code>--force_normalize</code> 加 CPM
+尺输入下的<strong>预期</strong>提示，非报错</td>
+<td>照原文跑；警告记录的就是该 flag 触发的归一化。输出
+<code>res_tide.txt</code> 与教师预跑副本字节同尺寸（10,259 B）</td>
+</tr>
+<tr>
+<td>APP-05</td>
+<td>Part 1，相关系数标注</td>
+<td>GZMA↔︎PRF1 的 <code>pearson_corr$P[1,2]</code> 打印为
+<code>0</code>（p 低于机器精度），标注渲染成 <code>p = 0</code></td>
+<td>仅显示问题；想看可读 p 值用 <code>format.pval()</code>
+或科学记数法</td>
+</tr>
+<tr>
+<td>APP-06</td>
+<td>数据路径说明</td>
+<td>表达矩阵文件 <code>VanAllen2015_CTLA4_Melanoma_RNASeq</code>
+<strong>无扩展名</strong>、tab
+分隔；<code>read.table(..., sep='\t', header=TRUE, row.names=1)</code>
+正确处理</td>
+<td>无需修复；记录是因为若误用 <code>read.csv</code> 会失败</td>
+</tr>
+<tr>
+<td>APP-07</td>
+<td>Part 2，ggsurvplot + ggplot</td>
+<td><code>p &lt;- ggsurvplot(...); p &lt;- p + xlab('Time (days)')</code>
+对 <code>ggsurvplot</code> 对象加 ggplot 图层。survminer 的
+<code>+.ggplot</code> 派发到主图组件，能用，但返回对象不再是纯
+<code>ggsurvplot</code></td>
+<td>良性；PNG 正常。若要事后改风险表，分别操作 <code>p$plot</code> 和
+<code>p$table</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="环境与数据">2. 环境与数据</h2>
+<p><strong>队列：</strong> Van Allen 等 2015，<em>Science</em> —— 42
+例转移性黑色素瘤患者，ipilimumab（抗
+CTLA-4）治疗前肿瘤活检的转录组。</p>
+<p><strong>共享数据</strong>（只读，在集群上）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>路径</th>
+<th>内容</th>
+<th>尺寸 / 形状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lustre1/share/rnaimmune/data/expression/VanAllen2015_CTLA4_Melanoma_RNASeq</code></td>
+<td>表达矩阵（Hugo Symbol × 42 患者，tab
+分隔，<strong>无扩展名</strong>）</td>
+<td>19,289 基因 × 42 样本；colSums ~0.8–0.94 M（已是可比尺度，非原始整数
+counts）</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/rnaimmune/data/follow_up/VanAllen2015_CTLA4_Melanoma_RNASeq</code></td>
+<td>临床随访（OS/PFS、Age、Gender、Stage、Response）</td>
+<td>42 患者 × 8 列</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/rnaimmune/CIBERSORT.R</code> +
+<code>LM22.txt</code></td>
+<td>CIBERSORT 源码 + LM22 签名矩阵（供 <code>immunedeconv</code>）</td>
+<td>8 KB + 147 KB</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/rnaimmune/res_tide.txt</code></td>
+<td>教师预跑的 TIDE 输出</td>
+<td>10,259 B，42 样本</td>
+</tr>
+</tbody>
+</table>
+<p><strong>环境：</strong> conda env <code>rnaimmune</code> —— R
+4.3.3、immunedeconv 2.1.0、Hmisc 5.1.3、survival 3.7.0、survminer
+0.4.9、pROC 1.18.5、matrixStats 1.1.0、tidyverse 2.0.0、pheatmap
+1.0.12；<code>tidepy</code> 在 PATH
+上。<code>ggsurvplot</code>/<code>ggforest</code> 是 <strong>survminer
+内的函数</strong>（非独立包——对它们查 <code>packageVersion</code> 返回
+NA 属正常）。</p>
+<p><strong>元数据编码</strong>（照随访文件原文）：</p>
+<table>
+<thead>
+<tr>
+<th>列</th>
+<th>编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OS.Event</code> / <code>PFS.Event</code></td>
+<td>0 = 删失，1 = 事件</td>
+</tr>
+<tr>
+<td><code>Gender</code></td>
+<td>0 = 女，1 = 男</td>
+</tr>
+<tr>
+<td><code>Response</code></td>
+<td>0 = 无应答，1 = 应答</td>
+</tr>
+<tr>
+<td><code>Stage</code></td>
+<td>整数 0–3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>输出布局</strong>（<code>RNA-seq-application/results/</code>，按步骤编号，沿用
+WES/RNA-seq 约定）：</p>
+<pre><code>results/
+├── 01_preparation/          # 环境检查（本次）
+├── 02_gene_correlation/     # Part 1: GZMA_cor_PRF1.png, CTLA4_cor_CYT.png
+├── 03_survival_analysis/    # Part 2: survival_CYT.png, cox.png
+├── 04_immune_infiltration/  # Part 3: qts_*.png ×4, deconv_methods/*.tsv ×8, CIBERSORT-Results.txt
+├── 05_tide/                 # Part 4: res_tide.txt, tide_*.png ×3, roc.png, roc_smooth.png
+└── */scripts/               # 每个 Part 一个 .R / .sh，代码逐字，偏差在文件头登记</code></pre>
+<h2 id="part-1-基因相关性代码块-610">3. Part 1 —— 基因相关性（代码块
+6–10）</h2>
+<h3 id="原文">原文</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exprsn <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;.../VanAllen2015_CTLA4_Melanoma_RNASeq&#39;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>exprsn <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">t</span>(exprsn)<span class="sc">/</span><span class="fu">colSums</span>(exprsn)<span class="sc">*</span><span class="fl">1e6</span>)            <span class="co"># CPM</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>pearson_corr  <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(exprsn[<span class="st">&#39;GZMA&#39;</span>,], exprsn[<span class="st">&#39;PRF1&#39;</span>,], <span class="at">type=</span><span class="st">&#39;pearson&#39;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>spearman_corr <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(exprsn[<span class="st">&#39;GZMA&#39;</span>,], exprsn[<span class="st">&#39;PRF1&#39;</span>,], <span class="at">type=</span><span class="st">&#39;spearman&#39;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># … 带 r 与 p 标注的散点图 …</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>geneset <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;GZMA&#39;</span>,<span class="st">&#39;PRF1&#39;</span>); sig <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(exprsn[geneset,])   <span class="co"># CYT 签名</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>pearson_corr  <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(sig, exprsn[<span class="st">&#39;CTLA4&#39;</span>,], <span class="at">type=</span><span class="st">&#39;pearson&#39;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>spearman_corr <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(sig, exprsn[<span class="st">&#39;CTLA4&#39;</span>,], <span class="at">type=</span><span class="st">&#39;spearman&#39;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># … CTLA4 vs CYT 散点图 …</span></span></code></pre></div>
+<h3 id="原理">原理</h3>
+<ul>
+<li><strong>CPM
+归一化</strong>（<code>t(t(x)/colSums(x)*1e6</code>）：每个样本除以自身库大小再放大到百万计数，使样本可比。注意此处输入已是
+~0.8–0.94 M 列和尺度（非原始整数 counts），CPM 把每列重定标到恰好 1e6 ——
+实测 <code>head(colSums(exprsn))</code> 归一化后 = 1e6。</li>
+<li><strong><code>Hmisc::rcorr</code></strong> 一次调用同时算
+Pearson（<code>type='pearson'</code>）和
+Spearman（<code>type='spearman'</code>）相关及 p 值矩阵，返回
+<code>$r</code> 与 <code>$P</code>。</li>
+<li><strong>CYT 签名</strong> =
+<code>colMeans(exprsn[c('GZMA','PRF1'),])</code> —— GZMA 与 PRF1（颗粒酶
+A / 穿孔素）的每样本均值，已发表的细胞杀伤活性标志（Rooney 等 2015
+<em>Cell</em>）。Part 2、3 复用。</li>
+</ul>
+<h3 id="我们跑了什么">我们跑了什么</h3>
+<table>
+<thead>
+<tr>
+<th>配对</th>
+<th>Pearson r</th>
+<th>Pearson p</th>
+<th>Spearman ρ</th>
+<th>Spearman p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GZMA ↔︎ PRF1</td>
+<td>0.71</td>
+<td>≈0（机器零）</td>
+<td>0.93</td>
+<td>≈0</td>
+</tr>
+<tr>
+<td>CTLA4 ↔︎ CYT</td>
+<td>0.16</td>
+<td>0.3247</td>
+<td>0.80</td>
+<td>≈0</td>
+</tr>
+</tbody>
+</table>
+<p>产出：<code>GZMA_cor_PRF1.png</code>、<code>CTLA4_cor_CYT.png</code>。</p>
+<h3 id="坑">坑</h3>
+<ul>
+<li><strong>APP-05</strong> —— GZMA↔︎PRF1 的 p 值标注渲染成
+<code>p = 0</code>，因为 <code>pearson_corr$P[1,2]</code>
+低于机器精度；仅显示问题。</li>
+<li>散点标注坐标（<code>x=50, y=13</code>
+等）是<strong>绝对数据单位</strong>，为这两个基因的值域调过；换成值域不同的基因，标注会跑到图外。需重算或改相对坐标。</li>
+</ul>
+<h3 id="结果解读">结果解读</h3>
+<p>GZMA 与 PRF1 强共表达（Spearman ρ=0.93）—— 符合预期，两者都是 CD8 T
+细胞 / NK 细胞脱颗粒时释放的杀伤效应基因。CTLA4 vs CYT 出现显著的
+<strong>Pearson–Spearman 分裂</strong>：Pearson
+r=0.16（p=0.32，不显著）但 Spearman
+ρ=0.80（p≈0）。这是<strong>离群驱动或非线性单调</strong>关系的教科书特征——Pearson（线性、对离群/量级敏感）被压低，Spearman（基于秩、单调）捕捉到强序共变。教训：两个都报，出现分歧时先看散点图再决定信哪个。</p>
+<h3 id="参数调优">参数调优</h3>
+<ul>
+<li>要无偏 p 值标注，用
+<code>format.pval(pearson_corr$P[1,2], digits=3, eps=1e-4)</code>。</li>
+<li><code>rcorr</code>
+也接受矩阵输入：<code>rcorr(t(exprsn[c('GZMA','PRF1','CTLA4'),]))</code>
+一次出 3×3 相关矩阵。</li>
+</ul>
+<h3 id="扩展">扩展</h3>
+<ul>
+<li>加更多效应/免疫基因（<code>GZMB</code>、<code>IFNG</code>、<code>PRF1</code>、<code>CXCL9</code>、<code>CXCL10</code>），用
+<code>corrplot</code> 或 <code>pheatmap</code> 做相关热图。</li>
+<li>控制肿瘤纯度的偏相关（<code>ppcor::pcor</code>）。</li>
+</ul>
+<h2 id="part-2-生存分析代码块-1116">4. Part 2 —— 生存分析（代码块
+11–16）</h2>
+<h3 id="原文-1">原文</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;.../follow_up/VanAllen2015_CTLA4_Melanoma_RNASeq&#39;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> metadata[<span class="fu">colnames</span>(exprsn),]                 <span class="co"># 按 exprsn 重排</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>metadata<span class="sc">$</span>CYT <span class="ot">&lt;-</span> sig</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">CYT_level =</span> <span class="fu">ifelse</span>(CYT <span class="sc">&gt;</span> <span class="fu">median</span>(CYT), <span class="st">&quot;high&quot;</span>, <span class="st">&quot;low&quot;</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>surv_obj <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> metadata<span class="sc">$</span>OS, <span class="at">event =</span> metadata<span class="sc">$</span><span class="st">`</span><span class="at">OS.Event</span><span class="st">`</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(surv_obj <span class="sc">~</span> CYT_level, <span class="at">data =</span> metadata)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(fit, <span class="at">data =</span> metadata, <span class="at">pval=</span><span class="cn">TRUE</span>, <span class="at">conf.int=</span><span class="cn">TRUE</span>, <span class="at">risk.table=</span><span class="cn">TRUE</span>, <span class="at">ggtheme=</span><span class="fu">theme_minimal</span>())</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>metadata<span class="sc">$</span>CTLA4 <span class="ot">&lt;-</span> exprsn[<span class="st">&#39;CTLA4&#39;</span>,]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>metadata<span class="sc">$</span>Gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(metadata<span class="sc">$</span>Gender, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)); <span class="fu">levels</span>(metadata<span class="sc">$</span>Gender) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Female&#39;</span>,<span class="st">&#39;Male&#39;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>cox_model <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(OS, <span class="st">`</span><span class="at">OS.Event</span><span class="st">`</span>) <span class="sc">~</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Stage <span class="sc">+</span> CYT <span class="sc">+</span> CYT_level <span class="sc">+</span> CTLA4, <span class="at">data =</span> metadata)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_model)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggforest</span>(cox_model, <span class="at">data =</span> metadata, <span class="at">main =</span> <span class="st">&quot;Cox Proportional Hazards Model&quot;</span>, <span class="at">fontsize =</span> <span class="fl">1.2</span>)</span></code></pre></div>
+<h3 id="原理-1">原理</h3>
+<ul>
+<li><strong><code>metadata[colnames(exprsn),]</code></strong>
+把临床行重排到与表达列一致——任何按列操作前必需。实测
+<code>all(rownames(metadata)==colnames(exprsn))</code> = TRUE。</li>
+<li><strong><code>CYT_level</code></strong>
+按中位数分组（<code>ifelse(CYT &gt; median(CYT), "high","low")</code>）。42
+患者恰好 21/21（中位数处无并列）。</li>
+<li><strong><code>survfit</code> +
+<code>ggsurvplot</code></strong>：Kaplan-Meier 估计，带 log-rank p
+值、置信区间、风险表（各时点风险人数）。</li>
+<li><strong><code>coxph</code></strong> 拟合多变量 Cox
+比例风险模型。公式
+<code>Surv(OS, OS.Event) ~ Age + Gender + Stage + CYT + CYT_level + CTLA4</code>
+同时含 CYT 连续型<strong>与</strong> CYT_level
+分组——刻意冗余，以对比连续 vs 二值化的效应。</li>
+<li><strong><code>ggforest</code></strong>
+把风险比与置信区间画成森林图。</li>
+</ul>
+<h3 id="我们跑了什么-1">我们跑了什么</h3>
+<ul>
+<li><strong>KM：</strong> CYT high = 21，CYT low = 21；事件：high 组 11
+个事件时间点，low 组 17 个；n=42，事件数 29。</li>
+<li><strong>Cox 多变量：</strong> n=42，事件 29。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>协变量</th>
+<th>exp(coef)</th>
+<th>z</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td>1.009</td>
+<td>0.570</td>
+<td>0.569</td>
+</tr>
+<tr>
+<td>GenderMale</td>
+<td>1.930</td>
+<td>1.477</td>
+<td>0.140</td>
+</tr>
+<tr>
+<td>Stage</td>
+<td>1.382</td>
+<td>1.141</td>
+<td>0.254</td>
+</tr>
+<tr>
+<td>CYT（连续）</td>
+<td>0.988</td>
+<td>−0.562</td>
+<td>0.574</td>
+</tr>
+<tr>
+<td>CYT_levellow</td>
+<td>1.936</td>
+<td>1.321</td>
+<td>0.187</td>
+</tr>
+<tr>
+<td>CTLA4</td>
+<td>1.000</td>
+<td>−0.079</td>
+<td>0.937</td>
+</tr>
+</tbody>
+</table>
+<p>似然比检验 8.89（6 df，p=0.2）；Wald 8.64（p=0.2）；Score(logrank)
+9.19（p=0.2）。Concordance = 0.679（se = 0.051）。</p>
+<p>产出：<code>survival_CYT.png</code>、<code>cox.png</code>。</p>
+<h3 id="坑-1">坑</h3>
+<ul>
+<li><strong>APP-07</strong> —— 对 <code>ggsurvplot</code> 对象
+<code>p &lt;- p + xlab(...)</code>：能用（survminer 的
+<code>+.ggplot</code> 派发到主图），但返回对象不再是纯
+<code>ggsurvplot</code>；要事后改风险表，用 <code>p$plot</code> /
+<code>p$table</code>。</li>
+<li>Cox 公式同时含 <code>CYT</code> 与
+<code>CYT_level</code>——两者<strong>构造上共线</strong>（CYT_level 是
+CYT 的函数），会膨胀标准误，这正是为何 KM
+曲线虽分离但单个协变量无一显著。这是教学选择（对比连续 vs 二值化），非
+bug，但需说明。</li>
+</ul>
+<h3 id="结果解读-1">结果解读</h3>
+<p>KM 曲线分离（CYT-high 的 OS 更好），但 log-rank 与任一 Cox 协变量在这
+42 人队列都不显著——符合预期：队列小、模型饱和（6 协变量对 29 事件，约 5
+事件/变量，低于通常的 10 EPV 经验值），且 CYT 以连续+分组重复入模。本
+Part 的重点是<strong>工作流</strong>，不是新生物标志物宣称。CTLA4
+表达本身基本平（HR≈1.000，p=0.94）—— 与 CTLA4
+是药物靶点、其效应经免疫上下文（CYT）介导而非经自身表达水平一致。</p>
+<h3 id="参数调优-1">参数调优</h3>
+<ul>
+<li>去掉冗余的 <code>CYT_level</code>（或
+<code>CYT</code>）降共线，重跑看标准误缩小。</li>
+<li>用 <code>PFS</code>（无进展生存）代替 <code>OS</code> 作结局——PFS
+事件更密（PFS.Event 几乎全 1），可能更有把握度。</li>
+<li>用 <code>survminer::cutp</code> 找 CYT
+最优切点代替中位数（注意：数据驱动切点需交叉验证）。</li>
+</ul>
+<h3 id="扩展-1">扩展</h3>
+<ul>
+<li>加时变协变量（<code>tt(CYT)</code>）检验比例风险假设。</li>
+<li>队列限定 Stage-III 子集降异质性。</li>
+</ul>
+<h2 id="part-3-免疫浸润代码块-1726">5. Part 3 —— 免疫浸润（代码块
+17–26）</h2>
+<h3 id="原文-2">原文</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse); <span class="fu">library</span>(pheatmap); <span class="fu">library</span>(immunedeconv)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set_cibersort_binary</span>(<span class="st">&quot;.../CIBERSORT.R&quot;</span>); <span class="fu">set_cibersort_mat</span>(<span class="st">&quot;.../LM22.txt&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>res_mcp <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;mcp_counter&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>res_epc <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;epic&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>res_qts <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;quantiseq&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>res_xcl <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;xcell&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>res_cbs <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;cibersort&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>res_cba <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;cibersort_abs&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>res_tmr <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;timer&quot;</span>, <span class="at">indications =</span> <span class="fu">rep</span>(<span class="st">&#39;skcm&#39;</span>, <span class="fu">ncol</span>(exprsn)))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>res_qts <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="at">method=</span><span class="st">&#39;quantiseq&#39;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">rmgenes =</span> <span class="fu">c</span>(<span class="st">&#39;TCL1A&#39;</span>,<span class="st">&#39;TCF4&#39;</span>,<span class="st">&#39;CD37&#39;</span>,<span class="st">&#39;SPIB&#39;</span>,<span class="st">&#39;IRF8&#39;</span>,<span class="st">&#39;BCL11A&#39;</span>))   <span class="co"># 覆盖前一次</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># … 堆叠柱（分数）、点图（相对）、热图（未缩放）、热图（按行缩放）…</span></span></code></pre></div>
+<h3 id="原理-2">原理</h3>
+<ul>
+<li><strong><code>immunedeconv::deconvolute</code></strong>
+是七种已发表去卷积方法的统一前端，每种返回 细胞型 × 样本
+矩阵。各方法的<strong>输出口径不同</strong>——这是教材反复强调的可视化正确性核心：
+<ul>
+<li><strong>绝对细胞分数</strong>（每样本和为
+1，可画堆叠柱、面积即比例）：<strong>EPIC、CIBERSORT(abs.
+mode)、quanTIseq</strong>。</li>
+<li><strong>相对任意单位</strong>（非分数；<strong>不可</strong>堆叠成比例——用点/散点图）：<strong>MCP-counter、xCell、TIMER、CIBERSORT(relative)</strong>。</li>
+</ul></li>
+<li><strong><code>rmgenes</code></strong> 给 quanTIseq 删 6 个 B
+细胞/pDC
+共表达基因（<code>TCL1A, TCF4, CD37, SPIB, IRF8, BCL11A</code>），降低肿瘤样本中
+T 细胞信号的污染——第二次 <code>res_qts</code>
+调用<strong>覆盖</strong>第一次。</li>
+<li><strong><code>indications = rep('skcm', ncol(exprsn))</code></strong>
+给 TIMER：TIMER 需要癌种以加载其癌种特异参考；<code>skcm</code> =
+皮肤黑色素瘤。可用癌种见 <code>timer_available_cancers</code>。</li>
+<li><strong>热图
+<code>annotation_col = metadata</code></strong>：所有元数据列成为列注释；<code>scale='row'</code>
+对每行（细胞型）跨样本 z-score，便于跨样本比较。</li>
+</ul>
+<h3 id="我们跑了什么-2">我们跑了什么</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>细胞型</th>
+<th>样本</th>
+<th>输出口径</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mcp_counter</td>
+<td>—</td>
+<td>—</td>
+<td>相对</td>
+<td><strong>阻塞（APP-01）</strong> —— 未跑</td>
+</tr>
+<tr>
+<td>epic</td>
+<td>8</td>
+<td>42</td>
+<td>绝对分数</td>
+<td>Pat02 收敛警告（APP-02）</td>
+</tr>
+<tr>
+<td>quantiseq</td>
+<td>11</td>
+<td>42</td>
+<td>绝对分数</td>
+<td>签名基因 133/138 命中（96.38 %）</td>
+</tr>
+<tr>
+<td>xcell</td>
+<td>39</td>
+<td>42</td>
+<td>相对</td>
+<td>GSVA 弃用警告（APP-03）</td>
+</tr>
+<tr>
+<td>cibersort</td>
+<td>22</td>
+<td>42</td>
+<td>相对</td>
+<td>向 cwd 写 <code>CIBERSORT-Results.txt</code></td>
+</tr>
+<tr>
+<td>cibersort_abs</td>
+<td>22</td>
+<td>42</td>
+<td>绝对分数</td>
+<td>—</td>
+</tr>
+<tr>
+<td>timer</td>
+<td>6</td>
+<td>42</td>
+<td>相对</td>
+<td><code>indications='skcm'</code>；经 <code>sva</code> 去批次</td>
+</tr>
+</tbody>
+</table>
+<p>quanTIseq 的 <code>rmgenes</code> 变体（下游所有图都用它）为 11
+细胞型 × 42 样本。</p>
+<p>产出：<code>qts_barplot.png</code>、<code>qts_scatterplot.png</code>、<code>qts_heatmap.png</code>、<code>qts_heatmap_row_scaled.png</code>、<code>deconv_methods/*.tsv</code>（每方法一份）、<code>CIBERSORT-Results.txt</code>、<code>mcp_counter_blocked.txt</code>。</p>
+<h3 id="坑-2">坑</h3>
+<p><strong>APP-01 —— MCPcounter 阻塞（唯一的硬阻塞）。</strong>
+根因，逐步验证： 1. <code>deconvolute(exprsn, "mcp_counter")</code>
+路由到 <code>MCPcounter::MCPcounter.estimate</code>。 2.
+<code>MCPcounter.estimate</code> 的默认参数在调用时拉取标志基因集：
+<code>r    $genes    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"), ...)    $probesets    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt"), ...)</code>
+即 <strong>http</strong>（非 https）从 GitHub 拉，在
+<code>genes</code>/<code>probesets</code> 首次被引用时惰性求值。 3.
+conda 装的 <code>MCPcounter</code> 1.1.0
+<strong>不带本地副本</strong>——<code>data(package="MCPcounter")</code>
+只列 <code>MCPcounterExampleData</code> 和
+<code>null_models</code>；<code>exists("genes", asNamespace("MCPcounter"))</code>
+为 FALSE；惰性加载的 <code>data/Rdata.rdb</code> 只装示例数据与 null
+模型。 4.
+本登录节点：<code>curl http://raw.githubusercontent.com/…</code> →
+<code>Recv failure: Connection reset by peer</code>（HTTP 000，0.18
+秒）；<code>curl https://raw.githubusercontent.com/…</code> → HTTP
+200，1.66 秒。即 <strong>https 通、http
+不通</strong>——网络策略不对称，而包硬编码了 http。</p>
+<p>按照原文执行（不覆盖 <code>genes=</code>/<code>probesets=</code>
+默认值）的既定指令，MCPcounter
+记为硬阻塞，其余六法照原文跑。能解除阻塞的一行修复（用 https 把
+<code>genes.txt</code>、<code>probesets.txt</code> 下到
+<code>ref/</code> 一次，作为显式参数传入）已记入
+<code>mcp_counter_blocked.txt</code>
+与下方扩展，但本次<strong>未</strong>应用。</p>
+<p><strong>APP-02 / APP-03</strong> —— EPIC 收敛警告与 xCell/GSVA
+弃用警告：均良性，结果照常产出。</p>
+<p><strong>CIBERSORT 向 cwd 写文件</strong> ——
+<code>deconvolute(exprsn, "cibersort")</code> 调 CIBERSORT.R
+源码，它向当前工作目录写 <code>CIBERSORT-Results.txt</code>。因脚本
+<code>setwd()</code> 到
+<code>04_immune_infiltration/</code>，文件落在此处（42
+样本，已验证）。早期 3 样本探测跑在仓库根留下的散落副本已删除。</p>
+<h3 id="结果解读-2">结果解读</h3>
+<p>七种方法在细胞型粒度（TIMER 6 型 → xCell 39
+型）与输出尺度上都不同。教材的核心论点——<strong>只有绝对分数法能画堆叠柱</strong>——由两张
+quanTIseq 图示范：堆叠柱（<code>qts_barplot.png</code>，分数和为 1）对
+quanTIseq（绝对法）正确，而点/分面图（<code>qts_scatterplot.png</code>，每细胞型自由
+y 轴）是对任何方法都安全的选择。<code>scale='row'</code>
+的热图（<code>qts_heatmap_row_scaled.png</code>）是公平的跨样本比较：每个细胞型被
+z-score，所以巨噬细胞高的样本读红，与方法单位是分数还是任意值无关。</p>
+<h3 id="参数调优-2">参数调优</h3>
+<ul>
+<li><p><strong>解除 MCPcounter
+阻塞</strong>（已记录的一行修复，本次未应用）：用 https
+下两个标志文件，显式传入：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt <span class="at">-o</span> ref/MCPcounter_genes.txt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt <span class="at">-o</span> ref/MCPcounter_probesets.txt</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_genes.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">check.names=</span><span class="cn">FALSE</span>, <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>probesets <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_probesets.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res_mcp <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;mcp_counter&quot;</span>, <span class="at">featuresType=</span><span class="st">&quot;HUGO_symbols&quot;</span>, <span class="at">genes=</span>genes, <span class="at">probesets=</span>probesets)</span></code></pre></div>
+<p>即用 https 拉的本地副本替换 http 默认——同一份数据，不改包。</p></li>
+<li><p><code>config_env$xcell_cores</code> 控制 xCell
+并行；大队列可调高。</p></li>
+<li><p><code>timer</code> 的癌种务必对照
+<code>timer_available_cancers</code>
+核对——错癌种会静默加载错参考。</p></li>
+</ul>
+<h3 id="扩展-2">扩展</h3>
+<ul>
+<li>七法全跑后，对各方法的 T
+细胞估计做相关热图比较——去卷积论文常见的合理性检查。</li>
+<li><code>immunedeconv</code> 还支持
+<code>consensus_tme</code>、<code>abis</code>、<code>estimate</code>（见
+<code>deconvolution_methods</code>）——教材未用但可用。</li>
+</ul>
+<h2 id="part-4-tide代码块-2733">6. Part 4 —— TIDE（代码块 27–33）</h2>
+<h3 id="原文-3">原文</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tidepy</span> .../VanAllen2015_CTLA4_Melanoma_RNASeq <span class="at">-o</span> /path_to_your_folder/res_tide.txt <span class="at">-c</span> Melanoma <span class="at">--force_normalize</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;.../res_tide.txt&#39;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res_tide)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&#39;Predicted Responder&#39;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> res_tide[<span class="fu">rownames</span>(metadata),]      <span class="co"># 按 metadata 重排</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># factor 重标签: Predicted Responder False/True -&gt; Non-responder/Responder</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                CTL.flag False/True -&gt; CTL Low / CTL high</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                cbind metadata$Response 作第 15 列 &#39;Responder&#39;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># heatmap(t(res_tide_heatmap), scale=&#39;row&#39;, annotation_col=annotation)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 柱图: 每患者 TIDE 分，按 CTL.flag 分面，按预测/真实应答着色</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>TIDE_roc <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggroc</span>(TIDE_roc, <span class="at">legacy.axes=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_segment</span>(...)   <span class="co"># AUC 标注</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>TIDE_roc_smooth <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>, <span class="at">smooth=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># … 平滑 ROC …</span></span></code></pre></div>
+<h3 id="原理-3">原理</h3>
+<ul>
+<li><strong><code>tidepy</code></strong>（shell）跑 TIDE 模型（Jiang 等
+2018 <em>Nature
+Medicine</em>），从治疗前表达预测免疫治疗应答：<strong>TIDE 分 &lt; 0
+预测应答，&gt; 0 预测无应答</strong>。<code>-c Melanoma</code>
+选黑色素瘤癌种模型；<code>--force_normalize</code> 强制 log2(x+1) +
+中心化（APP-04 的三行 <code>[WARN]</code>
+记录的正是此操作）。输出列：<code>No benefits</code>、<code>Responder</code>、<code>TIDE</code>、<code>IFNG</code>、<code>MSI Score</code>、<code>CD274</code>、<code>CD8</code>、<code>CTL.flag</code>、<code>Dysfunction</code>、<code>Exclusion</code>、<code>MDSC</code>、<code>CAF</code>、<code>TAM M2</code>、<code>CTL</code>。</li>
+<li><strong><code>res_tide[rownames(metadata),]</code></strong> 重排到
+metadata，使热图注释对齐。</li>
+<li><strong><code>roc(Responder ~ TIDE, data=res_tide)</code></strong>：pROC
+的公式接口。<code>Responder</code>（第 15 列，真实临床应答）是
+factor，levels <code>Non-responder</code> &lt;
+<code>Responder</code>；pROC 设
+<code>controls = Non-responder, cases = Responder</code>，方向
+<code>controls &gt; cases</code>（即 <strong>TIDE
+越低越应答</strong>）—— 与 TIDE &lt; 0 规则一致。</li>
+<li><strong><code>ggroc(..., legacy.axes=TRUE)</code></strong> x 轴画
+1−specificity（曲线凸向左上）；<code>geom_segment(0,0 → 1,1)</code>
+是机会对角线。</li>
+<li><strong><code>smooth=TRUE</code></strong> 对 ROC
+曲线做双正态平滑。</li>
+</ul>
+<h3 id="我们跑了什么-3">我们跑了什么</h3>
+<ul>
+<li><strong>tidepy：</strong> 墙钟 11 秒；输出 <code>res_tide.txt</code>
+10,259 B（与教师预跑副本
+<code>/lustre1/share/rnaimmune/res_tide.txt</code> 字节同尺寸），42 样本
+× 14 列。三行预期 <code>[WARN]</code>（APP-04）。</li>
+<li><strong>ROC：</strong> AUC = 0.7872（原始）；AUC =
+0.7718（平滑）。</li>
+</ul>
+<p>产出：<code>res_tide.txt</code>、<code>tide_heatmap.png</code>、<code>tide_predicted_responder.png</code>、<code>tide_responder.png</code>、<code>roc.png</code>、<code>roc_smooth.png</code>。</p>
+<h3 id="坑-3">坑</h3>
+<ul>
+<li><strong>APP-04</strong> —— 三行 <code>[WARN]</code> 在
+<code>--force_normalize</code> 加 CPM
+尺输入下<strong>预期</strong>，非报错。5.73 % 基因缺失是 Entrez ID
+转换损失（可接受，&lt;10 %）；&gt;80 %
+阳性表达警告正是触发归一化的原因。</li>
+<li>两张柱图仅在着色美学上不同：<code>tide_predicted_responder.png</code>
+按 <strong>TIDE 预测</strong>着色，<code>tide_responder.png</code>
+按<strong>真实临床应答</strong>着色——对比二者即可目视读预测 vs
+真实。</li>
+<li><code>roc(..., aur=TRUE)</code> —— 注意教程代码参数是
+<code>aur</code>（非 <code>auc</code>）；pROC 接受此别名，AUC 存于
+<code>$auc</code>。一个能跑通的笔误。</li>
+</ul>
+<h3 id="结果解读-3">结果解读</h3>
+<p>AUC ≈ 0.79（原始）/ 0.77（平滑）意味着 TIDE
+在本队列能较好区分应答与无应答——与 TIDE 原文黑色素瘤验证一致。TIDE &lt;
+0 规则与 ROC 方向吻合。柱图显示多数预测应答者落在 CTL-high 分面（T
+细胞在场），多数无应答者在 CTL-low，体现 TIDE 的双轴逻辑（CTL-high
+走功能失调轴，CTL-low 走排除轴）。</p>
+<h3 id="参数调优-3">参数调优</h3>
+<ul>
+<li><code>--vthres</code> 可设自定义 TIDE 阈值（默认
+0.0）；调高以特异性换敏感性。</li>
+<li><code>--pretreat</code>
+改变既往免疫治疗后进展患者的应答规则——此处不适用（ipilimumab
+为一线）。</li>
+<li>要 AUC 置信区间：<code>ci.auc(TIDE_roc)</code>。</li>
+</ul>
+<h3 id="扩展-3">扩展</h3>
+<ul>
+<li>把 TIDE 的 <code>Dysfunction</code> 与 <code>Exclusion</code> 分数与
+Part 1 的 CYT、CTLA4 相关对照——连贯叙事：高 CTL → 功能失调轴，低 CTL →
+排除轴。</li>
+<li>把 TIDE 预测与 Part 3 的 <code>immunedeconv</code> CD8/T
+细胞估计交叉对照。</li>
+</ul>
+<h2 id="检查清单产物清单与总结">7. 检查清单、产物清单与总结</h2>
+<h3 id="检查清单">检查清单</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>编号</th>
+<th>检查项</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ck1</td>
+<td>表达矩阵加载，CPM 列和 = 1e6</td>
+<td>✓ 42 × 1e6</td>
+</tr>
+<tr>
+<td>ck2</td>
+<td>metadata 按 exprsn 重排</td>
+<td>✓ <code>all(rownames(metadata)==colnames(exprsn))</code> TRUE</td>
+</tr>
+<tr>
+<td>ck3</td>
+<td>CYT 中位数分组</td>
+<td>✓ 21 high / 21 low，无并列</td>
+</tr>
+<tr>
+<td>ck4</td>
+<td>KM 图 + 风险表渲染</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ck5</td>
+<td>Cox 模型收敛（6 协变量，29 事件）</td>
+<td>✓ Concordance 0.679</td>
+</tr>
+<tr>
+<td>ck6</td>
+<td>森林图渲染</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ck7</td>
+<td>六种去卷积方法完成</td>
+<td>✓（MCPcounter 阻塞——APP-01）</td>
+</tr>
+<tr>
+<td>ck8</td>
+<td>quanTIseq rmgenes 变体覆盖首次调用</td>
+<td>✓ 11 × 42</td>
+</tr>
+<tr>
+<td>ck9</td>
+<td>堆叠柱 / 点图 / 热图 / 按行缩放热图均渲染</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ck10</td>
+<td>tidepy 完成，输出字节尺寸与教师一致</td>
+<td>✓ 10,259 B</td>
+</tr>
+<tr>
+<td>ck11</td>
+<td>res_tide 按 metadata 重排</td>
+<td>✓</td>
+</tr>
+<tr>
+<td>ck12</td>
+<td>ROC + 平滑 ROC 渲染带 AUC 标注</td>
+<td>✓ 0.787 / 0.772</td>
+</tr>
+<tr>
+<td>ck13</td>
+<td>全部产出在 <code>results/</code> 按步骤，仓库无原始数据</td>
+<td>✓</td>
+</tr>
+</tbody>
+</table>
+<h3 id="产物清单31-文件无原始数据">产物清单（31 文件，无原始数据）</h3>
+<pre><code>02_gene_correlation/   GZMA_cor_PRF1.png, CTLA4_cor_CYT.png, scripts/part1_gene_correlation.R
+03_survival_analysis/  survival_CYT.png, cox.png, scripts/part2_survival_analysis.R
+04_immune_infiltration/ qts_barplot.png, qts_scatterplot.png, qts_heatmap.png,
+                        qts_heatmap_row_scaled.png, CIBERSORT-Results.txt,
+                        mcp_counter_blocked.txt, log_part3.txt,
+                        deconv_methods/{res_mcp_counter,res_epic,res_quantiseq,
+                        res_quantiseq_rmgenes,res_xcell,res_cibersort,
+                        res_cibersort_abs,res_timer}.tsv,
+                        scripts/part3_immune_infiltration.R
+05_tide/               res_tide.txt, tide_heatmap.png, tide_predicted_responder.png,
+                        tide_responder.png, roc.png, roc_smooth.png,
+                        log_tidepy.txt, scripts/run_tidepy.sh, scripts/part4_tide_analysis.R</code></pre>
+<h3 id="总结">总结</h3>
+<p>第三节课是纯下游分析——无 FASTQ、无比对、无 SLURM。四个 Part
+全在登录节点用 R 4.3.3（加一行 <code>tidepy</code> shell）跑完，约 6
+分钟。七条已验证坑入档；其中一条（APP-01，MCPcounter）是硬阻塞，根因是
+conda MCPcounter 1.1.0 把标志基因集硬编码成 <strong>http</strong> GitHub
+拉取，而本登录节点到 GitHub 的 http 被重置（https
+可达）。按原样执行指令，阻塞被记录而非绕过；其余六种去卷积方法照原文跑完。TIDE
+输出与教师预跑副本字节同尺寸，ROC
+AUC（0.79）复现了原文黑色素瘤区分度。</p>
+<h2 id="附录-a.-偏差日志本次精简但忠实原文">附录 A.
+偏差日志（本次，精简但忠实原文）</h2>
+<ul>
+<li><strong>交互式 → Rscript：</strong> 每个 Part 写成
+<code>partN_*.R</code>，在 <code>LC_ALL=C</code>/<code>LANG=C</code>
+下用 <code>Rscript</code> 跑（RNA-seq R 段 segfault
+规避，项目记忆）。代码内容逐字取自教材；包装仅 <code>setwd()</code> +
+诊断 <code>cat()</code>/<code>print()</code>。</li>
+<li><strong>跨 Part 对象共享：</strong> 教材在一个交互式 R 会话里让
+<code>exprsn</code>、<code>sig</code>、<code>metadata</code>、<code>res_qts</code>
+跨代码块流动。脚本化为四个进程后，每个脚本重新派生所需对象（重读表达矩阵、重算
+CYT）。代码内容不变，仅加载重复。</li>
+<li><strong>Part 4 输入路径：</strong> 教材读教师预跑的
+<code>/lustre1/share/rnaimmune/res_tide.txt</code>。本次改读自己
+<code>tidepy</code> 跑出的
+<code>results/05_tide/res_tide.txt</code>（字节同尺寸）。教材代码块 28
+的注释明确把此作为”自己跑 tidepy 时的预期用法”。</li>
+<li><strong>MCPcounter（APP-01）：</strong> 包进
+<code>tryCatch</code>；失败时写 <code>mcp_counter_blocked.txt</code>
+并继续。未绕过。</li>
+<li><strong>去卷积结果落盘：</strong> 教材只 <code>print()</code>
+<code>res_qts</code>；本次额外把每方法矩阵写
+<code>deconv_methods/*.tsv</code>（附加、非破坏）。</li>
+<li><strong>CIBERSORT-Results.txt：</strong> 早期 3
+样本探测跑在仓库根留下的散落副本已删；<code>04_immune_infiltration/</code>
+里的 42 样本正式副本保留。</li>
+</ul>
+<h2 id="附录-b.-复现">附录 B. 复现</h2>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate rnaimmune</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C<span class="kw">;</span> <span class="bu">export</span> <span class="va">LANG</span><span class="op">=</span>C</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 02_gene_correlation/scripts/part1_gene_correlation.R</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 03_survival_analysis/scripts/part2_survival_analysis.R</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_immune_infiltration/scripts/part3_immune_infiltration.R   <span class="co"># ~2 分钟</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span>    05_tide/scripts/run_tidepy.sh                                <span class="co"># ~11 秒</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 05_tide/scripts/part4_tide_analysis.R</span></code></pre></div>
+<p>所有产出落到对应步骤目录（脚本 <code>setwd()</code>
+进去）。MCPcounter 预期会以 <code>Connection reset by peer</code>
+失败，记入 <code>mcp_counter_blocked.txt</code>。</p>
+</body>
+</html>

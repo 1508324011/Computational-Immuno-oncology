@@ -36,6 +36,17 @@
     └── results/                              # 两轮实跑分析产物 (无任何原始数据: FASTQ/BAM 不入库)
         ├── mini/                             # mini 轮 (10k reads/样本, chr22 索引, ~4 分钟, 111/4989 转录本, DEG 45)
         └── homework/                        # 全量轮 (全 GRCh38 索引, 13 分钟, 831/231448 转录本, DEG 319, 含热图 NA bug 证据对与矫正版)
+└── RNA-seq-application/                     # RNA-seq 下游应用模块 (第三节课, 实跑完成)
+    ├── RNA-seq-application.html             # 教材原文 (Part 0-4, 33 个代码块)
+    ├── ref/                                  # 矫正增强文档 (构建走 WES/ref/build.sh)
+    │   ├── RNA_seq_application_corrected{.md,.html,.pdf}      # 矫正增强版：全流程实跑 + 7 条坑位取证
+    │   ├── RNA_seq_application_corrected_zh{.md,.html,.pdf}   # 同一矫正版的中文版
+    │   └── RNA_seq_application_results_guide{.md,.html,.pdf}  # 结果逐类导读 + 7 个动手练习
+    └── results/                              # 实跑分析产物 (无任何原始数据)
+        ├── 02_gene_correlation/             # Part 1: GZMA↔PRF1 / CTLA4↔CYT 相关散点
+        ├── 03_survival_analysis/            # Part 2: KM 生存 + Cox 森林
+        ├── 04_immune_infiltration/          # Part 3: 七法去卷积 (六法齐, MCPcounter 阻塞) + 堆叠柱/点/热图
+        └── 05_tide/                         # Part 4: tidepy + 热图/柱图×2/ROC×2
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
@@ -46,6 +57,10 @@
 > **矫正增强版（RNA_seq_tutorial_corrected）**：把 mini 教程与 homework 作业在集群上**原样跑两轮**（mini 轮 2026-09-21 + 全量轮 2026-10-09，均按教程原生方式登录节点串行跑）后写成的修复与讲解版——每步含原理/实跑数字/坑与矫正/调优扩展，带 15 条问题登记表（含热图全 NA 沉默 bug、''' 伪注释、双模式映射率口径等，每条带证据）。中文版 `_zh` 与英文版数字逐一对拍一致。构建：`WES/ref/build.sh ../../RNA-seq/ref/RNA_seq_tutorial_corrected.md "RNA-seq 全流程教程 · 矫正增强版"`（中文版传 `_zh.md` 与中文标题）。
 >
 > **分析结果（RNA-seq/results/）**：两轮实跑的分析产物（fastqc/fastp 报告、STAR 指标与 SJ 表、multiqc、salmon 双模式定量与映射率证据、R 段四张 PDF 含**热图 NA bug 证据对**、全部脚本与日志）——**不含任何原始数据**。讲解文档 `RNA-seq/ref/RNA_seq_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 1 三条命令在仓库内亲手复现热图 50×NA bug）。大文件（FASTQ/BAM/完整 salmon 目录）仍在集群运行目录，讲解文档 §4 有清单。
+
+> **矫正增强版（RNA_seq_application_corrected）**：把第三节课教材（Van Allen 2015 黑色素瘤队列，基因相关性/生存/免疫浸润/TIDE 四个 Part）在登录节点**原样实跑一轮**（2026-10-12，纯 R + 一行 tidepy，~6 分钟）后写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 7 条问题登记表（含 MCPcounter conda 1.1.0 http 硬编码阻塞、EPIC 收敛警告、tidepy 三行预期 WARN 等，每条带证据）。中文版 `_zh` 与英文版数字逐一对拍一致。构建：`WES/ref/build.sh ../../RNA-seq-application/ref/RNA_seq_application_corrected.md "RNA-seq Application Analysis · Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **分析结果（RNA-seq-application/results/）**：实跑分析产物（Part 1 相关散点、Part 2 KM+森林、Part 3 七法去卷积表+四张 quanTIseq 图、Part 4 TIDE 输出+热图+柱图×2+ROC×2、全部脚本与日志）——**不含任何原始数据**（表达矩阵/随访表在共享只读路径，未复制）。讲解文档 `RNA-seq-application/ref/RNA_seq_application_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 1 亲手复现 MCPcounter http vs https 阻塞）。本模块无大文件，全部产出已入库。
 
 ## WES 路线图内容一览 / What the roadmap covers
 

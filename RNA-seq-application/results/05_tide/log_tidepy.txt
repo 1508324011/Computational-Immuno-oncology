@@ -1,0 +1,14 @@
+[tidepy] start 2026-10-12T17:50:11+08:00
+[tidepy] cmd: tidepy /lustre1/share/rnaimmune/data/expression/VanAllen2015_CTLA4_Melanoma_RNASeq -o /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide/res_tide.txt -c Melanoma --force_normalize
+[WARN] 5.73 % Genes are missing after converting to Entrez ID
+[WARN] The majority(>80%) of genes with positive expression in your inputted data. Please Normalize your data
+[WARN] Start normalizing the input expression profile by: 1. Do the log2(x+1) transformation. 2. Subtract the average across your samples.
+[tidepy] done exit=0 2026-10-12T17:50:22+08:00
+[tidepy] output:
+-rw-rw-r-- 1 bjx131_pkuhpc bjx131_pkuhpc 10259 Oct 12 17:50 /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide/res_tide.txt
+[tidepy] head:
+	No benefits	Responder	TIDE	IFNG	MSI Score	CD274	CD8	CTL.flag	Dysfunction	Exclusion	MDSC	CAF	TAM M2	CTL
+Pat06	False	False	2.8899381417332437	0.8900661176274205	0.38345959182676426	1.6043359845298872	1.5167783255519791	True	2.8899381417332437	-2.2531475216530175	-0.215804829620539	-0.026955690505823166	-0.08371866757792616	1.5781504921301455
+Pat85	False	False	2.737768905318931	2.6079776136707804	0.5711635144233614	2.2602788347889535	3.612429605273536	True	2.737768905318931	-2.481078994247564	-0.1838110012260207	-0.034995347286135875	-0.14347958639057226	2.826071326293243
+[tidepy] rows:
+43 /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide/res_tide.txt

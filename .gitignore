@@ -242,3 +242,27 @@ RNA-seq/results/**/*.fq.gz
 RNA-seq/results/**/*.g.vcf
 RNA-seq/results/**/*.g.vcf.idx
 RNA-seq/results/**/*.g.vcf.gz
+# -----------------------------------------------------------------------------
+# 10. RNA-seq-application/results — curated analysis results (EXPLICIT exception, 2026-10-12)
+# -----------------------------------------------------------------------------
+# Same deliberate policy as sections 8 (WES/results) and 9 (RNA-seq/results):
+# the Lesson-3 downstream analysis outputs ARE versioned (correlation/survival/
+# immune-infiltration/TIDE figures, deconvolution result tables, TIDE output,
+# scripts and logs — see RNA-seq-application/ref/RNA_seq_application_corrected.md
+# and RNA_seq_application_results_guide.md). NO raw data.
+!RNA-seq-application/results/**
+
+# Safety net (mirrors sections 8/9): raw data & heavy intermediates never enter,
+# not even via the exception above. Expression/follow-up files live on the shared
+# read-only path /lustre1/share/rnaimmune/ and are never copied into the repo.
+RNA-seq-application/results/**/*.bam
+RNA-seq-application/results/**/*.bai
+RNA-seq-application/results/**/*.sam
+RNA-seq-application/results/**/*.cram
+RNA-seq-application/results/**/*.fastq
+RNA-seq-application/results/**/*.fastq.gz
+RNA-seq-application/results/**/*.fq
+RNA-seq-application/results/**/*.fq.gz
+RNA-seq-application/results/**/*.g.vcf
+RNA-seq-application/results/**/*.g.vcf.idx
+RNA-seq-application/results/**/*.g.vcf.gz

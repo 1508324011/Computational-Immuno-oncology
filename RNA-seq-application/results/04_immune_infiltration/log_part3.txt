@@ -1,0 +1,253 @@
+-- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+v dplyr     1.1.4     v readr     2.1.5
+v forcats   1.0.0     v stringr   1.5.1
+v ggplot2   3.5.1     v tibble    3.2.1
+v lubridate 1.9.3     v tidyr     1.3.1
+v purrr     1.0.2     
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: EPIC
+== deconvolution_methods ==
+      MCPcounter             EPIC        quanTIseq            xCell 
+   "mcp_counter"           "epic"      "quantiseq"          "xcell" 
+       CIBERSORT CIBERSORT (abs.)            TIMER     ConsensusTME 
+     "cibersort"  "cibersort_abs"          "timer"  "consensus_tme" 
+            ABIS         ESTIMATE 
+          "abis"       "estimate" 
+
+== [1/7] mcp_counter (as written, expected to fail on http fetch) ==
+
+>>> Running mcp_counter
+   -> BLOCKED (recorded): Recv failure: Connection reset by peer
+
+== [2/7] epic ==
+
+>>> Running epic
+Warning message:
+In (function (bulk, reference = NULL, mRNA_cell = NULL, mRNA_cell_sub = NULL,  :
+  The optimization didn't fully converge for some samples:
+Pat02; Pat39; Pat40; Pat49; Pat79; Pat85
+ - check fit.gof for the convergeCode and convergeMessage
+dim:[1]  8 43
+
+== [3/7] quantiseq ==
+
+>>> Running quantiseq
+
+Running quanTIseq deconvolution module
+
+Gene expression normalization and re-annotation (arrays: FALSE)
+
+Removing 17 noisy genes
+
+Removing 15 genes with high expression in tumors
+
+Signature genes found in data set: 133/138 (96.38%)
+
+Mixture deconvolution (method: lsei)
+
+Deconvolution successful!
+dim:[1] 11 43
+
+== [4/7] xcell ==
+
+>>> Running xcell
+Warning message:
+Calling gsva(expr=., gset.idx.list=., method=., ...) is deprecated; use a method-specific parameter object (see '?gsva'). 
+dim:[1] 39 43
+
+== [5/7] cibersort ==
+
+>>> Running cibersort
+dim:[1] 22 43
+
+== [6/7] cibersort_abs ==
+
+>>> Running cibersort_abs
+dim:[1] 22 43
+
+== [7/7] timer ==
+
+>>> Running timer
+## Enter batch mode
+
+
+## Loading immune gene expression
+
+[1] "Outlier genes: ACTG1 APOD APOE B2M CAPN3 COL1A1 COL1A2 COL3A1 EEF1A1 FAM83A FN1 FTH1 FTL GAPDH GNAS HBA1 HBA2 HBB HLA-B HLA-C KRT1 KRT10 KRT14 KRT5 LYN MGP NACA NDRG1 PABPC1 PMEL PPIA PSAP RPL10 RPL13A RPL17 RPL37A RPL41 RPS11 RPS18 RPS20 RPS23 RPS24 SDCBP SERPINA3 SERPINE2 SPP1 TPT1 VEGFA VIM"
+## Removing the batch effect of /tmp/RtmpwNCvWO/filea309074533713
+
+Found 9 genes with uniform expression within a single batch (all zeros); these will not be adjusted for batch.
+Found2batches
+Adjusting for0covariate(s) or covariate level(s)
+Standardizing Data across genes
+Fitting L/S model and finding priors
+Finding parametric adjustments
+Adjusting the Data
+
+dim:[1]  6 43
+
+== quanTIseq rmgenes (overrides res_qts) ==
+
+>>> Running quantiseq
+
+Running quanTIseq deconvolution module
+
+Gene expression normalization and re-annotation (arrays: FALSE)
+
+Removing 17 noisy genes
+
+Removing 15 genes with high expression in tumors
+
+Signature genes found in data set: 129/138 (93.48%)
+
+Mixture deconvolution (method: lsei)
+
+Deconvolution successful!
+dim:[1] 11 43
+
+== timer_available_cancers ==
+ [1] "kich" "blca" "brca" "cesc" "gbm"  "hnsc" "kirp" "lgg"  "lihc" "luad"
+[11] "lusc" "prad" "sarc" "pcpg" "paad" "tgct" "ucec" "ov"   "skcm" "dlbc"
+[21] "kirc" "acc"  "meso" "thca" "uvm"  "ucs"  "thym" "esca" "stad" "read"
+[31] "coad" "chol"
+
+== res_qts (rmgenes version) ==
+# A tibble: 11 x 43
+   cell_type          Pat02   Pat03   Pat04  Pat06  Pat08 Pat118  Pat119  Pat123
+   <chr>              <dbl>   <dbl>   <dbl>  <dbl>  <dbl>  <dbl>   <dbl>   <dbl>
+ 1 B cell           0.0242  0.0395  0.0314  0.106  0.0343 0.0435 4.57e-2 0.0330 
+ 2 Macrophage M1    0.0598  0.0110  0.0479  0.0303 0.0363 0.0170 3.30e-4 0.0220 
+ 3 Macrophage M2    0.106   0.0469  0.00507 0.0448 0.0305 0.0527 9.20e-3 0.0114 
+ 4 Monocyte         0       0       0.0248  0      0      0      0       0      
+ 5 Neutrophil       0.171   0.0724  0.0227  0.115  0.0228 0.111  1.11e-1 0.0323 
+ 6 NK cell          0.0530  0.0139  0.0221  0.0235 0.0411 0.0158 7.96e-3 0.0202 
+ 7 T cell CD4+ (no~ 0       0       0       0.0798 0.0599 0      0       0      
+ 8 T cell CD8+      0.0266  0       0.0164  0.0403 0.0160 0.0249 2.96e-3 0.00466
+ 9 T cell regulato~ 0.00389 0.0123  0.0501  0.0432 0.0271 0.0237 1.63e-2 0.0214 
+10 Myeloid dendrit~ 0       0.00906 0       0.0436 0.0313 0.0176 2.18e-2 0.0368 
+11 uncharacterized~ 0.556   0.795   0.780   0.474  0.701  0.694  7.85e-1 0.818  
+# i 34 more variables: Pat126 <dbl>, Pat14 <dbl>, Pat15 <dbl>, Pat16 <dbl>,
+#   Pat19 <dbl>, Pat20 <dbl>, Pat25 <dbl>, Pat27 <dbl>, Pat28 <dbl>,
+#   Pat29 <dbl>, Pat33 <dbl>, Pat36 <dbl>, Pat37 <dbl>, Pat38 <dbl>,
+#   Pat39 <dbl>, Pat40 <dbl>, Pat41 <dbl>, Pat43 <dbl>, Pat44 <dbl>,
+#   Pat45 <dbl>, Pat46 <dbl>, Pat47 <dbl>, Pat49 <dbl>, Pat50 <dbl>,
+#   Pat79 <dbl>, Pat80 <dbl>, Pat81 <dbl>, Pat83 <dbl>, Pat85 <dbl>,
+#   Pat86 <dbl>, Pat88 <dbl>, Pat90 <dbl>, Pat91 <dbl>, Pat98 <dbl>
+# A tibble: 99 x 3
+   cell_type                    sample fraction
+   <chr>                        <chr>     <dbl>
+ 1 B cell                       Pat02   0.0242 
+ 2 Macrophage M1                Pat02   0.0598 
+ 3 Macrophage M2                Pat02   0.106  
+ 4 Monocyte                     Pat02   0      
+ 5 Neutrophil                   Pat02   0.171  
+ 6 NK cell                      Pat02   0.0530 
+ 7 T cell CD4+ (non-regulatory) Pat02   0      
+ 8 T cell CD8+                  Pat02   0.0266 
+ 9 T cell regulatory (Tregs)    Pat02   0.00389
+10 Myeloid dendritic cell       Pat02   0      
+# i 89 more rows
+null device 
+          1 
+null device 
+          1 
+ [1] 1 0 1 0 0 0 1 1 1 0 0 1 0 0 0 1 1 1 0 0 0 1 1 0 0 0 0 0 0 1 1 0 1 1 0 1 0 0
+[39] 1 1 1 0
+ [1] Responder     Non-responder Responder     Non-responder Non-responder
+ [6] Non-responder Responder     Responder     Responder     Non-responder
+[11] Non-responder Responder     Non-responder Non-responder Non-responder
+[16] Responder     Responder     Responder     Non-responder Non-responder
+[21] Non-responder Responder     Responder     Non-responder Non-responder
+[26] Non-responder Non-responder Non-responder Non-responder Responder    
+[31] Responder     Non-responder Responder     Responder     Non-responder
+[36] Responder     Non-responder Non-responder Responder     Responder    
+[41] Responder     Non-responder
+Levels: Non-responder Responder
+# A tibble: 6 x 43
+  cell_type     Pat02  Pat03   Pat04  Pat06  Pat08 Pat118  Pat119 Pat123  Pat126
+  <chr>         <dbl>  <dbl>   <dbl>  <dbl>  <dbl>  <dbl>   <dbl>  <dbl>   <dbl>
+1 B cell       0.0242 0.0395 0.0314  0.106  0.0343 0.0435 4.57e-2 0.0330 0.00816
+2 Macrophage ~ 0.0598 0.0110 0.0479  0.0303 0.0363 0.0170 3.30e-4 0.0220 0      
+3 Macrophage ~ 0.106  0.0469 0.00507 0.0448 0.0305 0.0527 9.20e-3 0.0114 0.00527
+4 Monocyte     0      0      0.0248  0      0      0      0       0      0      
+5 Neutrophil   0.171  0.0724 0.0227  0.115  0.0228 0.111  1.11e-1 0.0323 0.260  
+6 NK cell      0.0530 0.0139 0.0221  0.0235 0.0411 0.0158 7.96e-3 0.0202 0.00478
+# i 33 more variables: Pat14 <dbl>, Pat15 <dbl>, Pat16 <dbl>, Pat19 <dbl>,
+#   Pat20 <dbl>, Pat25 <dbl>, Pat27 <dbl>, Pat28 <dbl>, Pat29 <dbl>,
+#   Pat33 <dbl>, Pat36 <dbl>, Pat37 <dbl>, Pat38 <dbl>, Pat39 <dbl>,
+#   Pat40 <dbl>, Pat41 <dbl>, Pat43 <dbl>, Pat44 <dbl>, Pat45 <dbl>,
+#   Pat46 <dbl>, Pat47 <dbl>, Pat49 <dbl>, Pat50 <dbl>, Pat79 <dbl>,
+#   Pat80 <dbl>, Pat81 <dbl>, Pat83 <dbl>, Pat85 <dbl>, Pat86 <dbl>,
+#   Pat88 <dbl>, Pat90 <dbl>, Pat91 <dbl>, Pat98 <dbl>
+                   Pat02      Pat03       Pat04      Pat06      Pat08
+B cell        0.02418472 0.03946584 0.031417251 0.10558931 0.03429081
+Macrophage M1 0.05982150 0.01098262 0.047917735 0.03028779 0.03633563
+Macrophage M2 0.10626520 0.04693039 0.005068187 0.04479371 0.03049068
+Monocyte      0.00000000 0.00000000 0.024759034 0.00000000 0.00000000
+Neutrophil    0.17067024 0.07241447 0.022696695 0.11461172 0.02276514
+NK cell       0.05297825 0.01394142 0.022060042 0.02354268 0.04106212
+                  Pat118       Pat119     Pat123      Pat126       Pat14
+B cell        0.04351032 0.0457430017 0.03299180 0.008160654 0.046962492
+Macrophage M1 0.01698834 0.0003301127 0.02202086 0.000000000 0.004360034
+Macrophage M2 0.05266065 0.0092004523 0.01144274 0.005268185 0.015668046
+Monocyte      0.00000000 0.0000000000 0.00000000 0.000000000 0.006458999
+Neutrophil    0.11091239 0.1108211944 0.03226313 0.259619916 0.117137788
+NK cell       0.01580773 0.0079590447 0.02023362 0.004780672 0.011493228
+                   Pat15       Pat16      Pat19        Pat20       Pat25
+B cell        0.02961376 0.066326205 0.05074092 0.0237337897 0.027425039
+Macrophage M1 0.01056376 0.009629795 0.04163127 0.0009103146 0.011242642
+Macrophage M2 0.00000000 0.002365612 0.04548409 0.0054159336 0.005983307
+Monocyte      0.08198596 0.017692480 0.00000000 0.0000000000 0.000000000
+Neutrophil    0.00000000 0.018881994 0.13275118 0.3441231394 0.167337756
+NK cell       0.02668113 0.020072147 0.02093051 0.0033853438 0.011837893
+                   Pat27      Pat28      Pat29        Pat33      Pat36
+B cell        0.04445385 0.03760468 0.16206353 6.926409e-03 0.05072044
+Macrophage M1 0.02626945 0.07229317 0.01195830 0.000000e+00 0.01949999
+Macrophage M2 0.05229326 0.00000000 0.01133008 0.000000e+00 0.00000000
+Monocyte      0.00000000 0.03725596 0.03676970 0.000000e+00 0.05962095
+Neutrophil    0.03632361 0.04510014 0.03432688 4.228765e-01 0.00000000
+NK cell       0.01512283 0.01646361 0.01381163 6.015803e-05 0.03041592
+                   Pat37      Pat38       Pat39      Pat40      Pat41
+B cell        0.01059427 0.03372111 0.165136852 0.03340877 0.02138878
+Macrophage M1 0.01862247 0.06938975 0.005197842 0.01213358 0.02086426
+Macrophage M2 0.01423726 0.03901132 0.070505204 0.01835365 0.01304360
+Monocyte      0.01999844 0.00000000 0.000000000 0.00000000 0.00000000
+Neutrophil    0.04099118 0.04871522 0.131155478 0.14764640 0.14922533
+NK cell       0.03469654 0.01540203 0.031225748 0.01125675 0.02099485
+                   Pat43      Pat44       Pat45      Pat46       Pat47
+B cell        0.06855973 0.02578202 0.035308308 0.08315996 0.122393711
+Macrophage M1 0.03254137 0.02844563 0.007437313 0.01856588 0.003289570
+Macrophage M2 0.09032666 0.01118518 0.003859038 0.02393485 0.009505925
+Monocyte      0.00000000 0.03125350 0.053774758 0.02961924 0.000000000
+Neutrophil    0.10353323 0.00000000 0.000000000 0.00000000 0.070656603
+NK cell       0.02182346 0.01630410 0.044258537 0.03817904 0.000000000
+                   Pat49       Pat50       Pat79       Pat80      Pat81
+B cell        0.09026849 0.035187622 0.043440315 0.029647751 0.08279660
+Macrophage M1 0.02822580 0.002405119 0.010330572 0.025334661 0.01869702
+Macrophage M2 0.03543399 0.010963521 0.004934902 0.020308329 0.01716378
+Monocyte      0.01462598 0.000000000 0.020284165 0.008610156 0.04242669
+Neutrophil    0.03960207 0.047446763 0.010642902 0.062308350 0.00000000
+NK cell       0.02711064 0.016116739 0.016138655 0.011705988 0.02139263
+                    Pat83      Pat85      Pat86       Pat88      Pat90
+B cell        0.049946086 0.08546322 0.04455147 0.083630268 0.04329090
+Macrophage M1 0.002181082 0.09575497 0.01545891 0.032733490 0.01035843
+Macrophage M2 0.051407378 0.01444008 0.01261468 0.009406567 0.01161336
+Monocyte      0.000000000 0.02213721 0.04030593 0.025739941 0.04936338
+Neutrophil    0.028359686 0.06218418 0.02044535 0.006819775 0.00000000
+NK cell       0.019056936 0.02909092 0.03865272 0.021681519 0.03949217
+                   Pat91       Pat98
+B cell        0.04618090 0.028694438
+Macrophage M1 0.01780783 0.006207631
+Macrophage M2 0.01884259 0.008512671
+Monocyte      0.01157730 0.000000000
+Neutrophil    0.05229728 0.320360210
+NK cell       0.01930369 0.006224178
+null device 
+          1 
+null device 
+          1 
+
+== Part 3 done. outputs: qts_barplot/scatterplot/heatmap/heatmap_row_scaled.png + deconv_methods/*.tsv ==

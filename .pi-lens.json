@@ -1,5 +1,6 @@
 {
   "ignore": [
+    "RNA-seq-application/results/**",
     "RNA-seq/results/**",
     "WES/results/**"
   ]
