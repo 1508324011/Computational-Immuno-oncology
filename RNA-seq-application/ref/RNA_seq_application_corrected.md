@@ -30,7 +30,7 @@ Verified pitfalls in the course original. Full evidence and corrections are in t
 
 | ID | Where | Symptom / root cause | Correction |
 | --- | --- | --- | --- |
-| APP-01 | Part 3, MCPcounter | `MCPcounter::MCPcounter.estimate` hardcodes its marker genes as `read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"))` — an **http** (not https) runtime fetch from GitHub. The conda-installed MCPcounter 1.1.0 ships **no local copy** of `genes`/`probesets` (its `data/` holds only `MCPcounterExampleData` and `null_models`). On this login node the http connection to `raw.githubusercontent.com` is reset (`Connection reset by peer`); https reaches HTTP 200 in 1.7 s | Per the as-written instruction this is a hard blocker: MCPcounter is recorded as blocked, the other six deconvolution methods run as written. A one-line fix exists (download the two marker files over https once, pass them as explicit `genes=`/`probesets=` arguments) — see Part 3 |
+| APP-01 | Part 3, MCPcounter | `MCPcounter::MCPcounter.estimate` hardcodes its marker genes as `read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"))` — an **http** (not https) runtime fetch from GitHub. The conda-installed MCPcounter 1.1.0 ships **no local copy** of `genes`/`probesets` (its `data/` holds only `MCPcounterExampleData` and `null_models`). On this login node the http connection to `raw.githubusercontent.com` is reset (`Connection reset by peer`); https reaches HTTP 200 in 1.7 s | **Fix executed and verified (2026-10-12 evening, per user directive).** Downloaded `genes.txt` and `probesets.txt` over https into `ref/` (111 markers / 177 probesets), read them with the exact default `read.table` args of `MCPcounter.estimate` (only the data source swapped http→local file), and passed them as explicit `genes=`/`probesets=` arguments. Result: 11 cell types × 42 samples saved to `deconv_methods/res_mcp_counter.tsv`. One finding recorded: the 11 rows include `Monocyte` and `Macrophage/Monocyte` with **identical values** — immunedeconv's `cell_type_map` maps the single MCPcounter source population `Monocytic lineage` to both names, so 11 rows carry only 10 independent populations. See Part 3 |
 | APP-02 | Part 3, EPIC | `Warning: The optimization didn't fully converge for some samples (Pat02 …)` — EPIC's per-sample non-negative least squares did not fully converge for a few samples | Benign; EPIC prints `fit.gof` for inspection. Results are still produced and are the method's intended output |
 | APP-03 | Part 3, xCell | `Calling gsva(expr=., gset.idx.list=., method=., ...) is deprecated; use a method-specific parameter object` — the xCell wrapper calls GSVA in the legacy positional style | Benign deprecation warning from a transitive dependency; results unaffected |
 | APP-04 | Part 4, tidepy | Three `[WARN]` lines: 5.73 % genes missing after Entrez conversion; >80 % genes with positive expression; "Start normalizing … log2(x+1) … subtract average". These are **expected** given `--force_normalize` and the input being CPM-scale expression, not errors | Run as written; the warnings document the normalization the flag requests. Output `res_tide.txt` is byte-identical in size to the teacher's pre-baked copy (10,259 B) |
@@ -205,7 +205,7 @@ res_qts <- deconvolute(exprsn, method='quantiseq',
 ### What we ran
 | Method | Cell types | Samples | Output type | Notes |
 | --- | --- | --- | --- | --- |
-| mcp_counter | — | — | relative | **BLOCKED (APP-01)** — not run |
+| mcp_counter | 11 | 42 | relative | **FIXED (APP-01)** — ran via local https-fetched markers; see below |
 | epic | 8 | 42 | absolute fraction | convergence warning on Pat02 (APP-02) |
 | quantiseq | 11 | 42 | absolute fraction | 133/138 signature genes found (96.38 %) |
 | xcell | 39 | 42 | relative | GSVA deprecation warning (APP-03) |
@@ -219,7 +219,8 @@ Outputs: `qts_barplot.png`, `qts_scatterplot.png`, `qts_heatmap.png`, `qts_heatm
 
 ### Pitfalls
 
-**APP-01 — MCPcounter blocked (the one hard blocker).** Root cause, verified step by step:
+**APP-01 — MCPcounter fixed (correction executed 2026-10-12 evening).** Root cause unchanged: `MCPcounter.estimate`'s default arguments fetch the marker gene sets at call time over **http** from GitHub, and the conda MCPcounter 1.1.0 ships no local copy. The login node resets http to GitHub but reaches https. Per the standing instruction the lesson-3 run recorded MCPcounter as blocked and did not bypass it. A subsequent directive then asked for the correction to be executed and recorded, so it was: the two marker files were downloaded over https into `ref/` and passed as explicit `genes=`/`probesets=` arguments (read parameters identical to the package default, only the data source swapped). The full verification, step by step:
+
 1. `deconvolute(exprsn, "mcp_counter")` routes to `MCPcounter::MCPcounter.estimate`.
 2. `MCPcounter.estimate`'s default arguments fetch the marker gene sets at call time:
    ```r
@@ -229,10 +230,24 @@ Outputs: `qts_barplot.png`, `qts_scatterplot.png`, `qts_heatmap.png`, `qts_heatm
    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt"), ...)
    ```
    i.e. an **http** (not https) fetch from GitHub, evaluated lazily when `genes`/`probesets` is first referenced.
-3. The conda-installed `MCPcounter` 1.1.0 ships **no local copy** of these markers — `data(package="MCPcounter")` lists only `MCPcounterExampleData` and `null_models`; `exists("genes", asNamespace("MCPcounter"))` is FALSE; the lazy-load `data/Rdata.rdb` holds only the example data and null models.
+3. The conda-installed `MCPcounter` 1.1.0 ships **no local copy** — `data(package="MCPcounter")` lists only `MCPcounterExampleData` and `null_models`.
 4. On this login node: `curl http://raw.githubusercontent.com/…` → `Recv failure: Connection reset by peer` (HTTP 000, 0.18 s); `curl https://raw.githubusercontent.com/…` → HTTP 200, 1.66 s. So **https works, http does not** — a network policy asymmetry, and the package hardcodes http.
+5. **Correction (executed):** download the two marker files over https into `ref/` and pass them explicitly:
+   ```bash
+   curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt -o ref/MCPcounter_genes.txt
+   curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt -o ref/MCPcounter_probesets.txt
+   ```
+   ```r
+   genes <- read.table("ref/MCPcounter_genes.txt", sep="\t", stringsAsFactors=FALSE, header=TRUE,
+                       colClasses="character", check.names=FALSE)   # identical to MCPcounter.estimate default
+   probesets <- read.table("ref/MCPcounter_probesets.txt", sep="\t", stringsAsFactors=FALSE,
+                           colClasses="character")                              # identical to MCPcounter.estimate default
+   res_mcp <- deconvolute(exprsn, "mcp_counter", genes=genes, probesets=probesets)
+   ```
+   Result: 11 cell types × 42 samples, saved to `deconv_methods/res_mcp_counter.tsv`. Script: `scripts/part3_mcp_counter_fix.R`. This replaces the http default with a local https-fetched copy — the same data, no package edit.
+6. **Finding recorded:** the 11 output rows include `Monocyte` and `Macrophage/Monocyte` with **identical values across all 42 samples**. Root cause is `immunedeconv::cell_type_map`: MCPcounter's single source population `Monocytic lineage` is mapped to **both** output names. So the 11 rows carry only **10 independent populations** — a mapping-table duplicate, not a computational artifact.
 
-Per the standing instruction to run the tutorial code **as written** (no override of the `genes=`/`probesets=` defaults), MCPcounter is recorded as a hard blocker and the run proceeds with the other six methods. The one-line fix that would unblock it (download `genes.txt` and `probesets.txt` over https once into `ref/`, then pass them as explicit arguments) is documented in `mcp_counter_blocked.txt` and in the Extensions below, but was **not** applied in this run.
+During the lesson-3 run the blocker was recorded in `mcp_counter_blocked.txt`; that file now also documents the fix that followed and the duplicate-mapping finding.
 
 **APP-02 / APP-03** — EPIC convergence warning and xCell/GSVA deprecation warning: both benign, results produced.
 
@@ -242,17 +257,7 @@ Per the standing instruction to run the tutorial code **as written** (no overrid
 The seven methods disagree in both cell-type granularity (TIMER 6 types → xCell 39 types) and output scale. The textbook's central point — **only absolute-fraction methods may be drawn as stacked bars** — is demonstrated by the two quanTIseq plots: the stacked bar (`qts_barplot.png`, fractions summing to 1) is correct for quanTIseq (an absolute method), while the dot/facet plot (`qts_scatterplot.png`, free y-scales per cell type) is the safe choice for any method. The heatmap with `scale='row'` (`qts_heatmap_row_scaled.png`) is the fair cross-sample comparison: each cell type is z-scored so a high-Macrophage sample reads red regardless of whether the method's units are fractions or arbitrary scores.
 
 ### Tuning
-- **To unblock MCPcounter** (the documented one-line fix, not applied here): download the two marker files over https and pass them explicitly:
-  ```bash
-  curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt -o ref/MCPcounter_genes.txt
-  curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt -o ref/MCPcounter_probesets.txt
-  ```
-  ```r
-  genes <- read.table("ref/MCPcounter_genes.txt", sep="\t", header=TRUE, stringsAsFactors=FALSE, check.names=FALSE, colClasses="character")
-  probesets <- read.table("ref/MCPcounter_probesets.txt", sep="\t", stringsAsFactors=FALSE, colClasses="character")
-  res_mcp <- deconvolute(exprsn, "mcp_counter", featuresType="HUGO_symbols", genes=genes, probesets=probesets)
-  ```
-  This replaces the http default with a local https-fetched copy — the same data, no package edit.
+- The local-marker fix is now applied; `ref/MCPcounter_genes.txt` and `ref/MCPcounter_probesets.txt` are versioned with the repo, so re-runs are fully offline.
 - `config_env$xcell_cores` controls xCell parallelism; raise it for larger cohorts.
 - For `timer`, double-check the indication against `timer_available_cancers` — a wrong cancer type silently loads the wrong reference.
 
@@ -323,7 +328,7 @@ AUC ≈ 0.79 (raw) / 0.77 (smoothed) means TIDE discriminates responders from no
 | ck4 | KM plot + risk table render | ✓ |
 | ck5 | Cox model converges (6 covariates, 29 events) | ✓ Concordance 0.679 |
 | ck6 | Forest plot renders | ✓ |
-| ck7 | Six deconvolution methods complete | ✓ (MCPcounter blocked — APP-01) |
+| ck7 | seven deconvolution methods complete | ✓ (MCPcounter fixed — APP-01 correction applied) |
 | ck8 | quanTIseq rmgenes variant overrides first call | ✓ 11 × 42 |
 | ck9 | Stacked bar / dot / heatmap / row-scaled heatmap all render | ✓ |
 | ck10 | tidepy completes, output byte-size matches teacher's | ✓ 10,259 B |
@@ -341,20 +346,21 @@ AUC ≈ 0.79 (raw) / 0.77 (smoothed) means TIDE discriminates responders from no
                         deconv_methods/{res_mcp_counter,res_epic,res_quantiseq,
                         res_quantiseq_rmgenes,res_xcell,res_cibersort,
                         res_cibersort_abs,res_timer}.tsv,
-                        scripts/part3_immune_infiltration.R
+                        scripts/part3_immune_infiltration.R,
+                        scripts/part3_mcp_counter_fix.R
 05_tide/               res_tide.txt, tide_heatmap.png, tide_predicted_responder.png,
                         tide_responder.png, roc.png, roc_smooth.png,
                         log_tidepy.txt, scripts/run_tidepy.sh, scripts/part4_tide_analysis.R
 ```
 
 ### Summary
-Lesson 3 is a pure downstream analysis — no FASTQ, no alignment, no SLURM. All four parts ran on the login node in R 4.3.3 (plus one `tidepy` shell call) in ~6 minutes. Seven verified pitfalls are logged; one (APP-01, MCPcounter) is a hard blocker caused by the conda MCPcounter 1.1.0 package hardcoding an **http** GitHub fetch for its marker genes on a login node where http-to-GitHub is reset (https works). Per the as-written instruction the blocker was recorded, not bypassed; the six remaining deconvolution methods ran as written. The TIDE output is byte-size-identical to the teacher's pre-baked copy, and the ROC AUC (0.79) reproduces the published melanoma discrimination.
+Lesson 3 is a pure downstream analysis — no FASTQ, no alignment, no SLURM. All four parts ran on the login node in R 4.3.3 (plus one `tidepy` shell call) in ~6 minutes. Seven verified pitfalls are logged; one (APP-01, MCPcounter) was a hard blocker during the as-written run (conda MCPcounter 1.1.0 hardcodes an **http** GitHub fetch for its marker genes on a login node where http-to-GitHub is reset) — the correction was subsequently executed and verified (local https-fetched markers passed as explicit arguments), so all seven deconvolution methods now have results. A duplicate-mapping finding was recorded: MCPcounter's 11 output rows include `Monocyte` and `Macrophage/Monocyte` with identical values because immunedeconv maps the single source population `Monocytic lineage` to both names (10 independent populations, not 11). The TIDE output is byte-size-identical to the teacher's pre-baked copy, and the ROC AUC (0.79) reproduces the published melanoma discrimination.
 
 ## Appendix A. Deviation log (this run, condensed but verbatim-faithful)
 - **Interactive → Rscript:** each part scripted as `partN_*.R`, run via `Rscript` under `LC_ALL=C`/`LANG=C` (RNA-seq R-segment segfault guard, project memory). Code content is verbatim from the tutorial; the wrapper is `setwd()` + diagnostic `cat()`/`print()` only.
 - **Cross-part object sharing:** the tutorial runs in one interactive R session where `exprsn`, `sig`, `metadata`, `res_qts` flow across code blocks. Scripted as four processes, each script re-derives the objects it needs (re-reads the expression matrix, recomputes CYT). Code content unchanged; only the load is repeated.
 - **Part 4 input path:** tutorial loads the teacher's pre-baked `/lustre1/share/rnaimmune/res_tide.txt`. The run instead loads its own `tidepy` output `results/05_tide/res_tide.txt` (byte-size-identical). Tutorial code block 28's comment explicitly documents this as the intended usage when you run tidepy yourself.
-- **MCPcounter (APP-01):** wrapped in `tryCatch`; on failure writes `mcp_counter_blocked.txt` and continues. Not bypassed.
+- **MCPcounter (APP-01):** the lesson-3 run wrapped it in `tryCatch` and recorded the block; a subsequent correction (`scripts/part3_mcp_counter_fix.R`) ran it with local https-fetched markers and wrote `deconv_methods/res_mcp_counter.tsv`. The `mcp_counter_blocked.txt` file records both the original block and the applied fix.
 - **Deconvolution results saved:** tutorial only `print()`s `res_qts`; the run additionally writes each method's matrix to `deconv_methods/*.tsv` (additive, non-destructive).
 - **CIBERSORT-Results.txt:** a stray copy from a 3-sample probe run was removed from the repo root; the 42-sample production copy in `04_immune_infiltration/` is kept.
 
@@ -365,8 +371,10 @@ export LC_ALL=C; export LANG=C
 cd /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results
 Rscript 02_gene_correlation/scripts/part1_gene_correlation.R
 Rscript 03_survival_analysis/scripts/part2_survival_analysis.R
-Rscript 04_immune_infiltration/scripts/part3_immune_infiltration.R   # ~2 min
+Rscript 04_immune_infiltration/scripts/part3_immune_infiltration.R   # ~2 min, MCPcounter blocks (APP-01)
 bash    05_tide/scripts/run_tidepy.sh                                # ~11 s
 Rscript 05_tide/scripts/part4_tide_analysis.R
+# APP-01 correction (offline, needs ref/MCPcounter_*.txt):
+Rscript 04_immune_infiltration/scripts/part3_mcp_counter_fix.R        # ~10 s
 ```
-All outputs land in the respective step directories (scripts `setwd()` into them). MCPcounter is expected to fail with `Connection reset by peer` and is recorded in `mcp_counter_blocked.txt`.
+All outputs land in the respective step directories (scripts `setwd()` into them). MCPcounter is expected to fail with `Connection reset by peer` in the as-written run (logged in `mcp_counter_blocked.txt`); the fix script then runs it offline using the versioned `ref/MCPcounter_*.txt` marker files.

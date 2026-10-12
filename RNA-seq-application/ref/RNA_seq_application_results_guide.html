@@ -301,14 +301,15 @@ y 轴，对任何方法都安全）。</li>
 <li><code>qts_heatmap.png</code> /
 <code>qts_heatmap_row_scaled.png</code>：quanTIseq 热图，未缩放 vs 按行
 z-score。后者是公平跨样本比较。</li>
-<li><code>deconv_methods/*.tsv</code>：七种去卷积方法的结果表（MCPcounter
-为 NULL 占位+阻塞说明，其余六法完整）。<code>res_quantiseq.tsv</code>
+<li><code>deconv_methods/*.tsv</code>：七种去卷积方法的结果表（含
+MCPcounter 矫正版 11 细胞型 × 42 样本）。<code>res_quantiseq.tsv</code>
 是首次调用，<code>res_quantiseq_rmgenes.tsv</code> 是删 6 个 B
 细胞基因后的覆盖版（下游图用此版）。</li>
 <li><code>CIBERSORT-Results.txt</code>：CIBERSORT.R 源码向 cwd
 写的原始输出（42 样本 × 22 型 + P/Correlation/RMSE 列）。</li>
-<li><code>mcp_counter_blocked.txt</code>：APP-01 阻塞记录（conda
-MCPcounter 1.1.0 http 硬编码 → 登录节点 reset）。</li>
+<li><code>mcp_counter_blocked.txt</code>：APP-01 阻塞与矫正记录（conda
+MCPcounter 1.1.0 http 硬编码 → 登录节点 reset；随后用本地 https
+标志集矫正跑出，11 细胞型 × 42 样本）。</li>
 <li><code>log_part3.txt</code>：完整运行日志。</li>
 </ul>
 <h3 id="tide-part-4">05_tide/ —— Part 4</h3>
@@ -331,21 +332,30 @@ vs 真实。</li>
 <code>.sh</code>），代码逐字取自教材，文件头登记所有偏差（交互式→Rscript、setwd、LC_ALL=C、跨
 Part 对象重派生、MCPcounter tryCatch 等）。</p>
 <h2 id="动手练习全部仓库内可完成">3. 动手练习（全部仓库内可完成）</h2>
-<p><strong>练习 1 —— MCPcounter 阻塞复现</strong></p>
+<p><strong>练习 1 —— MCPcounter 阻塞与矫正复现</strong></p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> mcp_counter_blocked.txt                       <span class="co"># 读阻塞记录</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 亲手验证 http vs https：</span></span>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1a. 读阻塞与矫正记录</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/mcp_counter_blocked.txt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1b. 亲手验证 http vs https（原样跑为何阻塞）：</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">&quot;http: %{http_code}\n&quot;</span> <span class="at">--max-time</span> 15 <span class="dt">\</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">&quot;https: %{http_code}\n&quot;</span> <span class="at">--max-time</span> 15 <span class="dt">\</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：http 000（reset），https 200</span></span></code></pre></div>
-<p><strong>练习 2 —— 六法维度核对</strong></p>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：http 000（reset），https 200</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1c. 矫正脚本用本地标志集跑（离线）：</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate rnaimmune</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C <span class="va">LANG</span><span class="op">=</span>C</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/scripts/part3_mcp_counter_fix.R</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：11 cell types x 42 samples，写入 deconv_methods/res_mcp_counter.tsv</span></span></code></pre></div>
+<p><strong>练习 2 —— 七法维度核对 + MCPcounter 重复映射验证</strong></p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/deconv_methods</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> res_<span class="pp">*</span>.tsv<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">: &quot;</span><span class="kw">;</span> <span class="fu">head</span> <span class="at">-1</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;{print NF-1&quot; 样本&quot;}&#39;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="at">-n</span> <span class="st">&quot;  细胞型=&quot;</span><span class="kw">;</span> <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$(($(</span><span class="fu">wc</span> <span class="at">-l</span> <span class="op">&lt;</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span><span class="va">)</span><span class="op">-</span><span class="dv">1</span><span class="va">))</span><span class="st">&quot;</span><span class="kw">;</span> <span class="cf">done</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：epic 8型、quantiseq 11型、xcell 39型、cibersort 22型、cibersort_abs 22型、timer 6型、mcp_counter 占位</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 预期：epic 8型、quantiseq 11型、xcell 39型、cibersort 22型、cibersort_abs 22型、timer 6型、mcp_counter 11型</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># MCPcounter 重复映射验证（Monocyte 与 Macrophage/Monocyte 应字段完全相同）：</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">m</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;$1==&quot;Monocyte&quot;{print substr($0,length($1)+2)}&#39;</span> res_mcp_counter.tsv<span class="va">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">ma</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;$1==&quot;Macrophage/Monocyte&quot;{print substr($0,length($1)+2)}&#39;</span> res_mcp_counter.tsv<span class="va">)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span> <span class="st">&quot;</span><span class="va">$m</span><span class="st">&quot;</span> <span class="ot">==</span> <span class="st">&quot;</span><span class="va">$ma</span><span class="st">&quot;</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">&quot;Monocyte ≡ Macrophage/Monocyte（immunedeconv cell_type_map 把 Monocytic lineage 映射成两个名）&quot;</span> <span class="kw">||</span> <span class="bu">echo</span> <span class="st">&quot;不同&quot;</span></span></code></pre></div>
 <p><strong>练习 3 —— TIDE 输出与教师副本字节比对</strong></p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-c</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/05_tide/res_tide.txt <span class="dt">\</span></span>
@@ -376,9 +386,10 @@ MCP-counter/xCell/TIMER 不能画堆叠柱。</p>
 <p>本模块<strong>无大文件</strong>——所有产出都是小图、小表、小日志，已全部入库。原始数据（表达矩阵、随访表）在共享只读路径
 <code>/lustre1/share/rnaimmune/</code>，未复制（也无需复制，教材命令直接读该路径）。</p>
 <h2 id="一句话总结">5. 一句话总结</h2>
-<p>第三节课是纯下游 R 分析 + 一行 tidepy，登录节点 ~6 分钟跑完，31
-个产出文件全部入库；唯一阻塞是 conda MCPcounter 1.1.0 的 http
-硬编码（已记录、未绕过），六法齐全，TIDE 输出与教师副本字节一致，ROC AUC
-0.79 复现原文。</p>
+<p>第三节课是纯下游 R 分析 + 一行 tidepy，登录节点 ~6
+分钟跑完；MCPcounter 原样跑受阻（conda http 硬编码），已用本地 https
+标志集矫正跑出，七法齐全；发现 MCPcounter 的 Monocyte 与
+Macrophage/Monocyte 是 immunedeconv 映射表重复（10 独立群非 11）；TIDE
+输出与教师副本字节一致，ROC AUC 0.79 复现原文。</p>
 </body>
 </html>

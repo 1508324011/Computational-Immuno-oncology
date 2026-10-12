@@ -30,7 +30,7 @@
 
 | 编号 | 位置 | 症状 / 根因 | 矫正 |
 | --- | --- | --- | --- |
-| APP-01 | Part 3，MCPcounter | `MCPcounter::MCPcounter.estimate` 把标志基因集硬编码成 `read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"))` —— **http**（非 https）运行时从 GitHub 拉。conda 装的 MCPcounter 1.1.0 **不带本地副本**（`data/` 只有 `MCPcounterExampleData` 和 `null_models`）。本登录节点到 `raw.githubusercontent.com` 的 http 连接被重置（`Connection reset by peer`）；https 可达，HTTP 200，1.7 秒 | 按原样执行指令，这是硬阻塞：MCPcounter 记为阻塞，其余六种去卷积方法照原文跑。一行修复存在（用 https 把两个标志文件下到本地一次，作为 `genes=`/`probesets=` 显式参数传入）——见 Part 3 |
+| APP-01 | Part 3，MCPcounter | `MCPcounter::MCPcounter.estimate` 把标志基因集硬编码成 `read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"))` —— **http**（非 https）运行时从 GitHub 拉。conda 装的 MCPcounter 1.1.0 **不带本地副本**（`data/` 只有 `MCPcounterExampleData` 和 `null_models`）。本登录节点到 `raw.githubusercontent.com` 的 http 连接被重置（`Connection reset by peer`）；https 可达，HTTP 200，1.7 秒 | **矫正已执行并验证（2026-10-12 晚，按用户指示）。** 用 https 把 `genes.txt`、`probesets.txt` 下到 `ref/`（111 markers / 177 probesets），以 `MCPcounter.estimate` 默认的 `read.table` 参数读取（仅数据源 http→本地文件），作为 `genes=`/`probesets=` 显式传入。结果：11 细胞型 × 42 样本，存入 `deconv_methods/res_mcp_counter.tsv`。记录一个发现：11 行里 `Monocyte` 与 `Macrophage/Monocyte` 数值**完全相同**——`immunedeconv::cell_type_map` 把 MCPcounter 的单一源群 `Monocytic lineage` 映射成两个输出名，故 11 行只有 **10 个独立群**。详见 Part 3 |
 | APP-02 | Part 3，EPIC | `Warning: The optimization didn't fully converge for some samples (Pat02 …)` —— EPIC 对部分样本的非负最小二乘未完全收敛 | 良性；EPIC 会打印 `fit.gof` 供检查。结果照常产出，是该方法的预期输出 |
 | APP-03 | Part 3，xCell | `Calling gsva(expr=., gset.idx.list=., method=., ...) is deprecated` —— xCell 包装器以旧式位置参数调 GSVA | 依赖链弃用警告，良性；结果不受影响 |
 | APP-04 | Part 4，tidepy | 三行 `[WARN]`：5.73 % 基因 Entrez 转换后缺失；>80 % 基因阳性表达；"Start normalizing … log2(x+1) … subtract average"。这些是 `--force_normalize` 加 CPM 尺输入下的**预期**提示，非报错 | 照原文跑；警告记录的就是该 flag 触发的归一化。输出 `res_tide.txt` 与教师预跑副本字节同尺寸（10,259 B） |
@@ -205,7 +205,7 @@ res_qts <- deconvolute(exprsn, method='quantiseq',
 ### 我们跑了什么
 | 方法 | 细胞型 | 样本 | 输出口径 | 备注 |
 | --- | --- | --- | --- | --- |
-| mcp_counter | — | — | 相对 | **阻塞（APP-01）** —— 未跑 |
+| mcp_counter | 11 | 42 | 相对 | **已矫正（APP-01）**——用本地 https 标志集跑出；见下文 |
 | epic | 8 | 42 | 绝对分数 | Pat02 收敛警告（APP-02） |
 | quantiseq | 11 | 42 | 绝对分数 | 签名基因 133/138 命中（96.38 %） |
 | xcell | 39 | 42 | 相对 | GSVA 弃用警告（APP-03） |
@@ -219,7 +219,8 @@ quanTIseq 的 `rmgenes` 变体（下游所有图都用它）为 11 细胞型 × 
 
 ### 坑
 
-**APP-01 —— MCPcounter 阻塞（唯一的硬阻塞）。** 根因，逐步验证：
+**APP-01 —— MCPcounter 已矫正（2026-10-12 晚执行）。** 根因不变：`MCPcounter.estimate` 的默认参数在调用时经 **http** 从 GitHub 拉标志基因集，conda MCPcounter 1.1.0 不带本地副本。登录节点到 GitHub 的 http 被重置、https 可达。按既定指令，第三节课原样跑时 MCPcounter 记为阻塞、未绕过。随后用户要求执行并记录矫正，于是：两个标志文件用 https 下到 `ref/`，以与包默认完全相同的 `read.table` 参数读取（仅数据源 http→本地文件），作为 `genes=`/`probesets=` 显式传入。完整验证，逐步：
+
 1. `deconvolute(exprsn, "mcp_counter")` 路由到 `MCPcounter::MCPcounter.estimate`。
 2. `MCPcounter.estimate` 的默认参数在调用时拉取标志基因集：
    ```r
@@ -229,10 +230,24 @@ quanTIseq 的 `rmgenes` 变体（下游所有图都用它）为 11 细胞型 × 
    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt"), ...)
    ```
    即 **http**（非 https）从 GitHub 拉，在 `genes`/`probesets` 首次被引用时惰性求值。
-3. conda 装的 `MCPcounter` 1.1.0 **不带本地副本**——`data(package="MCPcounter")` 只列 `MCPcounterExampleData` 和 `null_models`；`exists("genes", asNamespace("MCPcounter"))` 为 FALSE；惰性加载的 `data/Rdata.rdb` 只装示例数据与 null 模型。
+3. conda 装的 `MCPcounter` 1.1.0 **不带本地副本**——`data(package="MCPcounter")` 只列 `MCPcounterExampleData` 和 `null_models`。
 4. 本登录节点：`curl http://raw.githubusercontent.com/…` → `Recv failure: Connection reset by peer`（HTTP 000，0.18 秒）；`curl https://raw.githubusercontent.com/…` → HTTP 200，1.66 秒。即 **https 通、http 不通**——网络策略不对称，而包硬编码了 http。
+5. **矫正（已执行）：** 用 https 把两个标志文件下到 `ref/`，显式传入：
+   ```bash
+   curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt -o ref/MCPcounter_genes.txt
+   curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt -o ref/MCPcounter_probesets.txt
+   ```
+   ```r
+   genes <- read.table("ref/MCPcounter_genes.txt", sep="\t", stringsAsFactors=FALSE, header=TRUE,
+                       colClasses="character", check.names=FALSE)   # 与 MCPcounter.estimate 默认一致
+   probesets <- read.table("ref/MCPcounter_probesets.txt", sep="\t", stringsAsFactors=FALSE,
+                           colClasses="character")                              # 与 MCPcounter.estimate 默认一致
+   res_mcp <- deconvolute(exprsn, "mcp_counter", genes=genes, probesets=probesets)
+   ```
+   结果：11 细胞型 × 42 样本，存入 `deconv_methods/res_mcp_counter.tsv`。脚本：`scripts/part3_mcp_counter_fix.R`。即用 https 拉的本地副本替换 http 默认——同一份数据，不改包。
+6. **记录的发现：** 11 行输出里 `Monocyte` 与 `Macrophage/Monocyte` 数值**在所有 42 样本上完全相同**。根因是 `immunedeconv::cell_type_map`：MCPcounter 的单一源群 `Monocytic lineage` 被映射成**两个**输出名。故 11 行只有 **10 个独立群**——映射表重复，非计算伪象。
 
-按照原文执行（不覆盖 `genes=`/`probesets=` 默认值）的既定指令，MCPcounter 记为硬阻塞，其余六法照原文跑。能解除阻塞的一行修复（用 https 把 `genes.txt`、`probesets.txt` 下到 `ref/` 一次，作为显式参数传入）已记入 `mcp_counter_blocked.txt` 与下方扩展，但本次**未**应用。
+第三节课原样跑时阻塞记入 `mcp_counter_blocked.txt`；该文件现在还记录了随后的矫正执行与重复映射发现。
 
 **APP-02 / APP-03** —— EPIC 收敛警告与 xCell/GSVA 弃用警告：均良性，结果照常产出。
 
@@ -242,17 +257,7 @@ quanTIseq 的 `rmgenes` 变体（下游所有图都用它）为 11 细胞型 × 
 七种方法在细胞型粒度（TIMER 6 型 → xCell 39 型）与输出尺度上都不同。教材的核心论点——**只有绝对分数法能画堆叠柱**——由两张 quanTIseq 图示范：堆叠柱（`qts_barplot.png`，分数和为 1）对 quanTIseq（绝对法）正确，而点/分面图（`qts_scatterplot.png`，每细胞型自由 y 轴）是对任何方法都安全的选择。`scale='row'` 的热图（`qts_heatmap_row_scaled.png`）是公平的跨样本比较：每个细胞型被 z-score，所以巨噬细胞高的样本读红，与方法单位是分数还是任意值无关。
 
 ### 参数调优
-- **解除 MCPcounter 阻塞**（已记录的一行修复，本次未应用）：用 https 下两个标志文件，显式传入：
-  ```bash
-  curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt -o ref/MCPcounter_genes.txt
-  curl -sS https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt -o ref/MCPcounter_probesets.txt
-  ```
-  ```r
-  genes <- read.table("ref/MCPcounter_genes.txt", sep="\t", header=TRUE, stringsAsFactors=FALSE, check.names=FALSE, colClasses="character")
-  probesets <- read.table("ref/MCPcounter_probesets.txt", sep="\t", stringsAsFactors=FALSE, colClasses="character")
-  res_mcp <- deconvolute(exprsn, "mcp_counter", featuresType="HUGO_symbols", genes=genes, probesets=probesets)
-  ```
-  即用 https 拉的本地副本替换 http 默认——同一份数据，不改包。
+- 本地标志集修复已应用；`ref/MCPcounter_genes.txt` 与 `ref/MCPcounter_probesets.txt` 已入库，重跑完全离线。
 - `config_env$xcell_cores` 控制 xCell 并行；大队列可调高。
 - `timer` 的癌种务必对照 `timer_available_cancers` 核对——错癌种会静默加载错参考。
 
@@ -323,7 +328,7 @@ AUC ≈ 0.79（原始）/ 0.77（平滑）意味着 TIDE 在本队列能较好�
 | ck4 | KM 图 + 风险表渲染 | ✓ |
 | ck5 | Cox 模型收敛（6 协变量，29 事件） | ✓ Concordance 0.679 |
 | ck6 | 森林图渲染 | ✓ |
-| ck7 | 六种去卷积方法完成 | ✓（MCPcounter 阻塞——APP-01） |
+| ck7 | 七种去卷积方法完成 | ✓（MCPcounter 已矫正——APP-01 矫正已应用） |
 | ck8 | quanTIseq rmgenes 变体覆盖首次调用 | ✓ 11 × 42 |
 | ck9 | 堆叠柱 / 点图 / 热图 / 按行缩放热图均渲染 | ✓ |
 | ck10 | tidepy 完成，输出字节尺寸与教师一致 | ✓ 10,259 B |
@@ -341,20 +346,21 @@ AUC ≈ 0.79（原始）/ 0.77（平滑）意味着 TIDE 在本队列能较好�
                         deconv_methods/{res_mcp_counter,res_epic,res_quantiseq,
                         res_quantiseq_rmgenes,res_xcell,res_cibersort,
                         res_cibersort_abs,res_timer}.tsv,
-                        scripts/part3_immune_infiltration.R
+                        scripts/part3_immune_infiltration.R,
+                        scripts/part3_mcp_counter_fix.R
 05_tide/               res_tide.txt, tide_heatmap.png, tide_predicted_responder.png,
                         tide_responder.png, roc.png, roc_smooth.png,
                         log_tidepy.txt, scripts/run_tidepy.sh, scripts/part4_tide_analysis.R
 ```
 
 ### 总结
-第三节课是纯下游分析——无 FASTQ、无比对、无 SLURM。四个 Part 全在登录节点用 R 4.3.3（加一行 `tidepy` shell）跑完，约 6 分钟。七条已验证坑入档；其中一条（APP-01，MCPcounter）是硬阻塞，根因是 conda MCPcounter 1.1.0 把标志基因集硬编码成 **http** GitHub 拉取，而本登录节点到 GitHub 的 http 被重置（https 可达）。按原样执行指令，阻塞被记录而非绕过；其余六种去卷积方法照原文跑完。TIDE 输出与教师预跑副本字节同尺寸，ROC AUC（0.79）复现了原文黑色素瘤区分度。
+第三节课是纯下游分析——无 FASTQ、无比对、无 SLURM。四个 Part 全在登录节点用 R 4.3.3（加一行 `tidepy` shell）跑完，约 6 分钟。七条已验证坑入档；其中一条（APP-01，MCPcounter）在原样跑时是硬阻塞（conda MCPcounter 1.1.0 把标志基因集硬编码成 **http** GitHub 拉取，登录节点到 GitHub 的 http 被重置）——矫正随后执行并验证（本地 https 标志集作为显式参数传入），故七种去卷积方法现在都有结果。记录了一个重复映射发现：MCPcounter 的 11 行输出里 `Monocyte` 与 `Macrophage/Monocyte` 数值完全相同，因为 immunedeconv 把单一源群 `Monocytic lineage` 映射成两个名（10 个独立群，非 11）。TIDE 输出与教师预跑副本字节同尺寸，ROC AUC（0.79）复现了原文黑色素瘤区分度。
 
 ## 附录 A. 偏差日志（本次，精简但忠实原文）
 - **交互式 → Rscript：** 每个 Part 写成 `partN_*.R`，在 `LC_ALL=C`/`LANG=C` 下用 `Rscript` 跑（RNA-seq R 段 segfault 规避，项目记忆）。代码内容逐字取自教材；包装仅 `setwd()` + 诊断 `cat()`/`print()`。
 - **跨 Part 对象共享：** 教材在一个交互式 R 会话里让 `exprsn`、`sig`、`metadata`、`res_qts` 跨代码块流动。脚本化为四个进程后，每个脚本重新派生所需对象（重读表达矩阵、重算 CYT）。代码内容不变，仅加载重复。
 - **Part 4 输入路径：** 教材读教师预跑的 `/lustre1/share/rnaimmune/res_tide.txt`。本次改读自己 `tidepy` 跑出的 `results/05_tide/res_tide.txt`（字节同尺寸）。教材代码块 28 的注释明确把此作为"自己跑 tidepy 时的预期用法"。
-- **MCPcounter（APP-01）：** 包进 `tryCatch`；失败时写 `mcp_counter_blocked.txt` 并继续。未绕过。
+- **MCPcounter（APP-01）：** 第三节课原样跑时包进 `tryCatch` 并记录阻塞；随后的矫正（`scripts/part3_mcp_counter_fix.R`）用本地 https 标志集跑出，写入 `deconv_methods/res_mcp_counter.tsv`。`mcp_counter_blocked.txt` 同时记录原始阻塞与已应用的矫正。
 - **去卷积结果落盘：** 教材只 `print()` `res_qts`；本次额外把每方法矩阵写 `deconv_methods/*.tsv`（附加、非破坏）。
 - **CIBERSORT-Results.txt：** 早期 3 样本探测跑在仓库根留下的散落副本已删；`04_immune_infiltration/` 里的 42 样本正式副本保留。
 
@@ -365,8 +371,10 @@ export LC_ALL=C; export LANG=C
 cd /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results
 Rscript 02_gene_correlation/scripts/part1_gene_correlation.R
 Rscript 03_survival_analysis/scripts/part2_survival_analysis.R
-Rscript 04_immune_infiltration/scripts/part3_immune_infiltration.R   # ~2 分钟
+Rscript 04_immune_infiltration/scripts/part3_immune_infiltration.R   # ~2 分钟，MCPcounter 阻塞 (APP-01)
 bash    05_tide/scripts/run_tidepy.sh                                # ~11 秒
 Rscript 05_tide/scripts/part4_tide_analysis.R
+# APP-01 矫正（离线，需 ref/MCPcounter_*.txt）：
+Rscript 04_immune_infiltration/scripts/part3_mcp_counter_fix.R        # ~10 秒
 ```
-所有产出落到对应步骤目录（脚本 `setwd()` 进去）。MCPcounter 预期会以 `Connection reset by peer` 失败，记入 `mcp_counter_blocked.txt`。
+所有产出落到对应步骤目录（脚本 `setwd()` 进去）。原样跑时 MCPcounter 预期以 `Connection reset by peer` 失败（记入 `mcp_counter_blocked.txt`）；矫正脚本随后用入库的 `ref/MCPcounter_*.txt` 标志集离线跑出。

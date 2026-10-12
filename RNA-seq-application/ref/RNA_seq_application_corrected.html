@@ -401,11 +401,20 @@ On this login node the http connection to
 <code>raw.githubusercontent.com</code> is reset
 (<code>Connection reset by peer</code>); https reaches HTTP 200 in 1.7
 s</td>
-<td>Per the as-written instruction this is a hard blocker: MCPcounter is
-recorded as blocked, the other six deconvolution methods run as written.
-A one-line fix exists (download the two marker files over https once,
-pass them as explicit <code>genes=</code>/<code>probesets=</code>
-arguments) — see Part 3</td>
+<td><strong>Fix executed and verified (2026-10-12 evening, per user
+directive).</strong> Downloaded <code>genes.txt</code> and
+<code>probesets.txt</code> over https into <code>ref/</code> (111
+markers / 177 probesets), read them with the exact default
+<code>read.table</code> args of <code>MCPcounter.estimate</code> (only
+the data source swapped http→local file), and passed them as explicit
+<code>genes=</code>/<code>probesets=</code> arguments. Result: 11 cell
+types × 42 samples saved to
+<code>deconv_methods/res_mcp_counter.tsv</code>. One finding recorded:
+the 11 rows include <code>Monocyte</code> and
+<code>Macrophage/Monocyte</code> with <strong>identical values</strong>
+— immunedeconv’s <code>cell_type_map</code> maps the single MCPcounter
+source population <code>Monocytic lineage</code> to both names, so 11
+rows carry only 10 independent populations. See Part 3</td>
 </tr>
 <tr>
 <td>APP-02</td>
@@ -863,10 +872,11 @@ cross-sample comparison.</li>
 <tbody>
 <tr>
 <td>mcp_counter</td>
-<td>—</td>
-<td>—</td>
+<td>11</td>
+<td>42</td>
 <td>relative</td>
-<td><strong>BLOCKED (APP-01)</strong> — not run</td>
+<td><strong>FIXED (APP-01)</strong> — ran via local https-fetched
+markers; see below</td>
 </tr>
 <tr>
 <td>epic</td>
@@ -922,36 +932,68 @@ plots) has 11 cell types × 42 samples.</p>
 <code>CIBERSORT-Results.txt</code>,
 <code>mcp_counter_blocked.txt</code>.</p>
 <h3 id="pitfalls-2">Pitfalls</h3>
-<p><strong>APP-01 — MCPcounter blocked (the one hard blocker).</strong>
-Root cause, verified step by step: 1.
-<code>deconvolute(exprsn, "mcp_counter")</code> routes to
-<code>MCPcounter::MCPcounter.estimate</code>. 2.
+<p><strong>APP-01 — MCPcounter fixed (correction executed 2026-10-12
+evening).</strong> Root cause unchanged:
 <code>MCPcounter.estimate</code>’s default arguments fetch the marker
-gene sets at call time:
-<code>r    $genes    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"), ...)    $probesets    read.table(curl:::curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt"), ...)</code>
-i.e. an <strong>http</strong> (not https) fetch from GitHub, evaluated
-lazily when <code>genes</code>/<code>probesets</code> is first
-referenced. 3. The conda-installed <code>MCPcounter</code> 1.1.0 ships
-<strong>no local copy</strong> of these markers —
-<code>data(package="MCPcounter")</code> lists only
-<code>MCPcounterExampleData</code> and <code>null_models</code>;
-<code>exists("genes", asNamespace("MCPcounter"))</code> is FALSE; the
-lazy-load <code>data/Rdata.rdb</code> holds only the example data and
-null models. 4. On this login node:
+gene sets at call time over <strong>http</strong> from GitHub, and the
+conda MCPcounter 1.1.0 ships no local copy. The login node resets http
+to GitHub but reaches https. Per the standing instruction the lesson-3
+run recorded MCPcounter as blocked and did not bypass it. A subsequent
+directive then asked for the correction to be executed and recorded, so
+it was: the two marker files were downloaded over https into
+<code>ref/</code> and passed as explicit
+<code>genes=</code>/<code>probesets=</code> arguments (read parameters
+identical to the package default, only the data source swapped). The
+full verification, step by step:</p>
+<ol type="1">
+<li><p><code>deconvolute(exprsn, "mcp_counter")</code> routes to
+<code>MCPcounter::MCPcounter.estimate</code>.</p></li>
+<li><p><code>MCPcounter.estimate</code>’s default arguments fetch the
+marker gene sets at call time:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>genes</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(curl<span class="sc">:::</span><span class="fu">curl</span>(<span class="st">&quot;http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt&quot;</span>), ...)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>probesets</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(curl<span class="sc">:::</span><span class="fu">curl</span>(<span class="st">&quot;http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt&quot;</span>), ...)</span></code></pre></div>
+<p>i.e. an <strong>http</strong> (not https) fetch from GitHub,
+evaluated lazily when <code>genes</code>/<code>probesets</code> is first
+referenced.</p></li>
+<li><p>The conda-installed <code>MCPcounter</code> 1.1.0 ships
+<strong>no local copy</strong> — <code>data(package="MCPcounter")</code>
+lists only <code>MCPcounterExampleData</code> and
+<code>null_models</code>.</p></li>
+<li><p>On this login node:
 <code>curl http://raw.githubusercontent.com/…</code> →
 <code>Recv failure: Connection reset by peer</code> (HTTP 000, 0.18 s);
 <code>curl https://raw.githubusercontent.com/…</code> → HTTP 200, 1.66
 s. So <strong>https works, http does not</strong> — a network policy
-asymmetry, and the package hardcodes http.</p>
-<p>Per the standing instruction to run the tutorial code <strong>as
-written</strong> (no override of the
-<code>genes=</code>/<code>probesets=</code> defaults), MCPcounter is
-recorded as a hard blocker and the run proceeds with the other six
-methods. The one-line fix that would unblock it (download
-<code>genes.txt</code> and <code>probesets.txt</code> over https once
-into <code>ref/</code>, then pass them as explicit arguments) is
-documented in <code>mcp_counter_blocked.txt</code> and in the Extensions
-below, but was <strong>not</strong> applied in this run.</p>
+asymmetry, and the package hardcodes http.</p></li>
+<li><p><strong>Correction (executed):</strong> download the two marker
+files over https into <code>ref/</code> and pass them explicitly:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt <span class="at">-o</span> ref/MCPcounter_genes.txt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt <span class="at">-o</span> ref/MCPcounter_probesets.txt</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_genes.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">header=</span><span class="cn">TRUE</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>, <span class="at">check.names=</span><span class="cn">FALSE</span>)   <span class="co"># identical to MCPcounter.estimate default</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>probesets <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_probesets.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>)                              <span class="co"># identical to MCPcounter.estimate default</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>res_mcp <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;mcp_counter&quot;</span>, <span class="at">genes=</span>genes, <span class="at">probesets=</span>probesets)</span></code></pre></div>
+<p>Result: 11 cell types × 42 samples, saved to
+<code>deconv_methods/res_mcp_counter.tsv</code>. Script:
+<code>scripts/part3_mcp_counter_fix.R</code>. This replaces the http
+default with a local https-fetched copy — the same data, no package
+edit.</p></li>
+<li><p><strong>Finding recorded:</strong> the 11 output rows include
+<code>Monocyte</code> and <code>Macrophage/Monocyte</code> with
+<strong>identical values across all 42 samples</strong>. Root cause is
+<code>immunedeconv::cell_type_map</code>: MCPcounter’s single source
+population <code>Monocytic lineage</code> is mapped to
+<strong>both</strong> output names. So the 11 rows carry only <strong>10
+independent populations</strong> — a mapping-table duplicate, not a
+computational artifact.</p></li>
+</ol>
+<p>During the lesson-3 run the blocker was recorded in
+<code>mcp_counter_blocked.txt</code>; that file now also documents the
+fix that followed and the duplicate-mapping finding.</p>
 <p><strong>APP-02 / APP-03</strong> — EPIC convergence warning and
 xCell/GSVA deprecation warning: both benign, results produced.</p>
 <p><strong>CIBERSORT writes to cwd</strong> —
@@ -976,22 +1018,15 @@ red regardless of whether the method’s units are fractions or arbitrary
 scores.</p>
 <h3 id="tuning-2">Tuning</h3>
 <ul>
-<li><p><strong>To unblock MCPcounter</strong> (the documented one-line
-fix, not applied here): download the two marker files over https and
-pass them explicitly:</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt <span class="at">-o</span> ref/MCPcounter_genes.txt</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-sS</span> https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt <span class="at">-o</span> ref/MCPcounter_probesets.txt</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_genes.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">check.names=</span><span class="cn">FALSE</span>, <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>probesets <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;ref/MCPcounter_probesets.txt&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>, <span class="at">colClasses=</span><span class="st">&quot;character&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>res_mcp <span class="ot">&lt;-</span> <span class="fu">deconvolute</span>(exprsn, <span class="st">&quot;mcp_counter&quot;</span>, <span class="at">featuresType=</span><span class="st">&quot;HUGO_symbols&quot;</span>, <span class="at">genes=</span>genes, <span class="at">probesets=</span>probesets)</span></code></pre></div>
-<p>This replaces the http default with a local https-fetched copy — the
-same data, no package edit.</p></li>
-<li><p><code>config_env$xcell_cores</code> controls xCell parallelism;
-raise it for larger cohorts.</p></li>
-<li><p>For <code>timer</code>, double-check the indication against
+<li>The local-marker fix is now applied;
+<code>ref/MCPcounter_genes.txt</code> and
+<code>ref/MCPcounter_probesets.txt</code> are versioned with the repo,
+so re-runs are fully offline.</li>
+<li><code>config_env$xcell_cores</code> controls xCell parallelism;
+raise it for larger cohorts.</li>
+<li>For <code>timer</code>, double-check the indication against
 <code>timer_available_cancers</code> — a wrong cancer type silently
-loads the wrong reference.</p></li>
+loads the wrong reference.</li>
 </ul>
 <h3 id="extensions-2">Extensions</h3>
 <ul>
@@ -1006,21 +1041,21 @@ available.</li>
 <h2 id="part-4-tide-code-blocks-2733">6. Part 4 — TIDE (code blocks
 27–33)</h2>
 <h3 id="original-3">Original</h3>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tidepy</span> .../VanAllen2015_CTLA4_Melanoma_RNASeq <span class="at">-o</span> /path_to_your_folder/res_tide.txt <span class="at">-c</span> Melanoma <span class="at">--force_normalize</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;.../res_tide.txt&#39;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="dv">1</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res_tide)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&#39;Predicted Responder&#39;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> res_tide[<span class="fu">rownames</span>(metadata),]      <span class="co"># reorder to metadata</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># factor relabeling: Predicted Responder False/True -&gt; Non-responder/Responder</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                    CTL.flag False/True -&gt; CTL Low / CTL high</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                    cbind metadata$Response as column 15 &#39;Responder&#39;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># heatmap(t(res_tide_heatmap), scale=&#39;row&#39;, annotation_col=annotation)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># bar plot: TIDE score per patient, facet by CTL.flag, fill by predicted/true responder</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>TIDE_roc <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggroc</span>(TIDE_roc, <span class="at">legacy.axes=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_segment</span>(...)   <span class="co"># AUC annotation</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>TIDE_roc_smooth <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>, <span class="at">smooth=</span><span class="cn">TRUE</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># … smoothed ROC …</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tidepy</span> .../VanAllen2015_CTLA4_Melanoma_RNASeq <span class="at">-o</span> /path_to_your_folder/res_tide.txt <span class="at">-c</span> Melanoma <span class="at">--force_normalize</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;.../res_tide.txt&#39;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>, <span class="at">header=</span><span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="dv">1</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(res_tide)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">&#39;Predicted Responder&#39;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>res_tide <span class="ot">&lt;-</span> res_tide[<span class="fu">rownames</span>(metadata),]      <span class="co"># reorder to metadata</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># factor relabeling: Predicted Responder False/True -&gt; Non-responder/Responder</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                    CTL.flag False/True -&gt; CTL Low / CTL high</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                    cbind metadata$Response as column 15 &#39;Responder&#39;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># heatmap(t(res_tide_heatmap), scale=&#39;row&#39;, annotation_col=annotation)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># bar plot: TIDE score per patient, facet by CTL.flag, fill by predicted/true responder</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>TIDE_roc <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggroc</span>(TIDE_roc, <span class="at">legacy.axes=</span><span class="cn">TRUE</span>) <span class="sc">+</span> <span class="fu">geom_segment</span>(...)   <span class="co"># AUC annotation</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>TIDE_roc_smooth <span class="ot">&lt;-</span> <span class="fu">roc</span>(Responder <span class="sc">~</span> TIDE, <span class="at">data=</span>res_tide, <span class="at">aur=</span><span class="cn">TRUE</span>, <span class="at">smooth=</span><span class="cn">TRUE</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># … smoothed ROC …</span></span></code></pre></div>
 <h3 id="rationale-3">Rationale</h3>
 <ul>
 <li><strong><code>tidepy</code></strong> (shell) runs the TIDE model
@@ -1156,8 +1191,8 @@ CD8/T-cell estimates from Part 3.</li>
 </tr>
 <tr>
 <td>ck7</td>
-<td>Six deconvolution methods complete</td>
-<td>✓ (MCPcounter blocked — APP-01)</td>
+<td>seven deconvolution methods complete</td>
+<td>✓ (MCPcounter fixed — APP-01 correction applied)</td>
 </tr>
 <tr>
 <td>ck8</td>
@@ -1202,7 +1237,8 @@ no raw data)</h3>
                         deconv_methods/{res_mcp_counter,res_epic,res_quantiseq,
                         res_quantiseq_rmgenes,res_xcell,res_cibersort,
                         res_cibersort_abs,res_timer}.tsv,
-                        scripts/part3_immune_infiltration.R
+                        scripts/part3_immune_infiltration.R,
+                        scripts/part3_mcp_counter_fix.R
 05_tide/               res_tide.txt, tide_heatmap.png, tide_predicted_responder.png,
                         tide_responder.png, roc.png, roc_smooth.png,
                         log_tidepy.txt, scripts/run_tidepy.sh, scripts/part4_tide_analysis.R</code></pre>
@@ -1210,14 +1246,19 @@ no raw data)</h3>
 <p>Lesson 3 is a pure downstream analysis — no FASTQ, no alignment, no
 SLURM. All four parts ran on the login node in R 4.3.3 (plus one
 <code>tidepy</code> shell call) in ~6 minutes. Seven verified pitfalls
-are logged; one (APP-01, MCPcounter) is a hard blocker caused by the
-conda MCPcounter 1.1.0 package hardcoding an <strong>http</strong>
-GitHub fetch for its marker genes on a login node where http-to-GitHub
-is reset (https works). Per the as-written instruction the blocker was
-recorded, not bypassed; the six remaining deconvolution methods ran as
-written. The TIDE output is byte-size-identical to the teacher’s
-pre-baked copy, and the ROC AUC (0.79) reproduces the published melanoma
-discrimination.</p>
+are logged; one (APP-01, MCPcounter) was a hard blocker during the
+as-written run (conda MCPcounter 1.1.0 hardcodes an
+<strong>http</strong> GitHub fetch for its marker genes on a login node
+where http-to-GitHub is reset) — the correction was subsequently
+executed and verified (local https-fetched markers passed as explicit
+arguments), so all seven deconvolution methods now have results. A
+duplicate-mapping finding was recorded: MCPcounter’s 11 output rows
+include <code>Monocyte</code> and <code>Macrophage/Monocyte</code> with
+identical values because immunedeconv maps the single source population
+<code>Monocytic lineage</code> to both names (10 independent
+populations, not 11). The TIDE output is byte-size-identical to the
+teacher’s pre-baked copy, and the ROC AUC (0.79) reproduces the
+published melanoma discrimination.</p>
 <h2
 id="appendix-a.-deviation-log-this-run-condensed-but-verbatim-faithful">Appendix
 A. Deviation log (this run, condensed but verbatim-faithful)</h2>
@@ -1240,9 +1281,13 @@ instead loads its own <code>tidepy</code> output
 <code>results/05_tide/res_tide.txt</code> (byte-size-identical).
 Tutorial code block 28’s comment explicitly documents this as the
 intended usage when you run tidepy yourself.</li>
-<li><strong>MCPcounter (APP-01):</strong> wrapped in
-<code>tryCatch</code>; on failure writes
-<code>mcp_counter_blocked.txt</code> and continues. Not bypassed.</li>
+<li><strong>MCPcounter (APP-01):</strong> the lesson-3 run wrapped it in
+<code>tryCatch</code> and recorded the block; a subsequent correction
+(<code>scripts/part3_mcp_counter_fix.R</code>) ran it with local
+https-fetched markers and wrote
+<code>deconv_methods/res_mcp_counter.tsv</code>. The
+<code>mcp_counter_blocked.txt</code> file records both the original
+block and the applied fix.</li>
 <li><strong>Deconvolution results saved:</strong> tutorial only
 <code>print()</code>s <code>res_qts</code>; the run additionally writes
 each method’s matrix to <code>deconv_methods/*.tsv</code> (additive,
@@ -1252,18 +1297,22 @@ probe run was removed from the repo root; the 42-sample production copy
 in <code>04_immune_infiltration/</code> is kept.</li>
 </ul>
 <h2 id="appendix-b.-reproduction">Appendix B. Reproduction</h2>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate rnaimmune</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C<span class="kw">;</span> <span class="bu">export</span> <span class="va">LANG</span><span class="op">=</span>C</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 02_gene_correlation/scripts/part1_gene_correlation.R</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 03_survival_analysis/scripts/part2_survival_analysis.R</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_immune_infiltration/scripts/part3_immune_infiltration.R   <span class="co"># ~2 min</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span>    05_tide/scripts/run_tidepy.sh                                <span class="co"># ~11 s</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 05_tide/scripts/part4_tide_analysis.R</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate rnaimmune</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C<span class="kw">;</span> <span class="bu">export</span> <span class="va">LANG</span><span class="op">=</span>C</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 02_gene_correlation/scripts/part1_gene_correlation.R</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 03_survival_analysis/scripts/part2_survival_analysis.R</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_immune_infiltration/scripts/part3_immune_infiltration.R   <span class="co"># ~2 min, MCPcounter blocks (APP-01)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span>    05_tide/scripts/run_tidepy.sh                                <span class="co"># ~11 s</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 05_tide/scripts/part4_tide_analysis.R</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># APP-01 correction (offline, needs ref/MCPcounter_*.txt):</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_immune_infiltration/scripts/part3_mcp_counter_fix.R        <span class="co"># ~10 s</span></span></code></pre></div>
 <p>All outputs land in the respective step directories (scripts
 <code>setwd()</code> into them). MCPcounter is expected to fail with
-<code>Connection reset by peer</code> and is recorded in
-<code>mcp_counter_blocked.txt</code>.</p>
+<code>Connection reset by peer</code> in the as-written run (logged in
+<code>mcp_counter_blocked.txt</code>); the fix script then runs it
+offline using the versioned <code>ref/MCPcounter_*.txt</code> marker
+files.</p>
 </body>
 </html>

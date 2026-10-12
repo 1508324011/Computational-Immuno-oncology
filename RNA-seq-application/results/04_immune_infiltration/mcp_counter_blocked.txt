@@ -1,2 +1,24 @@
-[2026-10-12 17:46:25.247669] MCPcounter blocked: Recv failure: Connection reset by peer
-  conda MCPcounter 1.1.0 hardcodes http://raw.githubusercontent.com markers; login node resets http. https reachable but tutorial code as-written uses the http default.
+[2026-10-12 17:46:25.247669] MCPcounter blocked (as-written run): Recv failure: Connection reset by peer
+  conda MCPcounter 1.1.0 hardcodes http://raw.githubusercontent.com markers;
+  login node resets http. https reachable but tutorial code as-written uses
+  the http default. Per user directive (run as-written, record blocker, do NOT
+  bypass) this was the state during the 2026-10-12 lesson-3 run.
+
+[2026-10-12 19:52:00] APP-01 fix applied and verified (per subsequent user directive).
+  Root cause unchanged (http hardcoded default, no local copy shipped).
+  Correction executed: downloaded genes.txt + probesets.txt over https into
+  RNA-seq-application/ref/ (MCPcounter_genes.txt 5342 B / 111 markers,
+  MCPcounter_probesets.txt 5147 B / 177 probesets), read them with the exact
+  default read.table args of MCPcounter.estimate (only the data source swapped
+  http->local file), and passed them as explicit genes=/probesets= arguments
+  to immunedeconv::deconvolute(exprsn, "mcp_counter", ...).
+  Result: 11 cell types x 42 samples saved to deconv_methods/res_mcp_counter.tsv
+  (overwriting the NULL placeholder from the as-written run).
+  Script: scripts/part3_mcp_counter_fix.R (deviations logged in header).
+
+  Finding recorded: the 11 output rows include "Monocyte" and "Macrophage/Monocyte"
+  with IDENTICAL values across all 42 samples. Root cause is immunedeconv's
+  cell_type_map: MCPcounter's single source population "Monocytic lineage" is
+  mapped to BOTH output names ("Monocyte" and "Macrophage/Monocyte"). So the 11
+  rows carry only 10 independent populations — a mapping-table duplicate, not a
+  computational artifact. See ref/RNA_seq_application_corrected*.md Part 3.

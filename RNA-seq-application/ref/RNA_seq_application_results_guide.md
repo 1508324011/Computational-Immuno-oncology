@@ -20,9 +20,9 @@
 - `qts_barplot.png`：quanTIseq 堆叠柱（**绝对分数法才能这样画**），前 10 样本，按细胞型着色。
 - `qts_scatterplot.png`：quanTIseq 点/分面图（每细胞型自由 y 轴，对任何方法都安全）。
 - `qts_heatmap.png` / `qts_heatmap_row_scaled.png`：quanTIseq 热图，未缩放 vs 按行 z-score。后者是公平跨样本比较。
-- `deconv_methods/*.tsv`：七种去卷积方法的结果表（MCPcounter 为 NULL 占位+阻塞说明，其余六法完整）。`res_quantiseq.tsv` 是首次调用，`res_quantiseq_rmgenes.tsv` 是删 6 个 B 细胞基因后的覆盖版（下游图用此版）。
+- `deconv_methods/*.tsv`：七种去卷积方法的结果表（含 MCPcounter 矫正版 11 细胞型 × 42 样本）。`res_quantiseq.tsv` 是首次调用，`res_quantiseq_rmgenes.tsv` 是删 6 个 B 细胞基因后的覆盖版（下游图用此版）。
 - `CIBERSORT-Results.txt`：CIBERSORT.R 源码向 cwd 写的原始输出（42 样本 × 22 型 + P/Correlation/RMSE 列）。
-- `mcp_counter_blocked.txt`：APP-01 阻塞记录（conda MCPcounter 1.1.0 http 硬编码 → 登录节点 reset）。
+- `mcp_counter_blocked.txt`：APP-01 阻塞与矫正记录（conda MCPcounter 1.1.0 http 硬编码 → 登录节点 reset；随后用本地 https 标志集矫正跑出，11 细胞型 × 42 样本）。
 - `log_part3.txt`：完整运行日志。
 
 ### 05_tide/ —— Part 4
@@ -37,23 +37,32 @@
 
 ## 3. 动手练习（全部仓库内可完成）
 
-**练习 1 —— MCPcounter 阻塞复现**
+**练习 1 —— MCPcounter 阻塞与矫正复现**
 ```bash
-cd /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration
-cat mcp_counter_blocked.txt                       # 读阻塞记录
-# 亲手验证 http vs https：
+# 1a. 读阻塞与矫正记录
+cat /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/mcp_counter_blocked.txt
+# 1b. 亲手验证 http vs https（原样跑为何阻塞）：
 curl -sS -o /dev/null -w "http: %{http_code}\n" --max-time 15 \
   http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt
 curl -sS -o /dev/null -w "https: %{http_code}\n" --max-time 15 \
   https://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt
 # 预期：http 000（reset），https 200
+# 1c. 矫正脚本用本地标志集跑（离线）：
+source /lustre1/share/miniconda3/etc/profile.d/conda.sh && conda activate rnaimmune
+export LC_ALL=C LANG=C
+Rscript /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/scripts/part3_mcp_counter_fix.R
+# 预期：11 cell types x 42 samples，写入 deconv_methods/res_mcp_counter.tsv
 ```
 
-**练习 2 —— 六法维度核对**
+**练习 2 —— 七法维度核对 + MCPcounter 重复映射验证**
 ```bash
 cd /gpfs1/home/bjx131_pkuhpc/class/RNA-seq-application/results/04_immune_infiltration/deconv_methods
 for f in res_*.tsv; do echo -n "$f: "; head -1 "$f" | awk -F'\t' '{print NF-1" 样本"}'; echo -n "  细胞型="; echo "$(($(wc -l < "$f")-1))"; done
-# 预期：epic 8型、quantiseq 11型、xcell 39型、cibersort 22型、cibersort_abs 22型、timer 6型、mcp_counter 占位
+# 预期：epic 8型、quantiseq 11型、xcell 39型、cibersort 22型、cibersort_abs 22型、timer 6型、mcp_counter 11型
+# MCPcounter 重复映射验证（Monocyte 与 Macrophage/Monocyte 应字段完全相同）：
+m=$(awk -F'\t' '$1=="Monocyte"{print substr($0,length($1)+2)}' res_mcp_counter.tsv)
+ma=$(awk -F'\t' '$1=="Macrophage/Monocyte"{print substr($0,length($1)+2)}' res_mcp_counter.tsv)
+[ "$m" == "$ma" ] && echo "Monocyte ≡ Macrophage/Monocyte（immunedeconv cell_type_map 把 Monocytic lineage 映射成两个名）" || echo "不同"
 ```
 
 **练习 3 —— TIDE 输出与教师副本字节比对**
@@ -87,4 +96,4 @@ awk -F'\t' 'NR>1{print $1, $3, $2}' res_tide.txt | sort -k2 -n | head -10
 
 ## 5. 一句话总结
 
-第三节课是纯下游 R 分析 + 一行 tidepy，登录节点 ~6 分钟跑完，31 个产出文件全部入库；唯一阻塞是 conda MCPcounter 1.1.0 的 http 硬编码（已记录、未绕过），六法齐全，TIDE 输出与教师副本字节一致，ROC AUC 0.79 复现原文。
+第三节课是纯下游 R 分析 + 一行 tidepy，登录节点 ~6 分钟跑完；MCPcounter 原样跑受阻（conda http 硬编码），已用本地 https 标志集矫正跑出，七法齐全；发现 MCPcounter 的 Monocyte 与 Macrophage/Monocyte 是 immunedeconv 映射表重复（10 独立群非 11）；TIDE 输出与教师副本字节一致，ROC AUC 0.79 复现原文。
