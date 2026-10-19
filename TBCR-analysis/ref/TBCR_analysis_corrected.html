@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TCR/BCR Repertoire Downstream Analysis · Corrected &amp; Annotated Edition (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">TCR/BCR Repertoire Downstream Analysis · Corrected
+&amp; Annotated Edition (Corrected &amp; Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#tcrbcr-repertoire-downstream-analysis-corrected-annotated-edition"
+id="toc-tcrbcr-repertoire-downstream-analysis-corrected-annotated-edition">TCR/BCR
+Repertoire Downstream Analysis — Corrected &amp; Annotated Edition</a>
+<ul>
+<li><a href="#about-this-edition" id="toc-about-this-edition">0. About
+this edition</a></li>
+<li><a href="#issue-list-at-a-glance" id="toc-issue-list-at-a-glance">1.
+Issue list at a glance</a></li>
+<li><a href="#environment-and-data" id="toc-environment-and-data">2.
+Environment and data</a></li>
+<li><a href="#part-1-obtain-clonotype-information"
+id="toc-part-1-obtain-clonotype-information">3. Part 1 — Obtain
+clonotype information</a></li>
+<li><a href="#part-2-obtain-gene-usage-information"
+id="toc-part-2-obtain-gene-usage-information">4. Part 2 — Obtain gene
+usage information</a></li>
+<li><a href="#part-3-distribution-of-cdr3-length"
+id="toc-part-3-distribution-of-cdr3-length">5. Part 3 — Distribution of
+CDR3 length</a></li>
+<li><a href="#part-4-tcrbcr-diversity-indices"
+id="toc-part-4-tcrbcr-diversity-indices">6. Part 4 — TCR/BCR diversity
+indices</a></li>
+<li><a href="#corrected-pass-and-comparison"
+id="toc-corrected-pass-and-comparison">7. Corrected pass and
+comparison</a></li>
+<li><a href="#checklist-outputs-and-summary"
+id="toc-checklist-outputs-and-summary">8. Checklist, outputs and
+summary</a></li>
+<li><a href="#appendix-a-deviation-log"
+id="toc-appendix-a-deviation-log">Appendix A — Deviation log</a></li>
+<li><a href="#appendix-b-reproduction"
+id="toc-appendix-b-reproduction">Appendix B — Reproduction</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="tcrbcr-repertoire-downstream-analysis-corrected-annotated-edition">TCR/BCR
+Repertoire Downstream Analysis — Corrected &amp; Annotated Edition</h1>
+<p><strong>Course module 4 · TBCR analysis (TRUST3 output)</strong>
+Source tutorial: <em>TBCR analysis — Downstream analysis on TRUST output
+files</em>, Tian Xu &amp; Zexian Zeng, Center for Life Sciences / Center
+for Quantitative Biology, Academy for Advanced Interdisciplinary
+Studies, Peking University.</p>
+<hr />
+<h2 id="about-this-edition">0. About this edition</h2>
+<p>This document is the corrected and annotated edition of the fourth
+course module. It follows the same protocol as the WES, RNA-seq and
+RNA-seq-application modules of this repository:</p>
+<ol type="1">
+<li>the tutorial was executed <strong>as written</strong> on the login
+node, with no optimisation and no mid-run fixes;</li>
+<li>every problem encountered or predicted was <strong>recorded, not
+fixed</strong>, during that run (the issues are listed in §1 and
+explained in the Part where they occur);</li>
+<li><strong>a separate corrected pass was then run</strong> into
+<code>results/05_corrected/</code> so that the effect of each correction
+can be measured rather than asserted (the user asked for this explicitly
+for this module);</li>
+<li>the documents, scripts, logs and figures are committed
+together.</li>
+</ol>
+<p>Unlike the three previous modules, this one is <strong>not</strong> a
+sequencing pipeline. It starts from files produced by TRUST3, an
+assembler that reconstructs TCR/BCR contigs from bulk RNA-seq reads, and
+it is entirely R-based downstream analysis (<code>ggplot2</code>,
+<code>dplyr</code>, <code>ggpubr</code>). There is no FASTQ, no
+alignment and no scheduler involvement: the whole module runs in about
+one minute on the login node.</p>
+<p>What this edition adds on top of the original tutorial:</p>
+<ul>
+<li>the reason each step exists, and what the underlying file actually
+contains;</li>
+<li>the exact commands and paths used in this run, and the observed
+numbers;</li>
+<li>nine verified pitfalls (<code>TBCR-01</code> to
+<code>TBCR-09</code>), each with the corrected code;</li>
+<li>a full as-written versus corrected comparison over the 375-sample
+TCGA-OV cohort;</li>
+<li>extension directions that the tutorial only gestures at (TCR beta
+chain, clinical integration).</li>
+</ul>
+<hr />
+<h2 id="issue-list-at-a-glance">1. Issue list at a glance</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Where</th>
+<th>What goes wrong</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TBCR-01</td>
+<td>Part 2</td>
+<td><code>*_report.tsv</code> begins with a <code>#count</code> header
+line. The tutorial reads it with <code>read.table()</code> and no
+<code>header = TRUE</code>, which only works because R’s default
+<code>comment.char = "#"</code> silently drops that line. Set
+<code>comment.char = ""</code> anywhere and the header becomes a data
+row.</td>
+<td>Keep the default, or read with <code>header = TRUE</code> after
+stripping the <code>#</code> from the first field. Documented, not
+changed in the as-written run.</td>
+</tr>
+<tr>
+<td>TBCR-02</td>
+<td>Part 4</td>
+<td><code>diversity &lt;- nrow(IGH_df)</code> is the number of
+<strong>report rows</strong>, not the number of unique CDR3. TRUST
+splits one CDR3 into several rows when it assigns different V alleles or
+constant regions: the demo sample has 354 IGH rows but only 345 unique
+CDR3nt (19 duplicated CDR3nt rows cohort-wide in that one sample). Raw
+diversity is therefore inflated by roughly 2-3% here.</td>
+<td>Collapse by CDR3nt (summing <code>count</code>) before
+counting.</td>
+</tr>
+<tr>
+<td>TBCR-03</td>
+<td>Part 3</td>
+<td><code>IGH_df$CDR3aa != "partial"</code> misses the second
+non-sequence label, <strong><code>out_of_frame</code></strong>. The demo
+sample keeps 2 such rows, whose nucleotide lengths are 46 and 71 — not
+multiples of three — and they enter the nucleotide length histogram.
+Across the 375 OV samples there are 9,965 such rows (0.92% of IGH
+rows).</td>
+<td>Filter on a whitelist of the 20 amino acids instead of blacklisting
+one label.</td>
+</tr>
+<tr>
+<td>TBCR-04</td>
+<td>Part 3, Part 4</td>
+<td>CDR3aa also contains <strong>imputed</strong> sequences written with
+<code>?</code> and <code>_</code> placeholders (the
+<code>CDR3_score = 0.01</code> case). The demo sample has 8; the OV
+cohort has 31,914 (2.94%). They pass the <code>!= "partial"</code>
+filter and are counted as normal amino-acid sequences.</td>
+<td>Two filtering tiers: L1 drops <code>partial</code> +
+<code>out_of_frame</code>; L2 additionally drops
+<code>?</code>/<code>_</code> sequences.</td>
+</tr>
+<tr>
+<td>TBCR-05</td>
+<td>Part 4</td>
+<td><code>clonality &lt;- 1 - (entropy / log2(diversity))</code> divides
+by zero when a sample has exactly one clone: <code>log2(1) = 0</code>
+and <code>entropy = 0</code>, so the result is <code>NaN</code>. In the
+OV cohort one sample (<code>TCGA-23-1113</code>) has raw diversity 1 and
+gets <code>NaN</code>; after correction 9 samples have fewer than 2
+valid clones and 3 have none at all. The tutorial writes these
+<code>NaN</code> values straight into the CSV.</td>
+<td>Return an explicit <code>NA</code>, count and report how many
+samples are undefined.</td>
+</tr>
+<tr>
+<td>TBCR-06</td>
+<td>Part 4</td>
+<td>The text defines <code>H(X) = -sum p_i log p_i</code> (natural log,
+nats) but the code uses <code>log2</code> (bits). The entropy values are
+therefore ~1.44 times smaller than the formula implies. Clonality is
+unaffected because the same base appears in numerator and
+denominator.</td>
+<td>Compute both; report the base used. Corrected pass stores nats and
+bits.</td>
+</tr>
+<tr>
+<td>TBCR-07</td>
+<td>Part 2</td>
+<td>The <code>*</code> placeholder (no D or J call) is treated as a
+gene. In the demo sample’s IGH rows, <code>*</code> occurs 60 times in
+V, 169 in D, 72 in J and 132 in C; in the IGHJ usage table
+<code>*</code> ranks fourth. Usage frequencies are therefore diluted by
+a non-gene category.</td>
+<td>Exclude <code>*</code> from the denominator, or report it as
+“unassigned”.</td>
+</tr>
+<tr>
+<td>TBCR-08</td>
+<td>Part 4</td>
+<td>The cohort loop does <strong>not</strong> filter
+<code>partial</code> or <code>out_of_frame</code>, while Part 3 does.
+Across the OV cohort 44.5% of IGH rows are <code>partial</code> (40.7%),
+<code>out_of_frame</code> (0.92%) or imputed (2.94%), so Part 3 and Part
+4 describe different sequence populations.</td>
+<td>Apply one documented filter in both parts (L1 or L2).</td>
+</tr>
+<tr>
+<td>TBCR-09</td>
+<td>Several</td>
+<td>Code hygiene: <code>aes(x = bcr_metrics_df$diversity)</code> reaches
+into the global environment from inside <code>aes()</code>; the output
+file is spelled <code>diveristy_cor_entropy.png</code>; two plot blocks
+draw <code>p</code> without <code>print(p)</code> (works at top level
+and under <code>Rscript</code>, silently produces nothing under
+<code>source()</code>); <code>bcr_metrics_df &lt;- data.frame()</code>
+grows by <code>rbind</code> in a loop; Part 0’s
+<code>ssh</code>/<code>.bashrc</code> instructions address a different
+machine.</td>
+<td>Use bare column names in <code>aes()</code>, fix the typo in the
+corrected pass, call <code>print()</code>, preallocate, skip the login
+instructions.</td>
+</tr>
+</tbody>
+</table>
+<p>Severity ordering: <strong>TBCR-02, 03, 04, 08</strong> change the
+numbers; <strong>TBCR-05</strong> produces invalid values;
+<strong>TBCR-06</strong> changes only units; <strong>TBCR-01, 07,
+09</strong> are robustness and hygiene issues.</p>
+<hr />
+<h2 id="environment-and-data">2. Environment and data</h2>
+<h3 id="environment">2.1 Environment</h3>
+<p>The tutorial’s Part 0 sets up conda on a student’s own server over
+SSH and writes a <code>.bashrc</code>. That is irrelevant here — the
+account already exists and the environment is preinstalled — so Part 0
+reduces to one line:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate airr</span></code></pre></div>
+<p>Verified versions in this run:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td>4.3.0 (2023-04-21)</td>
+</tr>
+<tr>
+<td>ggplot2</td>
+<td>3.4.4</td>
+</tr>
+<tr>
+<td>dplyr</td>
+<td>1.1.4</td>
+</tr>
+<tr>
+<td>ggpubr</td>
+<td>0.6.0</td>
+</tr>
+</tbody>
+</table>
+<p>Package load emits
+<code>package 'x' was built under R version 4.3.3</code> warnings
+because the binaries were built under a slightly newer R. They are
+benign and appear in every log.</p>
+<h3 id="input-data">2.2 Input data</h3>
+<p>Everything lives under <code>/lustre1/share/airr/data/</code>
+(read-only course share).</p>
+<p><code>TRUST_output/</code> holds the ten output files of
+<strong>one</strong> sample, <code>TCGA-02-0055-01A-01R-1849-01</code>,
+from TCGA RNA-seq:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_cdr3.out</code></td>
+<td>115 KB</td>
+<td>one row per consensus assembly: CDR1/2/3, V/D/J/C call, CDR3 score,
+read support</td>
+</tr>
+<tr>
+<td><code>*_report.tsv</code></td>
+<td>88 KB</td>
+<td>one row per reported CDR3 with count, frequency, V/D/J/C
+(VDJTools-compatible)</td>
+</tr>
+<tr>
+<td><code>*_final.out</code></td>
+<td>3.3 MB</td>
+<td>final contigs with nucleotide weights</td>
+</tr>
+<tr>
+<td><code>*_raw.out</code></td>
+<td>2.5 MB</td>
+<td>raw contigs with nucleotide weights</td>
+</tr>
+<tr>
+<td><code>*_assembled_reads.fa</code></td>
+<td>7.6 MB</td>
+<td>reads belonging to each assembly (FASTA)</td>
+</tr>
+<tr>
+<td><code>*_full.fa</code></td>
+<td>47 KB</td>
+<td>complete TCR/BCR sequences (FASTA)</td>
+</tr>
+<tr>
+<td><code>*_anno.fa</code></td>
+<td>773 KB</td>
+<td>annotation FASTA of the consensus assemblies</td>
+</tr>
+<tr>
+<td><code>*_cluster.out</code></td>
+<td>86 KB</td>
+<td>cluster membership of consensus assemblies</td>
+</tr>
+<tr>
+<td><code>*_evo.out</code></td>
+<td>1.1 KB</td>
+<td>evolution information of the final sequences</td>
+</tr>
+<tr>
+<td><code>*_simplerep.out</code></td>
+<td>108 KB</td>
+<td>simplified report</td>
+</tr>
+</tbody>
+</table>
+<p>Only the first two are used by this module: <code>cdr3.out</code> for
+Part 1 (assembly-level) and <code>report.tsv</code> for Parts 2-4
+(CDR3-level).</p>
+<p><code>OV_results/</code> holds 375 <code>*_report.tsv</code> files
+extracted by TRUST3 from the TCGA-OV cohort. Every file has exactly 8
+tab-separated fields; verified before running.</p>
+<h3 id="column-layouts">2.3 Column layouts</h3>
+<p><code>cdr3.out</code> has <strong>no header line</strong>. The
+tutorial assigns the 12 column names by hand:</p>
+<pre><code>consensus_id, index_within_consensus, V_gene, D_gene, J_gene, C_gene,
+CDR1, CDR2, CDR3, CDR3_score, read_fragment_count, CDR3_germline_similarity</code></pre>
+<p><code>report.tsv</code> <strong>does</strong> have a header line, and
+it starts with a <code>#</code>:</p>
+<pre><code>#count  frequency  CDR3nt  CDR3aa  V  D  J  C</code></pre>
+<p>Because <code>read.table()</code> defaults to
+<code>comment.char = "#"</code>, that line is skipped and the remaining
+930 rows are data (TBCR-01). The tutorial’s <code>colnames()</code> call
+then attaches the eight names. Reading the same file with
+<code>read.delim(..., comment.char = "")</code> would produce a bogus
+first row with <code>count = "#count"</code>.</p>
+<p>Two sanity checks on the demo report:</p>
+<ul>
+<li><code>sum(count) = 6341</code> reads in total;</li>
+<li><code>sum(frequency) = 2</code>, because the frequency column is
+normalised <strong>separately for TCR and BCR</strong> (the tutorial
+says so explicitly) — 1 + 1. This is a useful invariant: if a future
+TRUST version normalises the whole table, the sum would be 1 and
+downstream assumptions about per-chain frequencies would change.</li>
+</ul>
+<p><code>CDR3_score</code> in the demo sample takes five values, not the
+three the tutorial describes:</p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Meaning per tutorial</th>
+<th>Demo rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>partial CDR3</td>
+<td>294</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>(not described)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0.67</td>
+<td>(not described)</td>
+<td>30</td>
+</tr>
+<tr>
+<td>0.83</td>
+<td>(not described)</td>
+<td>137</td>
+</tr>
+<tr>
+<td>1.00</td>
+<td>strongest motif signal</td>
+<td>479</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-layout-in-this-repository">2.4 Output layout in this
+repository</h3>
+<pre><code>results/
+├── 01_clonotype/            Part 1  (1 PNG, script, log)
+├── 02_gene_usage/           Part 2  (3 PNG, script, log)
+├── 03_cdr3_length/          Part 3  (2 PNG, script, log)
+├── 04_diversity/            Part 4  (3 PNG + OV_bcr_diversity.csv, script, log)
+├── 05_corrected/            corrected pass (9 PNG + 2 CSV + summary, script, log)
+└── ref/                     this document and the original tutorial HTML</code></pre>
+<p>Scripts <code>setwd()</code> into their own step directory, so every
+relative path in the tutorial (<code>png("...")</code>,
+<code>write.csv(..., "OV_bcr_diversity.csv")</code>) still writes where
+the tutorial intends — just inside the repository instead of
+<code>~/airr_output</code>.</p>
+<hr />
+<h2 id="part-1-obtain-clonotype-information">3. Part 1 — Obtain
+clonotype information</h2>
+<h3 id="what-the-tutorial-does">3.1 What the tutorial does</h3>
+<p>Load <code>*_cdr3.out</code>, attach column names, split the table
+into TCR (<code>^TR</code> prefix in any of V/D/J/C) and BCR
+(<code>^IG</code>), then tabulate how many times each BCR consensus
+assembly appears and draw the frequency histogram.</p>
+<h3 id="why-this-step-exists">3.2 Why this step exists</h3>
+<p>TRUST3 reconstructs, for each expressed receptor, a <strong>consensus
+assembly</strong>: several reads that agree on a V-D-J rearrangement are
+merged into one contig and assigned an identifier
+(<code>assemble0</code>, <code>assemble1</code>, …). The
+<code>cdr3.out</code> table is therefore <em>assembly-level</em>: one
+row per read-cluster member, many rows per assembly. Counting how often
+an assembly was seen (<code>Freq</code> in the tutorial’s table) is the
+first estimate of clonal abundance, and the histogram answers a basic
+question: is this sample dominated by a few expanded clones, or by a
+long tail of singletons?</p>
+<p>Splitting TCR from BCR is mandatory here because TRUST3 calls both
+receptor types from the same RNA-seq library, and their gene
+nomenclatures never mix.</p>
+<h3 id="command">3.3 Command</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>consensus_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_cdr3.out&quot;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(consensus_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;consensus_id&quot;</span>,<span class="st">&quot;index_within_consensus&quot;</span>,<span class="st">&quot;V_gene&quot;</span>,<span class="st">&quot;D_gene&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;J_gene&quot;</span>,<span class="st">&quot;C_gene&quot;</span>,<span class="st">&quot;CDR1&quot;</span>,<span class="st">&quot;CDR2&quot;</span>,<span class="st">&quot;CDR3&quot;</span>,<span class="st">&quot;CDR3_score&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;read_fragment_count&quot;</span>,<span class="st">&quot;CDR3_germline_similarity&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>TCR_df <span class="ot">&lt;-</span> consensus_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, V_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, D_gene) <span class="sc">|</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, J_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, C_gene))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>BCR_df <span class="ot">&lt;-</span> consensus_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, V_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, D_gene) <span class="sc">|</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, J_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, C_gene))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>BCR_consensus_count <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(BCR_df<span class="sc">$</span>consensus_id, <span class="at">levels =</span> <span class="fu">unique</span>(BCR_df<span class="sc">$</span>consensus_id)))</span></code></pre></div>
+<h3 id="observed-output">3.4 Observed output</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cdr3.out</code> rows</td>
+<td>974</td>
+</tr>
+<tr>
+<td>unique <code>consensus_id</code></td>
+<td>778</td>
+</tr>
+<tr>
+<td>BCR rows / unique BCR assemblies</td>
+<td>941 / 745</td>
+</tr>
+<tr>
+<td>TCR rows / unique TCR assemblies</td>
+<td>33 / 33</td>
+</tr>
+<tr>
+<td>rows that are neither TCR nor BCR</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>BCR assembly frequency distribution (895 rows are in assemblies seen
+1-5 times, consistent with a long-tailed repertoire):</p>
+<table>
+<thead>
+<tr>
+<th>Times seen</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>7</th>
+<th>10</th>
+<th>11</th>
+<th>16</th>
+<th>18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assemblies</td>
+<td>659</td>
+<td>50</td>
+<td>15</td>
+<td>7</td>
+<td>8</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>factor(..., levels = unique(...))</code> construction
+matters: <code>table()</code> on a plain character vector sorts
+alphabetically and, more importantly, drops nothing here but would drop
+empty levels; fixing the levels to the observed order keeps the
+identifier order stable, so <code>BCR_consensus_df$Var1</code> lines up
+with the assembly numbering.</p>
+<h3 id="pitfalls">3.5 Pitfalls</h3>
+<ul>
+<li><strong><code>table()</code> returns a factor column.</strong>
+<code>as.data.frame(table(...))</code> gives <code>Var1</code> (the
+assembly id, as a factor) and <code>Freq</code>. Any downstream ordering
+must go through <code>as.character()</code> first.</li>
+<li><strong><code>Freq</code> is a count of rows, not of reads.</strong>
+The read support of an assembly is <code>read_fragment_count</code>, a
+different quantity; the tutorial never uses it. If you want
+abundance-weighted clonality from this file, sum
+<code>read_fragment_count</code> instead of counting rows.</li>
+<li><strong>The TCR table is computed and then ignored.</strong>
+<code>TCR_df</code> is printed and never used again in the module. The
+demo sample has only 33 TCR assembly rows versus 941 BCR rows, which is
+typical of a solid tumour: BCR-heavy infiltrate, little TCR clonality
+without TCR-seq enrichment.</li>
+</ul>
+<h3 id="tuning">3.6 Tuning</h3>
+<ul>
+<li>Filter low-support assemblies
+(<code>read_fragment_count &gt;= 2</code>) before clustering if you want
+to suppress assembly noise.</li>
+<li>Group near-identical CDR3s (Levenshtein distance 1, or same V-J with
+90% CDR3 identity) to collapse clonal families — the tutorial stops at
+exact-identifier clustering.</li>
+</ul>
+<h3 id="extensions">3.7 Extensions</h3>
+<ul>
+<li>Join <code>cluster.out</code> to collapse assemblies into clonal
+clusters and recompute the histogram at cluster level.</li>
+<li>Join <code>evo.out</code> (only 1.1 KB here) to look at somatic
+hypermutation lineages in the BCR compartment.</li>
+</ul>
+<hr />
+<h2 id="part-2-obtain-gene-usage-information">4. Part 2 — Obtain gene
+usage information</h2>
+<h3 id="what-the-tutorial-does-1">4.1 What the tutorial does</h3>
+<p>Read <code>*_report.tsv</code>, name the eight columns, extract the
+TCR alpha chain
+(<code>^TRAV</code>/<code>^TRAJ</code>/<code>^TRAC</code>) and the BCR
+heavy chain
+(<code>^IGHV</code>/<code>^IGHD</code>/<code>^IGHJ</code>/<code>^IGHC</code>),
+then compute IGHV usage, IGHJ usage and the joint V-J distribution, with
+two bar charts and one heatmap.</p>
+<h3 id="why-this-step-exists-1">4.2 Why this step exists</h3>
+<p>V and J gene usage is the coarsest description of a repertoire and
+the one most comparable across samples and studies: it is driven by
+recombination signal preferences, by selection, and — in tumours — by
+antigen-driven expansion. V-J pairing adds the combinatorial dimension:
+a few V-J combinations often carry most of the clonal mass.</p>
+<p>The tutorial deliberately works on the <strong>heavy chain</strong>
+(and, in principle, the beta chain) because those chains determine
+antigen binding; light chains and the alpha chain are paired partners
+and are excluded from the usage calculation to avoid double counting the
+same clone.</p>
+<h3 id="command-1">4.3 Command</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>air_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;.../TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(air_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;count&quot;</span>,<span class="st">&quot;frequency&quot;</span>,<span class="st">&quot;CDR3nt&quot;</span>,<span class="st">&quot;CDR3aa&quot;</span>,<span class="st">&quot;V&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>IGH_df <span class="ot">&lt;-</span> air_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IGHV&quot;</span>, V) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHD&quot;</span>, D) <span class="sc">|</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">grepl</span>(<span class="st">&quot;^IGHJ&quot;</span>, J) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHC&quot;</span>, C))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>usage_IGHV_df <span class="ot">&lt;-</span> IGH_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(V) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">total_count =</span> <span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">usage_frequency =</span> total_count <span class="sc">/</span> <span class="fu">sum</span>(total_count)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(usage_frequency))</span></code></pre></div>
+<h3 id="observed-output-1">4.4 Observed output</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>report rows (data)</td>
+<td>930</td>
+</tr>
+<tr>
+<td>total reads <code>sum(count)</code></td>
+<td>6341</td>
+</tr>
+<tr>
+<td><code>sum(frequency)</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>TRA rows</td>
+<td>6</td>
+</tr>
+<tr>
+<td>TRB rows</td>
+<td>19</td>
+</tr>
+<tr>
+<td>IGH rows</td>
+<td>354</td>
+</tr>
+<tr>
+<td>IGH reads</td>
+<td>2115</td>
+</tr>
+<tr>
+<td>distinct IGHV entries (including <code>*</code>)</td>
+<td>80</td>
+</tr>
+<tr>
+<td>distinct IGHJ entries (including <code>*</code>)</td>
+<td>12</td>
+</tr>
+<tr>
+<td>distinct V-J pairs</td>
+<td>173</td>
+</tr>
+</tbody>
+</table>
+<p>Top IGHV by read count:</p>
+<table>
+<thead>
+<tr>
+<th>V gene</th>
+<th>reads</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGHV3-15*01</td>
+<td>330</td>
+<td>0.1560</td>
+</tr>
+<tr>
+<td>IGHV5-51*03</td>
+<td>243</td>
+<td>0.1149</td>
+</tr>
+<tr>
+<td>IGHV4-31*03</td>
+<td>167</td>
+<td>0.0790</td>
+</tr>
+</tbody>
+</table>
+<p>Top IGHJ:</p>
+<table>
+<thead>
+<tr>
+<th>J gene</th>
+<th>reads</th>
+<th>usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGHJ5*02</td>
+<td>751</td>
+<td>0.3551</td>
+</tr>
+<tr>
+<td>IGHJ4*02</td>
+<td>492</td>
+<td>0.2326</td>
+</tr>
+<tr>
+<td>IGHJ6*02</td>
+<td>478</td>
+<td>0.2260</td>
+</tr>
+</tbody>
+</table>
+<p>Top V-J pair: <code>IGHV3-15*01</code> + <code>IGHJ5*02</code>, 288
+reads, 0.1362 of IGH mass.</p>
+<h3 id="pitfalls-1">4.5 Pitfalls</h3>
+<ul>
+<li><strong>TBCR-01 (header line).</strong> As discussed in §2.3, the
+<code>#count</code> line is skipped only because of
+<code>comment.char</code>. This is invisible in the tutorial but becomes
+a data-corruption bug the moment anyone passes
+<code>comment.char = ""</code> or reads the file with
+<code>readr::read_tsv()</code> (which does not treat <code>#</code> as a
+comment by default and would keep the header as a row).</li>
+<li><strong>TBCR-07 (<code>*</code> is not a gene).</strong> The
+<code>*</code> placeholder marks an unassigned D or J segment. In the
+demo IGH rows it appears 60 times in V, 169 in D, 72 in J and 132 in C.
+Because the tutorial groups by the raw column, <code>*</code> becomes a
+category: in the IGHJ usage table it ranks fourth. Every reported usage
+frequency is therefore slightly diluted, and the V-J heatmap carries a
+<code>*</code> row and column. Excluding <code>*</code> changes the IGHJ
+ranking below the top three but not the top three themselves (verified
+in the corrected pass).</li>
+<li><strong>The OR filter is chain-agnostic.</strong>
+<code>grepl("^IGHV", V) | grepl("^IGHD", D) | ...</code> keeps a row if
+<em>any</em> of the four fields starts with the prefix. That is safe for
+TRUST output because a row’s four fields always belong to one chain, but
+it is not a guarantee — a mixed row would slip through. A stricter form
+is to require the V prefix and check consistency.</li>
+<li><strong>Allele-level granularity.</strong> Genes carry allele
+suffixes (<code>IGHV3-15*01</code>). The tutorial never collapses
+alleles; two rows differing only by allele are two categories. For
+cohort comparisons, collapse to gene level
+(<code>sub("\\*.*", "", V)</code>) or the tables become sparse.</li>
+<li><strong><code>summary(total_count)</code> with
+<code>.groups</code>.</strong> In the V-J block the tutorial passes
+<code>.groups = 'drop'</code>; in the single-gene blocks it does not, so
+dplyr prints a grouping message. Harmless, but the inconsistency is a
+hint that these blocks were written at different times.</li>
+</ul>
+<h3 id="tuning-1">4.6 Tuning</h3>
+<ul>
+<li>Collapse alleles: <code>mutate(V = sub("\\*.*", "", V))</code>
+before grouping.</li>
+<li>Restrict to productive sequences (<code>CDR3aa</code> matching the
+amino-acid whitelist) before computing usage — otherwise
+<code>partial</code> rows contribute V calls without a valid
+junction.</li>
+<li>Weight by <code>count</code> (as the tutorial does) rather than by
+row: a singleton and a 500-read clone are not equivalent evidence for a
+V gene.</li>
+</ul>
+<h3 id="extensions-1">4.7 Extensions</h3>
+<ul>
+<li>Compare usage against a reference repertoire (e.g. the IMGT
+reference gene distribution) with a chi-square or Jensen-Shannon
+distance.</li>
+<li>Compute usage separately for expanded versus singleton clones to see
+whether expansion is V-restricted.</li>
+</ul>
+<hr />
+<h2 id="part-3-distribution-of-cdr3-length">5. Part 3 — Distribution of
+CDR3 length</h2>
+<h3 id="what-the-tutorial-does-2">5.1 What the tutorial does</h3>
+<p>Drop rows whose <code>CDR3aa</code> equals <code>"partial"</code>,
+add <code>nt_length = nchar(CDR3nt)</code> and
+<code>aa_length = nchar(CDR3aa)</code>, then draw one histogram per
+unit.</p>
+<h3 id="why-this-step-exists-2">5.2 Why this step exists</h3>
+<p>CDR3 length is a quality and biology readout at the same time.
+Biologically, the junction length distribution is under strong selection
+(too short loses binding surface, too long is disfavoured by steric
+constraints) and its mode is species- and chain-specific. Technically,
+nucleotide length must be a multiple of three for an in-frame junction,
+so the length distribution is also a quick sanity check on the
+assembler.</p>
+<h3 id="command-2">5.3 Command</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>IGH_filter_df <span class="ot">&lt;-</span> IGH_df[IGH_df<span class="sc">$</span>CDR3aa <span class="sc">!=</span> <span class="st">&quot;partial&quot;</span>,]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>IGH_filter_df <span class="ot">&lt;-</span> IGH_filter_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">nt_length =</span> <span class="fu">nchar</span>(CDR3nt), <span class="at">aa_length =</span> <span class="fu">nchar</span>(CDR3aa))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nt_length_df <span class="ot">&lt;-</span> IGH_filter_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(nt_length) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">total_count =</span> <span class="fu">sum</span>(count))</span></code></pre></div>
+<h3 id="observed-output-2">5.4 Observed output</h3>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGH rows</td>
+<td>354</td>
+</tr>
+<tr>
+<td><code>partial</code> rows removed</td>
+<td>169 (47.7%)</td>
+</tr>
+<tr>
+<td>rows kept</td>
+<td>185</td>
+</tr>
+<tr>
+<td>reads kept</td>
+<td>1823 of 2115</td>
+</tr>
+<tr>
+<td>nucleotide length range</td>
+<td>30-102</td>
+</tr>
+<tr>
+<td>nucleotide length mode</td>
+<td>66 nt, 477 reads</td>
+</tr>
+<tr>
+<td>amino-acid length range</td>
+<td>10-34</td>
+</tr>
+<tr>
+<td>amino-acid length mode</td>
+<td>22 aa, 477 reads</td>
+</tr>
+<tr>
+<td>kept rows whose nt length is <strong>not</strong> a multiple of
+3</td>
+<td><strong>2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The 47.7% partial rate is not a defect of the sample: TRUST3 reports
+a junction whenever it can assemble enough of the CDR3 to call it, and
+roughly half of the assemblies in this tumour do not cover the full
+junction. Dropping them is correct for length analysis — but note that
+it also drops half the reads, which is why Part 4 must make an explicit
+decision about the same sequences (TBCR-08).</p>
+<h3 id="pitfalls-2">5.5 Pitfalls</h3>
+<ul>
+<li><strong>TBCR-03 (<code>out_of_frame</code> survives the
+filter).</strong> The two rows with non-multiple-of-three nucleotide
+lengths are precisely the <code>out_of_frame</code> rows: 46 nt and 71
+nt. They are not <code>"partial"</code>, so the tutorial’s blacklist
+keeps them, and they appear as two isolated bars in the nucleotide
+histogram. The correct filter is a whitelist: keep only sequences
+matching <code>^[ACDEFGHIKLMNPQRSTVWY]+$</code>.</li>
+<li><strong>TBCR-04 (imputed sequences).</strong> Eight IGH rows carry
+<code>?</code> or <code>_</code> inside the amino-acid string
+(e.g. <code>CATTMIRDYFYYGMDV_</code>, <code>CAKPGDYDSSSYF?QW</code>).
+<code>nchar()</code> counts those placeholders as residues, so they
+enter the length distribution as if they were real amino acids. Whether
+to keep them is a judgement call — the nucleotide sequence is complete
+but partly imputed — but the choice must be stated.</li>
+<li><strong><code>nchar()</code> on a factor.</strong> If
+<code>CDR3aa</code> were read as a factor (it is not here, because
+<code>read.table</code> defaults to
+<code>stringsAsFactors = FALSE</code> since R 4.0), <code>nchar()</code>
+would return the length of the level index. Worth remembering when
+porting the code to older R.</li>
+<li><strong>No zero-length guard.</strong> A sample with no surviving
+row yields an empty histogram and <code>ggplot</code> errors rather than
+an empty plot.</li>
+</ul>
+<h3 id="tuning-2">5.6 Tuning</h3>
+<ul>
+<li>Plot the same distribution after L2 filtering (whitelist) to see how
+much the two <code>out_of_frame</code> rows and the eight imputed rows
+actually move it: in the demo sample the mode stays at 66 nt / 22 aa
+with 474 instead of 477 reads, so the effect is negligible here but not
+necessarily in other samples.</li>
+<li>Normalise by total reads to compare samples with different
+sequencing depth.</li>
+</ul>
+<h3 id="extensions-2">5.7 Extensions</h3>
+<ul>
+<li>Compare the observed length distribution with the theoretical
+distribution of a random V-D-J recombination (a null model) to detect
+selection.</li>
+<li>Stratify by V gene family: long CDR3s are enriched in certain V
+genes.</li>
+</ul>
+<hr />
+<h2 id="part-4-tcrbcr-diversity-indices">6. Part 4 — TCR/BCR diversity
+indices</h2>
+<h3 id="what-the-tutorial-does-3">6.1 What the tutorial does</h3>
+<p>Defines five indices, computes them by hand for the demo sample, then
+loops over the 375 OV files, writes <code>OV_bcr_diversity.csv</code>,
+and draws three Spearman correlation plots.</p>
+<h3 id="the-indices-and-what-each-one-measures">6.2 The indices, and
+what each one measures</h3>
+<p>Let a repertoire have <code>N</code> unique sequences with read
+counts <code>c_i</code>, total <code>C = sum c_i</code>, and frequencies
+<code>p_i = c_i / C</code>.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Index</th>
+<th>Formula in the tutorial</th>
+<th>What it captures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw diversity</td>
+<td>number of unique CDR3</td>
+<td><strong>richness</strong> only; ignores abundance</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td><code>(unique CDR3 / total reads) * 1000</code></td>
+<td>richness normalised by sequencing depth</td>
+</tr>
+<tr>
+<td>entropy</td>
+<td><code>H = -sum p_i log p_i</code></td>
+<td>richness and evenness together</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td><code>1 - H / log N</code></td>
+<td>how far the repertoire is from a uniform distribution of its
+<code>N</code> sequences; 0 = perfectly even, 1 = one clone
+dominates</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td><code>1 - sum p_i^2</code></td>
+<td>probability that two randomly drawn reads come from different
+clones</td>
+</tr>
+</tbody>
+</table>
+<p>The tutorial’s note that only the heavy (BCR) and beta (TCR) chains
+are analysed is a scope decision, not a mathematical one: those chains
+determine binding, and including both chains of a pair would count each
+clone twice.</p>
+<h3 id="command-3">6.3 Command</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">&lt;-</span> <span class="fu">nrow</span>(IGH_df)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>CPK <span class="ot">&lt;-</span> diversity<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count) <span class="sc">*</span><span class="dv">1000</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> IGH_df<span class="sc">$</span>count<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>entropy <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(freqs <span class="sc">*</span> <span class="fu">log2</span>(freqs))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>clonality <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (entropy<span class="sc">/</span><span class="fu">log2</span>(diversity))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>gini <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(freqs <span class="sc">*</span> freqs)</span></code></pre></div>
+<p>followed by the 375-file loop:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> files) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  air_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">paste0</span>(<span class="st">&quot;/lustre1/share/airr/data/OV_results/&quot;</span>,file), <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(air_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;count&quot;</span>,<span class="st">&quot;frequency&quot;</span>,<span class="st">&quot;CDR3nt&quot;</span>,<span class="st">&quot;CDR3aa&quot;</span>,<span class="st">&quot;V&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  IGH_df <span class="ot">&lt;-</span> air_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IGHV&quot;</span>, V) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHD&quot;</span>, D) <span class="sc">|</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">grepl</span>(<span class="st">&quot;^IGHJ&quot;</span>, J) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHC&quot;</span>, C))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  diversity <span class="ot">&lt;-</span> <span class="fu">nrow</span>(IGH_df); CPK <span class="ot">&lt;-</span> diversity<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count) <span class="sc">*</span><span class="dv">1000</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  freqs <span class="ot">&lt;-</span> IGH_df<span class="sc">$</span>count<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  entropy <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(freqs <span class="sc">*</span> <span class="fu">log2</span>(freqs))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  clonality <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (entropy<span class="sc">/</span><span class="fu">log2</span>(diversity))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  gini <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(freqs <span class="sc">*</span> freqs)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  bcr_metrics_row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(diversity, CPK, entropy, clonality, gini)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(bcr_metrics_row) <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(file))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  bcr_metrics_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bcr_metrics_df, bcr_metrics_row)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(bcr_metrics_df, <span class="st">&quot;OV_bcr_diversity.csv&quot;</span>)</span></code></pre></div>
+<h3 id="observed-output-3">6.4 Observed output</h3>
+<p>Demo sample, as written:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>354</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>167.3759</td>
+</tr>
+<tr>
+<td>entropy (log2)</td>
+<td>6.3314</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.252280</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.956772</td>
+</tr>
+</tbody>
+</table>
+<p>Cohort (375 samples, 13.9 s):</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Range</th>
+<th>Median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>1 - 26,978</td>
+<td>918</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>15.567 - 1000</td>
+<td>180.7188</td>
+</tr>
+<tr>
+<td>entropy (log2)</td>
+<td>0 - 13.2401</td>
+<td>—</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.0195 - 0.7306</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0 - 0.9995</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>NaN</code> values</td>
+<td>1 (clonality, <code>TCGA-23-1113</code>)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Spearman correlations, as written:</p>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>rho</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity vs entropy</td>
+<td>0.7957</td>
+</tr>
+<tr>
+<td>CPK vs entropy</td>
+<td>-0.2470</td>
+</tr>
+<tr>
+<td>CPK vs clonality</td>
+<td>-0.8790</td>
+</tr>
+</tbody>
+</table>
+<p>The sign pattern is the expected one: richness and entropy move
+together; CPK is high in samples that are deep but not necessarily
+diverse (it is a ratio to reads, so a small sample with few reads can
+reach CPK 1000); CPK and clonality are strongly anti-correlated because
+a repertoire dominated by one clone has few unique CDR3s per read.</p>
+<h3 id="pitfalls-3">6.5 Pitfalls</h3>
+<ul>
+<li><strong>TBCR-02 (diversity is <code>nrow</code>, not unique
+CDR3).</strong> TRUST’s report is keyed by the full V/D/J/C assignment,
+so one CDR3 can appear on several rows. The demo sample: 354 rows, 345
+unique CDR3nt, and only 173 unique CDR3aa (the amino-acid level
+collapses synonymous variants). <code>nrow()</code> therefore overstates
+richness by 2.6% here; cohort-wide the median overstatement is about 2x
+after also correcting the sequence-quality filter (§7).</li>
+<li><strong>TBCR-05 (<code>NaN</code> for single-clone
+samples).</strong> With <code>N = 1</code>, <code>entropy = 0</code> and
+<code>log2(N) = 0</code>, so <code>clonality = 1 - 0/0 = NaN</code>. One
+OV sample hits this in the as-written run. Writing <code>NaN</code> into
+the CSV is worse than writing <code>NA</code>: many tools propagate
+<code>NaN</code> silently through means and correlations.</li>
+<li><strong>TBCR-06 (log base).</strong> The formula uses
+<code>log</code> (nats), the code uses <code>log2</code> (bits). Entropy
+values differ by a factor <code>ln 2 = 0.6931</code>. Clonality is
+unaffected, because both numerator and denominator use the same base —
+this is exactly why the normalised form is the portable one.</li>
+<li><strong>TBCR-08 (no sequence filter in the loop).</strong> Part 3
+removed <code>partial</code>, the loop does not, so the entropy of a
+sample is computed over a mixture of full-length and partial junctions.
+Across the OV cohort, 40.7% of IGH rows are <code>partial</code>, 0.92%
+<code>out_of_frame</code> and 2.94% imputed. This is the single largest
+driver of the discrepancy between the as-written and corrected diversity
+values.</li>
+<li><strong>Frequency vs count.</strong> The loop recomputes frequencies
+from <code>count</code> and ignores the <code>frequency</code> column.
+That is correct (the given column is per-chain normalised), but it means
+the two columns are never cross-checked.</li>
+<li><strong><code>rbind</code> in a loop.</strong> 375 iterations is
+fine; 10,000 would not be. Preallocate or use
+<code>dplyr::bind_rows</code> on a list.</li>
+<li><strong>TBCR-09 (<code>aes()</code> with <code>$</code>).</strong>
+<code>aes(x = bcr_metrics_df$diversity)</code> evaluates the global
+vector rather than the data frame’s column. It works until the data
+frame is filtered or renamed; <code>aes(x = diversity)</code> is both
+shorter and safer.</li>
+</ul>
+<h3 id="tuning-3">6.6 Tuning</h3>
+<ul>
+<li>If <code>N</code> is small, clonality is unstable (it divides by
+<code>log N</code>). Report it only for samples above a minimum clone
+count (the corrected pass flags the 9 samples with fewer than 2 valid
+clones).</li>
+<li>Use <code>vegan::diversity</code> or <code>immunarch</code> if you
+want vetted implementations and confidence intervals.</li>
+<li>Downsample reads to a common depth before comparing CPK across
+samples; CPK is depth-normalised but not depth-invariant when richness
+saturates.</li>
+</ul>
+<h3 id="extensions-3">6.7 Extensions</h3>
+<ul>
+<li><strong>TCR beta chain.</strong> The tutorial’s own rationale
+(analyse the chain that determines binding) applies equally to TRB. The
+corrected pass computes TRB diversity with the same rules: 369 of 375
+samples have at least one valid TRB clone, median diversity 38, range
+0-529 (see <code>OV_trb_diversity_corrected.csv</code>).</li>
+<li><strong>Clinical integration.</strong> The tutorial’s last sentence
+suggests joining clinical annotations and comparing indices between
+groups. TCGA-OV clinical data are available from the GDC; the comparison
+is a Wilcoxon test or a Cox model with diversity as a continuous
+covariate.</li>
+<li><strong>Rarefaction curves.</strong> Plot diversity against
+sequencing depth per sample to separate biological richness from
+technical sampling.</li>
+</ul>
+<hr />
+<h2 id="corrected-pass-and-comparison">7. Corrected pass and
+comparison</h2>
+<p>The corrected pass lives in <code>results/05_corrected/</code>
+(<code>scripts/corrected_analysis.R</code>). It recomputes the
+as-written indices with the identical code path, then applies the
+corrections, so that every difference below is attributable to a named
+fix rather than to a different implementation.</p>
+<h3 id="definitions-used">7.1 Definitions used</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Sequence filter</th>
+<th>Clone definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw</td>
+<td>none (as written)</td>
+<td>one report row</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>drop <code>partial</code> and <code>out_of_frame</code></td>
+<td>one unique CDR3nt, counts summed across rows</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>additionally drop <code>?</code>/<code>_</code> imputed
+sequences</td>
+<td>one unique CDR3nt, counts summed</td>
+</tr>
+</tbody>
+</table>
+<p>Entropy is reported in both nats (matching the formula) and bits
+(matching the code); clonality is base-invariant.</p>
+<h3 id="demo-sample">7.2 Demo sample</h3>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>raw</th>
+<th>L1</th>
+<th>L2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>354</td>
+<td>177</td>
+<td>169</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>167.3759</td>
+<td>97.9524</td>
+<td>94.0980</td>
+</tr>
+<tr>
+<td>entropy (nats)</td>
+<td>4.3886</td>
+<td>3.7572</td>
+<td>3.7308</td>
+</tr>
+<tr>
+<td>entropy (bits)</td>
+<td>6.3314</td>
+<td>5.4205</td>
+<td>5.3824</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.2523</td>
+<td>0.2741</td>
+<td>0.2727</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.9568</td>
+<td>0.9393</td>
+<td>0.9385</td>
+</tr>
+</tbody>
+</table>
+<p>The demo sample has 354 IGH rows, 169 <code>partial</code>, 2
+<code>out_of_frame</code>, 8 imputed and 175 valid; L1 keeps 183 rows
+which collapse to 177 unique CDR3nt.</p>
+<h3 id="cohort-375-samples">7.3 Cohort (375 samples)</h3>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>raw median</th>
+<th>L1 median</th>
+<th>L1 / raw</th>
+<th>Spearman(raw, L1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>918</td>
+<td>446</td>
+<td>0.484</td>
+<td>0.9975</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>180.72</td>
+<td>113.35</td>
+<td>0.640</td>
+<td>0.9877</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.1843</td>
+<td>0.2196</td>
+<td>1.172</td>
+<td>0.9690</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.9820</td>
+<td>0.9645</td>
+<td>0.985</td>
+<td>0.9672</td>
+</tr>
+</tbody>
+</table>
+<p>Ranges, raw to L1:</p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>raw</th>
+<th>L1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>1 - 26,978</td>
+<td>0 - 14,979</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>15.567 - 1000</td>
+<td>8.408 - 833.333</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.0195 - 0.7306</td>
+<td>0.0290 - 0.8168</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0 - 0.9995</td>
+<td>0 - 0.9991</td>
+</tr>
+</tbody>
+</table>
+<p>Interpretation: the <strong>absolute</strong> values change
+substantially (diversity roughly halves, because half the rows are
+partial and the rest are collapsed), but the <strong>ranking</strong> of
+samples is essentially preserved (Spearman 0.9975). Downstream
+conclusions of the form “sample A is more diverse than sample B”
+therefore survive; conclusions of the form “this cohort has a median
+diversity of 918” do not, because that number is an artefact of counting
+partial rows. This is the practical argument for the corrected
+definition.</p>
+<h3 id="undefined-values">7.4 Undefined values</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tier</th>
+<th><code>NA</code> in clonality</th>
+<th><code>NA</code> in entropy / CPK / Gini</th>
+<th>samples with fewer than 2 clones</th>
+<th>samples with no valid clone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>9</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>9</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>The three samples with no valid IGH clone (<code>TCGA-13-0800</code>,
+<code>TCGA-23-1113</code>, <code>TCGA-24-1419</code>) have all indices
+undefined. They should be excluded from cohort statistics explicitly,
+not silently imputed.</p>
+<h3 id="correlation-structure">7.5 Correlation structure</h3>
+<table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>raw</th>
+<th>L1</th>
+<th>L2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity vs entropy</td>
+<td>0.7957</td>
+<td>0.7862</td>
+<td>0.7875</td>
+</tr>
+<tr>
+<td>CPK vs entropy</td>
+<td>-0.2470</td>
+<td>-0.2421</td>
+<td>-0.2393</td>
+</tr>
+<tr>
+<td>CPK vs clonality</td>
+<td>-0.8790</td>
+<td>-0.8729</td>
+<td>-0.8722</td>
+</tr>
+</tbody>
+</table>
+<p>The correlation structure is robust to the correction — another sign
+that the corrected pass changes the scale, not the biology.</p>
+<h3 id="other-corrections-in-the-same-pass">7.6 Other corrections in the
+same pass</h3>
+<ul>
+<li><strong>Gene usage</strong> excludes <code>*</code>: the IGHV table
+drops from 80 to 79 entries, and the top five V genes are unchanged
+(<code>IGHV3-15*01</code>, <code>IGHV5-51*03</code>,
+<code>IGHV4-31*03</code>, <code>IGHV1-18*04</code>,
+<code>IGHV3-23*01</code>); the top three IGHJ genes are unchanged
+(<code>IGHJ5*02</code>, <code>IGHJ4*02</code>,
+<code>IGHJ6*02</code>).</li>
+<li><strong>CDR3 length</strong> on L2: 175 rows, all nucleotide lengths
+multiples of three (the two <code>out_of_frame</code> rows are gone),
+range 30-102 nt, mode 66 nt / 22 aa with 474 reads.</li>
+<li><strong>Plots</strong> use bare column names in <code>aes()</code>,
+call <code>print()</code>, and fix the filename typo in the corrected
+copies only (the as-written typo <code>diveristy_cor_entropy.png</code>
+is kept for fidelity).</li>
+</ul>
+<h3 id="what-the-corrected-pass-does-not-do">7.7 What the corrected pass
+does <em>not</em> do</h3>
+<ul>
+<li>It does not re-run TRUST3 or question the assembler’s calls.</li>
+<li>It does not collapse V alleles in the usage tables (that is left as
+an extension).</li>
+<li>It does not add clinical covariates, because the tutorial provides
+none.</li>
+<li>It does not silently replace <code>NaN</code> with a number:
+undefined stays <code>NA</code>.</li>
+</ul>
+<hr />
+<h2 id="checklist-outputs-and-summary">8. Checklist, outputs and
+summary</h2>
+<h3 id="checklist">8.1 Checklist</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Check</th>
+<th>Expected</th>
+<th>Observed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ck1</td>
+<td>environment <code>airr</code> activates and loads
+ggplot2/dplyr/ggpubr</td>
+<td>yes (R 4.3.0, 3.4.4 / 1.1.4 / 0.6.0)</td>
+</tr>
+<tr>
+<td>ck2</td>
+<td>demo <code>cdr3.out</code> has 12 columns, no header</td>
+<td>yes, 974 rows</td>
+</tr>
+<tr>
+<td>ck3</td>
+<td>TCR and BCR rows partition the table</td>
+<td>yes, 33 + 941 = 974, 0 leftovers</td>
+</tr>
+<tr>
+<td>ck4</td>
+<td>demo <code>report.tsv</code> has 8 columns</td>
+<td>yes, 930 data rows after the <code>#</code> header is skipped</td>
+</tr>
+<tr>
+<td>ck5</td>
+<td>report frequency sums to 2 (TCR and BCR each normalised)</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck6</td>
+<td>IGH usage frequencies sum to 1</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck7</td>
+<td>CDR3 length histogram shows the expected mode</td>
+<td>yes, 66 nt / 22 aa</td>
+</tr>
+<tr>
+<td>ck8</td>
+<td>375 OV samples processed</td>
+<td>yes, 13.9 s</td>
+</tr>
+<tr>
+<td>ck9</td>
+<td>diversity CSV has one row per sample</td>
+<td>yes, 375</td>
+</tr>
+<tr>
+<td>ck10</td>
+<td>three correlation plots produced</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ck11</td>
+<td><code>NaN</code> documented rather than hidden</td>
+<td>yes, 1 sample, plus 9 undefined after correction</td>
+</tr>
+<tr>
+<td>ck12</td>
+<td>corrected pass reproduces raw indices exactly</td>
+<td>yes, demo raw row matches Part 4 to six decimals</td>
+</tr>
+<tr>
+<td>ck13</td>
+<td>corrected vs raw ranking preserved</td>
+<td>yes, Spearman 0.9975 for diversity</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-inventory">8.2 Output inventory</h3>
+<pre><code>01_clonotype/    BCR_consensus_frequency_distribution.png, log_part1.txt, scripts/part1_clonotype.R
+02_gene_usage/   top10_IGHV_genes.png, top10_IGHJ_genes.png, heatmap_VJ.png,
+                 log_part2.txt, scripts/part2_gene_usage.R
+03_cdr3_length/  CDR3_nt_length_distribution.png, CDR3_aa_length_distribution.png,
+                 log_part3.txt, scripts/part3_cdr3_length.R
+04_diversity/    OV_bcr_diversity.csv, diveristy_cor_entropy.png, CPK_cor_entropy.png,
+                 CPK_cor_clonality.png, log_part4.txt, scripts/part4_diversity.R
+05_corrected/    OV_bcr_diversity_corrected.csv, OV_trb_diversity_corrected.csv,
+                 corrected_summary.txt, raw_vs_corrected_diversity.png,
+                 corrected_diversity_cor_entropy.png, corrected_CPK_cor_entropy.png,
+                 corrected_CPK_cor_clonality.png,
+                 corrected_CDR3_nt_length_distribution.png, corrected_CDR3_aa_length_distribution.png,
+                 corrected_top10_IGHV_genes.png, corrected_top10_IGHJ_genes.png,
+                 log_corrected.txt, scripts/corrected_analysis.R</code></pre>
+<h3 id="summary">8.3 Summary</h3>
+<p>This module is a one-minute R analysis over 11 input files plus a
+375-sample cohort, and it is the first module in this course where the
+tutorial’s own definitions, rather than its commands, are the weak
+point. Nine issues were verified and recorded. The three that change the
+numbers are: <code>nrow()</code> used as a richness measure when TRUST’s
+report is not keyed by CDR3 (TBCR-02), a blacklist that removes
+<code>partial</code> but not <code>out_of_frame</code> (TBCR-03), and a
+cohort loop that skips the quality filter Part 3 applies (TBCR-08). The
+corrected pass halves the median diversity (918 to 446) while preserving
+sample ranking (Spearman 0.9975), so relative comparisons survive and
+absolute cohort-level statements do not. One sample yields
+<code>NaN</code> clonality in the as-written run and three have no valid
+IGH clone at all after correction; all are reported as undefined rather
+than imputed.</p>
+<hr />
+<h2 id="appendix-a-deviation-log">Appendix A — Deviation log</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>Tutorial</th>
+<th>This run</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>interactive <code>R</code>, state carried between Parts</td>
+<td>one <code>Rscript</code> per Part, state re-derived</td>
+<td>reproducible, logged</td>
+</tr>
+<tr>
+<td>2</td>
+<td>outputs into <code>~/airr_output</code></td>
+<td>outputs into <code>results/NN_*/</code> via
+<code>setwd()</code></td>
+<td>repository layout</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Part 0 SSH + <code>.bashrc</code> + <code>conda init</code></td>
+<td><code>conda activate airr</code> only</td>
+<td>already on the cluster</td>
+</tr>
+<tr>
+<td>4</td>
+<td>absolute input paths</td>
+<td>unchanged</td>
+<td>read-only course share</td>
+</tr>
+<tr>
+<td>5</td>
+<td>no diagnostics</td>
+<td>extra <code>[diag]</code> prints</td>
+<td>evidence for this document</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>p</code> without <code>print()</code> in three plot
+blocks</td>
+<td>unchanged in as-written, <code>print()</code> in corrected</td>
+<td>fidelity in as-written run</td>
+</tr>
+<tr>
+<td>7</td>
+<td>tutorial ends at three correlation plots</td>
+<td>plus corrected pass, TRB extension, comparison</td>
+<td>explicitly requested</td>
+</tr>
+<tr>
+<td>8</td>
+<td>filename <code>diveristy_cor_entropy.png</code></td>
+<td>kept as written; corrected copy spelled correctly</td>
+<td>fidelity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="appendix-b-reproduction">Appendix B — Reproduction</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate airr</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C <span class="va">LANG</span><span class="op">=</span>C</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/TBCR-analysis/results</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 01_clonotype/scripts/part1_clonotype.R    <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 01_clonotype/log_part1.txt</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 02_gene_usage/scripts/part2_gene_usage.R  <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 02_gene_usage/log_part2.txt</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 03_cdr3_length/scripts/part3_cdr3_length.R <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 03_cdr3_length/log_part3.txt</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_diversity/scripts/part4_diversity.R    <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 04_diversity/log_part4.txt</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 05_corrected/scripts/corrected_analysis.R <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 05_corrected/log_corrected.txt</span></code></pre></div>
+<p>Total wall time: about 45 s (the cohort loop is 14 s, the corrected
+pass 24 s). No scheduler is used; the analysis is single-threaded and
+fits comfortably on the login node.</p>
+<p>Expected key numbers, for verification: 974 rows in
+<code>cdr3.out</code>; 745 BCR assemblies; 930 report rows; IGHV top
+gene <code>IGHV3-15*01</code> at 0.1560; 169 partial rows out of 354;
+diversity 354 for the demo sample; 375 cohort rows; median raw diversity
+918; median corrected diversity 446; one <code>NaN</code> clonality as
+written and nine undefined after correction.</p>
+</body>
+</html>

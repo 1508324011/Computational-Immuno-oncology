@@ -47,6 +47,18 @@
         ├── 03_survival_analysis/            # Part 2: KM 生存 + Cox 森林
         ├── 04_immune_infiltration/          # Part 3: 七法去卷积 (六法齐, MCPcounter 阻塞) + 堆叠柱/点/热图
         └── 05_tide/                         # Part 4: tidepy + 热图/柱图×2/ROC×2
+└── TBCR-analysis/                          # TCR/BCR 组库下游分析模块 (第四节课, 实跑完成)
+    ├── ref/
+    │   ├── TBCR_analysis.html               # 教材原文 (Part 0-4, TRUST3 输出下游分析)
+    │   ├── TBCR_analysis_corrected{.md,.html,.pdf}     # 矫正增强版：实跑 + 9 条坑位取证 + 修正版对拍
+    │   ├── TBCR_analysis_corrected_zh{.md,.html,.pdf}  # 同一矫正版的中文版
+    │   └── TBCR_analysis_results_guide{.md,.html,.pdf} # 结果逐类导读 + 7 个动手练习
+    └── results/                              # 实跑分析产物 (无任何原始数据)
+        ├── 01_clonotype/                    # Part 1: BCR consensus assembly 频率直方图
+        ├── 02_gene_usage/                   # Part 2: IGHV/IGHJ top10 + V-J 热图
+        ├── 03_cdr3_length/                  # Part 3: CDR3 nt/aa 长度分布
+        ├── 04_diversity/                    # Part 4: 375 样本多样性 CSV + 三张相关图 (原样)
+        └── 05_corrected/                    # 修正版: raw/L1/L2 三套指标 + TRB 扩展 + 对拍图
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
@@ -61,6 +73,10 @@
 > **矫正增强版（RNA_seq_application_corrected）**：把第三节课教材（Van Allen 2015 黑色素瘤队列，基因相关性/生存/免疫浸润/TIDE 四个 Part）在登录节点**原样实跑一轮**（2026-10-12，纯 R + 一行 tidepy，~6 分钟）后写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 7 条问题登记表（含 MCPcounter conda 1.1.0 http 硬编码阻塞、EPIC 收敛警告、tidepy 三行预期 WARN 等，每条带证据）。中文版 `_zh` 与英文版数字逐一对拍一致。构建：`WES/ref/build.sh ../../RNA-seq-application/ref/RNA_seq_application_corrected.md "RNA-seq Application Analysis · Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
 >
 > **分析结果（RNA-seq-application/results/）**：实跑分析产物（Part 1 相关散点、Part 2 KM+森林、Part 3 七法去卷积表+四张 quanTIseq 图、Part 4 TIDE 输出+热图+柱图×2+ROC×2、全部脚本与日志）——**不含任何原始数据**（表达矩阵/随访表在共享只读路径，未复制）。讲解文档 `RNA-seq-application/ref/RNA_seq_application_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 1 亲手复现 MCPcounter http vs https 阻塞）。本模块无大文件，全部产出已入库。
+
+> **矫正增强版（TBCR_analysis_corrected）**：把第四节课教材（TRUST3 输出的 TCR/BCR 组库下游分析：克隆型/基因使用/CDR3 长度/多样性指数）在登录节点**原样实跑一轮**（2026-10-19，纯 R，约 45 秒）后，再**补跑一份修正版**对拍写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 9 条问题登记表（核心三条：`nrow()` 冒充唯一 CDR3、`partial` 黑名单漏掉 `out_of_frame`、队列循环跳过 Part 3 的质量过滤；另有插补序列、单克隆 `NaN`、log2 vs 自然对数、`*` 占位符当基因等）。中文版 `_zh` 与英文版数字逐一对拍一致（218 个数字 token 出现次数完全相同）。构建：`WES/ref/build.sh ../../TBCR-analysis/ref/TBCR_analysis_corrected.md "TCR/BCR Repertoire Downstream Analysis · Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **分析结果（TBCR-analysis/results/）**：原样四部分产物（克隆型频率直方图、IGHV/IGHJ top10、V-J 热图、CDR3 nt/aa 长度分布、375 样本多样性 CSV 与三张相关图、全部脚本与日志）+ `05_corrected/` 修正版（raw/L1/L2 三套逐样本指标、TRB 扩展 CSV、全部修正图与 `corrected_summary.txt`）——**不含任何原始数据**（TRUST3 产物在共享只读路径 `/lustre1/share/airr/data/`，未复制）。讲解文档 `TBCR-analysis/ref/TBCR_analysis_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 2 五条命令现场复现 raw/L1/L2 三口径差异）。
 
 ## WES 路线图内容一览 / What the roadmap covers
 
@@ -110,6 +126,8 @@ mkdir -p "$BASE"/{0_fastq,1_alignment/OC,1_alignment/PBMC,2_variant_call,3_annot
 ```
 
 按路线图第 1–10 节顺序执行即可；推荐用 SLURM (`sbatch`) 提交 BWA/GATK 等重计算步骤，不要在登录节点直接跑。
+
+后三节课（RNA-seq、RNA-seq 下游应用、TCR/BCR 组库）都是**登录节点串行直跑**，与 WES 的 sbatch 纪律不同：`conda activate RNA-seq` / `rnaimmune` / `airr` 后按各自 `ref/` 下的矫正版文档执行即可。
 
 ## 致谢 / Credits
 

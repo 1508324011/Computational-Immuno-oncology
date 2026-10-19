@@ -1,0 +1,122 @@
+=== Part 1: Obtain clonetype information ===
+R: R version 4.3.0 (2023-04-21) 
+time: 2026-10-19 18:15:37 
+
+Warning message:
+package 'ggplot2' was built under R version 4.3.1 
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package 'dplyr' was built under R version 4.3.3 
+Warning message:
+package 'ggpubr' was built under R version 4.3.3 
+         V1 V2          V3         V4                V5    V6
+1 assemble0  0 IGHV4-31*03 IGHD1-1*01          IGHJ5*02 IGHG1
+2 assemble0  1 IGHV4-31*03 IGHD1-1*01          IGHJ5*02 IGHG1
+3 assemble0  2 IGHV4-31*03 IGHD1-1*01          IGHJ5*02 IGHG1
+4 assemble0  3 IGHV4-31*03 IGHD1-1*01          IGHJ5*02 IGHG1
+5 assemble1  0 IGLV1-40*01          * IGLJ2*01,IGLJ3*01 IGLC3
+6 assemble1  1 IGLV1-40*01          * IGLJ2*01,IGLJ3*01 IGLC3
+                              V7                    V8
+1 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+2 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+3 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+4 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+5    AGCTCCAACATCGGGGCAGGTTATAAT             GGTAACACC
+6    AGCTCCAACATCGGGGCAGGTTATAAT             GGTAACACC
+                                          V9 V10    V11   V12
+1 TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG   1 149.20 95.24
+2 TGTGCGAGAGCGCGCGGGGATAACAACTGGTTCGACCCCTGG   1   2.96 95.24
+3 TGTGGGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG   1   1.59 92.86
+4 TCTACGAGAGCGCGCGGGGATAGCAACTGGTTCGACCCCTGG   1   1.25 85.71
+5    TGCCAGTCCTATGACAGCAGCCTGAATGGTCTGGTATTC   1 360.07 97.22
+6    TGCCAGTCCTATGACAGCAGCCTGAATGGCCTGGTATTC   1   4.09 94.44
+  consensus_id index_within_consensus      V_gene     D_gene            J_gene
+1    assemble0                      0 IGHV4-31*03 IGHD1-1*01          IGHJ5*02
+2    assemble0                      1 IGHV4-31*03 IGHD1-1*01          IGHJ5*02
+3    assemble0                      2 IGHV4-31*03 IGHD1-1*01          IGHJ5*02
+4    assemble0                      3 IGHV4-31*03 IGHD1-1*01          IGHJ5*02
+5    assemble1                      0 IGLV1-40*01          * IGLJ2*01,IGLJ3*01
+6    assemble1                      1 IGLV1-40*01          * IGLJ2*01,IGLJ3*01
+  C_gene                           CDR1                  CDR2
+1  IGHG1 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+2  IGHG1 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+3  IGHG1 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+4  IGHG1 GGTGGGTCCATCAGTAGTGGTGGACACTAC ATCTATTACAGTGGGAAAACC
+5  IGLC3    AGCTCCAACATCGGGGCAGGTTATAAT             GGTAACACC
+6  IGLC3    AGCTCCAACATCGGGGCAGGTTATAAT             GGTAACACC
+                                        CDR3 CDR3_score read_fragment_count
+1 TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG          1              149.20
+2 TGTGCGAGAGCGCGCGGGGATAACAACTGGTTCGACCCCTGG          1                2.96
+3 TGTGGGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG          1                1.59
+4 TCTACGAGAGCGCGCGGGGATAGCAACTGGTTCGACCCCTGG          1                1.25
+5    TGCCAGTCCTATGACAGCAGCCTGAATGGTCTGGTATTC          1              360.07
+6    TGCCAGTCCTATGACAGCAGCCTGAATGGCCTGGTATTC          1                4.09
+  CDR3_germline_similarity
+1                    95.24
+2                    95.24
+3                    92.86
+4                    85.71
+5                    97.22
+6                    94.44
+
+[diag] cdr3.out rows: 974  unique consensus_id: 778 
+  consensus_id index_within_consensus     V_gene   D_gene     J_gene C_gene
+1    assemble8                      0  TRBV27*01 TRBD1*01 TRBJ2-5*01  TRBC2
+2  assemble509                      0  TRBV28*01 TRBD1*01 TRBJ2-7*01      *
+3  assemble514                      0 TRAV9-2*01        *  TRAJ12*01      *
+4  assemble538                      0  TRBV18*01        *          *      *
+5  assemble644                      0          *        * TRBJ2-4*01      *
+6  assemble899                      0 TRBV4-2*01 TRBD2*01 TRBJ1-1*01      *
+             CDR1               CDR2
+1 ATGAACCATGAGTAT TCAATGAATGTTGAGGTG
+2               *                  *
+3               *                  *
+4               *                  *
+5               *                  *
+6               *                  *
+                                              CDR3 CDR3_score
+1    TGTGCCAGCAGTTTAAGGGCAGCAGGGGGGGAGACCCAGTACTTC          1
+2 TGTGCCAGCAGTTCCCGGATACAGGGGGGGGAGTACGAGCAGTACTTC          1
+3       TGTGCTCTGACTTGGATGGATAGCAGCTATAAATTGATCTTC          1
+4                TGTGCCAGCTCACTGGGACAGGGCTTGGATGGC          0
+5                TCGGGGCTGTGAGCCAAAAACATTCAGTACTTC          0
+6    TGTGCCAGCACCCAACGGGGGGCGCGGTACACTGAAGCTTTCTTT          1
+  read_fragment_count CDR3_germline_similarity
+1                   5                    100.0
+2                   2                    100.0
+3                   2                    100.0
+4                   2                      0.0
+5                   1                      0.0
+6                   1                     97.3
+
+[diag] TCR rows: 33  unique consensus_id: 33 
+[diag] BCR rows: 941  unique consensus_id: 745 
+[diag] rows neither TR nor IG: 0 
+       Var1 Freq
+1 assemble0    4
+2 assemble1   18
+3 assemble2    7
+4 assemble3   10
+5 assemble4    5
+6 assemble6    1
+[1] 745
+
+[diag] BCR consensus assemblies: 745  total rows: 941 
+[diag] Freq table:
+
+  1   2   3   4   5   7  10  11  16  18 
+659  50  15   7   8   2   1   1   1   1 
+null device 
+          1 
+
+=== Part 1 done ===

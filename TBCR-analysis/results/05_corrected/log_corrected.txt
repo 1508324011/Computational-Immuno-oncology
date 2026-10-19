@@ -1,0 +1,120 @@
+Warning messages:
+1: package 'ggplot2' was built under R version 4.3.1 
+2: package 'dplyr' was built under R version 4.3.3 
+3: package 'ggpubr' was built under R version 4.3.3 
+=== TBCR corrected analysis ===
+R: R version 4.3.0 (2023-04-21) 
+time: 2026-10-19 18:19:57 
+
+## demo sample (TCGA-02-0055) 
+IGH report rows: 354  unique CDR3nt: 345  unique CDR3aa: 173 
+  seq_class imputed: 8 
+  seq_class out_of_frame: 2 
+  seq_class partial: 169 
+  seq_class valid: 175 
+total reads: 2115 
+L1 kept rows: 183  L2 kept rows: 175 
+demo indices (rows = raw / L1 / L2): 
+raw   L1    L2     
+diversity    354.000000177.000000169.000000 
+CPK          167.37588797.952407 94.097996  
+entropy_nat  4.388594  3.757226  3.730807   
+entropy_bit  6.331402  5.420532  5.382417   
+clonality    0.252280  0.274127  0.272733   
+gini         0.956772  0.939264  0.938524   
+ 
+## cohort (OV_results) 
+samples: 375 
+loop elapsed: 23.7 s 
+ 
+## as-written vs corrected 
+diversity   raw=median 918.0000  L1=median 446.0000  finite=375  spearman=0.9975  median(L1/raw)=0.4840  changed=375 
+CPK         raw=median 180.7188  L1=median 113.3483  finite=372  spearman=0.9877  median(L1/raw)=0.6403  changed=372 
+clonality   raw=median 0.1843  L1=median 0.2196  finite=366  spearman=0.9690  median(L1/raw)=1.1716  changed=366 
+gini        raw=median 0.9820  L1=median 0.9645  finite=372  spearman=0.9672  median(L1/raw)=0.9849  changed=372 
+entropy bit->nat factor (log 2 = 0.693147), raw bit median 7.6351 -> L1 nat median 4.4098 
+ 
+NA counts: 
+  raw_clonality    NA = 1 
+  L1_clonality     NA = 9 
+  L2_clonality     NA = 9 
+  L1_diversity     NA = 0 
+  L2_diversity     NA = 0 
+  L1_entropy_nat   NA = 3 
+  L1_CPK           NA = 3 
+  L1_gini          NA = 3 
+samples that are degenerate (L1 diversity < 2): 9 -> TCGA-04-1519-01A-01R-1565-13_report, TCGA-04-1542-01A-01R-1566-13_report, TCGA-10-0933-01A-01R-1569-13_report, TCGA-13-0800-01A-01R-1564-13_report, TCGA-13-0888-01A-01R-1564-13_report, TCGA-23-1113-01A-01R-1564-13_report, TCGA-24-1419-01A-01R-1565-13_report, TCGA-29-1762-01A-01R-1567-13_report, TCGA-29-1774-01A-01R-1567-13_report 
+samples with L1 diversity == 0 (no valid IGH): 3 -> TCGA-13-0800-01A-01R-1564-13_report, TCGA-23-1113-01A-01R-1564-13_report, TCGA-24-1419-01A-01R-1565-13_report 
+ 
+ranges (raw -> L1): 
+  diversity       1.0000..26978.0000  ->      0.0000..14979.0000 
+  CPK            15.5670.. 1000.0000  ->      8.4084..  833.3333 
+  clonality       0.0195..    0.7306  ->      0.0290..    0.8168 
+  gini            0.0000..    0.9995  ->      0.0000..    0.9991 
+  diversity       0.0000..14762.0000  (L2) 
+ 
+## spearman (as-written) 
+  diversity~entropy  0.7957 
+  CPK~entropy        -0.2470 
+  CPK~clonality      -0.8790 
+## spearman (corrected L1, entropy in nat) 
+  diversity~entropy  0.7862 
+  CPK~entropy        -0.2421 
+  CPK~clonality      -0.8729 
+## spearman (corrected L2, entropy in nat) 
+  diversity~entropy  0.7875 
+  CPK~entropy        -0.2393 
+  CPK~clonality      -0.8722 
+Warning message:
+Transformation introduced infinite values in continuous y-axis 
+null device 
+          1 
+`geom_smooth()` using formula = 'y ~ x'
+null device 
+          1 
+Warning messages:
+1: Removed 3 rows containing non-finite values (`stat_smooth()`). 
+2: Removed 3 rows containing non-finite values (`stat_cor()`). 
+3: Removed 3 rows containing missing values (`geom_point()`). 
+`geom_smooth()` using formula = 'y ~ x'
+null device 
+          1 
+Warning messages:
+1: Removed 3 rows containing non-finite values (`stat_smooth()`). 
+2: Removed 3 rows containing non-finite values (`stat_cor()`). 
+3: Removed 3 rows containing missing values (`geom_point()`). 
+`geom_smooth()` using formula = 'y ~ x'
+null device 
+          1 
+Warning messages:
+1: Removed 9 rows containing non-finite values (`stat_smooth()`). 
+2: Removed 9 rows containing non-finite values (`stat_cor()`). 
+3: Removed 9 rows containing missing values (`geom_point()`). 
+ 
+## CDR3 length, demo sample 
+L2 rows: 175  nt multiple-of-3: TRUE 
+nt length range: 30-102 
+aa length range: 10-34 
+nt mode: 66 (474 reads) 
+aa mode: 22 (474 reads) 
+null device 
+          1 
+null device 
+          1 
+ 
+## gene usage, demo sample (C5: exclude * placeholder) 
+IGH rows with J == "*": 72  V == "*": 60  D == "*": 169  C == "*": 132 
+IGHV distinct incl "*": 80  excluding "*": 79 
+top5 IGHV (excl *): IGHV3-15*01, IGHV5-51*03, IGHV4-31*03, IGHV1-18*04, IGHV3-23*01 
+top5 IGHJ (excl *): IGHJ5*02, IGHJ4*02, IGHJ6*02, IGHJ3*01, IGHJ3*02 
+null device 
+          1 
+null device 
+          1 
+ 
+## extension: TRB (beta chain) diversity, same C1/C2/C3 rules 
+samples with >=1 valid TRB clone: 369 / 375 
+TRB diversity median (nonzero): 38 
+TRB diversity range: 0-529 
+ 
+=== corrected analysis done === 

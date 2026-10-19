@@ -1,0 +1,122 @@
+=== Part 3: Calculate the distribution of CDR3 length ===
+R: R version 4.3.0 (2023-04-21) 
+time: 2026-10-19 18:16:07 
+
+Warning message:
+package 'ggplot2' was built under R version 4.3.1 
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package 'dplyr' was built under R version 4.3.3 
+Warning message:
+package 'ggpubr' was built under R version 4.3.3 
+  count   frequency
+1   278 0.043787140
+2   231 0.036464390
+3   155 0.024469420
+4   149 0.023455430
+5    49 0.007733061
+6    35 0.005502280
+                                                                    CDR3nt
+1       TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+2                      TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+3       TGTGCGAGGGACTCCGGTGTATACTGTGACAGTGCCGACTGCTTTCTTTCACCCTTCGACCCCTGG
+4                               TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG
+5                            TGTGCGAGAGGGTCGGGGTATAGCAGCAGCTGGTCCGACTACTGG
+6 TGCGCGAGACAGGGCTCGATACTACTTCCAGTTGCCATGGGTGGCGACTACTACTTCGGTATGGACGTCTGG
+                    CDR3aa           V           D        J     C
+1   CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+2        CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+3   CARDSGVYCDSADCFLSPFDPW IGHV1-18*04 IGHD3-22*01 IGHJ5*02 IGHA1
+4           CARARGDNNWFDPW IGHV4-31*03  IGHD1-1*01 IGHJ5*02 IGHG1
+5          CARGSGYSSSWSDYW IGHV4-61*02 IGHD6-13*01 IGHJ4*02 IGHA2
+6 CARQGSILLPVAMGGDYYFGMDVW IGHV3-33*01 IGHD2-21*02 IGHJ6*02 IGHG1
+
+[diag] IGH rows: 354  partial rows: 169  kept: 185  kept fraction: 0.5226 
+[diag] kept read count: 1823  (of 2115 )
+  count   frequency
+1   278 0.043787140
+2   231 0.036464390
+3   155 0.024469420
+4   149 0.023455430
+5    49 0.007733061
+6    35 0.005502280
+                                                                    CDR3nt
+1       TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+2                      TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+3       TGTGCGAGGGACTCCGGTGTATACTGTGACAGTGCCGACTGCTTTCTTTCACCCTTCGACCCCTGG
+4                               TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG
+5                            TGTGCGAGAGGGTCGGGGTATAGCAGCAGCTGGTCCGACTACTGG
+6 TGCGCGAGACAGGGCTCGATACTACTTCCAGTTGCCATGGGTGGCGACTACTACTTCGGTATGGACGTCTGG
+                    CDR3aa           V           D        J     C nt_length
+1   CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1        66
+2        CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1        51
+3   CARDSGVYCDSADCFLSPFDPW IGHV1-18*04 IGHD3-22*01 IGHJ5*02 IGHA1        66
+4           CARARGDNNWFDPW IGHV4-31*03  IGHD1-1*01 IGHJ5*02 IGHG1        42
+5          CARGSGYSSSWSDYW IGHV4-61*02 IGHD6-13*01 IGHJ4*02 IGHA2        45
+6 CARQGSILLPVAMGGDYYFGMDVW IGHV3-33*01 IGHD2-21*02 IGHJ6*02 IGHG1        72
+  aa_length
+1        22
+2        17
+3        22
+4        14
+5        15
+6        24
+
+[diag] nt length range: 30 - 102  multiples of 3: FALSE 
+[diag] aa length range: 10 - 34 
+   nt_length total_count
+1         30           2
+2         33           1
+3         36           4
+4         39          29
+5         42         176
+6         45         133
+7         46           2
+8         48         119
+9         51         383
+10        54         107
+
+[diag] nt length mode: 66  count: 477  total: 1823 
+[diag] top5 nt lengths by count:
+   nt_length total_count
+14        66         477
+9         51         383
+5         42         176
+6         45         133
+8         48         119
+null device 
+          1 
+   aa_length total_count
+1         10           2
+2         11           1
+3         12          20
+4         13          29
+5         14         176
+6         15         133
+7         16         119
+8         17         383
+9         18         107
+10        19         113
+
+[diag] aa length mode: 22  count: 477 
+[diag] top5 aa lengths by count:
+   aa_length total_count
+13        22         477
+8         17         383
+5         14         176
+6         15         133
+7         16         119
+null device 
+          1 
+
+=== Part 3 done ===

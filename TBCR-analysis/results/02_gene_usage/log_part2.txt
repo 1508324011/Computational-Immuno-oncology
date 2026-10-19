@@ -1,0 +1,140 @@
+=== Part 2: Obtain gene usage information ===
+R: R version 4.3.0 (2023-04-21) 
+time: 2026-10-19 18:15:52 
+
+Warning message:
+package 'ggplot2' was built under R version 4.3.1 
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package 'dplyr' was built under R version 4.3.3 
+Warning message:
+package 'ggpubr' was built under R version 4.3.3 
+   V1         V2
+1 495 0.07787612
+2 364 0.05723471
+3 278 0.04378714
+4 231 0.03646439
+5 203 0.03203899
+6 201 0.03170728
+                                                                  V3
+1                               TGTCAACAAACTTACAATACCGTCATCTTCACTTTC
+2                            TGCCAGTCCTATGACAGCAGCCTGAATGGTCTGGTATTC
+3 TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+4                TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+5                                  TGTCAACAGAGTTACAATACCCCGGAGACGTTC
+6                            TGTCAGCAGTATAATAAATGGCCTCCAGCGCTCACTTTC
+                      V4          V5          V6       V7    V8
+1           CQQTYNTVIFTF IGKV1-39*01           * IGKJ3*01  IGKC
+2          CQSYDSSLNGLVF IGLV1-40*01           * IGLJ2*01  IGLC
+3 CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+4      CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+5            CQQSYNTPETF IGKV1-39*01           * IGKJ1*01  IGKC
+6          CQQYNKWPPALTF IGKV3-15*01           * IGKJ4*01  IGKC
+  count  frequency
+1   495 0.07787612
+2   364 0.05723471
+3   278 0.04378714
+4   231 0.03646439
+5   203 0.03203899
+6   201 0.03170728
+                                                              CDR3nt
+1                               TGTCAACAAACTTACAATACCGTCATCTTCACTTTC
+2                            TGCCAGTCCTATGACAGCAGCCTGAATGGTCTGGTATTC
+3 TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+4                TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+5                                  TGTCAACAGAGTTACAATACCCCGGAGACGTTC
+6                            TGTCAGCAGTATAATAAATGGCCTCCAGCGCTCACTTTC
+                  CDR3aa           V           D        J     C
+1           CQQTYNTVIFTF IGKV1-39*01           * IGKJ3*01  IGKC
+2          CQSYDSSLNGLVF IGLV1-40*01           * IGLJ2*01  IGLC
+3 CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+4      CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+5            CQQSYNTPETF IGKV1-39*01           * IGKJ1*01  IGKC
+6          CQQYNKWPPALTF IGKV3-15*01           * IGKJ4*01  IGKC
+
+[diag] report rows: 930  sum(count): 6341  sum(frequency): 2 
+  count  frequency                                     CDR3nt         CDR3aa
+1     3 0.05084746    TGTGCTCTGGTCAAAGCTGCAGGCAACAAGCTAACTTTT  CALVKAAGNKLTF
+2     2 0.03389831 TGTGCTCTGACTTGGATGGATAGCAGCTATAAATTGATCTTC CALTWMDSSYKLIF
+3     1 0.01694915                         TGTGCCGGAAGTCCGTGG        partial
+4     1 0.01694915                   TGTGCTGTGGAGGCACAGTGCCCC        partial
+5     1 0.01694915                         TGTGCCGGTAGGGGCGGG        partial
+6     1 0.01694915                      GAGCGGAGAGGGTCCTGTTGG        partial
+            V D         J    C
+1  TRAV9-2*01 * TRAJ17*01 TRAC
+2  TRAV9-2*01 * TRAJ12*01 TRAC
+3   TRAV39*01 *         * TRAC
+4   TRAV41*01 *         * TRAC
+5 TRAV12-2*01 *         * TRAC
+6           * * TRAJ55*01 TRAC
+  count   frequency
+1   278 0.043787140
+2   231 0.036464390
+3   155 0.024469420
+4   149 0.023455430
+5    49 0.007733061
+6    35 0.005502280
+                                                                    CDR3nt
+1       TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+2                      TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+3       TGTGCGAGGGACTCCGGTGTATACTGTGACAGTGCCGACTGCTTTCTTTCACCCTTCGACCCCTGG
+4                               TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG
+5                            TGTGCGAGAGGGTCGGGGTATAGCAGCAGCTGGTCCGACTACTGG
+6 TGCGCGAGACAGGGCTCGATACTACTTCCAGTTGCCATGGGTGGCGACTACTACTTCGGTATGGACGTCTGG
+                    CDR3aa           V           D        J     C
+1   CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+2        CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+3   CARDSGVYCDSADCFLSPFDPW IGHV1-18*04 IGHD3-22*01 IGHJ5*02 IGHA1
+4           CARARGDNNWFDPW IGHV4-31*03  IGHD1-1*01 IGHJ5*02 IGHG1
+5          CARGSGYSSSWSDYW IGHV4-61*02 IGHD6-13*01 IGHJ4*02 IGHA2
+6 CARQGSILLPVAMGGDYYFGMDVW IGHV3-33*01 IGHD2-21*02 IGHJ6*02 IGHG1
+
+[diag] TRA rows: 6  TRB rows: 19  IGH rows: 354 
+[diag] IGH sum(count): 2115  IGH sum(frequency): 0.3362695 
+            V total_count usage_frequency
+1 IGHV3-15*01         330      0.15602837
+2 IGHV5-51*03         243      0.11489362
+3 IGHV4-31*03         167      0.07895981
+4 IGHV1-18*04         165      0.07801418
+5 IGHV3-23*01         109      0.05153664
+6           *         101      0.04775414
+
+[diag] distinct IGHV genes: 80  usage sum: 1 
+[diag] top5 IGHV: IGHV3-15*01, IGHV5-51*03, IGHV4-31*03, IGHV1-18*04, IGHV3-23*01 
+null device 
+          1 
+         J total_count usage_frequency
+1 IGHJ5*02         751      0.35508274
+2 IGHJ4*02         492      0.23262411
+3 IGHJ6*02         478      0.22600473
+4        *         111      0.05248227
+5 IGHJ3*01          94      0.04444444
+6 IGHJ3*02          66      0.03120567
+
+[diag] distinct IGHJ genes: 12  usage sum: 1 
+[diag] top5 IGHJ: IGHJ5*02, IGHJ4*02, IGHJ6*02, *, IGHJ3*01 
+null device 
+          1 
+            V        J total_count usage_frequency
+1 IGHV3-15*01 IGHJ5*02         288      0.13617021
+2 IGHV5-51*03 IGHJ6*02         243      0.11489362
+3 IGHV1-18*04 IGHJ5*02         165      0.07801418
+4 IGHV4-31*03 IGHJ5*02         153      0.07234043
+5 IGHV3-23*01 IGHJ4*02          80      0.03782506
+6 IGHV4-61*02 IGHJ4*02          77      0.03640662
+
+[diag] distinct V-J pairs: 173  top pair: IGHV3-15*01 + IGHJ5*02  count: 288 
+null device 
+          1 
+
+=== Part 2 done ===

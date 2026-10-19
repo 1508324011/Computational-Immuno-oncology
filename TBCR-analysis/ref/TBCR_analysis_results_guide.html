@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TBCR 分析结果讲解 (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">TBCR 分析结果讲解 (Corrected &amp; Annotated
+Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#tbcr-分析结果讲解" id="toc-tbcr-分析结果讲解">TBCR
+分析结果讲解</a>
+<ul>
+<li><a href="#怎么读这个目录" id="toc-怎么读这个目录">1.
+怎么读这个目录</a></li>
+<li><a href="#逐类导读" id="toc-逐类导读">2. 逐类导读</a></li>
+<li><a href="#手把手练习" id="toc-手把手练习">3. 手把手练习</a></li>
+<li><a href="#一句话总结" id="toc-一句话总结">4. 一句话总结</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="tbcr-分析结果讲解">TBCR 分析结果讲解</h1>
+<p>本文件导读 <code>TBCR-analysis/results/</code>
+下的全部产物，并给出可以亲手复现的练习。配套的矫正增强版文档在
+<code>ref/TBCR_analysis_corrected.md</code>（英文）与
+<code>ref/TBCR_analysis_corrected_zh.md</code>（中文）。</p>
+<h2 id="怎么读这个目录">1. 怎么读这个目录</h2>
+<pre><code>results/
+├── 01_clonotype/   Part 1 原样产出：BCR consensus assembly 频率直方图
+├── 02_gene_usage/  Part 2 原样产出：IGHV / IGHJ top10 柱状图、V-J 热图
+├── 03_cdr3_length/ Part 3 原样产出：CDR3 核苷酸 / 氨基酸长度分布
+├── 04_diversity/   Part 4 原样产出：375 样本多样性 CSV + 三张相关图
+└── 05_corrected/   修正版产出：同四项指标在 L1/L2 过滤下的结果 + 对拍图</code></pre>
+<p>每个步骤目录里都有
+<code>scripts/</code>（教材原文代码，文件头登记偏差）与
+<code>log_*.txt</code>（完整运行日志，含 <code>[diag]</code>
+诊断行）。所有脚本都会 <code>setwd()</code> 到自己的目录，所以直接
+<code>Rscript scripts/xxx.R</code> 即可重跑。</p>
+<h2 id="逐类导读">2. 逐类导读</h2>
+<h3 id="clonotype">2.1 <code>01_clonotype/</code></h3>
+<ul>
+<li><code>BCR_consensus_frequency_distribution.png</code>：横轴是某个
+consensus assembly
+在样本里出现的次数（<code>Freq</code>），纵轴是有多少个 assembly
+具有该次数。演示样本 745 个 BCR assembly 中 659
+个只出现一次，最高的一个出现 18 次——长尾单例为主、少数扩增克隆。</li>
+<li>读这张图要记住：<code>Freq</code>
+是<strong>行数</strong>（报告条目数），不是读段数；若要按读段加权，用
+<code>cdr3.out</code> 的 <code>read_fragment_count</code> 列。</li>
+</ul>
+<h3 id="gene_usage">2.2 <code>02_gene_usage/</code></h3>
+<ul>
+<li><code>top10_IGHV_genes.png</code>：IGHV 使用率前 10。演示样本首位
+<code>IGHV3-15*01</code>，占 IGH 读段 0.1560。</li>
+<li><code>top10_IGHJ_genes.png</code>：IGHJ 使用率前 10。首位
+<code>IGHJ5*02</code>，占 0.3551。</li>
+<li><code>heatmap_VJ.png</code>：V（横）×
+J（纵）配对计数热图，颜色越深读段越多。173 个不同配对，最强的是
+<code>IGHV3-15*01</code> + <code>IGHJ5*02</code>（288 读段，占
+0.1362）。</li>
+<li>注意热图里会出现 <code>*</code> 行/列：那是”未检出
+D/J”的占位符，不是一个基因（详见矫正文档 TBCR-07）。修正版已剔除。</li>
+</ul>
+<h3 id="cdr3_length">2.3 <code>03_cdr3_length/</code></h3>
+<ul>
+<li><code>CDR3_nt_length_distribution.png</code> /
+<code>CDR3_aa_length_distribution.png</code>：按读段数加权的长度分布。演示样本众数
+66 nt / 22 aa（各 477 读段）。</li>
+<li>核苷酸长度图上会出现两根不在 3 倍数上的孤立柱（46 与 71 nt）：那是
+<code>out_of_frame</code> 序列，教材的 <code>!= "partial"</code>
+过滤没拦住它们（TBCR-03）。修正版的
+<code>corrected_CDR3_nt_length_distribution.png</code>
+里这两根柱消失。</li>
+</ul>
+<h3 id="diversity">2.4 <code>04_diversity/</code></h3>
+<ul>
+<li><code>OV_bcr_diversity.csv</code>：375 个 TCGA-OV 样本 × 5
+个指数（<code>diversity</code>、<code>CPK</code>、<code>entropy</code>、<code>clonality</code>、<code>gini</code>），第一列是样本名（去掉
+<code>_report.tsv</code> 后缀）。<code>TCGA-23-1113</code> 的
+<code>clonality</code> 是 <code>NA</code>——该样本只有 1 条 IGH
+行，公式在此处 0/0。</li>
+<li><code>diveristy_cor_entropy.png</code>（文件名拼写照教材保留）：diversity
+对 entropy，Spearman rho 0.7957。</li>
+<li><code>CPK_cor_entropy.png</code>：CPK 对 entropy，rho -0.2470。</li>
+<li><code>CPK_cor_clonality.png</code>：CPK 对 clonality，rho
+-0.8790（预期中的强负相关）。</li>
+<li>三张图里都会看到一条提示”Removed 1 rows containing non-finite
+values”——就是那个 <code>NaN</code> 样本，属预期。</li>
+</ul>
+<h3 id="corrected">2.5 <code>05_corrected/</code></h3>
+<ul>
+<li><code>corrected_summary.txt</code>：修正版全部关键数字的纯文本汇总，写文档时直接引用它。</li>
+<li><code>OV_bcr_diversity_corrected.csv</code>：逐样本同时给出 raw / L1
+/ L2 三套指标，外加
+<code>rows_IGH</code>、<code>reads</code>、<code>n_partial</code>、<code>n_oof</code>、<code>n_imputed</code>、<code>n_valid</code>
+六个审计列。想核对任何差异，从这张表开始。</li>
+<li><code>OV_trb_diversity_corrected.csv</code>：TCR beta
+链的同一套指标（教材只做 BCR 重链，这是扩展）。</li>
+<li><code>raw_vs_corrected_diversity.png</code>：raw 对 L1 的 diversity
+散点（双对数），虚线是 y = x；点整体落在虚线下方，说明 raw
+系统性高估，但斜率接近 1，说明排序基本不变。</li>
+<li>三张 <code>corrected_*_cor_*.png</code>：修正后的相关图（entropy 用
+nat，与公式一致）。</li>
+<li>两张 <code>corrected_CDR3_*_length_distribution.png</code>：L2
+过滤后的长度分布（无非 3 倍数柱）。</li>
+<li>两张 <code>corrected_top10_IGH*.png</code>：剔除 <code>*</code>
+后的使用率前 10。</li>
+</ul>
+<h2 id="手把手练习">3. 手把手练习</h2>
+<p><strong>练习 1 —— 复现”表头行靠注释符跳过”这件事</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/TBCR-analysis/results</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh <span class="kw">&amp;&amp;</span> <span class="ex">conda</span> activate airr</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">f &lt;- &quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">a &lt;- read.table(f, sep=&quot;\t&quot;)                       # 默认 comment.char=&quot;#&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">b &lt;- read.table(f, sep=&quot;\t&quot;, comment.char=&quot;&quot;)      # 关掉注释</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;默认:&quot;, nrow(a), &quot;行；关注释:&quot;, nrow(b), &quot;行\n&quot;)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;关注释后首行 count =&quot;, as.character(b$V1[1]), &quot;\n&quot;)&#39;</span></span></code></pre></div>
+<p>预期：默认 930 行，关注释 931 行，首行 <code>count</code> 是
+<code>#count</code>。这就是 TBCR-01。</p>
+<p><strong>练习 2 —— 亲手验证 diversity 的两种口径</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">suppressMessages(library(dplyr))</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">a &lt;- read.table(&quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;, sep=&quot;\t&quot;)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">colnames(a) &lt;- c(&quot;count&quot;,&quot;frequency&quot;,&quot;CDR3nt&quot;,&quot;CDR3aa&quot;,&quot;V&quot;,&quot;D&quot;,&quot;J&quot;,&quot;C&quot;)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">ig &lt;- a %&gt;% filter(grepl(&quot;^IGHV&quot;,V)|grepl(&quot;^IGHD&quot;,D)|grepl(&quot;^IGHJ&quot;,J)|grepl(&quot;^IGHC&quot;,C))</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;nrow(IGH)          =&quot;, nrow(ig), &quot;\n&quot;)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;唯一 CDR3nt        =&quot;, length(unique(ig$CDR3nt)), &quot;\n&quot;)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;唯一 CDR3aa        =&quot;, length(unique(ig$CDR3aa)), &quot;\n&quot;)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;partial 行         =&quot;, sum(ig$CDR3aa==&quot;partial&quot;), &quot;\n&quot;)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;out_of_frame 行    =&quot;, sum(ig$CDR3aa==&quot;out_of_frame&quot;), &quot;\n&quot;)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;含 ?/_ 插补行      =&quot;, sum(grepl(&quot;[?_]&quot;, ig$CDR3aa)), &quot;\n&quot;)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;保持 3 倍数?       =&quot;, all(nchar(ig$CDR3nt[ig$CDR3aa!=&quot;partial&quot;]) %% 3 == 0), &quot;\n&quot;)&#39;</span></span></code></pre></div>
+<p>预期：354 / 345 / 173 / 169 / 2 / 8 / FALSE。最后一行 FALSE 正是
+TBCR-03：<code>!= "partial"</code> 之后仍有非 3 倍数序列。</p>
+<p><strong>练习 3 —— 从 CSV 里找出所有未定义样本</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/TBCR-analysis/results/05_corrected</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">m &lt;- read.csv(&quot;OV_bcr_diversity_corrected.csv&quot;)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;样本数:&quot;, nrow(m), &quot;\n&quot;)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;L1 clonality 为 NA:&quot;, sum(is.na(m$L1_clonality)), &quot;\n&quot;)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;无有效克隆(L1 diversity==0):&quot;, sum(m$L1_diversity==0), &quot;\n&quot;)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">print(m[is.na(m$L1_clonality), c(&quot;sample&quot;,&quot;rows_IGH&quot;,&quot;n_partial&quot;,&quot;n_oof&quot;,&quot;n_imputed&quot;,&quot;n_valid&quot;,&quot;L1_diversity&quot;)])&#39;</span></span></code></pre></div>
+<p>预期：375 样本、9 个 NA、3 个零有效克隆，名单与文档 §7.4 一致。</p>
+<p><strong>练习 4 —— 量化 raw 与修正版的关系</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">m &lt;- read.csv(&quot;OV_bcr_diversity_corrected.csv&quot;)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;diversity  spearman =&quot;, round(cor(m$raw_diversity, m$L1_diversity, method=&quot;spearman&quot;),4), &quot;\n&quot;)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;L1/raw 中位比       =&quot;, round(median(m$L1_diversity/m$raw_diversity, na.rm=TRUE),4), &quot;\n&quot;)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;clonality spearman  =&quot;, round(cor(m$raw_clonality, m$L1_clonality, method=&quot;spearman&quot;, use=&quot;complete.obs&quot;),4), &quot;\n&quot;)&#39;</span></span></code></pre></div>
+<p>预期：0.9975 / 0.484 /
+0.969。解读：绝对值缩了一半，排序几乎不变——这是本文档最重要的结论。</p>
+<p><strong>练习 5 —— 看 <code>*</code>
+占位符如何进入使用率表</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">suppressMessages(library(dplyr))</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">a &lt;- read.table(&quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;, sep=&quot;\t&quot;)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">colnames(a) &lt;- c(&quot;count&quot;,&quot;frequency&quot;,&quot;CDR3nt&quot;,&quot;CDR3aa&quot;,&quot;V&quot;,&quot;D&quot;,&quot;J&quot;,&quot;C&quot;)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">ig &lt;- a %&gt;% filter(grepl(&quot;^IGHV&quot;,V)|grepl(&quot;^IGHD&quot;,D)|grepl(&quot;^IGHJ&quot;,J)|grepl(&quot;^IGHC&quot;,C))</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">u &lt;- ig %&gt;% group_by(J) %&gt;% summarise(n=sum(count)) %&gt;% mutate(f=n/sum(n)) %&gt;% arrange(desc(f))</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">print(as.data.frame(u))&#39;</span></span></code></pre></div>
+<p>预期：<code>*</code> 排第四（111 读段，占 0.0525；前三是 751 / 492 /
+478），证明它不是基因却被当作基因计数。剔除后前三名不变。</p>
+<p><strong>练习 6 —— 复核训练集的长度分布众数</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">m &lt;- read.table(&quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;, sep=&quot;\t&quot;)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">colnames(m) &lt;- c(&quot;count&quot;,&quot;frequency&quot;,&quot;CDR3nt&quot;,&quot;CDR3aa&quot;,&quot;V&quot;,&quot;D&quot;,&quot;J&quot;,&quot;C&quot;)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">ig &lt;- m[grepl(&quot;^IGHV&quot;,m$V)|grepl(&quot;^IGHD&quot;,m$D)|grepl(&quot;^IGHJ&quot;,m$J)|grepl(&quot;^IGHC&quot;,m$C),]</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">ig &lt;- ig[grepl(&quot;^[ACDEFGHIKLMNPQRSTVWY]+$&quot;, ig$CDR3aa),]</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">nt &lt;- nchar(ig$CDR3nt)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;L2 行数:&quot;, nrow(ig), &quot; 众数 nt:&quot;, as.integer(names(which.max(table(nt)))), &quot;\n&quot;)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;全部 3 的倍数:&quot;, all(nt %% 3 == 0), &quot;\n&quot;)&#39;</span></span></code></pre></div>
+<p>预期：175 行、众数 66、全部为 3 的倍数。与修正版
+<code>corrected_summary.txt</code> 的 “L2 rows: 175 / nt mode: 66”
+对上。</p>
+<p><strong>练习 7 —— 用 TRB 扩展数据看 TCR 侧</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/TBCR-analysis/results/05_corrected</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">-e</span> <span class="st">&#39;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">t &lt;- read.csv(&quot;OV_trb_diversity_corrected.csv&quot;)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;有有效 TRB 克隆的样本:&quot;, sum(t$diversity&gt;0), &quot;/&quot;, nrow(t), &quot;\n&quot;)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;TRB diversity 中位数(非零):&quot;, median(t$diversity[t$diversity&gt;0]), &quot;\n&quot;)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">cat(&quot;TRB diversity 范围:&quot;, range(t$diversity), &quot;\n&quot;)&#39;</span></span></code></pre></div>
+<p>预期：369/375、38、0-529。</p>
+<h2 id="一句话总结">4. 一句话总结</h2>
+<p>第四节课用约一分钟的纯 R 分析，把 TRUST3
+的组装产物变成克隆型频率、基因使用、CDR3
+长度和五个多样性指数；教材的薄弱点不在命令而在定义——<code>nrow()</code>
+冒充唯一 CDR3、<code>partial</code> 黑名单漏掉
+<code>out_of_frame</code>、队列循环跳过质量过滤——修正后多样性中位数从
+918 降到 446，而样本排序保持（Spearman
+0.9975），因此相对比较可信、绝对数值不可直接引用。</p>
+</body>
+</html>

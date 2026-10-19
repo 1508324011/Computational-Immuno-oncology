@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TCR/BCR 免疫组库下游分析 · 矫正增强版（中文版） (Corrected &amp; Annotated Edition)</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">TCR/BCR 免疫组库下游分析 · 矫正增强版（中文版）
+(Corrected &amp; Annotated Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#tcrbcr-免疫组库下游分析-矫正增强版"
+id="toc-tcrbcr-免疫组库下游分析-矫正增强版">TCR/BCR 免疫组库下游分析 ·
+矫正增强版</a>
+<ul>
+<li><a href="#关于本版" id="toc-关于本版">0. 关于本版</a></li>
+<li><a href="#问题清单速览" id="toc-问题清单速览">1.
+问题清单速览</a></li>
+<li><a href="#环境与数据" id="toc-环境与数据">2. 环境与数据</a></li>
+<li><a href="#part-1-获取克隆型信息" id="toc-part-1-获取克隆型信息">3.
+Part 1 —— 获取克隆型信息</a></li>
+<li><a href="#part-2-获取基因使用信息"
+id="toc-part-2-获取基因使用信息">4. Part 2 —— 获取基因使用信息</a></li>
+<li><a href="#part-3-cdr3-长度分布" id="toc-part-3-cdr3-长度分布">5.
+Part 3 —— CDR3 长度分布</a></li>
+<li><a href="#part-4-tcrbcr-多样性指数"
+id="toc-part-4-tcrbcr-多样性指数">6. Part 4 —— TCR/BCR
+多样性指数</a></li>
+<li><a href="#修正版与对拍" id="toc-修正版与对拍">7.
+修正版与对拍</a></li>
+<li><a href="#检查清单产物与总结" id="toc-检查清单产物与总结">8.
+检查清单、产物与总结</a></li>
+<li><a href="#附录-a-偏差日志" id="toc-附录-a-偏差日志">附录 A ——
+偏差日志</a></li>
+<li><a href="#附录-b-复现" id="toc-附录-b-复现">附录 B —— 复现</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="tcrbcr-免疫组库下游分析-矫正增强版">TCR/BCR 免疫组库下游分析 ·
+矫正增强版</h1>
+<p><strong>第四节课 · TBCR analysis（TRUST3 输出）</strong>
+教材来源：<em>TBCR analysis — Downstream analysis on TRUST output
+files</em>，徐天、曾泽贤，北京大学生命科学中心 / 定量生物学中心 /
+前沿交叉学科研究院。</p>
+<hr />
+<h2 id="关于本版">0. 关于本版</h2>
+<p>本文件是第四节课教材的矫正增强版，沿用本仓库
+WES、RNA-seq、RNA-seq-application 三个模块的既定流程：</p>
+<ol type="1">
+<li>教材先在登录节点<strong>按原样执行</strong>，不做优化、不在运行中修错；</li>
+<li>所有遇到或预见的问题<strong>只记录不修改</strong>（问题清单见
+§1，具体解释放在对应 Part）；</li>
+<li>随后<strong>另跑一份修正版</strong>到
+<code>results/05_corrected/</code>，让每条修正的影响可被测量而不是被断言（本模块用户明确要求补跑修正版）；</li>
+<li>文档、脚本、日志、图一并入库。</li>
+</ol>
+<p>与前三节课不同，本模块<strong>不是</strong>测序流程：输入是
+TRUST3（从 bulk RNA-seq 读段重建 TCR/BCR 序列的组装器）的产物，全程是 R
+下游分析（<code>ggplot2</code>、<code>dplyr</code>、<code>ggpubr</code>）。没有
+FASTQ、没有比对、不涉及调度器——整个模块在登录节点约一分钟跑完。</p>
+<p>本版相对原教材增加的内容：</p>
+<ul>
+<li>每一步为什么存在、底层文件到底装了什么；</li>
+<li>本次运行的准确命令与路径，以及实测数字；</li>
+<li>九条已验证的坑（<code>TBCR-01</code> 到
+<code>TBCR-09</code>），每条给出修正代码；</li>
+<li>375 样本 TCGA-OV 队列上”原样 vs 修正”的完整对拍；</li>
+<li>教材只提了一句的扩展方向（TCR beta 链、临床整合）。</li>
+</ul>
+<hr />
+<h2 id="问题清单速览">1. 问题清单速览</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>编号</th>
+<th>位置</th>
+<th>问题</th>
+<th>修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TBCR-01</td>
+<td>Part 2</td>
+<td><code>*_report.tsv</code> 首行是 <code>#count</code> 表头。教材用
+<code>read.table()</code> 且不设
+<code>header = TRUE</code>，能跑通只是因为 R 默认
+<code>comment.char = "#"</code> 静默丢弃该行。任何地方把
+<code>comment.char</code> 设为
+<code>""</code>，表头就会变成一行数据。</td>
+<td>保持默认，或先去掉首字段的 <code>#</code> 再用
+<code>header = TRUE</code>。原样运行不改，仅记录。</td>
+</tr>
+<tr>
+<td>TBCR-02</td>
+<td>Part 4</td>
+<td><code>diversity &lt;- nrow(IGH_df)</code>
+数的是<strong>报告行数</strong>，不是唯一 CDR3 数。TRUST 给同一 CDR3
+分配不同 V 等位或常量区时会拆成多行：演示样本 354 条 IGH 行、只有 345
+条唯一 CDR3nt（该样本内部 19 条重复 CDR3nt 行）。raw diversity
+因此虚高约 2-3%。</td>
+<td>先按 CDR3nt 折叠（<code>count</code> 求和）再计数。</td>
+</tr>
+<tr>
+<td>TBCR-03</td>
+<td>Part 3</td>
+<td><code>IGH_df$CDR3aa != "partial"</code> 漏掉了第二个非序列标签
+<strong><code>out_of_frame</code></strong>。演示样本留下 2
+条，核苷酸长度 46 与 71——不是 3 的倍数——直接进入核苷酸长度直方图。375 个
+OV 样本里这类行有 9,965 条（占 IGH 行 0.92%）。</td>
+<td>用 20 种标准氨基酸的白名单过滤，而不是黑名单掉一个标签。</td>
+</tr>
+<tr>
+<td>TBCR-04</td>
+<td>Part 3、Part 4</td>
+<td><code>CDR3aa</code> 里还有<strong>插补</strong>序列，用
+<code>?</code> 和 <code>_</code> 作占位符（对应
+<code>CDR3_score = 0.01</code>）。演示样本 8 条，OV 队列 31,914
+条（2.94%）。它们能通过 <code>!= "partial"</code>
+过滤，被当作正常氨基酸序列统计。</td>
+<td>两级过滤：L1 去 <code>partial</code> + <code>out_of_frame</code>；L2
+再去含 <code>?</code>/<code>_</code> 的插补序列。</td>
+</tr>
+<tr>
+<td>TBCR-05</td>
+<td>Part 4</td>
+<td><code>clonality &lt;- 1 - (entropy / log2(diversity))</code>
+在样本只有 1
+个克隆时除零：<code>log2(1) = 0</code>、<code>entropy = 0</code>，结果为
+<code>NaN</code>。OV 队列中 1 个样本（<code>TCGA-23-1113</code>）raw
+diversity 为 1，得到 <code>NaN</code>；修正后 9 个样本有效克隆数不足
+2、3 个完全没有。教材把这些 <code>NaN</code> 直接写进 CSV。</td>
+<td>显式返回 <code>NA</code>，并统计、报告有多少样本未定义。</td>
+</tr>
+<tr>
+<td>TBCR-06</td>
+<td>Part 4</td>
+<td>正文定义
+<code>H(X) = -sum p_i log p_i</code>（自然对数，nat），代码用
+<code>log2</code>（bit）。熵值比公式暗示的小约 1.44 倍。clonality
+不受影响，因为分子分母同底。</td>
+<td>两种都算；报告用的是哪个底。修正版同时存 nat 与 bit。</td>
+</tr>
+<tr>
+<td>TBCR-07</td>
+<td>Part 2</td>
+<td><code>*</code> 占位符（D 或 J 未检出）被当成一个基因。演示样本 IGH
+行里 <code>*</code> 在 V 出现 60 次、D 169 次、J 72 次、C 132 次；IGHJ
+使用率表里 <code>*</code> 排第四。使用频率被一个非基因类别稀释。</td>
+<td>从分母里剔除 <code>*</code>，或单独报告为”未分配”。</td>
+</tr>
+<tr>
+<td>TBCR-08</td>
+<td>Part 4</td>
+<td>队列循环<strong>不过滤</strong> <code>partial</code> 与
+<code>out_of_frame</code>，而 Part 3 过滤。OV 队列 44.5% 的 IGH 行是
+<code>partial</code>（40.7%）、<code>out_of_frame</code>（0.92%）或插补（2.94%），等于
+Part 3 与 Part 4 描述的是两个不同的序列总体。</td>
+<td>两部分使用同一套有记录的过滤规则（L1 或 L2）。</td>
+</tr>
+<tr>
+<td>TBCR-09</td>
+<td>多处</td>
+<td>代码卫生：<code>aes(x = bcr_metrics_df$diversity)</code> 在
+<code>aes()</code> 里引用全局环境；输出文件名拼错成
+<code>diveristy_cor_entropy.png</code>；两个画图块写 <code>p</code> 而不
+<code>print(p)</code>（顶层与 <code>Rscript</code>
+可用，<code>source()</code>
+下静默不出图）；<code>bcr_metrics_df &lt;- data.frame()</code>
+在循环里靠 <code>rbind</code> 增长；Part 0 的
+<code>ssh</code>/<code>.bashrc</code> 讲的是另一台机器。</td>
+<td><code>aes()</code> 用裸列名；修正版改正拼写；调用
+<code>print()</code>；预分配；跳过登录说明。</td>
+</tr>
+</tbody>
+</table>
+<p>严重性排序：<strong>TBCR-02、03、04、08</strong>
+改变数字；<strong>TBCR-05</strong> 产生非法值；<strong>TBCR-06</strong>
+只改单位；<strong>TBCR-01、07、09</strong> 是健壮性与规范问题。</p>
+<hr />
+<h2 id="环境与数据">2. 环境与数据</h2>
+<h3 id="环境">2.1 环境</h3>
+<p>教材 Part 0 是在同学自己的服务器上通过 SSH 配置 conda 并写
+<code>.bashrc</code>。本机账号与环境均已就绪，Part 0 缩为一行：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate airr</span></code></pre></div>
+<p>本次运行实测版本：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td>4.3.0 (2023-04-21)</td>
+</tr>
+<tr>
+<td>ggplot2</td>
+<td>3.4.4</td>
+</tr>
+<tr>
+<td>dplyr</td>
+<td>1.1.4</td>
+</tr>
+<tr>
+<td>ggpubr</td>
+<td>0.6.0</td>
+</tr>
+</tbody>
+</table>
+<p>加载包时会打印
+<code>package 'x' was built under R version 4.3.3</code>，因为二进制是在略新的
+R 下编译的。无害，每份日志都有。</p>
+<h3 id="输入数据">2.2 输入数据</h3>
+<p>全部位于 <code>/lustre1/share/airr/data/</code>（课程只读共享）。</p>
+<p><code>TRUST_output/</code> 是<strong>一个</strong>样本
+<code>TCGA-02-0055-01A-01R-1849-01</code> 的十个 TRUST3 产物（TCGA
+RNA-seq）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>大小</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_cdr3.out</code></td>
+<td>115 KB</td>
+<td>每个 consensus assembly 一行：CDR1/2/3、V/D/J/C、CDR3
+score、读段支持数</td>
+</tr>
+<tr>
+<td><code>*_report.tsv</code></td>
+<td>88 KB</td>
+<td>每个报告 CDR3 一行：count、frequency、V/D/J/C（兼容 VDJTools）</td>
+</tr>
+<tr>
+<td><code>*_final.out</code></td>
+<td>3.3 MB</td>
+<td>最终 contig 及核苷酸权重</td>
+</tr>
+<tr>
+<td><code>*_raw.out</code></td>
+<td>2.5 MB</td>
+<td>原始 contig 及核苷酸权重</td>
+</tr>
+<tr>
+<td><code>*_assembled_reads.fa</code></td>
+<td>7.6 MB</td>
+<td>各 assembly 的读段（FASTA）</td>
+</tr>
+<tr>
+<td><code>*_full.fa</code></td>
+<td>47 KB</td>
+<td>完整 TCR/BCR 序列（FASTA）</td>
+</tr>
+<tr>
+<td><code>*_anno.fa</code></td>
+<td>773 KB</td>
+<td>consensus assembly 注释（FASTA）</td>
+</tr>
+<tr>
+<td><code>*_cluster.out</code></td>
+<td>86 KB</td>
+<td>consensus assembly 的聚类归属</td>
+</tr>
+<tr>
+<td><code>*_evo.out</code></td>
+<td>1.1 KB</td>
+<td>最终序列的进化信息</td>
+</tr>
+<tr>
+<td><code>*_simplerep.out</code></td>
+<td>108 KB</td>
+<td>简化报告</td>
+</tr>
+</tbody>
+</table>
+<p>本模块只用其中两个：Part 1 用 <code>cdr3.out</code>（assembly
+层），Part 2-4 用 <code>report.tsv</code>（CDR3 层）。</p>
+<p><code>OV_results/</code> 是 TRUST3 从 TCGA-OV 队列抽出的 375 个
+<code>*_report.tsv</code>。每个文件恰好 8
+个制表符分隔字段，运行前已逐个核验。</p>
+<h3 id="列结构">2.3 列结构</h3>
+<p><code>cdr3.out</code> <strong>没有表头</strong>。教材手工赋 12
+个列名：</p>
+<pre><code>consensus_id, index_within_consensus, V_gene, D_gene, J_gene, C_gene,
+CDR1, CDR2, CDR3, CDR3_score, read_fragment_count, CDR3_germline_similarity</code></pre>
+<p><code>report.tsv</code> <strong>有</strong>表头，且以 <code>#</code>
+开头：</p>
+<pre><code>#count  frequency  CDR3nt  CDR3aa  V  D  J  C</code></pre>
+<p>因为 <code>read.table()</code> 默认
+<code>comment.char = "#"</code>，该行被跳过，余下 930
+行是数据（TBCR-01）。教材随后用 <code>colnames()</code> 赋 8
+个名字。若换成
+<code>read.delim(..., comment.char = "")</code>，就会多出一行
+<code>count = "#count"</code> 的伪数据。</p>
+<p>演示 report 的两个自检：</p>
+<ul>
+<li><code>sum(count) = 6341</code> 条读段；</li>
+<li><code>sum(frequency) = 2</code>，因为 frequency 列是 <strong>TCR 与
+BCR 各自归一化</strong>（教材明确说明）——1 + 1。这是个有用的不变量：将来
+TRUST 版本若改成全表归一化，总和会是
+1，按链解读频率的假设就得跟着改。</li>
+</ul>
+<p>演示样本的 <code>CDR3_score</code>
+有五个取值，不是教材描述的三个：</p>
+<table>
+<thead>
+<tr>
+<th>取值</th>
+<th>教材含义</th>
+<th>演示样本行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>partial CDR3</td>
+<td>294</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>（未描述）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0.67</td>
+<td>（未描述）</td>
+<td>30</td>
+</tr>
+<tr>
+<td>0.83</td>
+<td>（未描述）</td>
+<td>137</td>
+</tr>
+<tr>
+<td>1.00</td>
+<td>motif 信号最强</td>
+<td>479</td>
+</tr>
+</tbody>
+</table>
+<h3 id="本仓库的产出布局">2.4 本仓库的产出布局</h3>
+<pre><code>results/
+├── 01_clonotype/            Part 1（1 张 PNG、脚本、日志）
+├── 02_gene_usage/           Part 2（3 张 PNG、脚本、日志）
+├── 03_cdr3_length/          Part 3（2 张 PNG、脚本、日志）
+├── 04_diversity/            Part 4（3 张 PNG + OV_bcr_diversity.csv、脚本、日志）
+├── 05_corrected/            修正版（9 张 PNG + 2 个 CSV + 汇总、脚本、日志）
+└── ref/                     本文档与教材原文 HTML</code></pre>
+<p>各脚本 <code>setwd()</code>
+进自己的步骤目录，所以教材里所有相对路径（<code>png("...")</code>、<code>write.csv(..., "OV_bcr_diversity.csv")</code>）仍然写到教材预期的位置——只是落在仓库内而不是
+<code>~/airr_output</code>。</p>
+<hr />
+<h2 id="part-1-获取克隆型信息">3. Part 1 —— 获取克隆型信息</h2>
+<h3 id="教材做了什么">3.1 教材做了什么</h3>
+<p>读 <code>*_cdr3.out</code>，加列名，按 V/D/J/C 任一字段的
+<code>^TR</code> / <code>^IG</code> 前缀拆成 TCR 与 BCR，然后统计每个
+BCR consensus assembly 出现次数并画频率直方图。</p>
+<h3 id="这一步为什么存在">3.2 这一步为什么存在</h3>
+<p>TRUST3 对每个表达的受体重建一个 <strong>consensus
+assembly</strong>：若干读段在 V-D-J 重排上一致就合并成一条 contig
+并赋予标识（<code>assemble0</code>、<code>assemble1</code>……）。因此
+<code>cdr3.out</code> 是 <em>assembly 层</em> 的表：一个 assembly
+对应多行。统计一个 assembly 出现多少次（教材表里的
+<code>Freq</code>）是对克隆丰度的第一层估计，直方图回答一个基本问题：这个样本是被少数扩增克隆主导，还是长尾单例为主？</p>
+<p>必须把 TCR 与 BCR 拆开，因为 TRUST3 从同一个 RNA-seq
+文库同时调两类受体，而两者的基因命名体系永不混用。</p>
+<h3 id="命令">3.3 命令</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>consensus_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;/lustre1/share/airr/data/TRUST_output/TCGA-02-0055-01A-01R-1849-01_cdr3.out&quot;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(consensus_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;consensus_id&quot;</span>,<span class="st">&quot;index_within_consensus&quot;</span>,<span class="st">&quot;V_gene&quot;</span>,<span class="st">&quot;D_gene&quot;</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;J_gene&quot;</span>,<span class="st">&quot;C_gene&quot;</span>,<span class="st">&quot;CDR1&quot;</span>,<span class="st">&quot;CDR2&quot;</span>,<span class="st">&quot;CDR3&quot;</span>,<span class="st">&quot;CDR3_score&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&quot;read_fragment_count&quot;</span>,<span class="st">&quot;CDR3_germline_similarity&quot;</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>TCR_df <span class="ot">&lt;-</span> consensus_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, V_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, D_gene) <span class="sc">|</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, J_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^TR&quot;</span>, C_gene))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>BCR_df <span class="ot">&lt;-</span> consensus_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, V_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, D_gene) <span class="sc">|</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, J_gene) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IG&quot;</span>, C_gene))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>BCR_consensus_count <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">factor</span>(BCR_df<span class="sc">$</span>consensus_id, <span class="at">levels =</span> <span class="fu">unique</span>(BCR_df<span class="sc">$</span>consensus_id)))</span></code></pre></div>
+<h3 id="实测产出">3.4 实测产出</h3>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cdr3.out</code> 行数</td>
+<td>974</td>
+</tr>
+<tr>
+<td>唯一 <code>consensus_id</code></td>
+<td>778</td>
+</tr>
+<tr>
+<td>BCR 行数 / 唯一 BCR assembly</td>
+<td>941 / 745</td>
+</tr>
+<tr>
+<td>TCR 行数 / 唯一 TCR assembly</td>
+<td>33 / 33</td>
+</tr>
+<tr>
+<td>既非 TCR 也非 BCR 的行</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>BCR assembly 出现次数分布（895 行落在出现 1-5 次的 assembly
+里，符合长尾组库）：</p>
+<table>
+<thead>
+<tr>
+<th>出现次数</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>7</th>
+<th>10</th>
+<th>11</th>
+<th>16</th>
+<th>18</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assembly 数</td>
+<td>659</td>
+<td>50</td>
+<td>15</td>
+<td>7</td>
+<td>8</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><code>factor(..., levels = unique(...))</code>
+这个构造是必要的：对普通字符向量调用 <code>table()</code>
+会按字母序排序，并按观测顺序固定 levels
+后，<code>BCR_consensus_df$Var1</code> 才能与 assembly
+编号稳定对应。</p>
+<h3 id="坑">3.5 坑</h3>
+<ul>
+<li><strong><code>table()</code> 返回因子列。</strong>
+<code>as.data.frame(table(...))</code> 给出 <code>Var1</code>（assembly
+id，因子）与 <code>Freq</code>。任何下游排序都必须先
+<code>as.character()</code>。</li>
+<li><strong><code>Freq</code> 是行数，不是读段数。</strong> 一个
+assembly 的读段支持是
+<code>read_fragment_count</code>，是另一个量；教材从未使用它。若想在这个文件上做按丰度加权的
+clonality，应求和 <code>read_fragment_count</code> 而不是数行。</li>
+<li><strong>TCR 表算了却没用。</strong> <code>TCR_df</code>
+只打印，后文再未使用。演示样本只有 33 条 TCR assembly 行对 941 条 BCR
+行，这在实体瘤里很典型：B 细胞浸润为主，未做 TCR 富集时 TCR
+克隆性很弱。</li>
+</ul>
+<h3 id="参数调优">3.6 参数调优</h3>
+<ul>
+<li>先按 <code>read_fragment_count &gt;= 2</code> 过滤低支持 assembly
+再聚类，可压掉组装噪声。</li>
+<li>对 CDR3 做近似合并（Levenshtein 距离 1，或同 V-J 且 CDR3 同一性
+90%）以合并克隆家族——教材只做到按精确标识聚类。</li>
+</ul>
+<h3 id="扩展">3.7 扩展</h3>
+<ul>
+<li>接上 <code>cluster.out</code> 把 assembly
+折成克隆簇，在簇层面重算直方图。</li>
+<li>接上 <code>evo.out</code>（本样本仅 1.1 KB）观察 BCR
+的体细胞高频突变谱系。</li>
+</ul>
+<hr />
+<h2 id="part-2-获取基因使用信息">4. Part 2 —— 获取基因使用信息</h2>
+<h3 id="教材做了什么-1">4.1 教材做了什么</h3>
+<p>读 <code>*_report.tsv</code>，命名 8 列，抽 TCR alpha
+链（<code>^TRAV</code>/<code>^TRAJ</code>/<code>^TRAC</code>）与 BCR
+重链（<code>^IGHV</code>/<code>^IGHD</code>/<code>^IGHJ</code>/<code>^IGHC</code>），再算
+IGHV 使用率、IGHJ 使用率与 V-J 联合分布，配两张柱状图与一张热图。</p>
+<h3 id="这一步为什么存在-1">4.2 这一步为什么存在</h3>
+<p>V、J
+基因使用是组库最粗的描述，也是跨样本、跨研究可比性最好的描述：它由重组信号偏好、选择压力以及——在肿瘤中——抗原驱动的扩增共同决定。V-J
+配对再增加一个组合维度：少数 V-J 组合常常承载大部分克隆质量。</p>
+<p>教材刻意只看<strong>重链</strong>（以及原则上 beta
+链），因为这两条链决定抗原结合；轻链与 alpha
+链是配对伙伴，若一并计入等于把同一克隆数两遍。</p>
+<h3 id="命令-1">4.3 命令</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>air_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;.../TCGA-02-0055-01A-01R-1849-01_report.tsv&quot;</span>, <span class="at">sep=</span><span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(air_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;count&quot;</span>,<span class="st">&quot;frequency&quot;</span>,<span class="st">&quot;CDR3nt&quot;</span>,<span class="st">&quot;CDR3aa&quot;</span>,<span class="st">&quot;V&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>IGH_df <span class="ot">&lt;-</span> air_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IGHV&quot;</span>, V) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHD&quot;</span>, D) <span class="sc">|</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">grepl</span>(<span class="st">&quot;^IGHJ&quot;</span>, J) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHC&quot;</span>, C))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>usage_IGHV_df <span class="ot">&lt;-</span> IGH_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(V) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">total_count =</span> <span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">usage_frequency =</span> total_count <span class="sc">/</span> <span class="fu">sum</span>(total_count)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(usage_frequency))</span></code></pre></div>
+<h3 id="实测产出-1">4.4 实测产出</h3>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>report 数据行</td>
+<td>930</td>
+</tr>
+<tr>
+<td><code>sum(count)</code> 总读段</td>
+<td>6341</td>
+</tr>
+<tr>
+<td><code>sum(frequency)</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>TRA 行</td>
+<td>6</td>
+</tr>
+<tr>
+<td>TRB 行</td>
+<td>19</td>
+</tr>
+<tr>
+<td>IGH 行</td>
+<td>354</td>
+</tr>
+<tr>
+<td>IGH 读段</td>
+<td>2115</td>
+</tr>
+<tr>
+<td>IGHV 条目数（含 <code>*</code>）</td>
+<td>80</td>
+</tr>
+<tr>
+<td>IGHJ 条目数（含 <code>*</code>）</td>
+<td>12</td>
+</tr>
+<tr>
+<td>不同 V-J 配对</td>
+<td>173</td>
+</tr>
+</tbody>
+</table>
+<p>按读段数排的 IGHV 前三：</p>
+<table>
+<thead>
+<tr>
+<th>V 基因</th>
+<th>读段</th>
+<th>使用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGHV3-15*01</td>
+<td>330</td>
+<td>0.1560</td>
+</tr>
+<tr>
+<td>IGHV5-51*03</td>
+<td>243</td>
+<td>0.1149</td>
+</tr>
+<tr>
+<td>IGHV4-31*03</td>
+<td>167</td>
+<td>0.0790</td>
+</tr>
+</tbody>
+</table>
+<p>IGHJ 前三：</p>
+<table>
+<thead>
+<tr>
+<th>J 基因</th>
+<th>读段</th>
+<th>使用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGHJ5*02</td>
+<td>751</td>
+<td>0.3551</td>
+</tr>
+<tr>
+<td>IGHJ4*02</td>
+<td>492</td>
+<td>0.2326</td>
+</tr>
+<tr>
+<td>IGHJ6*02</td>
+<td>478</td>
+<td>0.2260</td>
+</tr>
+</tbody>
+</table>
+<p>最高 V-J 配对：<code>IGHV3-15*01</code> + <code>IGHJ5*02</code>，288
+条读段，占 IGH 质量 0.1362。</p>
+<h3 id="坑-1">4.5 坑</h3>
+<ul>
+<li><strong>TBCR-01（表头行）。</strong> 见 §2.3：<code>#count</code>
+行被跳过纯粹依赖
+<code>comment.char</code>。这在教材里看不出来，但只要有人传
+<code>comment.char = ""</code>，或用 <code>readr::read_tsv()</code>
+读（它默认不把 <code>#</code>
+当注释，会把表头保留为一行），立刻变成数据污染。</li>
+<li><strong>TBCR-07（<code>*</code> 不是基因）。</strong> <code>*</code>
+占位符表示 D 或 J 段未检出。演示 IGH 行里它在 V 出现 60 次、D 169 次、J
+72 次、C 132 次。教材按原始列分组，于是 <code>*</code> 成为一个类别：在
+IGHJ 使用率表里排第四。所有报告的使用率因此被轻微稀释，V-J
+热图也多出一行一列 <code>*</code>。剔除 <code>*</code> 后 IGHJ
+前三名不变（修正版已核验）。</li>
+<li><strong>OR 过滤与链无关。</strong>
+<code>grepl("^IGHV", V) | grepl("^IGHD", D) | ...</code>
+只要四个字段中任一个匹配前缀就保留该行。对 TRUST
+输出是安全的，因为一行四个字段总属同一条链，但这不是保证——混链行会漏进来。更严格的形式是要求
+V 前缀匹配并检查一致性。</li>
+<li><strong>等位粒度。</strong>
+基因带等位后缀（<code>IGHV3-15*01</code>）。教材不合并等位，只差一个等位的两行就是两个类别。做队列比较时应折到基因层（<code>sub("\\*.*", "", V)</code>），否则表会非常稀疏。</li>
+<li><strong><code>.groups</code> 不一致。</strong> V-J 块传了
+<code>.groups = 'drop'</code>，单基因块没传，于是 dplyr
+会打印分组消息。无害，但这个小不一致暗示这些代码块是不同时期写的。</li>
+</ul>
+<h3 id="参数调优-1">4.6 参数调优</h3>
+<ul>
+<li>折并等位：分组前 <code>mutate(V = sub("\\*.*", "", V))</code>。</li>
+<li>计算使用率前先限定 productive 序列（<code>CDR3aa</code>
+匹配氨基酸白名单），否则 <code>partial</code> 行会贡献 V
+调用却没有有效连接区。</li>
+<li>按 <code>count</code>
+加权（教材即如此），而不是按行计：一个单例与一个 500
+读段的克隆不是同等证据。</li>
+</ul>
+<h3 id="扩展-1">4.7 扩展</h3>
+<ul>
+<li>与参考组库（如 IMGT 参考基因分布）比较，用卡方或 Jensen-Shannon
+距离。</li>
+<li>分别对扩增克隆与单例克隆计算使用率，观察扩增是否受 V 限制。</li>
+</ul>
+<hr />
+<h2 id="part-3-cdr3-长度分布">5. Part 3 —— CDR3 长度分布</h2>
+<h3 id="教材做了什么-2">5.1 教材做了什么</h3>
+<p>去掉 <code>CDR3aa</code> 等于 <code>"partial"</code> 的行，加
+<code>nt_length = nchar(CDR3nt)</code> 与
+<code>aa_length = nchar(CDR3aa)</code>，两种单位各画一张直方图。</p>
+<h3 id="这一步为什么存在-2">5.2 这一步为什么存在</h3>
+<p>CDR3
+长度同时是质量指标与生物学读数。生物学上，连接区长度分布受强选择（过短缺少结合面，过长受空间位阻排斥），其众数有种属与链特异性。技术上，核苷酸长度必须是
+3 的倍数才可能是框内连接，所以长度分布也是组装器的快速自检。</p>
+<h3 id="命令-2">5.3 命令</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>IGH_filter_df <span class="ot">&lt;-</span> IGH_df[IGH_df<span class="sc">$</span>CDR3aa <span class="sc">!=</span> <span class="st">&quot;partial&quot;</span>,]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>IGH_filter_df <span class="ot">&lt;-</span> IGH_filter_df <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">nt_length =</span> <span class="fu">nchar</span>(CDR3nt), <span class="at">aa_length =</span> <span class="fu">nchar</span>(CDR3aa))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nt_length_df <span class="ot">&lt;-</span> IGH_filter_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(nt_length) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">total_count =</span> <span class="fu">sum</span>(count))</span></code></pre></div>
+<h3 id="实测产出-2">5.4 实测产出</h3>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGH 行</td>
+<td>354</td>
+</tr>
+<tr>
+<td>去掉的 <code>partial</code> 行</td>
+<td>169（47.7%）</td>
+</tr>
+<tr>
+<td>保留行</td>
+<td>185</td>
+</tr>
+<tr>
+<td>保留读段</td>
+<td>1823 / 2115</td>
+</tr>
+<tr>
+<td>核苷酸长度范围</td>
+<td>30-102</td>
+</tr>
+<tr>
+<td>核苷酸长度众数</td>
+<td>66 nt，477 读段</td>
+</tr>
+<tr>
+<td>氨基酸长度范围</td>
+<td>10-34</td>
+</tr>
+<tr>
+<td>氨基酸长度众数</td>
+<td>22 aa，477 读段</td>
+</tr>
+<tr>
+<td>保留行中核苷酸长度<strong>不是</strong> 3 的倍数</td>
+<td><strong>2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>47.7% 的 partial 比例不是样本缺陷：只要能组装出足够 CDR3
+就会报告，而这个肿瘤里约一半 assembly
+未覆盖完整连接区。做长度分析时剔除它们是正确做法——但注意这也剔掉了一半读段，所以
+Part 4 必须对同一批序列做明确决定（TBCR-08）。</p>
+<h3 id="坑-2">5.5 坑</h3>
+<ul>
+<li><strong>TBCR-03（<code>out_of_frame</code> 逃过过滤）。</strong>
+那两条核苷酸长度非 3 倍数的行正是 <code>out_of_frame</code> 行：46 nt 与
+71 nt。它们不是
+<code>"partial"</code>，所以教材的黑名单保留了它们，在核苷酸直方图上成为两根孤立柱。正确过滤是白名单：只保留匹配
+<code>^[ACDEFGHIKLMNPQRSTVWY]+$</code> 的序列。</li>
+<li><strong>TBCR-04（插补序列）。</strong> 8 条 IGH 行的氨基酸串里含
+<code>?</code> 或 <code>_</code>（例如
+<code>CATTMIRDYFYYGMDV_</code>、<code>CAKPGDYDSSSYF?QW</code>）。<code>nchar()</code>
+把这些占位符当残基计数，于是它们以正常氨基酸的身份进入长度分布。是否保留是个判断问题——核苷酸序列完整但部分插补——但必须写明选择。</li>
+<li><strong>对因子调用 <code>nchar()</code>。</strong> 若
+<code>CDR3aa</code> 被读成因子（本模块不是，因为 R 4.0 起
+<code>read.table</code> 默认
+<code>stringsAsFactors = FALSE</code>），<code>nchar()</code>
+会返回水平序号长度。移植到旧版 R 时要注意。</li>
+<li><strong>没有零行保护。</strong>
+样本若无一行存活，直方图为空，<code>ggplot</code>
+报错而不是画空图。</li>
+</ul>
+<h3 id="参数调优-2">5.6 参数调优</h3>
+<ul>
+<li>用 L2 过滤（白名单）再画同一分布，看两条 <code>out_of_frame</code>
+与八条插补行实际影响多大：演示样本众数仍是 66 nt / 22 aa，读段从 477
+降到 474，影响可忽略——但在别的样本里不一定。</li>
+<li>按总读段归一化，以比较测序深度不同的样本。</li>
+</ul>
+<h3 id="扩展-2">5.7 扩展</h3>
+<ul>
+<li>把观测长度分布与随机 V-D-J
+重排的理论分布（零模型）比较，检测选择。</li>
+<li>按 V 基因家族分层：长 CDR3 在某些 V 基因中富集。</li>
+</ul>
+<hr />
+<h2 id="part-4-tcrbcr-多样性指数">6. Part 4 —— TCR/BCR 多样性指数</h2>
+<h3 id="教材做了什么-3">6.1 教材做了什么</h3>
+<p>定义五个指数，先在演示样本上手工计算，再对 375 个 OV 文件循环，写
+<code>OV_bcr_diversity.csv</code>，画三张 Spearman 相关图。</p>
+<h3 id="各指数衡量什么">6.2 各指数衡量什么</h3>
+<p>设组库有 <code>N</code> 条唯一序列、读段计数 <code>c_i</code>、总数
+<code>C = sum c_i</code>、频率 <code>p_i = c_i / C</code>。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>指数</th>
+<th>教材公式</th>
+<th>衡量什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw diversity</td>
+<td>唯一 CDR3 数</td>
+<td>只看<strong>丰富度</strong>，忽略丰度</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td><code>(唯一 CDR3 / 总读段) * 1000</code></td>
+<td>按测序深度归一化的丰富度</td>
+</tr>
+<tr>
+<td>entropy</td>
+<td><code>H = -sum p_i log p_i</code></td>
+<td>丰富度与均匀度合一</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td><code>1 - H / log N</code></td>
+<td>距”其 N 条序列均匀分布”有多远；0 = 完全均匀，1 = 单克隆主导</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td><code>1 - sum p_i^2</code></td>
+<td>随机抽两条读段来自不同克隆的概率</td>
+</tr>
+</tbody>
+</table>
+<p>教材关于”只分析重链（BCR）与 beta
+链（TCR）“的说明是范围决定而非数学决定：这两条链决定结合，且若把配对的两条链都算进来，同一克隆会被数两遍。</p>
+<h3 id="命令-3">6.3 命令</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">&lt;-</span> <span class="fu">nrow</span>(IGH_df)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>CPK <span class="ot">&lt;-</span> diversity<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count) <span class="sc">*</span><span class="dv">1000</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>freqs <span class="ot">&lt;-</span> IGH_df<span class="sc">$</span>count<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>entropy <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(freqs <span class="sc">*</span> <span class="fu">log2</span>(freqs))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>clonality <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (entropy<span class="sc">/</span><span class="fu">log2</span>(diversity))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>gini <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(freqs <span class="sc">*</span> freqs)</span></code></pre></div>
+<p>以及 375 文件循环：</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> files) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  air_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="fu">paste0</span>(<span class="st">&quot;/lustre1/share/airr/data/OV_results/&quot;</span>,file), <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(air_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;count&quot;</span>,<span class="st">&quot;frequency&quot;</span>,<span class="st">&quot;CDR3nt&quot;</span>,<span class="st">&quot;CDR3aa&quot;</span>,<span class="st">&quot;V&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;J&quot;</span>,<span class="st">&quot;C&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  IGH_df <span class="ot">&lt;-</span> air_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;^IGHV&quot;</span>, V) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHD&quot;</span>, D) <span class="sc">|</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">grepl</span>(<span class="st">&quot;^IGHJ&quot;</span>, J) <span class="sc">|</span> <span class="fu">grepl</span>(<span class="st">&quot;^IGHC&quot;</span>, C))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  diversity <span class="ot">&lt;-</span> <span class="fu">nrow</span>(IGH_df); CPK <span class="ot">&lt;-</span> diversity<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count) <span class="sc">*</span><span class="dv">1000</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  freqs <span class="ot">&lt;-</span> IGH_df<span class="sc">$</span>count<span class="sc">/</span><span class="fu">sum</span>(IGH_df<span class="sc">$</span>count)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  entropy <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">sum</span>(freqs <span class="sc">*</span> <span class="fu">log2</span>(freqs))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  clonality <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (entropy<span class="sc">/</span><span class="fu">log2</span>(diversity))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  gini <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(freqs <span class="sc">*</span> freqs)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  bcr_metrics_row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(diversity, CPK, entropy, clonality, gini)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(bcr_metrics_row) <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(file))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  bcr_metrics_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(bcr_metrics_df, bcr_metrics_row)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(bcr_metrics_df, <span class="st">&quot;OV_bcr_diversity.csv&quot;</span>)</span></code></pre></div>
+<h3 id="实测产出-3">6.4 实测产出</h3>
+<p>演示样本（原样）：</p>
+<table>
+<thead>
+<tr>
+<th>指数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>354</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>167.3759</td>
+</tr>
+<tr>
+<td>entropy（log2）</td>
+<td>6.3314</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.252280</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.956772</td>
+</tr>
+</tbody>
+</table>
+<p>队列（375 样本，13.9 秒）：</p>
+<table>
+<thead>
+<tr>
+<th>指数</th>
+<th>范围</th>
+<th>中位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>1 - 26,978</td>
+<td>918</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>15.567 - 1000</td>
+<td>180.7188</td>
+</tr>
+<tr>
+<td>entropy（log2）</td>
+<td>0 - 13.2401</td>
+<td>—</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.0195 - 0.7306</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0 - 0.9995</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>NaN</code> 值</td>
+<td>1 个（clonality，<code>TCGA-23-1113</code>）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Spearman 相关（原样）：</p>
+<table>
+<thead>
+<tr>
+<th>配对</th>
+<th>rho</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity 对 entropy</td>
+<td>0.7957</td>
+</tr>
+<tr>
+<td>CPK 对 entropy</td>
+<td>-0.2470</td>
+</tr>
+<tr>
+<td>CPK 对 clonality</td>
+<td>-0.8790</td>
+</tr>
+</tbody>
+</table>
+<p>符号模式符合预期：丰富度与熵同向；CPK
+在深度大但未必多样的样本里可以很高（它是相对读段的比值，读段少的小样本反而可能达到
+CPK 1000）；CPK 与 clonality
+强负相关，因为单克隆主导的组库每读段对应的唯一 CDR3 很少。</p>
+<h3 id="坑-3">6.5 坑</h3>
+<ul>
+<li><strong>TBCR-02（diversity 是 <code>nrow</code> 而非唯一
+CDR3）。</strong> TRUST 的 report 以完整 V/D/J/C 赋值为键，同一 CDR3
+可出现在多行。演示样本：354 行、345 条唯一 CDR3nt、只有 173 条唯一
+CDR3aa（氨基酸层把同义变异合并）。此处 <code>nrow()</code> 高估丰富度
+2.6%；队列层面在同时修正序列质量过滤后，中位数高估约两倍（§7）。</li>
+<li><strong>TBCR-05（单克隆样本 <code>NaN</code>）。</strong>
+<code>N = 1</code> 时
+<code>entropy = 0</code>、<code>log2(N) = 0</code>，于是
+<code>clonality = 1 - 0/0 = NaN</code>。原样运行有 1 个 OV 样本命中。把
+<code>NaN</code> 写进 CSV 比 <code>NA</code> 更糟：许多工具会让
+<code>NaN</code> 静默穿透均值与相关计算。</li>
+<li><strong>TBCR-06（对数底）。</strong> 公式用
+<code>log</code>（nat），代码用 <code>log2</code>（bit）。熵值相差
+<code>ln 2 = 0.6931</code> 倍。clonality
+不受影响，因为分子分母同底——这正是归一化形式可移植的原因。</li>
+<li><strong>TBCR-08（循环无序列过滤）。</strong> Part 3 去了
+<code>partial</code>，循环没有，于是熵是在”全长 +
+partial”混合序列上算的。OV 队列 40.7% 的 IGH 行是
+<code>partial</code>、0.92% 是 <code>out_of_frame</code>、2.94%
+是插补。这是原样与修正版差异的最大来源。</li>
+<li><strong>frequency 与 count 的关系。</strong> 循环从
+<code>count</code> 重算频率，忽略 <code>frequency</code>
+列。这是对的（给定列是按链归一化的），但也意味着两列从未被交叉验证。</li>
+<li><strong>循环里 <code>rbind</code>。</strong> 375 次没问题；10,000
+次就有问题了。应预分配，或对 list 用
+<code>dplyr::bind_rows</code>。</li>
+<li><strong>TBCR-09（<code>aes()</code> 里用 <code>$</code>）。</strong>
+<code>aes(x = bcr_metrics_df$diversity)</code>
+求值的是全局向量而不是数据框列。在数据框被过滤或改名之前它能跑；<code>aes(x = diversity)</code>
+更短也更安全。</li>
+</ul>
+<h3 id="参数调优-3">6.6 参数调优</h3>
+<ul>
+<li><code>N</code> 小时 clonality 不稳定（要除以
+<code>log N</code>）。只在克隆数超过阈值的样本上报告它（修正版标出了有效克隆数不足
+2 的 9 个样本）。</li>
+<li>需要经过检验的实现与置信区间时，用 <code>vegan::diversity</code> 或
+<code>immunarch</code>。</li>
+<li>跨样本比较 CPK 前先把读段降采样到共同深度；CPK
+按深度归一化，但当丰富度饱和时并非深度不变。</li>
+</ul>
+<h3 id="扩展-3">6.7 扩展</h3>
+<ul>
+<li><strong>TCR beta 链。</strong>
+教材自己的理由（分析决定结合的链）同样适用于 TRB。修正版用同一套规则算了
+TRB：375 个样本中 369 个至少有一个有效 TRB 克隆，diversity 中位数
+38，范围 0-529（见 <code>OV_trb_diversity_corrected.csv</code>）。</li>
+<li><strong>临床整合。</strong>
+教材最后一句提到可接入临床注释、比较组间指数。TCGA-OV 临床数据可从 GDC
+获取；比较是 Wilcoxon 检验，或以多样性为连续协变量的 Cox 模型。</li>
+<li><strong>稀疏化曲线。</strong>
+每样本画丰富度对测序深度的曲线，把生物学丰富度与技术抽样分开。</li>
+</ul>
+<hr />
+<h2 id="修正版与对拍">7. 修正版与对拍</h2>
+<p>修正版位于
+<code>results/05_corrected/</code>（<code>scripts/corrected_analysis.R</code>）。它先用完全相同的代码路径重算原样指数，再施加修正，因此下面每一处差异都能归因到一条具名修正，而不是归因到不同的实现。</p>
+<h3 id="使用的定义">7.1 使用的定义</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>序列过滤</th>
+<th>克隆定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw</td>
+<td>不过滤（原样）</td>
+<td>一行 report</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>去 <code>partial</code> 与 <code>out_of_frame</code></td>
+<td>唯一 CDR3nt，跨行 <code>count</code> 求和</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>再去含 <code>?</code>/<code>_</code> 的插补序列</td>
+<td>唯一 CDR3nt，跨行 <code>count</code> 求和</td>
+</tr>
+</tbody>
+</table>
+<p>熵同时给 nat（对应公式）与 bit（对应代码）；clonality
+与底数无关。</p>
+<h3 id="演示样本">7.2 演示样本</h3>
+<table>
+<thead>
+<tr>
+<th>指数</th>
+<th>raw</th>
+<th>L1</th>
+<th>L2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>354</td>
+<td>177</td>
+<td>169</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>167.3759</td>
+<td>97.9524</td>
+<td>94.0980</td>
+</tr>
+<tr>
+<td>entropy（nat）</td>
+<td>4.3886</td>
+<td>3.7572</td>
+<td>3.7308</td>
+</tr>
+<tr>
+<td>entropy（bit）</td>
+<td>6.3314</td>
+<td>5.4205</td>
+<td>5.3824</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.2523</td>
+<td>0.2741</td>
+<td>0.2727</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.9568</td>
+<td>0.9393</td>
+<td>0.9385</td>
+</tr>
+</tbody>
+</table>
+<p>演示样本 354 条 IGH 行中：169 条 <code>partial</code>、2 条
+<code>out_of_frame</code>、8 条插补、175 条有效；L1 保留 183 行，折成
+177 条唯一 CDR3nt。</p>
+<h3 id="队列375-样本">7.3 队列（375 样本）</h3>
+<table>
+<thead>
+<tr>
+<th>指数</th>
+<th>raw 中位数</th>
+<th>L1 中位数</th>
+<th>L1 / raw</th>
+<th>Spearman(raw, L1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>918</td>
+<td>446</td>
+<td>0.484</td>
+<td>0.9975</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>180.72</td>
+<td>113.35</td>
+<td>0.640</td>
+<td>0.9877</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.1843</td>
+<td>0.2196</td>
+<td>1.172</td>
+<td>0.9690</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0.9820</td>
+<td>0.9645</td>
+<td>0.985</td>
+<td>0.9672</td>
+</tr>
+</tbody>
+</table>
+<p>范围，raw 到 L1：</p>
+<table>
+<thead>
+<tr>
+<th>指数</th>
+<th>raw</th>
+<th>L1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity</td>
+<td>1 - 26,978</td>
+<td>0 - 14,979</td>
+</tr>
+<tr>
+<td>CPK</td>
+<td>15.567 - 1000</td>
+<td>8.408 - 833.333</td>
+</tr>
+<tr>
+<td>clonality</td>
+<td>0.0195 - 0.7306</td>
+<td>0.0290 - 0.8168</td>
+</tr>
+<tr>
+<td>Gini-Simpson</td>
+<td>0 - 0.9995</td>
+<td>0 - 0.9991</td>
+</tr>
+</tbody>
+</table>
+<p>解读：<strong>绝对</strong>数值变化很大（diversity
+约减半，因为一半的行是
+partial，剩下的还要折叠），但样本<strong>排序</strong>基本保持（Spearman
+0.9975）。因此”A 样本比 B
+样本更多样”这类结论仍然成立；“本队列多样性中位数为
+918”这类结论不成立，因为那个数字是数 partial
+行的产物。这就是采用修正定义的实际理由。</p>
+<h3 id="未定义值">7.4 未定义值</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>层级</th>
+<th>clonality 的 <code>NA</code></th>
+<th>entropy / CPK / Gini 的 <code>NA</code></th>
+<th>克隆数不足 2 的样本</th>
+<th>无有效克隆的样本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>L1</td>
+<td>9</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>9</td>
+<td>3</td>
+<td>9</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>三个无有效 IGH
+克隆的样本（<code>TCGA-13-0800</code>、<code>TCGA-23-1113</code>、<code>TCGA-24-1419</code>）所有指数均未定义。它们应从队列统计中显式排除，而不是静默插补。</p>
+<h3 id="相关结构">7.5 相关结构</h3>
+<table>
+<thead>
+<tr>
+<th>配对</th>
+<th>raw</th>
+<th>L1</th>
+<th>L2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diversity 对 entropy</td>
+<td>0.7957</td>
+<td>0.7862</td>
+<td>0.7875</td>
+</tr>
+<tr>
+<td>CPK 对 entropy</td>
+<td>-0.2470</td>
+<td>-0.2421</td>
+<td>-0.2393</td>
+</tr>
+<tr>
+<td>CPK 对 clonality</td>
+<td>-0.8790</td>
+<td>-0.8729</td>
+<td>-0.8722</td>
+</tr>
+</tbody>
+</table>
+<p>相关结构对修正稳健——再次说明修正版改变的是尺度而不是生物学。</p>
+<h3 id="同一次修正里的其他内容">7.6 同一次修正里的其他内容</h3>
+<ul>
+<li><strong>基因使用率</strong>剔除 <code>*</code>：IGHV 表从 80 项降到
+79 项，前五个 V
+基因不变（<code>IGHV3-15*01</code>、<code>IGHV5-51*03</code>、<code>IGHV4-31*03</code>、<code>IGHV1-18*04</code>、<code>IGHV3-23*01</code>）；前三个
+IGHJ
+基因不变（<code>IGHJ5*02</code>、<code>IGHJ4*02</code>、<code>IGHJ6*02</code>）。</li>
+<li><strong>CDR3 长度</strong>在 L2 上：175 行，核苷酸长度全部是 3
+的倍数（两条 <code>out_of_frame</code> 已去掉），范围 30-102 nt，众数 66
+nt / 22 aa，474 读段。</li>
+<li><strong>画图</strong>在修正版里用裸列名、调用
+<code>print()</code>、修正文件名拼写；原样的拼写错误
+<code>diveristy_cor_entropy.png</code> 为保真保留。</li>
+</ul>
+<h3 id="修正版没有做什么">7.7 修正版<strong>没有</strong>做什么</h3>
+<ul>
+<li>没有重跑 TRUST3，也没有质疑组装器的调用。</li>
+<li>没有在使用率表里折并 V 等位（留作扩展）。</li>
+<li>没有加入临床协变量，因为教材没有提供。</li>
+<li>没有把 <code>NaN</code> 静默替换成数字：未定义就保持
+<code>NA</code>。</li>
+</ul>
+<hr />
+<h2 id="检查清单产物与总结">8. 检查清单、产物与总结</h2>
+<h3 id="检查清单">8.1 检查清单</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>检查</th>
+<th>预期</th>
+<th>实测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ck1</td>
+<td><code>airr</code> 环境可激活并加载 ggplot2/dplyr/ggpubr</td>
+<td>是（R 4.3.0，3.4.4 / 1.1.4 / 0.6.0）</td>
+</tr>
+<tr>
+<td>ck2</td>
+<td>演示 <code>cdr3.out</code> 12 列、无表头</td>
+<td>是，974 行</td>
+</tr>
+<tr>
+<td>ck3</td>
+<td>TCR 与 BCR 行恰好划分全表</td>
+<td>是，33 + 941 = 974，0 剩余</td>
+</tr>
+<tr>
+<td>ck4</td>
+<td>演示 <code>report.tsv</code> 8 列</td>
+<td>是，跳过 <code>#</code> 表头后 930 数据行</td>
+</tr>
+<tr>
+<td>ck5</td>
+<td>report frequency 合计为 2（TCR、BCR 各自归一化）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck6</td>
+<td>IGH 使用率合计为 1</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck7</td>
+<td>CDR3 长度直方图众数符合预期</td>
+<td>是，66 nt / 22 aa</td>
+</tr>
+<tr>
+<td>ck8</td>
+<td>375 个 OV 样本全部处理</td>
+<td>是，13.9 秒</td>
+</tr>
+<tr>
+<td>ck9</td>
+<td>diversity CSV 每样本一行</td>
+<td>是，375 行</td>
+</tr>
+<tr>
+<td>ck10</td>
+<td>三张相关图产出</td>
+<td>是</td>
+</tr>
+<tr>
+<td>ck11</td>
+<td><code>NaN</code> 被记录而非隐藏</td>
+<td>是，1 个样本；修正后 9 个未定义</td>
+</tr>
+<tr>
+<td>ck12</td>
+<td>修正版能精确复现原样指数</td>
+<td>是，演示 raw 行与 Part 4 六位小数一致</td>
+</tr>
+<tr>
+<td>ck13</td>
+<td>修正前后排序保持</td>
+<td>是，diversity 的 Spearman 0.9975</td>
+</tr>
+</tbody>
+</table>
+<h3 id="产物清单">8.2 产物清单</h3>
+<pre><code>01_clonotype/    BCR_consensus_frequency_distribution.png、log_part1.txt、scripts/part1_clonotype.R
+02_gene_usage/   top10_IGHV_genes.png、top10_IGHJ_genes.png、heatmap_VJ.png、
+                 log_part2.txt、scripts/part2_gene_usage.R
+03_cdr3_length/  CDR3_nt_length_distribution.png、CDR3_aa_length_distribution.png、
+                 log_part3.txt、scripts/part3_cdr3_length.R
+04_diversity/    OV_bcr_diversity.csv、diveristy_cor_entropy.png、CPK_cor_entropy.png、
+                 CPK_cor_clonality.png、log_part4.txt、scripts/part4_diversity.R
+05_corrected/    OV_bcr_diversity_corrected.csv、OV_trb_diversity_corrected.csv、
+                 corrected_summary.txt、raw_vs_corrected_diversity.png、
+                 corrected_diversity_cor_entropy.png、corrected_CPK_cor_entropy.png、
+                 corrected_CPK_cor_clonality.png、
+                 corrected_CDR3_nt_length_distribution.png、corrected_CDR3_aa_length_distribution.png、
+                 corrected_top10_IGHV_genes.png、corrected_top10_IGHJ_genes.png、
+                 log_corrected.txt、scripts/corrected_analysis.R</code></pre>
+<h3 id="总结">8.3 总结</h3>
+<p>本模块是一分钟级的 R 分析，输入 11 个文件加一个 375
+样本队列；它也是本课程第一个”教材自己的定义、而不是命令”成为薄弱点的模块。九条问题已核验并记录。改变数字的有三条：把
+<code>nrow()</code> 当作丰富度度量而 TRUST report 并不以 CDR3
+为键（TBCR-02）；黑名单只去 <code>partial</code> 却留下
+<code>out_of_frame</code>（TBCR-03）；队列循环跳过了 Part 3
+施加的质量过滤（TBCR-08）。修正版把多样性中位数减半（918 到
+446），同时保持样本排序（Spearman
+0.9975），因此相对比较仍然成立，绝对队列层面的陈述不成立。原样运行有 1
+个样本得到 <code>NaN</code> clonality，修正后 3 个样本完全没有有效 IGH
+克隆；全部按未定义报告而不插补。</p>
+<hr />
+<h2 id="附录-a-偏差日志">附录 A —— 偏差日志</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>#</th>
+<th>教材</th>
+<th>本次运行</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>交互式 <code>R</code>，Part 之间状态延续</td>
+<td>每个 Part 一个 <code>Rscript</code>，状态重新推导</td>
+<td>可复现、可留日志</td>
+</tr>
+<tr>
+<td>2</td>
+<td>输出到 <code>~/airr_output</code></td>
+<td>通过 <code>setwd()</code> 输出到 <code>results/NN_*/</code></td>
+<td>仓库布局</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Part 0 的 SSH + <code>.bashrc</code> + <code>conda init</code></td>
+<td>只 <code>conda activate airr</code></td>
+<td>已在该集群</td>
+</tr>
+<tr>
+<td>4</td>
+<td>输入绝对路径</td>
+<td>不变</td>
+<td>只读课程共享</td>
+</tr>
+<tr>
+<td>5</td>
+<td>无诊断打印</td>
+<td>增加 <code>[diag]</code> 打印</td>
+<td>为本文档留证</td>
+</tr>
+<tr>
+<td>6</td>
+<td>三个画图块用 <code>p</code> 不 <code>print()</code></td>
+<td>原样运行不变，修正版加 <code>print()</code></td>
+<td>原样运行保真</td>
+</tr>
+<tr>
+<td>7</td>
+<td>教材停在三张相关图</td>
+<td>增加修正版、TRB 扩展、对拍</td>
+<td>用户明确要求</td>
+</tr>
+<tr>
+<td>8</td>
+<td>文件名 <code>diveristy_cor_entropy.png</code></td>
+<td>原样保留；修正版改正拼写</td>
+<td>保真</td>
+</tr>
+</tbody>
+</table>
+<h2 id="附录-b-复现">附录 B —— 复现</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate airr</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">LC_ALL</span><span class="op">=</span>C <span class="va">LANG</span><span class="op">=</span>C</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /gpfs1/home/bjx131_pkuhpc/class/TBCR-analysis/results</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 01_clonotype/scripts/part1_clonotype.R     <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 01_clonotype/log_part1.txt</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 02_gene_usage/scripts/part2_gene_usage.R   <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 02_gene_usage/log_part2.txt</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 03_cdr3_length/scripts/part3_cdr3_length.R <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 03_cdr3_length/log_part3.txt</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 04_diversity/scripts/part4_diversity.R     <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 04_diversity/log_part4.txt</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> 05_corrected/scripts/corrected_analysis.R  <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span> <span class="kw">|</span> <span class="fu">tee</span> 05_corrected/log_corrected.txt</span></code></pre></div>
+<p>总墙钟时间约 45 秒（队列循环 14 秒，修正版 24
+秒）。不使用调度器；分析单线程，登录节点完全够用。</p>
+<p>用于核验的关键数字：<code>cdr3.out</code> 974 行；745 个 BCR
+assembly；report 930 行；IGHV 首位 <code>IGHV3-15*01</code> 使用率
+0.1560；354 条 IGH 行中 169 条 partial；演示样本 diversity 354；队列 375
+行；raw diversity 中位数 918；修正后中位数 446；原样 1 个
+<code>NaN</code> clonality，修正后 9 个未定义。</p>
+</body>
+</html>

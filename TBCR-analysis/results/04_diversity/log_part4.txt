@@ -1,0 +1,120 @@
+=== Part 4: Calculate TCR/BCR diversity index of each sample ===
+R: R version 4.3.0 (2023-04-21) 
+time: 2026-10-19 18:17:27 
+
+Warning message:
+package 'ggplot2' was built under R version 4.3.1 
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Warning message:
+package 'dplyr' was built under R version 4.3.3 
+Warning message:
+package 'ggpubr' was built under R version 4.3.3 
+  count  frequency
+1   495 0.07787612
+2   364 0.05723471
+3   278 0.04378714
+4   231 0.03646439
+5   203 0.03203899
+6   201 0.03170728
+                                                              CDR3nt
+1                               TGTCAACAAACTTACAATACCGTCATCTTCACTTTC
+2                            TGCCAGTCCTATGACAGCAGCCTGAATGGTCTGGTATTC
+3 TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+4                TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+5                                  TGTCAACAGAGTTACAATACCCCGGAGACGTTC
+6                            TGTCAGCAGTATAATAAATGGCCTCCAGCGCTCACTTTC
+                  CDR3aa           V           D        J     C
+1           CQQTYNTVIFTF IGKV1-39*01           * IGKJ3*01  IGKC
+2          CQSYDSSLNGLVF IGLV1-40*01           * IGLJ2*01  IGLC
+3 CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+4      CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+5            CQQSYNTPETF IGKV1-39*01           * IGKJ1*01  IGKC
+6          CQQYNKWPPALTF IGKV3-15*01           * IGKJ4*01  IGKC
+  count   frequency
+1   278 0.043787140
+2   231 0.036464390
+3   155 0.024469420
+4   149 0.023455430
+5    49 0.007733061
+6    35 0.005502280
+                                                                    CDR3nt
+1       TGTACCACAGAGCACTTAGGATATTGTAGTAGTACCAGCTGTTTCGACAACTGGTTCGACACCTGG
+2                      TGTGCGACCACAATGATTCGCGACTACTTCTATTACGGCATGGACGTCTGG
+3       TGTGCGAGGGACTCCGGTGTATACTGTGACAGTGCCGACTGCTTTCTTTCACCCTTCGACCCCTGG
+4                               TGTGCGAGAGCGCGCGGTGATAACAACTGGTTCGACCCCTGG
+5                            TGTGCGAGAGGGTCGGGGTATAGCAGCAGCTGGTCCGACTACTGG
+6 TGCGCGAGACAGGGCTCGATACTACTTCCAGTTGCCATGGGTGGCGACTACTACTTCGGTATGGACGTCTGG
+                    CDR3aa           V           D        J     C
+1   CTTEHLGYCSSTSCFDNWFDTW IGHV3-15*01  IGHD2-2*01 IGHJ5*02 IGHA1
+2        CATTMIRDYFYYGMDVW IGHV5-51*03 IGHD2-21*02 IGHJ6*02 IGHG1
+3   CARDSGVYCDSADCFLSPFDPW IGHV1-18*04 IGHD3-22*01 IGHJ5*02 IGHA1
+4           CARARGDNNWFDPW IGHV4-31*03  IGHD1-1*01 IGHJ5*02 IGHG1
+5          CARGSGYSSSWSDYW IGHV4-61*02 IGHD6-13*01 IGHJ4*02 IGHA2
+6 CARQGSILLPVAMGGDYYFGMDVW IGHV3-33*01 IGHD2-21*02 IGHJ6*02 IGHG1
+[1] 354
+[1] 167.3759
+[1] 6.331402
+[1] 0.2522795
+[1] 0.9567724
+
+[diag] single-sample indices: diversity= 354  unique CDR3nt= 345  unique CDR3aa= 173 
+[diag] partial rows in IGH: 169  out_of_frame: 2 
+[diag] total reads: 2115 
+
+[diag] OV files: 375 
+                                    diversity       CPK   entropy  clonality
+TCGA-04-1331-01A-01R-1569-13_report       662 316.59493  8.747244 0.06653120
+TCGA-04-1332-01A-01R-1564-13_report       468 449.56772  8.247561 0.07021175
+TCGA-04-1338-01A-01R-1564-13_report       653 202.85803  7.387905 0.20992911
+TCGA-04-1341-01A-01R-1564-13_report      2450  25.02988  7.082832 0.37089397
+TCGA-04-1343-01A-01R-1564-13_report     10238  87.84213 10.357630 0.22249621
+TCGA-04-1347-01A-01R-1564-13_report       424  67.05678  5.567095 0.36215103
+                                         gini
+TCGA-04-1331-01A-01R-1569-13_report 0.9961048
+TCGA-04-1332-01A-01R-1564-13_report 0.9939586
+TCGA-04-1338-01A-01R-1564-13_report 0.9535228
+TCGA-04-1341-01A-01R-1564-13_report 0.9581129
+TCGA-04-1343-01A-01R-1564-13_report 0.9944972
+TCGA-04-1347-01A-01R-1564-13_report 0.9123257
+
+[diag] loop elapsed: 13.9 s
+[diag] samples: 375 
+[diag] diversity range: 1 - 26978  median: 918 
+[diag] CPK range: 15.567 - 1000  median: 180.7188 
+[diag] entropy range: 0 - 13.2401 
+[diag] clonality range: 0.0195 - 0.7306 
+[diag] gini range: 0 - 0.9995 
+[diag] NaN per column:
+diversity       CPK   entropy clonality      gini 
+        0         0         0         1         0 
+[diag] rows with NaN:
+[1] "TCGA-23-1113-01A-01R-1564-13_report"
+`geom_smooth()` using formula = 'y ~ x'
+null device 
+          1 
+`geom_smooth()` using formula = 'y ~ x'
+null device 
+          1 
+`geom_smooth()` using formula = 'y ~ x'
+Warning messages:
+1: Removed 1 rows containing non-finite values (`stat_smooth()`). 
+2: Removed 1 rows containing non-finite values (`stat_cor()`). 
+3: Removed 1 rows containing missing values (`geom_point()`). 
+null device 
+          1 
+
+[diag] spearman rho (diversity~entropy): 0.7957 
+[diag] spearman rho (CPK~entropy): -0.247 
+[diag] spearman rho (CPK~clonality): -0.879 
+
+=== Part 4 done ===

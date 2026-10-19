@@ -266,3 +266,32 @@ RNA-seq-application/results/**/*.fq.gz
 RNA-seq-application/results/**/*.g.vcf
 RNA-seq-application/results/**/*.g.vcf.idx
 RNA-seq-application/results/**/*.g.vcf.gz
+# -----------------------------------------------------------------------------
+# 11. TBCR-analysis/results — curated analysis results (EXPLICIT exception, 2026-10-19)
+# -----------------------------------------------------------------------------
+# Same deliberate policy as sections 8 (WES/results), 9 (RNA-seq/results) and
+# 10 (RNA-seq-application/results): the Lesson-4 TCR/BCR repertoire analysis
+# outputs ARE versioned (clonotype/gene-usage/CDR3-length figures, the 375-sample
+# diversity CSV of the as-written run, the corrected-pass CSVs and figures,
+# scripts and logs — see TBCR-analysis/ref/TBCR_analysis_corrected.md and
+# TBCR_analysis_results_guide.md). NO raw data.
+!TBCR-analysis/results/**
+
+# Safety net (mirrors sections 8/9/10): raw data & heavy intermediates never
+# enter, not even via the exception above. TRUST3 outputs (cdr3.out, final.out,
+# raw.out, assembled_reads.fa, ...) live on the shared read-only path
+# /lustre1/share/airr/data/ and are never copied into the repo.
+TBCR-analysis/results/**/*.bam
+TBCR-analysis/results/**/*.bai
+TBCR-analysis/results/**/*.sam
+TBCR-analysis/results/**/*.cram
+TBCR-analysis/results/**/*.fastq
+TBCR-analysis/results/**/*.fastq.gz
+TBCR-analysis/results/**/*.fq
+TBCR-analysis/results/**/*.fq.gz
+TBCR-analysis/results/**/*.fa
+TBCR-analysis/results/**/*.fasta
+TBCR-analysis/results/**/*.out
+TBCR-analysis/results/**/*.g.vcf
+TBCR-analysis/results/**/*.g.vcf.idx
+TBCR-analysis/results/**/*.g.vcf.gz
