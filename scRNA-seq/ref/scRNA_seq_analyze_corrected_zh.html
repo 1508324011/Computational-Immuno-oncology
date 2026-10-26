@@ -1,0 +1,2278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>单细胞 RNA-seq（PBMC 3k）· 矫正增强版（中文版）</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">单细胞 RNA-seq（PBMC 3k）· 矫正增强版（中文版）</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#单细胞-rna-seqpbmc-3k-矫正增强版"
+id="toc-单细胞-rna-seqpbmc-3k-矫正增强版">单细胞 RNA-seq（PBMC 3k）·
+矫正增强版</a>
+<ul>
+<li><a href="#关于本版" id="toc-关于本版">0. 关于本版</a></li>
+<li><a href="#问题清单速览" id="toc-问题清单速览">1.
+问题清单速览</a></li>
+<li><a href="#环境与数据" id="toc-环境与数据">2. 环境与数据</a></li>
+<li><a href="#原样运行教材实际产出了什么"
+id="toc-原样运行教材实际产出了什么">3.
+原样运行：教材实际产出了什么</a></li>
+<li><a href="#part-1-载入数据" id="toc-part-1-载入数据">4. Part 1 ——
+载入数据</a></li>
+<li><a href="#part-2-质量控制" id="toc-part-2-质量控制">5. Part 2 ——
+质量控制</a></li>
+<li><a href="#part-3-高变基因" id="toc-part-3-高变基因">6. Part 3 ——
+高变基因</a></li>
+<li><a href="#part-4-标准化与-pca" id="toc-part-4-标准化与-pca">7. Part
+4 —— 标准化与 PCA</a></li>
+<li><a href="#part-5-聚类与-umap" id="toc-part-5-聚类与-umap">8. Part 5
+—— 聚类与 UMAP</a></li>
+<li><a href="#part-6-注释与差异表达" id="toc-part-6-注释与差异表达">9.
+Part 6 —— 注释与差异表达</a></li>
+<li><a href="#part-7-去批次整合" id="toc-part-7-去批次整合">10. Part 7
+—— 去批次整合</a></li>
+<li><a href="#part-8-scanpy" id="toc-part-8-scanpy">11. Part 8 ——
+scanpy</a></li>
+<li><a href="#两套工具链对账" id="toc-两套工具链对账">12.
+两套工具链对账</a></li>
+<li><a href="#修正版" id="toc-修正版">13. 修正版</a></li>
+<li><a href="#教材范围之外的参考图" id="toc-教材范围之外的参考图">14.
+教材范围之外的参考图</a></li>
+<li><a href="#复现本模块" id="toc-复现本模块">15. 复现本模块</a></li>
+<li><a href="#文件清单" id="toc-文件清单">16. 文件清单</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="单细胞-rna-seqpbmc-3k-矫正增强版">单细胞 RNA-seq（PBMC 3k）·
+矫正增强版</h1>
+<p><strong>第五节课 · scRNA-seq 分析</strong> 教材来源：<em>Single Cell
+RNA-seq Analyze Tutorial</em>，秦博文、曾泽贤，北京大学生命科学中心 /
+定量生物学中心 / 前沿交叉学科研究院（本目录下
+<code>scRNA_seq_analyze_totorial_2026.html</code>）。</p>
+<hr />
+<h2 id="关于本版">0. 关于本版</h2>
+<p>本文件是第五节课教材的矫正增强版，沿用本仓库
+WES、RNA-seq、RNA-seq-application、TBCR-analysis
+四个模块的既定流程：</p>
+<ol type="1">
+<li>教材先<strong>按原样执行</strong>——每个代码单元逐字照抄，按教材顺序，不做优化、不在运行中修错；</li>
+<li>所有遇到或预见的问题<strong>只记录不修改</strong>（清单见
+§1，具体解释放在对应 Part）；</li>
+<li>随后<strong>另跑一份修正版</strong>，让每条修正的影响可被测量而不是被断言（§13）；</li>
+<li>文档、脚本、日志、图、表一并入库。</li>
+</ol>
+<p>本模块与前四节课有两处不同。</p>
+<p><strong>第一次同一份数据上有两套工具链。</strong> Part 1-7 是
+R/Seurat，Part 8 是 Python/scanpy，都从同一个 <code>matrix.mtx</code>
+出发。教材从不交代两侧的关系，而它们确实不一致：R 侧保留 32,738
+个基因、得到 9 个群，Python 侧保留 13,714 个基因、得到 8 个群。§12
+把这一差异逐细胞量化。</p>
+<p><strong>第一次教材在两门语言里都跑不到结尾。</strong> 少一行
+<code>library()</code> 让 R 的差异表达单元崩掉，多一个逗号让整个 Python
+单元崩掉——合起来就是 25 张图里的 7
+张，以及两个交付对象全部丢失（§3）。</p>
+<p>本版相对原教材增加的内容：</p>
+<ul>
+<li>完整的一次运行：逐单元耗时、警告、以及准确的报错原文（§3）；</li>
+<li>二十条已验证的坑（<code>SC-01</code> …
+<code>SC-20</code>），每条给出修正代码，重要处给出实测影响；</li>
+<li>每张重生成的图与课程随附 28 张参考 PNG
+的逐图像素级比对（§3.4，<code>results/08_figure_comparison/</code>）；</li>
+<li>两套工具链的对账：所谓”9 群 vs 8 群”到底是什么（§12）；</li>
+<li>一份修正版，原样复现了全部数字，并补出教材只留在内存里的对象与表格（§13）。</li>
+</ul>
+<p>全文统一四档严重度：<strong>致命</strong>（原样代码根本产不出结果）、<strong>改变结果</strong>（能跑，但标签/数字不可信）、<strong>稳健性</strong>（这里能跑，别处会崩）、<strong>代码卫生</strong>（风格、命名、结果不落盘）。</p>
+<hr />
+<h2 id="问题清单速览">1. 问题清单速览</h2>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 6%" />
+<col style="width: 42%" />
+<col style="width: 11%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">编号</th>
+<th style="text-align: left;">Part</th>
+<th style="text-align: left;">问题</th>
+<th style="text-align: left;">严重度</th>
+<th style="text-align: left;">修正</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SC-01</td>
+<td style="text-align: left;">4</td>
+<td
+style="text-align: left;"><code>ScaleData(features = rownames(seurat_obj))</code>
+对全部 32,738 个基因做 scale，而正文写的是”用选出的特征”（2,000 个
+HVG）。这不是错误：<code>DoHeatmap()</code> 从 <code>scale.data</code>
+取基因，只 scale HVG 会让任意 marker 热图直接报错。代价是：对象 0.73
+GB、耗时 4.2 s，而 13,714 基因版是 0.35 GB / 2.2 s。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">保留，但写明理由；内存敏感时 scale
+<code>unique(c(VariableFeatures, 需要的 marker))</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-02</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">cluster →
+细胞类型的映射在教材里<strong>写了两份且互相矛盾</strong>：cell 39
+的表说 cluster 1 = CD14+ Mono、cluster 2 = Memory CD4 T；cell 43 的
+<code>new.cluster.ids</code> 说 cluster 1 = Memory CD4 T、cluster 2 =
+CD14+ Mono。本次运行里向量对、表错（cluster 1 是 CCR7/LEF1/NOSIP 即
+CD4，cluster 2 是 S100A8/FCN1/CD14 即单核）。而 Louvain
+编号并不稳定：§13.2 里仅 30 个 HVG 的扰动，就让同一个固定向量标错 957
+个细胞（36%）。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">由 marker
+反推标签、断言群数、输出审计表。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-03</td>
+<td style="text-align: left;">6</td>
+<td
+style="text-align: left;"><code>seurat_obj.markers %&gt;% group_by(cluster) %&gt;% dplyr::filter(avg_log2FC &gt; 1)</code>
+是一条<strong>值被丢弃的管道</strong>；随后 <code>top10</code> 用
+<code>slice_max(avg_log2FC)</code>
+取自<strong>未过滤</strong>的表，完全不看
+<code>p_val_adj</code>。过滤从未生效。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">先赋值过滤结果、同时卡
+<code>p_val_adj &lt; 0.05</code>，再 <code>slice_max()</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-04</td>
+<td style="text-align: left;">6</td>
+<td
+style="text-align: left;"><code>naive_cd4_genes</code>、<code>memory_vs_naive_genes</code>
+算完再也不使用；火山图纵轴 <code>-log10(p_val_adj)</code>，当
+<code>p_val_adj</code> 下溢为 0 时是
+<code>Inf</code>（本数据未触发——最小
+1.24e-115——但测试精度再少一位就会触发）；两个 DEG 表都不落盘。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">用
+<code>pmax(p_val_adj, .Machine$double.xmin)</code>；导出两张表；真正用上基因列表。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-05</td>
+<td style="text-align: left;">7</td>
+<td
+style="text-align: left;"><code>data_pbmc_multi &lt;- load("pbmc_stim.RData")</code>
+拿到的是被载入对象的<strong>名字</strong>，不是对象；<code>ctrl.sparse</code>/<code>stim.sparse</code>
+被倒进全局环境，再用 <code>get()</code> 取回。放进函数或 knit
+文档里会静默泄漏或直接失败。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;"><code>load(..., envir = e)</code>
+载入私有环境。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-06</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Part 7
+直接把<strong>未过滤的原始矩阵</strong>送去整合——没有
+<code>percent.mt</code>、没有 <code>nFeature</code> 阈值，与 Part 2
+完全脱节；<code>RunHarmony()</code> 之后只画一张 UMAP，不做
+<code>FindNeighbors()</code>/<code>FindClusters()</code>，去批次效果从未被量化。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">两侧都做 QC（13,019 → 12,932、12,875 →
+12,779），并用量化指标替代肉眼判断（§10）。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-07</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>PCHeatmap()</code>
+是已废弃别名（Seurat 5.1.0
+里仍在、且不报警告）；<code>ElbowPlot()</code> 默认画 20 个
+PC，而下游全部用 <code>dims = 1:10</code>。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">换
+<code>DimHeatmap(dims = 1:6)</code>；显式 <code>ndims = 20</code>
+并说明为何取 10。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-08</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><code>p &lt;- p + plot2</code> 中
+<code>plot2</code> 本身是基于 <code>p</code> 的完整
+ggplot，结果是<strong>两联图</strong>（左 <code>p</code>、右
+<code>plot2</code>），而不是”同一个图上叠了一层”。随附的参考图
+<code>VariableFeaturePlot.png</code>
+就带着这个痕迹：左右两半是同一张散点、标注不同。</td>
+<td style="text-align: left;">代码卫生</td>
+<td
+style="text-align: left;"><code>p &lt;- LabelPoints(plot = p, points = top_features, repel = TRUE)</code>，单联。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-09</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>sc.pl.pca_variance_ratio(adata, log=True,,save="scanpy_PCA_ratio.png")</code>
+的双逗号是 <code>SyntaxError</code>。Python
+以整单元格编译，于是该单元里<strong>什么都没有执行</strong>：不只是比值图，连
+<code>sc.tl.pca()</code>、<code>sc.pp.neighbors()</code>、<code>sc.tl.umap()</code>
+全都没跑。后续单元连锁失败于
+<code>KeyError: 'No "neighbors" in .uns'</code>。</td>
+<td style="text-align: left;">致命</td>
+<td style="text-align: left;">去掉一个逗号。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-10</td>
+<td style="text-align: left;">2, 8</td>
+<td style="text-align: left;">两侧用不同阈值过滤同一批 2,700
+个细胞（<code>nFeature_RNA &lt; 2500</code> vs
+<code>n_genes_by_counts &lt; 2000</code>），于是分别描述 2,638 与 2,635
+个细胞、9 与 8 个群。正文与代码都没提这个不一致。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">统一阈值；§12 显示 Python 侧改用 2,500
+恰好得到 2,638 个细胞。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-11</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>sc.pp.scale(adata, max_value = 10)</code>
+在 cell 64 末尾调一次、cell 67
+开头又调一次。第二次是对已截断数据的重复截断（本数据上是空操作，但一旦
+<code>max_value</code> 不同就会静默改变数值）。</td>
+<td style="text-align: left;">代码卫生</td>
+<td style="text-align: left;">只保留一次。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-12</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>rename_categories("leiden", new_cluster_names)</code>
+要求每个类别正好一个名字，数量不符就抛难以理解的错误；8 个名字对 9
+个类别时整单元崩掉。更关键的是这些名字是<strong>位置式</strong>的——按类别顺序而非
+marker 证据分配——而且<strong>是错的</strong>：名叫 <code>CD8 T</code>
+的群有 78.1% 是 Seurat 的 Naive CD4 T（CD8A 0.14、CD8B 0.24、IL7R
+1.61），名叫 <code>NK</code> 的群是 61.8% CD8 T 加 33.3% NK。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">校验类别数，并由
+<code>rank_genes_groups</code> 结果反推映射（§11.4）。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-13</td>
+<td style="text-align: left;">6, 8</td>
+<td style="text-align: left;">两侧算完 marker 都不落盘；scanpy 的
+<code>save=</code> 是”函数名 + 字符串”拼接，于是产生
+<code>highest_expr_genesscanpy_highest_expr_genes.png</code>、<code>violinscanpy_violin_plot_QC.png</code>、<code>umapscanpy_final_umap.png</code>。课程随附的图之所以要改名，正是这个原因。</td>
+<td style="text-align: left;">代码卫生</td>
+<td style="text-align: left;">导出
+<code>markers_all_clusters.csv</code>、<code>clusterN_markers.csv</code>、<code>cluster_label_audit*.csv</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-14</td>
+<td style="text-align: left;">1, 8</td>
+<td style="text-align: left;"><code>genes.tsv</code> 有 95
+个重复行、涉及 91 个 symbol（32,738 行、32,643
+个唯一名，<code>7SK</code> 出现 4 次），另有 21 个 symbol 含
+<code>_</code>。Seurat 把 <code>_</code> 改写成 <code>-</code>（“Feature
+names cannot have underscores, replacing with dashes”），scanpy 的
+<code>var_names_make_unique()</code> 把重复项改成 <code>ACE</code> →
+<code>ACE-1</code>。两侧基因名双向不一致。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">记录两份映射；跨工具关联用
+<code>gene_ids</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-15</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">数据目录是<strong>旧版 Cell Ranger 1.1.0
+结构</strong>：<code>barcodes.tsv</code>、<code>genes.tsv</code>、<code>matrix.mtx</code>，没有
+<code>features.tsv</code>、没有 <code>.gz</code>。<code>Read10X()</code>
+与 <code>read_10x_mtx()</code> 都能读，但任何期待
+<code>features.tsv.gz</code> 的新工具都读不了。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">本模块无需处理，记录在案。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-16</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">调用了
+<code>geom_text_repel()</code>，却从未
+<code>library(ggrepel)</code>（只载入了 Seurat、dplyr、ggplot2）。整个
+DEG 单元以 <code>could not find function "geom_text_repel"</code>
+崩溃——<strong>连带最后一行
+<code>saveRDS(seurat_obj, "pbmc3k_final.rds")</code>
+也不执行</strong>。</td>
+<td style="text-align: left;">致命</td>
+<td style="text-align: left;">Part 1 加
+<code>library(ggrepel)</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-17</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>CreateSeuratObject()</code> 用默认
+<code>min.cells = 0</code>，保留全部 32,738 个基因（其中 19,024 个 QC
+后全零），而 scanpy 的 <code>filter_genes(min_cells = 3)</code> 只留
+13,714 个。这不是无害差异：2,000 个 HVG 里有 30 个变化，Louvain
+解随之移动（模块度 0.8584 vs 0.8728，群大小差
+±5%），教材那两份硬编码注释表也不再自洽（§13.2）。</td>
+<td style="text-align: left;">改变结果</td>
+<td style="text-align: left;">显式声明基因全集，不要静默改动。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-18</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Part 7 的两张 UMAP
+<strong>不可跨运行复现</strong>：同一输入、同一代码跑两次，结构相关只有
+0.5631（<code>UMAP_without_harmony</code>）与
+0.5676（<code>UMAP_with_harmony</code>），与”对参考图的相关”（0.5664、0.5689）同量级。uwot
+是多线程的，<code>RunUMAP()</code> 没有线程无关的随机种子。</td>
+<td style="text-align: left;">稳健性</td>
+<td
+style="text-align: left;">比对群体结构或嵌入矩阵，永不比像素；需要逐位可复现就设
+<code>n.threads = 1</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-19</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">随附参考图 <code>Marker_Heatmap.png</code>
+是 3,000 × 6,000 px，即 300 dpi 下 10 × 20 英寸；而教材
+<code>ggsave(..., width = 10, height = 10)</code> 只会得到 3,000 ×
+3,000。参考图不是教材代码产出的。</td>
+<td style="text-align: left;">代码卫生</td>
+<td style="text-align: left;">无需处理，记录课程材料内部不一致。</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-20</td>
+<td style="text-align: left;">7</td>
+<td
+style="text-align: left;"><code>RunHarmony(merged_seurat, group.by.vars = "orig.ident")</code>
+省略了 <code>dims</code>，于是对 <code>RunPCA()</code> 得到的全部 50 个
+PC 做整合（默认 <code>npcs = 50</code>）；而随后的
+<code>RunUMAP(reduction = "harmony", dims = 1:10)</code> 只用前 10 个
+harmony 分量。去批次与可视化跑在不同维度上。</td>
+<td style="text-align: left;">稳健性</td>
+<td style="text-align: left;">显式 <code>dims = 1:10</code>（或
+<code>1:20</code>），并让 UMAP 使用同一组。</td>
+</tr>
+</tbody>
+</table>
+<p>另有两点不是代码 bug，但必须记录：</p>
+<ul>
+<li>教材的 HTML
+里从未出现随机种子，而整个模块处处随机（Louvain、UMAP、harmony）；</li>
+<li>本目录下 28 张参考 PNG 是教师 2025 年的输出，其中 13 张与 2024
+版逐字节相同；另有 3
+张（<code>UMAP_noPCA.png</code>、<code>UMAP_three_stages.png</code>、<code>immune_markers.png</code>）不是教材里任何代码产出的（§14）。</li>
+</ul>
+<hr />
+<h2 id="环境与数据">2. 环境与数据</h2>
+<h3 id="环境">2.1 环境</h3>
+<p>本模块不新建环境。教师共享环境里两套工具链都在：</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate /lustre1/share/miniconda3/envs/scRNA_seq</span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>组件</th>
+<th>版本</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td>4.4.1</td>
+<td></td>
+</tr>
+<tr>
+<td>Seurat</td>
+<td>5.1.0</td>
+<td>SeuratObject 5.0.2；v5 分层对象</td>
+</tr>
+<tr>
+<td>harmony</td>
+<td>1.2.1</td>
+<td></td>
+</tr>
+<tr>
+<td>ggrepel</td>
+<td>0.9.6</td>
+<td>装了，但教材从未载入（SC-16）</td>
+</tr>
+<tr>
+<td>dplyr / ggplot2 / patchwork</td>
+<td>1.1.4 / 3.5.1 / 1.3.0</td>
+<td></td>
+</tr>
+<tr>
+<td>Matrix / uwot / leiden / igraph</td>
+<td>1.7.1 / 0.2.2 / 0.4.3.1 / 2.1.1</td>
+<td></td>
+</tr>
+<tr>
+<td>FNN / RANN</td>
+<td>1.1.4.1 / 2.6.2</td>
+<td>仅供矫正版的混合度指标使用</td>
+</tr>
+<tr>
+<td>presto</td>
+<td><strong>缺失</strong></td>
+<td>缺它 <code>FindAllMarkers()</code> 退回慢速 Wilcoxon 路径：一个单元
+330 s</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.12.7</td>
+<td></td>
+</tr>
+<tr>
+<td>scanpy / anndata</td>
+<td>1.10.3 / 0.10.9</td>
+<td></td>
+</tr>
+<tr>
+<td>leidenalg / igraph</td>
+<td>0.11.6</td>
+<td></td>
+</tr>
+<tr>
+<td>numpy / pandas / seaborn</td>
+<td>2.0.2 / 2.2.3 / 0.13.2</td>
+<td></td>
+</tr>
+<tr>
+<td>Pillow</td>
+<td>11.0.0</td>
+<td>供图像比对脚本使用</td>
+</tr>
+</tbody>
+</table>
+<p>本模块在登录节点串行运行，与第 3、4、5 节课一致：总数据量 2,700
+个细胞（Part 7 为 25,894 个），峰值内存约 4 GB，最长的单个单元是
+<code>FindAllMarkers()</code> 的 5.5
+分钟。没有比对步骤、不涉及调度器，故未加 <code>sbatch</code> 包装——与
+RNA-seq、TBCR 两个模块记录的理由相同。</p>
+<h3 id="输入数据">2.2 输入数据</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>路径</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lustre1/share/scRNA_seq/hg19/</code></td>
+<td><code>barcodes.tsv</code>（2,700）、<code>genes.tsv</code>（32,738）、<code>matrix.mtx</code>（2,286,884
+个非零），Cell Ranger 1.1.0 / hg19</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/qinbowen/pbmc_stim.RData</code></td>
+<td><code>ctrl.sparse</code>（35,635 ×
+13,019）、<code>stim.sparse</code>（35,635 × 12,875），稀疏
+<code>dgCMatrix</code></td>
+</tr>
+<tr>
+<td><code>/lustre1/share/scRNA_seq_student/qinbowen_2025/</code></td>
+<td>教师输出，仅作比对参照</td>
+</tr>
+</tbody>
+</table>
+<p>矩阵是标准 10x PBMC 3k：2,700 个细胞，中位 817 个基因、2,197 个
+UMI，线粒体占比中位 2.03%。<code>genes.tsv</code> 有 95 个重复
+symbol、21 个含 <code>_</code> 的 symbol（SC-14）。</p>
+<h3 id="运行目录">2.3 运行目录</h3>
+<pre><code>/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/
+├── hg19/                     计数矩阵副本（按教材 cell 7 的 rsync 指令）
+├── pbmc_stim.RData           刺激组数据副本
+├── rr/                       R 原样版（图直接写在该目录）
+├── rr_fixed/                 R 矫正版（MIN_CELLS = 0）
+├── rr_mincells3/             R 矫正版、基因全集对齐 scanpy（§13.2）
+├── py/  py_asis/             Python 原样版
+├── py_fixed/                 Python 矫正版（N_GENES_MAX = 2000，教材原值）
+├── py_align2500/             Python 矫正版、阈值对齐 Seurat（§12.3）
+├── logs/                     每次运行一份日志 + 一份逐单元状态表
+└── scripts/                  单元文件 + 驱动器 + 分析脚本</code></pre>
+<p>教材的每个代码单元都按 HTML 中的原始编号抽出（R 为
+11、13、16…，Python 为 54、55、57…），交给两个小驱动器执行：</p>
+<ul>
+<li><code>scripts/run_cells.R</code>：在<strong>同一个常驻 R
+会话</strong>里逐单元求值，逐单元捕获错误、警告、消息，记录耗时，并在单元结束后记录各对象状态；</li>
+<li><code>scripts/run_cells.py</code>：同一思路，Python
+常驻命名空间。</li>
+</ul>
+<p>两个驱动器精确复刻 notebook
+语义：报错的单元被记录，下一个单元继续执行；不自动修正、不重试、不重排。这正是把”教材有
+bug”变成”25 张图里只有 18 张存在，另外 7 张死在这些单元”的关键。</p>
+<h3 id="仓库内的产物布局">2.4 仓库内的产物布局</h3>
+<pre><code>scRNA-seq/
+├── scRNA_seq_analyze_totorial_2026.html   课程材料（未改动）
+├── scRNA_seq_lecture_2026.pdf             课程幻灯片（未改动）
+├── *.png                                  28 张参考图（未改动）
+├── ref/                                   本文档、中文版、结果导读
+└── results/
+    ├── 01_qc/                  质控图 + qc_summary.csv + qc_rederivation_rawmatrix.csv
+    ├── 02_hvg_pca/             高变基因与 PCA 图（两侧、两版）
+    ├── 03_clustering/          UMAP 图 + cluster_sizes.csv
+    ├── 04_annotation/          marker/注释图、marker 表、审计表与对账表
+    ├── 05_deg/                 火山图 + DEG 表 + scanpy 排名/点图
+    ├── 06_integration/         harmony 图 + integration_metrics.csv + 分样本群占比表
+    ├── 07_objects/             pbmc3k.h5ad + pbmc3k_obs.csv
+    ├── 08_figure_comparison/   三张比对表 + 书面比对报告
+    ├── 09_run_logs/            六次运行的逐单元日志与状态表
+    └── scripts/                重新生成以上全部内容的脚本</code></pre>
+<p><code>pbmc3k_final.rds</code> <strong>不入库</strong>：Seurat 为全部
+32,738 个基因保留稠密 <code>scale.data</code>，文件 331 MiB。Part 6
+里那行 <code>saveRDS()</code> 即可重建。</p>
+<hr />
+<h2 id="原样运行教材实际产出了什么">3. 原样运行：教材实际产出了什么</h2>
+<h3 id="r-侧part-1-7">3.1 R 侧（Part 1-7）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>单元</th>
+<th>步骤</th>
+<th>秒</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td><code>Read10X</code> + <code>CreateSeuratObject</code></td>
+<td>7.2</td>
+<td>32,738 × 2,700；警告：特征名 <code>_</code> → <code>-</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>线粒体 QC + 小提琴图</td>
+<td>1.9</td>
+<td>2,700 → 2,638 个细胞</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>NormalizeData</code></td>
+<td>0.8</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>FindVariableFeatures</code>（vst，2,000）</td>
+<td>4.2</td>
+<td>警告：零离散度取 log-10</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>ScaleData</code>（全部 32,738 基因）</td>
+<td>5.8</td>
+<td>对象 0.73 GB</td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>RunPCA</code> + 4 张图</td>
+<td>8.7</td>
+<td>50 个 PC</td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>FindNeighbors(1:10)</code> +
+<code>FindClusters(0.5)</code></td>
+<td>1.3</td>
+<td>9 个社区，模块度 0.8584</td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>RunUMAP(1:10)</code></td>
+<td>6.7</td>
+<td>65 条消息（uwot 进度）</td>
+</tr>
+<tr>
+<td>33</td>
+<td>9 个 marker 的 <code>FeaturePlot</code></td>
+<td>3.0</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td><code>FindAllMarkers(only.pos)</code> + 热图</td>
+<td><strong>330.3</strong></td>
+<td>11,986 行；无 presto</td>
+</tr>
+<tr>
+<td>39</td>
+<td>注释表（仅注释）</td>
+<td>0.0</td>
+<td></td>
+</tr>
+<tr>
+<td>40</td>
+<td>12 个 marker 的 <code>FeaturePlot</code></td>
+<td>4.3</td>
+<td></td>
+</tr>
+<tr>
+<td>43</td>
+<td><code>RenameIdents</code> + 带注释 UMAP</td>
+<td>0.6</td>
+<td>9 个标签</td>
+</tr>
+<tr>
+<td>46</td>
+<td>DEG + 火山图 + <code>saveRDS</code></td>
+<td>11.3</td>
+<td><strong>报错：<code>could not find function "geom_text_repel"</code></strong></td>
+</tr>
+<tr>
+<td>48</td>
+<td>merge + 未去批次 UMAP</td>
+<td>63.1</td>
+<td>35,635 × 25,894</td>
+</tr>
+<tr>
+<td>51</td>
+<td>harmony + UMAP</td>
+<td>60.1</td>
+<td>50 维 harmony 嵌入</td>
+</tr>
+</tbody>
+</table>
+<p>合计 509 s，其中 <code>FindAllMarkers()</code> 占 65%。cell 46
+在崩溃前已经算完两次 <code>FindMarkers()</code>（724 行与 650 行），所以
+DEG 数字留在日志里，但火山图与 <code>pbmc3k_final.rds</code>
+都没有。cell 51 的 harmony 嵌入是 50
+维（SC-20）：<code>RunHarmony()</code> 默认用 <code>pca</code>
+的全部主成分，而合并对象经 <code>RunPCA()</code> 得到 50 个。</p>
+<h3 id="python-侧part-8">3.2 Python 侧（Part 8）</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>单元</th>
+<th>步骤</th>
+<th>秒</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>54</td>
+<td>import</td>
+<td>0.0</td>
+<td></td>
+</tr>
+<tr>
+<td>55</td>
+<td><code>read_10x_mtx</code> + <code>var_names_make_unique</code></td>
+<td>0.5</td>
+<td>2,700 × 32,738</td>
+</tr>
+<tr>
+<td>57</td>
+<td><code>highest_expr_genes</code></td>
+<td>0.8</td>
+<td>出图</td>
+</tr>
+<tr>
+<td>59</td>
+<td><code>filter_cells(200)</code> + <code>filter_genes(3)</code> + QC
+小提琴图</td>
+<td>1.1</td>
+<td>过滤基因后 2,700 × 13,714</td>
+</tr>
+<tr>
+<td>61</td>
+<td>两张散点 + 阈值 + normalize + log1p</td>
+<td>0.4</td>
+<td>2,635 个细胞</td>
+</tr>
+<tr>
+<td>64</td>
+<td>HVG + 取子集 + scale</td>
+<td>0.9</td>
+<td>1,833 个 HVG</td>
+</tr>
+<tr>
+<td>67</td>
+<td>PCA + 比值图 + neighbors + UMAP</td>
+<td>0.0</td>
+<td><strong>SyntaxError（SC-09）——该单元一行未执行</strong></td>
+</tr>
+<tr>
+<td>70</td>
+<td>leiden + UMAP + rank_genes_groups</td>
+<td>0.0</td>
+<td><code>KeyError: 'No "neighbors" in .uns'</code></td>
+</tr>
+<tr>
+<td>72</td>
+<td>dotplot</td>
+<td>0.0</td>
+<td><code>ValueError: groupby has to be a valid observation</code></td>
+</tr>
+<tr>
+<td>75</td>
+<td>改名 + 终版 UMAP + 写 h5ad</td>
+<td>0.0</td>
+<td><code>ValueError: leiden is neither in .obs nor in .var</code></td>
+</tr>
+</tbody>
+</table>
+<p>合计 3.8 s、5 张图。没有 <code>pbmc3k.h5ad</code>。</p>
+<h3 id="结论">3.3 结论</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>产出</th>
+<th>缺失</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seurat 图</td>
+<td>14 张里的 13 张</td>
+<td><code>Naive_Memory_CD4_DEG.png</code></td>
+</tr>
+<tr>
+<td>scanpy 图</td>
+<td>11 张里的 5 张</td>
+<td>PCA、PCA 比值、markers、rank、rank 小提琴、dotplot、终版 UMAP</td>
+</tr>
+<tr>
+<td>对象</td>
+<td>2 个里的 0 个</td>
+<td><code>pbmc3k_final.rds</code>、<code>pbmc3k.h5ad</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>25 张图里的 18 张、2 个对象里的 0 个。</strong>
+修正版（§13）产出
+25/25，外加教材本想画却从未画出的比值图，以及两个对象。</p>
+<h3 id="与-28-张参考图的逐图像素比对">3.4 与 28
+张参考图的逐图像素比对</h3>
+<p>每张重生成的图都比对了像素尺寸、着色数量与 64 × 64
+归一化结构相关（<code>results/08_figure_comparison/compare_aswritten_vs_reference.tsv</code>）。</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>图</th>
+<th>像素（我们 / 参考）</th>
+<th>相关度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PCA_heatmap_ALL.png</code></td>
+<td>3000×3000 / 3000×3000</td>
+<td><strong>1.0000</strong></td>
+</tr>
+<tr>
+<td><code>violin_mt.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9982</td>
+</tr>
+<tr>
+<td><code>marker_Features_2.png</code></td>
+<td>6000×3000 / 6000×3000</td>
+<td>0.9965</td>
+</tr>
+<tr>
+<td><code>marker_Features.png</code></td>
+<td>3000×3000 / 3000×3000</td>
+<td>0.9957</td>
+</tr>
+<tr>
+<td><code>UMAP_with_harmony.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9953</td>
+</tr>
+<tr>
+<td><code>UMAP_without_harmony.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9941</td>
+</tr>
+<tr>
+<td><code>UMAP.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9914</td>
+</tr>
+<tr>
+<td><code>cell annotations.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9898</td>
+</tr>
+<tr>
+<td><code>PCA_dimplot.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9875</td>
+</tr>
+<tr>
+<td><code>PCA_VizDimLoadings.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9775</td>
+</tr>
+<tr>
+<td><code>VariableFeaturePlot.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9751</td>
+</tr>
+<tr>
+<td><code>PCA.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9603</td>
+</tr>
+<tr>
+<td><code>Marker_Heatmap.png</code></td>
+<td>3000×<strong>3000</strong> / 3000×<strong>6000</strong></td>
+<td>0.7250</td>
+</tr>
+<tr>
+<td>scanpy：highest-expr、HVG、2 张散点、QC 小提琴</td>
+<td>尺寸完全一致</td>
+<td>0.9992 - 1.0000</td>
+</tr>
+</tbody>
+</table>
+<p>PC 热图上的 1.0000 不是巧合：同一份 PCA、每个主成分同样取 100
+个平衡细胞、完全确定的绘图路径，PNG 逐字节级可复现。热图的 0.7250
+纯粹是长宽比效应（SC-19）。Part 7 的两张 UMAP
+是唯一”真实差异”，而这点差异落在跨运行噪声里（SC-18：我们自己两次运行之间是
+0.5631，对参考图是 0.5664）。</p>
+<hr />
+<h2 id="part-1-载入数据">4. Part 1 —— 载入数据</h2>
+<h3 id="教材做了什么">4.1 教材做了什么</h3>
+<p><code>Read10X()</code> 把旧版 Cell Ranger 的三个文件读成 32,738 ×
+2,700 的稀疏矩阵，<code>CreateSeuratObject()</code>
+包成对象。出现两条警告，两条都有信息量：</p>
+<pre><code>Feature names cannot have underscores (&#39;_&#39;), replacing with dashes (&#39;-&#39;)</code></pre>
+<p><code>genes.tsv</code> 里有 21 个 symbol 含
+<code>_</code>（<code>RP11-442N24__B.1</code>、<code>Metazoa_SRP</code>
+等）。Seurat 静默改写，此后用原符号查找必然失败。Python
+侧则对重复项做相反的处理：95 行重复、涉及 91 个符号（32,738 行、32,643
+个唯一名），<code>var_names_make_unique()</code> 把第二个
+<code>ACE</code> 变成 <code>ACE-1</code>。因此跨工具链关联基因必须用
+<code>gene_ids</code>，不能用 symbol。</p>
+<pre><code>Default search for &quot;data&quot; layer in &quot;RNA&quot; assay yielded no results; utilizing &quot;counts&quot; layer instead.</code></pre>
+<p>这是 Seurat 5 的消息：<code>PercentageFeatureSet()</code> 要
+<code>data</code> 层，但此刻还没
+<code>NormalizeData()</code>。功能上无害。</p>
+<h3 id="实测">4.2 实测</h3>
+<table>
+<tbody>
+<tr>
+<td>矩阵</td>
+<td>32,738 个特征 × 2,700 个细胞，2,286,884 个非零</td>
+</tr>
+<tr>
+<td>基因数 / UMI / 线粒体占比中位</td>
+<td>817 / 2,197 / 2.03%</td>
+</tr>
+<tr>
+<td>基因数范围</td>
+<td>212 - 3,422</td>
+</tr>
+<tr>
+<td>线粒体占比范围</td>
+<td>0 - 22.6%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="坑与调参">4.3 坑与调参</h3>
+<p>SC-14（符号改写、重复）与 SC-15（旧版布局、无
+<code>features.tsv</code>）都在这一步。<code>Read10X()</code>
+能读旧布局，<code>scanpy.read_10x_mtx()</code> 靠 <code>gex_only</code>
+默认值也能读。</p>
+<p>调参：<code>CreateSeuratObject(min.cells = 3)</code> 是把 R
+的基因全集对齐 scanpy <code>filter_genes(min_cells = 3)</code>
+的自然做法，但<strong>不要随手改</strong>——SC-17 量化了它的代价。</p>
+<h3 id="扩展">4.4 扩展</h3>
+<p>若数据来自 Cell Ranger 3+，用 <code>Read10X_h5()</code>；其它来源用
+<code>ReadMtx()</code>；多模态数据要按 <code>features.tsv</code>
+的类型列区分基因表达与其它特征。</p>
+<hr />
+<h2 id="part-2-质量控制">5. Part 2 —— 质量控制</h2>
+<h3 id="做什么为什么">5.1 做什么、为什么</h3>
+<p>三条过滤，对应三种失败模式：基因数太少 = 空滴或死细胞；基因数太多 =
+双细胞；线粒体占比高 = 应激或濒死细胞，胞质 mRNA 已外漏。</p>
+<h3 id="实测-1">5.2 实测</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>规则</td>
+<td><code>nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5</code></td>
+</tr>
+<tr>
+<td>保留细胞</td>
+<td>2,700 中的 <strong>2,638</strong>（97.7%）</td>
+</tr>
+<tr>
+<td>因基因数过少丢弃</td>
+<td>0</td>
+</tr>
+<tr>
+<td>因基因数过多丢弃</td>
+<td>5</td>
+</tr>
+<tr>
+<td>因线粒体占比 ≥ 5% 丢弃</td>
+<td>57</td>
+</tr>
+<tr>
+<td>质控后中位基因数 / UMI / 线粒体占比</td>
+<td>820 / 2,214 / 2.01%（线粒体最高 4.99%）</td>
+</tr>
+</tbody>
+</table>
+<p>scanpy 侧用 <code>n_genes &lt; 2000</code> 保留
+<strong>2,635</strong>
+个细胞（SC-10）。在原始矩阵上按同样数字独立重算得到
+2,634——差的这一个细胞，是线粒体占比在 scanpy
+里按<strong>过滤后</strong>的 13,714 基因矩阵计算、而 Seurat 用全部
+32,738 个特征，边界细胞的占比因此落在 5% 两侧。记录在
+<code>results/01_qc/qc_rederivation_rawmatrix.csv</code>。</p>
+<h3 id="坑">5.3 坑</h3>
+<p>实质性的是阈值不一致（SC-10）：它就是 §12 里”9 群 vs 8
+群”的源头。另需注意 <code>^MT-</code> 只匹配实际存在的 13 个基因；换成
+<code>^MT\.</code>（MitoCarta
+风格）或小鼠数据（<code>^mt-</code>）要改正则，而一旦不匹配，<code>PercentageFeatureSet()</code>
+的表现会被误读成数据问题。</p>
+<h3 id="调参">5.4 调参</h3>
+<p><code>nFeature</code> 上限与数据本身强相关：PBMC 3k 是 2016
+年的浅测序（中位 817 个基因），2,500 很宽松；现代 10x 数据中位常超
+2,000，同样阈值会删掉大部分细胞。定阈值前先看 <code>nFeature</code> vs
+<code>nCount</code>、<code>nFeature</code> vs <code>mt%</code>（教材
+cell 61 的两张散点正是为此）。</p>
+<hr />
+<h2 id="part-3-高变基因">6. Part 3 —— 高变基因</h2>
+<p><code>FindVariableFeatures(selection.method = "vst", nfeatures = 2,000)</code>
+拟合”方差 ~ 平均表达”的 loess 曲线，按标准化残差排序；从 32,738
+个特征里选出 2,000 个，出 <code>VariableFeaturePlot.png</code>。</p>
+<p>两点说明：</p>
+<ul>
+<li><code>log-10 transformation introduced infinite values</code>
+是预期警告：<code>vst</code> 对离散度取
+<code>log10</code>，零方差基因给出 <code>-Inf</code>，Seurat
+会丢弃，消息仅为提示。</li>
+<li><code>LabelPoints()</code> 标注方差最高的 20
+个基因：PPBP、LYZ、S100A9、IGLL5、FTL、GNLY、PF4、FTH1、GNG11、S100A8、FCER1A、HLA-DRA、CD74、CLU、NKG7、CST3、GZMB、CCL4、C1QA、HLA-DPB1，全是白细胞
+marker，这本身是”方法有效”的体检。</li>
+</ul>
+<p>SC-08 在此：<code>p &lt;- p + plot2</code>
+画出的是<strong>两联图</strong>，参考图带着这个痕迹。<code>results/02_hvg_pca/</code>
+两个版本都在：<code>VariableFeaturePlot.png</code>（原样、两联、对参考
+0.9751）与
+<code>VariableFeaturePlot_corrected.png</code>（修正、单联）。</p>
+<hr />
+<h2 id="part-4-标准化与-pca">7. Part 4 —— 标准化与 PCA</h2>
+<p><code>ScaleData(features = rownames(seurat_obj))</code> 对全部 32,738
+个特征做中心化与缩放（SC-01），随后
+<code>RunPCA(features = VariableFeatures(...))</code> 只用 2,000 个
+HVG，返回 50 个主成分。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>scale 的特征数</td>
+<td>32,738（其中 13,714 非空）</td>
+</tr>
+<tr>
+<td>对象体积</td>
+<td>0.73 GB</td>
+</tr>
+<tr>
+<td><code>ScaleData</code> 耗时</td>
+<td>4.2 s</td>
+</tr>
+<tr>
+<td>主成分</td>
+<td>50</td>
+</tr>
+<tr>
+<td>出图</td>
+<td><code>PCA_VizDimLoadings.png</code>、<code>PCA.png</code>（肘图，20
+维）、<code>PCA_dimplot.png</code>、<code>PCA_heatmap_ALL.png</code>（6
+张热图 × 100 细胞）</td>
+</tr>
+</tbody>
+</table>
+<p><code>PCHeatmap()</code> 是 <code>DimHeatmap()</code>
+的废弃别名；Seurat 5.1.0
+里仍可用且不报警告，很容易一用多年（SC-07）。肘图呈 PBMC 3k
+的经典形状——拐点在 PC 7-10 之间——这正是 <code>dims = 1:10</code>
+的依据；但肘图画的是 20 维，而正文从未解释为什么取 10。</p>
+<p><code>PCA_heatmap_ALL.png</code> 同时也是”我们的 PCA
+与教师完全相同”的证据：结构相关 1.0000。</p>
+<hr />
+<h2 id="part-5-聚类与-umap">8. Part 5 —— 聚类与 UMAP</h2>
+<pre><code>FindNeighbors(seurat_obj, dims = 1:10)      # 10 个 PC 上的 SNN 图
+FindClusters(seurat_obj, resolution = 0.5)  # Louvain
+RunUMAP(seurat_obj, dims = 1:10)</code></pre>
+<table>
+<tbody>
+<tr>
+<td>图</td>
+<td>2,638 个节点、95,650 条边</td>
+</tr>
+<tr>
+<td>Louvain</td>
+<td>模块度 0.8584，<strong>9 个社区</strong></td>
+</tr>
+<tr>
+<td>群大小</td>
+<td>657 / 503 / 471 / 339 / 307 / 175 / 144 / 28 / 14</td>
+</tr>
+<tr>
+<td>UMAP</td>
+<td><code>UMAP.png</code>；关于 uwot 取代 Python UMAP 的警告</td>
+</tr>
+</tbody>
+</table>
+<p>群大小本身已经回答了”这是不是真实生物学拆分”：657 与 503 是两个 CD4
+腔室，471 单核、339 B、307 CD8、175 FCGR3A+ 单核、144
+NK，最后两个小群——28 个树突状细胞、14 个血小板。血小板群只占 0.5%，在
+<code>resolution = 0.5</code> 下能保留，0.3 就没了。</p>
+<hr />
+<h2 id="part-6-注释与差异表达">9. Part 6 —— 注释与差异表达</h2>
+<h3 id="两份硬编码映射互相矛盾sc-02">9.1
+两份硬编码映射互相矛盾（SC-02）</h3>
+<p>教材把 cluster → 细胞类型映射写了两遍：</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 19%" />
+<col style="width: 34%" />
+<col style="width: 38%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">cluster</th>
+<th style="text-align: left;">cell 39 的表</th>
+<th style="text-align: left;">cell 43 的
+<code>new.cluster.ids</code></th>
+<th style="text-align: left;">marker 说的是什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Naive CD4 T</td>
+<td style="text-align: left;">Naive CD4 T</td>
+<td style="text-align: left;">CD4（LDHB、IL7R、LTB、CD3D、IL32）</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>CD14+ Mono</strong></td>
+<td style="text-align: left;"><strong>Memory CD4 T</strong></td>
+<td
+style="text-align: left;"><strong>CD4</strong>（CCR7、NOSIP、LEF1、FHIT、NELL2）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>Memory CD4 T</strong></td>
+<td style="text-align: left;"><strong>CD14+ Mono</strong></td>
+<td
+style="text-align: left;"><strong>单核</strong>（LGALS2、S100A8、FCN1、S100A9、CD14）</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">B（CD79A、MS4A1、CD79B）</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">CD8 T</td>
+<td style="text-align: left;">CD8 T</td>
+<td style="text-align: left;">CD8（GZMK、CCL5、GZMA、CST7）</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">FCGR3A+ Mono</td>
+<td style="text-align: left;">FCGR3A+ Mono</td>
+<td style="text-align: left;">FCGR3A+
+单核（CDKN1C、HES4、MS4A7、FCGR3A）</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NK（GZMB、FGFBP2、SPON2、PRF1）</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">DC</td>
+<td style="text-align: left;">DC</td>
+<td style="text-align: left;">DC（SERPINF1、FCER1A、CLEC10A）</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">血小板（GP9、ITGA2B、LY6G6F）</td>
+</tr>
+</tbody>
+</table>
+<p>本次运行里<strong>向量对、表错</strong>：把 cell 39 的表抄进
+<code>new.cluster.ids</code> 的学生，会把 503 个 CD4 T 细胞标成单核、把
+471 个单核标成 CD4 T。两份输出都在
+<code>results/04_annotation/cluster_label_audit.csv</code>，其中”观测到的程序”由
+marker
+面板（<code>marker_panel_mean_expression_seurat.csv</code>）给出。</p>
+<p>用同样的方法检查最终对象的标签，9 个全对：</p>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>细胞数</th>
+<th>证据（log 标准化均值）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive CD4 T</td>
+<td>657</td>
+<td>IL7R 1.70、CCR7 0.58、LEF1 0.57、CD14 0.03</td>
+</tr>
+<tr>
+<td>Memory CD4 T</td>
+<td>503</td>
+<td>IL7R 1.19、CCR7 0.84、CD14 0.03</td>
+</tr>
+<tr>
+<td>CD14+ Mono</td>
+<td>471</td>
+<td>CD14 1.53、LYZ 5.09、S100A8 3.91</td>
+</tr>
+<tr>
+<td>B</td>
+<td>339</td>
+<td>MS4A1 2.17、CD79A 2.80</td>
+</tr>
+<tr>
+<td>CD8 T</td>
+<td>307</td>
+<td>CD8A 1.01、CD8B 0.79、NKG7 3.36</td>
+</tr>
+<tr>
+<td>FCGR3A+ Mono</td>
+<td>175</td>
+<td>FCGR3A 2.75、MS4A7 1.71</td>
+</tr>
+<tr>
+<td>NK</td>
+<td>144</td>
+<td>GNLY 4.17、GZMB 3.68、KLRF1 0.52</td>
+</tr>
+<tr>
+<td>DC</td>
+<td>28</td>
+<td>FCER1A 2.11、CLEC10A 1.28</td>
+</tr>
+<tr>
+<td>Platelet</td>
+<td>14</td>
+<td>PPBP 5.85、PF4 4.93</td>
+</tr>
+</tbody>
+</table>
+<p>对得<strong>靠运气</strong>：§13.2 显示，只要 2,000 个 HVG 里变 30
+个（1.5%），cluster 1 与 2 就互换编号，同一个固定向量立刻变成 957
+个细胞标错。</p>
+<h3 id="marker-与热图">9.2 Marker 与热图</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td><code>FindAllMarkers(only.pos = TRUE)</code></td>
+<td>9 个群共 11,986 行，330 s（无 presto）</td>
+</tr>
+<tr>
+<td>通过 <code>p_val_adj &lt; 0.05 &amp; avg_log2FC &gt; 1</code></td>
+<td>3,483 行</td>
+</tr>
+<tr>
+<td>进热图</td>
+<td>90 个（每群 10 个）</td>
+</tr>
+<tr>
+<td>每群显著数</td>
+<td>89（cluster 0）… 753（cluster 5）</td>
+</tr>
+</tbody>
+</table>
+<p>SC-03：过滤算完就丢，<code>top10</code>
+来自未过滤表，<code>slice_max(avg_log2FC)</code> 完全可以把
+<code>p_val_adj = 0.2</code> 的基因选进去。修正版先过滤（3,483
+行）再每群取 10 个；由此得到的热图与参考图相关 0.9865。</p>
+<h3 id="deg-单元崩了sc-16">9.3 DEG 单元崩了（SC-16）</h3>
+<p><code>geom_text_repel()</code> 需要
+<code>library(ggrepel)</code>，而教材只载入了
+Seurat、dplyr、ggplot2。于是这个单元在<strong>最贵的部分之后</strong>失败：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td><code>FindMarkers(ident.1 = "Naive CD4 T")</code></td>
+<td>724 个基因，353 个 <code>p_val_adj &lt; 0.05</code>，其中 199 个同时
+<code>|log2FC| &gt; 0.5</code></td>
+</tr>
+<tr>
+<td><code>FindMarkers("Memory CD4 T", "Naive CD4 T")</code></td>
+<td>650 个基因，129 个 <code>p_val_adj &lt; 0.05</code></td>
+</tr>
+<tr>
+<td>报错</td>
+<td><code>could not find function "geom_text_repel"</code></td>
+</tr>
+<tr>
+<td>后果</td>
+<td>没有 <code>Naive_Memory_CD4_DEG.png</code>，<strong>也没有
+<code>pbmc3k_final.rds</code></strong></td>
+</tr>
+</tbody>
+</table>
+<p>火山图按 <code>p_val_adj</code> 排前五的是
+LDHB（1.2e-115）、IL7R（1.8e-102）、LTB（1.9e-97）、CD3D（2.0e-91）、IL32（7.7e-86）——即”naive
+CD4 T 相对其余细胞”主要是 naive marker 更高、单核/B/NK 基因更低，这正是
+<code>avg_log2FC &gt; 0</code> 的含义。</p>
+<p>SC-04：<code>-log10(p_val_adj)</code> 在本数据上是有界值（最小
+1.24e-115），但离 <code>Inf</code>
+只差一次舍入；两个基因列表算完不用；两张表都不落盘。</p>
+<hr />
+<h2 id="part-7-去批次整合">10. Part 7 —— 去批次整合</h2>
+<h3 id="教材做了什么-1">10.1 教材做了什么</h3>
+<p>载入 <code>pbmc_stim.RData</code>，建两个 Seurat 对象，设
+<code>orig.ident</code>，<code>merge()</code>，然后<strong>完全不质控</strong>地
+<code>NormalizeData</code> → <code>FindVariableFeatures</code> →
+<code>ScaleData</code> → <code>RunPCA</code> →
+<code>RunUMAP(1:10)</code> → <code>DimPlot</code>（SC-06），再
+<code>RunHarmony(group.by.vars = "orig.ident")</code> →
+<code>RunUMAP(reduction = "harmony", dims = 1:10)</code> →
+<code>DimPlot</code>。</p>
+<h3 id="实测-2">10.2 实测</h3>
+<table>
+<tbody>
+<tr>
+<td>ctrl / stim 细胞数</td>
+<td>13,019 / 12,875（35,635 个特征）</td>
+</tr>
+<tr>
+<td>合并后</td>
+<td>25,894 个细胞</td>
+</tr>
+<tr>
+<td>教材省略的质控</td>
+<td>12,932 / 12,779 → <strong>25,711</strong>（−183，−0.7%）</td>
+</tr>
+<tr>
+<td>去批次前 UMAP</td>
+<td><code>UMAP_without_harmony.png</code></td>
+</tr>
+<tr>
+<td>去批次后 UMAP</td>
+<td><code>UMAP_with_harmony.png</code></td>
+</tr>
+<tr>
+<td>harmony 输入</td>
+<td><strong>全部 50 个 PC</strong>（SC-20），UMAP 只用前 10 个</td>
+</tr>
+</tbody>
+</table>
+<h3 id="把只能看图的部分量化">10.3 把”只能看图”的部分量化</h3>
+<p>修正版补了一个不需要聚类的指标：对每个细胞，取 30
+个最近邻，算其中来自<strong>另一样本</strong>的比例（0 = 完全分家，0.5 =
+完全混合）。</p>
+<table>
+<thead>
+<tr>
+<th>空间</th>
+<th>跨样本近邻比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCA（10 个 PC），未去批次</td>
+<td><strong>0.0287</strong></td>
+</tr>
+<tr>
+<td>harmony（10 维）</td>
+<td><strong>0.4051</strong></td>
+</tr>
+</tbody>
+</table>
+<p>再把 harmony 嵌入按分辨率 0.5 聚类：</p>
+<table>
+<tbody>
+<tr>
+<td>群数</td>
+<td>12</td>
+</tr>
+<tr>
+<td>单样本占比 &gt; 90% 的群</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>ctrl 占比偏离 0.5 的平均绝对值</td>
+<td>0.030</td>
+</tr>
+</tbody>
+</table>
+<p>最大的群 6,065 个细胞（3,096 ctrl / 2,969 stim），最小的 92 个（38 /
+54）。这就是”harmony 起作用了”的数字版：跨样本近邻比例从 2.9% 升到
+40.5%（去批次前，每个细胞的 30 个近邻里有 97%
+来自同一样本），而每个群内部两个样本仍然平衡。</p>
+<p>SC-18：两张 UMAP 不可跨运行复现（同一输入两次运行之间 0.5631 /
+0.5676），所以本节比较的是嵌入与群组成，不是像素。</p>
+<hr />
+<h2 id="part-8-scanpy">11. Part 8 —— scanpy</h2>
+<h3 id="哪些活下来哪些没有">11.1 哪些活下来、哪些没有</h3>
+<p>cell 54-64 用 3.8 s 跑完，产出 5 张图。cell 67
+里是那个双逗号（SC-09）。由于 Python
+以整单元格编译，<code>SyntaxError</code> 抹掉了整个单元：PCA
+从未计算，<code>neighbors()</code> 无法建图，<code>umap()</code>
+无法运行，cell 70、72、75
+连锁失败（<code>KeyError: 'No "neighbors" in .uns'</code>、<code>groupby has to be a valid observation</code>、<code>leiden is neither in .obs nor in .var</code>）。</p>
+<p>这也解释了为什么课程参考图里没有
+<code>pca_variance_ratio</code>：教师自己那一遍撞在同一堵墙上，被缩短的文件名清单也证明只产出了
+5 张 scanpy 图。</p>
+<h3 id="python-侧确实走到的数字">11.2 Python 侧确实走到的数字</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td><code>filter_cells(200)</code> + <code>filter_genes(3)</code>
+之后</td>
+<td>2,700 × <strong>13,714</strong> 个基因</td>
+</tr>
+<tr>
+<td><code>n_genes &lt; 2000 &amp; pct_mt &lt; 5</code> 之后</td>
+<td><strong>2,635</strong> 个细胞</td>
+</tr>
+<tr>
+<td>HVG（<code>min_mean 0.0125, max_mean 3, min_disp 0.5</code>）</td>
+<td><strong>1,833</strong> 个</td>
+</tr>
+<tr>
+<td>PCA</td>
+<td>50 个主成分，<code>arpack</code></td>
+</tr>
+<tr>
+<td>近邻 / UMAP</td>
+<td>10 / 40 个 PC</td>
+</tr>
+</tbody>
+</table>
+<p>修正版把剩下的补完：分辨率 0.9 的 8 个 leiden 社区（534 / 643 / 340 /
+497 / 432 / 142 / 35 / 12
+个细胞）、<code>rank_genes_groups</code>（Wilcoxon）、点图，以及
+<code>pbmc3k.h5ad</code>。</p>
+<h3 id="位置式命名是错的sc-12">11.3 位置式命名是错的（SC-12）</h3>
+<p>按教材阈值，8 个名字正好对得上——其中两个落在了错的群上。证据来自
+<code>rank_genes_groups</code> 与跨工具对账表（§12.2）：</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 7%" />
+<col style="width: 13%" />
+<col style="width: 25%" />
+<col style="width: 28%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">scanpy 群</th>
+<th style="text-align: left;">细胞数</th>
+<th style="text-align: left;">分配的名字</th>
+<th style="text-align: left;">主要 marker</th>
+<th style="text-align: left;">Seurat 组成</th>
+<th style="text-align: left;">判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">534</td>
+<td style="text-align: left;">CD4 T</td>
+<td style="text-align: left;">RPS12、RPS27、RPL32</td>
+<td style="text-align: left;">70.6% Memory CD4 T、26.2% Naive CD4 T</td>
+<td style="text-align: left;">可接受（确为 CD4 群）</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">643</td>
+<td style="text-align: left;"><strong>CD8 T</strong></td>
+<td style="text-align: left;">LDHB、LTB、CD3D、IL32、TPT1</td>
+<td style="text-align: left;"><strong>78.1% Naive CD4 T</strong>、18.2%
+Memory CD4 T</td>
+<td style="text-align: left;"><strong>错</strong>（CD8A 0.14、CD8B
+0.24）</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">340</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">CD74、CD79A、HLA-DRA</td>
+<td style="text-align: left;">99.1% B</td>
+<td style="text-align: left;">对</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">497</td>
+<td style="text-align: left;">CD14+ Monocytes</td>
+<td style="text-align: left;">LYZ、S100A9、S100A8</td>
+<td style="text-align: left;">92.4% CD14+ Mono</td>
+<td style="text-align: left;">对</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">432</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NKG7、CST7、GZMA、CTSW</td>
+<td style="text-align: left;"><strong>61.8% CD8 T</strong>、33.3%
+NK</td>
+<td style="text-align: left;">部分错</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">142</td>
+<td style="text-align: left;">FCGR3A+ Monocytes</td>
+<td style="text-align: left;">LST1、FCGR3A、FCER1G</td>
+<td style="text-align: left;">97.2% FCGR3A+ Mono</td>
+<td style="text-align: left;">对</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">35</td>
+<td style="text-align: left;">Dendritic</td>
+<td style="text-align: left;">HLA-DPA1、HLA-DPB1、HLA-DRA</td>
+<td style="text-align: left;">77.1% DC</td>
+<td style="text-align: left;">对</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">PF4、PPBP、GNG11</td>
+<td style="text-align: left;">100% Platelet</td>
+<td style="text-align: left;">对</td>
+</tr>
+</tbody>
+</table>
+<p><code>rename_categories()</code> 按类别顺序（即”Louvain
+先编号了哪个社区”）分配名字，与生物学无关。于是 8 个标签里有 2
+个实质性错误，其中最大的一个（<code>CD8 T</code>，占 24%）正是终版 UMAP
+里最大的群。</p>
+<h3 id="修正版怎么做">11.4 修正版怎么做</h3>
+<p>先断言类别数，再由 <code>rank_genes_groups</code> 的主要 marker
+反推映射，打印审计表，最后才改名。按教材阈值会得到 8
+个类别、改名照常进行；按对齐阈值（§12.3）会得到 9
+个，修正版拒绝猜测，保留数字标签并写出
+<code>cluster_label_audit_py.csv</code> 交给人判断。</p>
+<hr />
+<h2 id="两套工具链对账">12. 两套工具链对账</h2>
+<h3 id="群-vs-8-群之谜">12.1 “9 群 vs 8 群”之谜</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Seurat</th>
+<th>scanpy（教材）</th>
+<th>scanpy（对齐）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>细胞数</td>
+<td>2,638</td>
+<td>2,635</td>
+<td><strong>2,638</strong></td>
+</tr>
+<tr>
+<td>基因数</td>
+<td>32,738</td>
+<td>13,714</td>
+<td>13,714</td>
+</tr>
+<tr>
+<td>HVG</td>
+<td>2,000（vst）</td>
+<td>1,833（离散度）</td>
+<td>1,838</td>
+</tr>
+<tr>
+<td>使用的主成分</td>
+<td>10</td>
+<td>40</td>
+<td>40</td>
+</tr>
+<tr>
+<td>分辨率</td>
+<td>0.5（Louvain）</td>
+<td>0.9（leiden）</td>
+<td>0.9（leiden）</td>
+</tr>
+<tr>
+<td>群数</td>
+<td><strong>9</strong></td>
+<td><strong>8</strong></td>
+<td><strong>9</strong></td>
+</tr>
+</tbody>
+</table>
+<p>“R 出 9 群、Python 出 8 群”常被解释成”算法不同”。这不是全部：把
+Python 侧阈值从 2,000 提到 2,500，得到<strong>与 Seurat
+完全相同的细胞数</strong>（2,638）和 <strong>9
+个群</strong>。群数主要由质控阈值决定，而不是 Louvain 与 leiden
+的差别。</p>
+<p>两个 9 群解在组成上仍然不同：Seurat 把 CD4 拆成 naive/memory 并把 NK
+与 CD8 分开，而对齐后的 scanpy 解里有一个核糖体基因偏高的 CD4
+群和一个合并的 CD8/NK 群。</p>
+<h3 id="跨工具列联表">12.2 跨工具列联表</h3>
+<p>两侧共享 barcode，可以直接交叉（两个对象共有 2,635
+个细胞；<code>results/04_annotation/cluster_correspondence_counts.csv</code>）：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>Seurat 标签</th>
+<th>CD4 T</th>
+<th>CD8 T</th>
+<th>B</th>
+<th>CD14+ Mono</th>
+<th>NK</th>
+<th>FCGR3A+ Mono</th>
+<th>Dendritic</th>
+<th>Platelet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive CD4 T</td>
+<td>140</td>
+<td>502</td>
+<td>1</td>
+<td>0</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Memory CD4 T</td>
+<td>377</td>
+<td>117</td>
+<td>1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CD14+ Mono</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>459</td>
+<td>0</td>
+<td>4</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>1</td>
+<td>337</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CD8 T</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>0</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>FCGR3A+ Mono</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>37</td>
+<td>0</td>
+<td>138</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>NK</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>144</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>DC</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Platelet</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>列是教材命名后的 scanpy 群。B、单核、DC、血小板近乎对角，两个大的 T
+腔室则完全错位：scanpy 的”CD8 T”列里 78% 是 Seurat 的 naive CD4 T。</p>
+<h3 id="哪些能比哪些不能比">12.3 哪些能比、哪些不能比</h3>
+<p><strong>能比、且本模块比了</strong>：质控后细胞数、群数、按 marker
+面板给出的群组成、marker 排名、DEG 数量、整合指标。</p>
+<p><strong>不能比</strong>：群的<strong>编号</strong>（两种方法各有自己的编号规则）、基因全集（HVG
+之前 32,738 vs 13,714）、分辨率参数（0.5 Louvain 不等于 0.9
+leiden——这里恰好给出 9 与 8，是巧合而非标定）。</p>
+<p>让两侧真正对齐有两个开关：<code>CreateSeuratObject(min.cells = 3)</code>（13,714
+个基因，但见 SC-17）与 scanpy 侧 <code>n_genes &lt; 2500</code>（2,638
+个细胞、9 个群）。两个都做，两侧就是 2,638
+个细胞；本模块没有这么做，因为教材的图是按它自己的取值标定的，而且 SC-17
+证明改动基因全集并不免费。</p>
+<hr />
+<h2 id="修正版">13. 修正版</h2>
+<h3 id="改了什么就只改了什么">13.1 改了什么，就只改了什么</h3>
+<p><code>results/scripts/scRNA_seq_R_cells_corrected.R</code> 与
+<code>..._py_cells_corrected.py</code> 就是教材原文，每处改动都标
+<code># --- FIX ... (SC-xx)</code>、每处新增都标
+<code># --- ADD ...</code>。真正影响产出的改动：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>改动</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>library(ggrepel)</code>（SC-16）</td>
+<td>DEG 单元跑通：火山图、DEG 表、<code>pbmc3k_final.rds</code></td>
+</tr>
+<tr>
+<td>比值图那一个逗号（SC-09）</td>
+<td>PCA/近邻/UMAP 得以运行；生成
+<code>scanpy_PCA_ratio.png</code>（参考图里没有这一张）</td>
+</tr>
+<tr>
+<td><code>pmax(p_val_adj, .Machine$double.xmin)</code>（SC-04）</td>
+<td>火山图纵轴构造上有界</td>
+</tr>
+<tr>
+<td>过滤后的 marker 表赋值（SC-03）</td>
+<td>热图用 90 个显著基因，而不是”只看 log2FC 的前 10”</td>
+</tr>
+<tr>
+<td>群数守卫 + 审计表（SC-02、SC-12）</td>
+<td>映射由 marker 反推并打印；编号漂移变成警告，而不是静默错标</td>
+</tr>
+<tr>
+<td>整合前质控 + harmony 显式 <code>dims</code> +
+之后聚类（SC-06、SC-20）</td>
+<td>25,711 个细胞、12 个群、混合度指标</td>
+</tr>
+<tr>
+<td><code>load()</code> 载入私有环境（SC-05）</td>
+<td>不再污染全局环境</td>
+</tr>
+<tr>
+<td>导出表格（SC-13）</td>
+<td>10 个 CSV，教材只留在内存里</td>
+</tr>
+</tbody>
+</table>
+<p>修正版 R 运行<strong>精确复现</strong>原样数字：2,638 个细胞、9
+个群、11,986 行 marker、724 与 650 行 DEG、合并 25,894 个细胞、模块度
+0.8584。两者共有的 13 张图里有 9
+张<strong>逐字节相同</strong>（<code>results/08_figure_comparison/compare_aswritten_vs_corrected.tsv</code>）；不同的
+4 张是两处有意改动（<code>VariableFeaturePlot</code>
+单联、<code>Marker_Heatmap</code> 加了显著性过滤）与 Part 7 的两张
+UMAP（SC-18 的不可复现性）。</p>
+<h3 id="基因全集的对照实验sc-17">13.2 基因全集的对照实验（SC-17）</h3>
+<p>同一份修正脚本改用 <code>MIN_CELLS=3</code>（即 scanpy
+的基因全集），细胞数不变，但：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th><code>MIN_CELLS = 0</code>（教材）</th>
+<th><code>MIN_CELLS = 3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特征数</td>
+<td>32,738</td>
+<td>13,714</td>
+</tr>
+<tr>
+<td>与另一设置共享的 HVG</td>
+<td>—</td>
+<td>2,000 个里的 1,970 个（98.5%）</td>
+</tr>
+<tr>
+<td>Louvain 模块度</td>
+<td>0.8584</td>
+<td>0.8728</td>
+</tr>
+<tr>
+<td>群大小</td>
+<td>657/503/471/339/307/175/144/28/14</td>
+<td>684/481/476/344/291/162/155/32/13</td>
+</tr>
+<tr>
+<td>marker 行数</td>
+<td>11,986</td>
+<td>11,629</td>
+</tr>
+<tr>
+<td>naive-CD4 DEG 行数</td>
+<td>724</td>
+<td>733</td>
+</tr>
+<tr>
+<td>memory-vs-naive DEG 行数</td>
+<td>650</td>
+<td>887</td>
+</tr>
+<tr>
+<td>最终标签</td>
+<td>正确</td>
+<td><strong>cluster 1 与 2 互换</strong></td>
+</tr>
+</tbody>
+</table>
+<p>最后一行是关键。<code>MIN_CELLS = 3</code> 时 Louvain
+把单核社区编号为 1、memory-CD4 编号为 2；教材那个固定
+<code>new.cluster.ids</code> 于是把 “Memory CD4 T” 贴到 CD14 1.51 / LYZ
+5.07 / IL7R 0.19 的群上，把 “CD14+ Mono” 贴到 CD14 0.03 / IL7R 1.69
+的群上——<strong>957 个细胞（占
+36%）标签错误，而所有图看起来都正常</strong>。只有审计表能抓到这件事。</p>
+<h3 id="修正版-python-补了什么">13.3 修正版 Python 补了什么</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>细胞数 / 基因数</td>
+<td>2,635 / 13,714（教材阈值）；2,638（对齐阈值，附录）</td>
+</tr>
+<tr>
+<td>HVG</td>
+<td>1,833 / 1,838</td>
+</tr>
+<tr>
+<td>群数</td>
+<td>8（教材阈值）/ 9（对齐阈值）</td>
+</tr>
+<tr>
+<td>出图</td>
+<td>12 张（参考集的 11 张 + <code>pca_variance_ratio</code>）</td>
+</tr>
+<tr>
+<td>表格</td>
+<td>8 个
+<code>clusterN_markers.csv</code>、<code>cluster_label_audit_py.csv</code>、<code>pbmc3k_obs.csv</code></td>
+</tr>
+<tr>
+<td>对象</td>
+<td><code>pbmc3k.h5ad</code>（2,635 个细胞，19.5 MiB，gzip）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="有意不做的修正">13.4 有意不做的修正</h3>
+<ul>
+<li><strong>不给 Louvain/UMAP/harmony 设种子。</strong>
+教材没有种子、参考图也没有，设种子只会让我们的图更难对齐。</li>
+<li><strong>不统一分辨率。</strong> 0.5 Louvain 与 0.9 leiden
+就是教材的取值；把它们”等价化”既不可能，也会掩盖 §12 的结论。</li>
+<li><strong>不安装 presto。</strong> <code>FindAllMarkers()</code> 无
+presto 要 330 s；装上能降到秒级，但会改变 Seurat
+的数值路径，因此这里记录代价而不改变计算。</li>
+<li><strong>不改写交付的 Seurat 对象标签。</strong>
+它的标签是对的（§9.1），改写只会破坏与参考图的可比性。</li>
+</ul>
+<hr />
+<h2 id="教材范围之外的参考图">14. 教材范围之外的参考图</h2>
+<p>28 张参考 PNG 里有 3
+张不是教材任何代码的产物，因此本模块没有尝试重画：</p>
+<ul>
+<li><code>UMAP_noPCA.png</code> 与
+<code>UMAP_PCA_vs_noPCA.png</code>——教师 2025 幻灯片里”有没有
+PCA”的对比；</li>
+<li><code>UMAP_three_stages.png</code>——讲义里用来说明流程三阶段的三联示意图；</li>
+<li><code>immune_markers.png</code>——CST 免疫 marker
+速查表，属于外部参考图，不是分析产物。</li>
+</ul>
+<p>教师 2025 目录里还有 HIV/EBV
+病毒定量素材（<code>virus_star_ref/</code>、<code>ebv.fasta</code>、<code>HIV.fasta</code>、<code>virus.fa/gtf</code>）。教材完全未涉及，故不在本模块范围。</p>
+<p>另有一处不一致只记录、不修正：参考图 <code>Marker_Heatmap.png</code>
+是 3,000 × 6,000 px，而教材 <code>ggsave()</code> 要求 10 × 10 英寸、300
+dpi，只能得到 3,000 × 3,000（SC-19）。</p>
+<hr />
+<h2 id="复现本模块">15. 复现本模块</h2>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. 环境（教师共享环境，无需新建）</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="va">E</span><span class="op">=</span>/lustre1/share/miniconda3/envs/scRNA_seq</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 按教材 cell 7 的指令准备数据</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="va">RUN</span><span class="op">=</span>/lustre1/user/<span class="va">$USER</span>/scrna_run</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/<span class="dt">{rr</span><span class="op">,</span><span class="dt">py</span><span class="op">,</span><span class="dt">logs</span><span class="op">,</span><span class="dt">scripts}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-r</span> /lustre1/share/scRNA_seq/hg19 <span class="va">$RUN</span>/</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> /lustre1/share/qinbowen/pbmc_stim.RData <span class="va">$RUN</span>/</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 原样运行（25 张图里的 18 张，两个单元致命）</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> results/scripts/<span class="pp">*</span>.R results/scripts/<span class="pp">*</span>.py <span class="va">$RUN</span>/scripts/</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span>/rr <span class="kw">&amp;&amp;</span> <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="va">$RUN</span>/scripts/run_cells.R <span class="dt">\</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_aswritten.R <span class="va">$RUN</span>/logs R_aswritten</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span>/py <span class="kw">&amp;&amp;</span> <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_aswritten.py <span class="va">$RUN</span>/logs Py_aswritten</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 修正运行（25/25 张图 + 两个对象）</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/rr_fixed <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/rr_fixed <span class="kw">&amp;&amp;</span> <span class="va">MIN_CELLS</span><span class="op">=</span>0 <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="dt">\</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/run_cells.R <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_corrected.R <span class="va">$RUN</span>/logs R_corrected</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/py_fixed <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/py_fixed <span class="kw">&amp;&amp;</span> <span class="va">N_GENES_MAX</span><span class="op">=</span>2000 <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="dt">\</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_corrected.py <span class="va">$RUN</span>/logs Py_corrected</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 附录运行（基因全集与阈值对齐）</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/rr_mincells3 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/rr_mincells3 <span class="kw">&amp;&amp;</span> <span class="va">MIN_CELLS</span><span class="op">=</span>3 <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="dt">\</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/run_cells.R <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_corrected.R <span class="va">$RUN</span>/logs R_mincells3</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/py_align2500 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/py_align2500 <span class="kw">&amp;&amp;</span> <span class="va">N_GENES_MAX</span><span class="op">=</span>2500 <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="dt">\</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_corrected.py <span class="va">$RUN</span>/logs Py_align2500</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 表格与图像比对</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span> <span class="kw">&amp;&amp;</span> <span class="va">$E</span><span class="ex">/bin/Rscript</span> scripts/table_qc_clusters.R <span class="va">$RUN</span> ../class/scRNA-seq/results</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="va">$E</span><span class="ex">/bin/python</span> scripts/compare_figs.py <span class="va">$RUN</span> ../class/scRNA-seq <span class="dt">\</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    results/08_figure_comparison/compare_corrected_vs_reference.tsv rr_fixed py_fixed</span></code></pre></div>
+<p>教材自己的占位符（<code>data_dir &lt;- "yourfolder/hg19"</code>、<code>load("pbmc_stim.RData")</code>、<code>read_10x_mtx("yourfolder/hg19")</code>）是原样版单元文件里唯一的改动，每个文件头部都用
+<code>#@@NOTE</code> 标注。其余部分逐字照抄，包括那个双逗号。</p>
+<hr />
+<h2 id="文件清单">16. 文件清单</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>路径</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref/scRNA_seq_analyze_corrected.md</code></td>
+<td>本文档（英文）</td>
+</tr>
+<tr>
+<td><code>ref/scRNA_seq_analyze_corrected_zh.md</code></td>
+<td>中文版</td>
+</tr>
+<tr>
+<td><code>ref/scRNA_seq_analyze_results_guide.md</code></td>
+<td><code>results/</code> 导读 + 练习</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_R_cells_aswritten.R</code></td>
+<td>教材 R 单元，除两处路径外逐字照抄</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_py_cells_aswritten.py</code></td>
+<td>教材 Python 单元，逐字照抄（含 <code>SyntaxError</code>）</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_R_cells_corrected.R</code></td>
+<td>修正版 R 单元，每处改动有标注</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_py_cells_corrected.py</code></td>
+<td>修正版 Python 单元，每处改动有标注</td>
+</tr>
+<tr>
+<td><code>results/scripts/run_cells.R</code>、<code>run_cells.py</code></td>
+<td>notebook 语义驱动器（单会话、逐单元状态）</td>
+</tr>
+<tr>
+<td><code>results/scripts/table_qc_clusters.R</code></td>
+<td>质控账目与群大小表</td>
+</tr>
+<tr>
+<td><code>results/scripts/marker_panel_audit.{R,py}</code></td>
+<td>两侧的 marker 面板逐群均值</td>
+</tr>
+<tr>
+<td><code>results/scripts/annotation_audit.R</code></td>
+<td>两份硬编码映射 vs 观测程序</td>
+</tr>
+<tr>
+<td><code>results/scripts/cluster_correspondence.{R,py}</code></td>
+<td>跨工具列联表</td>
+</tr>
+<tr>
+<td><code>results/scripts/compare_figs.py</code></td>
+<td>与 28 张参考图的图像比对</td>
+</tr>
+<tr>
+<td><code>results/09_run_logs/*_cell_log.txt</code></td>
+<td>逐单元的代码、标准输出、警告、报错、对象状态</td>
+</tr>
+<tr>
+<td><code>results/09_run_logs/*_cell_summary.tsv</code></td>
+<td>每个单元一行：状态、秒数、警告/报错数</td>
+</tr>
+<tr>
+<td><code>results/08_figure_comparison/*.tsv</code></td>
+<td>三张机器可读比对表</td>
+</tr>
+<tr>
+<td><code>results/08_figure_comparison/figure_comparison.md</code></td>
+<td>同一批数据的书面比对与解读</td>
+</tr>
+<tr>
+<td><code>results/07_objects/pbmc3k.h5ad</code></td>
+<td>Part 8 的交付对象（19.5 MiB）</td>
+</tr>
+<tr>
+<td><code>results/07_objects/pbmc3k_obs.csv</code></td>
+<td>逐细胞元数据：分群、质控指标</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

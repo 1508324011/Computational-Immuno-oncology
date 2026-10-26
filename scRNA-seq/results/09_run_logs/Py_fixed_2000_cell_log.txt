@@ -1,0 +1,249 @@
+### driver: run_cells.py | label= Py_fixed_2000
+### python: 3.12.7 | scanpy: 1.10.3 | anndata: 0.10.9 | cells: 11
+### cwd: /lustre1/user/bjx131_pkuhpc/scrna_run_20261026/py_fixed
+### start: 2026-10-26 19:53:33
+
+===== CELL 0 =====
+  | import os
+  | # --- FIX P1 (SC-10): the tutorial filters n_genes < 2000 here while the Seurat half uses
+  | #     nFeature < 2500, so one dataset is described by two thresholds. This switch keeps the
+  | #     tutorial value by default (so the 8 hard-coded names remain valid and the figures stay
+  | #     comparable with the reference set) and can be set to 2500 to reproduce the Seurat half.
+  | N_GENES_MAX = int(os.environ.get("N_GENES_MAX", "2000"))
+  --status-- OK in 0.00s
+
+===== CELL 54 =====
+  | import pandas as pd
+  | import scanpy as sc
+  --status-- OK in 0.00s
+
+===== CELL 55 =====
+  | results_file = "pbmc3k.h5ad"  # the file that will store the analysis results
+  | adata = sc.read_10x_mtx(
+  |     "/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/hg19",  # the directory with the `.mtx` file
+  |     var_names="gene_symbols",  # use gene symbols for the variable names (variables-axis index)
+  |     cache=True,  # write a cache file for faster subsequent reading
+  | )
+  | adata.var_names_make_unique()  # this is unnecessary if using `var_names='gene_ids'` in `sc.read_10x_mtx`
+  | # --- FIX P0 (SC-14): gene symbols repeat in genes.tsv; var_names_make_unique() renames
+  | #     them (ACE -> ACE-1, ...), so gene lookups differ from the Seurat side (which uses
+  | #     gene-1 style suffixes too, but applies them to a different symbol set). Count them. ---
+  | _sym = pd.read_csv("/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/hg19/genes.tsv",
+  |                    sep="\t", header=None)[1]
+  | print(f"loaded: {adata.n_obs} cells x {adata.n_vars} genes; duplicated symbols in genes.tsv: "
+  |       f"{int(_sym.duplicated().sum())}; '_'-containing symbols: {int(_sym.str.contains('_').sum())}")
+  --stdout--
+  > loaded: 2700 cells x 32738 genes; duplicated symbols in genes.tsv: 95; '_'-containing symbols: 21
+  --state--
+  # adata: 2700 cells x 32738 genes
+  --status-- OK in 0.54s
+
+===== CELL 57 =====
+  | sc.pl.highest_expr_genes(adata, n_top=20,save="scanpy_highest_expr_genes.png")
+  --state--
+  # adata: 2700 cells x 32738 genes
+  --status-- OK in 0.81s
+
+===== CELL 59 =====
+  | sc.pp.filter_cells(adata, min_genes=200)
+  | sc.pp.filter_genes(adata, min_cells=3)
+  | print(f"after filter_cells(min_genes=200)+filter_genes(min_cells=3): "
+  |       f"{adata.n_obs} cells x {adata.n_vars} genes")
+  | 
+  | # annotate the group of mitochondrial genes as "mt"
+  | adata.var["mt"] = adata.var_names.str.startswith("MT-")
+  | sc.pp.calculate_qc_metrics(
+  |     adata, qc_vars=["mt"], percent_top=None, log1p=False, inplace=True
+  | )
+  | 
+  | sc.pl.violin(
+  |     adata,
+  |     ["n_genes_by_counts", "total_counts", "pct_counts_mt"],
+  |     jitter=0.4,
+  |     multi_panel=True,
+  |     save="scanpy_violin_plot_QC.png"  # 保存为 violin_plot.png 文件
+  | )
+  --stdout--
+  > after filter_cells(min_genes=200)+filter_genes(min_cells=3): 2700 cells x 13714 genes
+  --state--
+  # adata: 2700 cells x 13714 genes
+  # obs['n_genes_by_counts']: median=816.000 max=3400.0
+  # obs['pct_counts_mt']: median=2.031 max=22.6
+  --status-- OK in 1.13s
+
+===== CELL 61 =====
+  | sc.pl.scatter(adata, x="total_counts", y="pct_counts_mt", save="scanpy_scatter_pct_counts_mt.png")
+  | sc.pl.scatter(adata, x="total_counts", y="n_genes_by_counts", save="scanpy_scatter_n_genes_by_counts.png")
+  | n_before = adata.n_obs
+  | adata = adata[adata.obs.n_genes_by_counts < N_GENES_MAX, :]
+  | adata = adata[adata.obs.pct_counts_mt < 5, :].copy()
+  | print(f"QC (n_genes<{N_GENES_MAX}, pct_mt<5): {n_before} -> {adata.n_obs} cells")
+  | sc.pp.normalize_total(adata, target_sum=1e4)
+  | #Logarithmize the data:
+  | sc.pp.log1p(adata)
+  --stdout--
+  > QC (n_genes<2000, pct_mt<5): 2700 -> 2635 cells
+  --state--
+  # adata: 2635 cells x 13714 genes
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  --status-- OK in 0.45s
+
+===== CELL 64 =====
+  | sc.pp.highly_variable_genes(adata, min_mean=0.0125, max_mean=3, min_disp=0.5)
+  | sc.pl.highly_variable_genes(adata, save="scanpy_HVG.png")
+  | adata.raw = adata.copy()
+  | adata = adata[:, adata.var.highly_variable]
+  | sc.pp.scale(adata, max_value=10)
+  | print(f"HVG: {adata.n_vars} genes kept (raw keeps {adata.raw.n_vars})")
+  --stdout--
+  > HVG: 1833 genes kept (raw keeps 13714)
+  --warnings(1)--
+  ! UserWarning: Received a view of an AnnData. Making a copy.
+  --state--
+  # adata: 2635 cells x 1833 genes
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  --status-- OK in 1.01s
+
+===== CELL 67 =====
+  | # --- FIX P2 (SC-11): `sc.pp.scale` was already applied at the end of the previous cell;
+  | #     running it twice is a no-op on already-scaled data but silently re-clips, so drop it. ---
+  | sc.tl.pca(adata, svd_solver="arpack")
+  | sc.pl.pca(adata, color="CST3",save="scanpy_PCA.png")
+  | # --- FIX P3 (SC-09): literal `log=True,,save=...` in the tutorial is a SyntaxError, which
+  | #     killed the whole cell (PCA + neighbors + UMAP never ran and the ratio plot is missing
+  | #     from the 28 reference figures). One comma removed. ---
+  | sc.pl.pca_variance_ratio(adata, log=True, save="scanpy_PCA_ratio.png")
+  | sc.pp.neighbors(adata, n_neighbors=10, n_pcs=40)
+  | sc.tl.umap(adata)
+  --state--
+  # adata: 2635 cells x 1833 genes
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  # obsm['X_pca']: (2635, 50)
+  # obsm['X_umap']: (2635, 2)
+  --status-- OK in 15.49s
+
+===== CELL 70 =====
+  | sc.tl.leiden(
+  |     adata,
+  |     resolution=0.9,
+  |     random_state=0,
+  |     flavor="igraph",
+  |     n_iterations=2,
+  |     directed=False,
+  | )
+  | print(f"leiden clusters: {adata.obs['leiden'].nunique()} -> {list(adata.obs['leiden'].cat.categories)}")
+  | sc.pl.umap(adata, color=["leiden", "MS4A1", "GNLY","NKG7", "CD3E","IL7R","CD14", "FCER1A","CST3", "FCGR3A", "LYZ", "PPBP","CD8A"],save="scanpy_markers.png")
+  | sc.tl.rank_genes_groups(adata, "leiden", method="wilcoxon")
+  | sc.pl.rank_genes_groups(adata, n_genes=25, sharey=False,save="scanpy_rank_genes_groups.png")
+  | sc.pl.rank_genes_groups_violin(adata, groups="0", n_genes=10,save="scanpy_rank_genes_groups_violin.png")
+  --stdout--
+  > leiden clusters: 8 -> ['0', '1', '2', '3', '4', '5', '6', '7']
+  --warnings(1)--
+  ! UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  --state--
+  # adata: 2635 cells x 1833 genes
+  # obs['leiden']: 8 categories [0; 1; 2; 3; 4; 5; 6; 7]
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  # obsm['X_pca']: (2635, 50)
+  # obsm['X_umap']: (2635, 2)
+  # uns['rank_genes_groups']: present (method=wilcoxon)
+  --status-- OK in 8.38s
+
+===== CELL 72 =====
+  | marker_genes = [
+  |     *["IL7R", "CD79A", "MS4A1", "CD8A", "CD8B", "LYZ", "CD14"],
+  |     *["LGALS3", "S100A8", "GNLY", "NKG7", "KLRB1"],
+  |     *["FCGR3A", "MS4A7", "FCER1A", "CST3", "PPBP"],
+  | ]
+  | sc.pl.dotplot(adata, marker_genes, groupby="leiden",save="scanpy_rank_genes_groups_dotplot.png")
+  | # --- ADD (SC-13): the tutorial keeps the marker statistics inside the AnnData only; export. ---
+  | for i, cl in enumerate(adata.obs["leiden"].cat.categories):
+  |     df_cl = sc.get.rank_genes_groups_df(adata, group=cl)
+  |     df_cl.head(200).to_csv(f"cluster{i}_markers.csv", index=False)
+  | print(f"cluster sizes: {adata.obs['leiden'].value_counts().sort_index().to_dict()}")
+  --stdout--
+  > cluster sizes: {'0': 534, '1': 643, '2': 340, '3': 497, '4': 432, '5': 142, '6': 35, '7': 12}
+  --state--
+  # adata: 2635 cells x 1833 genes
+  # obs['leiden']: 8 categories [0; 1; 2; 3; 4; 5; 6; 7]
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  # obsm['X_pca']: (2635, 50)
+  # obsm['X_umap']: (2635, 2)
+  # uns['rank_genes_groups']: present (method=wilcoxon)
+  --status-- OK in 0.69s
+
+===== CELL 75 =====
+  | new_cluster_names = [
+  |     "CD4 T",
+  |     "CD8 T",
+  |     "B",
+  |     "CD14+ Monocytes",
+  |     "NK",
+  |     "FCGR3A+ Monocytes",
+  |     "Dendritic",
+  |     "Platelet"
+  | ]
+  | # --- FIX P4 (SC-12): rename_categories() demands exactly one new name per category and
+  | #     fails with an opaque error otherwise. Check the count and print the audit table first. ---
+  | cats = list(adata.obs["leiden"].cat.categories)
+  | audit = pd.DataFrame({
+  |     "cluster": cats,
+  |     "proposed_name": new_cluster_names if len(cats) == len(new_cluster_names) else None,
+  |     "top5_markers": [", ".join(sc.get.rank_genes_groups_df(adata, group=c)["names"].head(5))
+  |                      for c in cats],
+  |     "n_cells": [int((adata.obs["leiden"] == c).sum()) for c in cats],
+  | })
+  | print(audit.to_string(index=False))
+  | audit.to_csv("cluster_label_audit_py.csv", index=False)
+  | if len(cats) == len(new_cluster_names):
+  |     adata.rename_categories("leiden", new_cluster_names)
+  |     print(f"renamed {len(cats)} clusters with the tutorial's names")
+  | else:
+  |     print(f"WARNING: {len(cats)} leiden clusters but {len(new_cluster_names)} hard-coded names "
+  |           f"-> keeping numeric labels (see cluster_label_audit_py.csv)")
+  | sc.pl.umap(
+  |     adata, color="leiden", legend_loc="on data", title="", frameon=False, save="scanpy_final_umap.png"
+  | )
+  | adata.write("pbmc3k.h5ad", compression="gzip")
+  | adata.obs.to_csv("pbmc3k_obs.csv")
+  | print(f"written: pbmc3k.h5ad ({adata.n_obs} cells), pbmc3k_obs.csv, cluster_label_audit_py.csv")
+  --stdout--
+  > cluster     proposed_name                                    top5_markers  n_cells
+  >       0             CD4 T                RPS12, RPS27, RPL32, RPS6, RPL13      534
+  >       1             CD8 T                     LDHB, LTB, CD3D, IL32, TPT1      643
+  >       2                 B           CD74, CD79A, HLA-DRA, CD79B, HLA-DPB1      340
+  >       3   CD14+ Monocytes                LYZ, S100A9, S100A8, TYROBP, FTL      497
+  >       4                NK                     NKG7, CST7, GZMA, CTSW, B2M      432
+  >       5 FCGR3A+ Monocytes               LST1, FCGR3A, FCER1G, AIF1, COTL1      142
+  >       6         Dendritic HLA-DPA1, HLA-DPB1, HLA-DRA, HLA-DRB1, HLA-DQA1       35
+  >       7          Platelet                    PF4, PPBP, GNG11, SDPR, GPX1       12
+  > renamed 8 clusters with the tutorial's names
+  > written: pbmc3k.h5ad (2635 cells), pbmc3k_obs.csv, cluster_label_audit_py.csv
+  --state--
+  # adata: 2635 cells x 1833 genes
+  # obs['leiden']: 8 categories [CD4 T; CD8 T; B; CD14+ Monocytes; NK; FCGR3A+ Monocytes; Dendritic; Platelet]
+  # obs['n_genes_by_counts']: median=819.000 max=1996.0
+  # obs['pct_counts_mt']: median=2.011 max=5.0
+  # obsm['X_pca']: (2635, 50)
+  # obsm['X_umap']: (2635, 2)
+  # uns['rank_genes_groups']: present (method=wilcoxon)
+  --status-- OK in 1.35s
+
+===== SUMMARY =====
+cell 0   OK       0.00s warn=0 
+cell 54  OK       0.00s warn=0 
+cell 55  OK       0.54s warn=0 
+cell 57  OK       0.81s warn=0 
+cell 59  OK       1.13s warn=0 
+cell 61  OK       0.45s warn=0 
+cell 64  OK       1.01s warn=1 
+cell 67  OK      15.49s warn=0 
+cell 70  OK       8.38s warn=1 
+cell 72  OK       0.69s warn=0 
+cell 75  OK       1.35s warn=0 
+### end: 2026-10-26 19:54:02

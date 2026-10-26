@@ -88,7 +88,11 @@ while i < len(lines):
                 i += 1
                 if i < len(lines) and lines[i] == '  , kind: table':
                     i += 1
-                if i < len(lines) and lines[i] == ')':
+                # pandoc 3.11 emits the closing paren of the figure at column 0 for
+                # some tables and indented for others; accept both, otherwise a stray
+                # ')' survives into the page as a literal paragraph (found 2026-10-26:
+                # 22-25 such lines in the TBCR and scRNA-seq PDFs).
+                if i < len(lines) and lines[i].strip() == ')':
                     i += 1
                 stripped += 1
                 break

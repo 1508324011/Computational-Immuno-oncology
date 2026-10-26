@@ -1,0 +1,4 @@
+"metric","all_cells_median","all_cells_min","all_cells_max","kept_median","kept_min","kept_max"
+"nFeature_RNA",817,212,3422,820,212,2455
+"nCount_RNA",2197,548,15844,2214,561,8931
+"percent.mt",2.02963922792192,0,22.5690276110444,2.00861941036803,0,4.98768472906404

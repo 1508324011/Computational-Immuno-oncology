@@ -1,0 +1,805 @@
+### driver: run_cells.R | label=R_corrected
+### R: R version 4.4.1 (2024-06-14) | Seurat: 5.1.0 | cells: 16
+### wd: /lustre1/user/bjx131_pkuhpc/scrna_run_20261026/rr_fixed
+### start: 2026-10-26 19:52:33
+
+===== CELL 11 =====
+  | library(Seurat)
+  | library(dplyr)
+  | library(ggplot2)
+  | # --- FIX R0 (SC-20): the DEG cell calls geom_text_repel() but the tutorial never loads
+  | #     ggrepel (it only loads Seurat/dplyr/ggplot2), so that whole cell -- FindMarkers
+  | #     results, volcano plot AND saveRDS() -- dies with 'could not find function'. ---
+  | library(ggrepel)
+  | 
+  | data_dir <- "/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/hg19"
+  | sc_data <- Read10X(data.dir = data_dir)
+  | # --- FIX R1 (SC-19): keep only features seen in >=3 cells, mirroring scanpy's
+  | #     filter_genes(min_cells=3); the tutorial keeps all 32,738 features, 19k of which
+  | #     are all-zero after QC (slower FindAllMarkers, meaningless p-values). ---
+  | seurat_obj <- CreateSeuratObject(counts = sc_data, project = "scRNAseq", min.cells = 3)
+  | cat(sprintf("after CreateSeuratObject(min.cells=3): %d genes x %d cells\n",
+  |             nrow(seurat_obj), ncol(seurat_obj)))
+  | 
+  --stdout--
+  > after CreateSeuratObject(min.cells=3): 13714 genes x 2700 cells
+  --messages(7)--
+  * Loading required package: SeuratObject
+
+  * Loading required package: sp
+
+  * 
+Attaching package: ‘SeuratObject’
+
+
+  * The following objects are masked from ‘package:base’:
+
+    intersect, t
+
+
+  * 
+Attaching package: ‘dplyr’
+
+
+  * The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+
+  * The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+  --warnings(1)--
+  ! Feature names cannot have underscores ('_'), replacing with dashes ('-')
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2700 cells
+  # seurat_obj: reductions=[]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 7.67s
+
+===== CELL 13 =====
+  | seurat_obj[["percent.mt"]] <- PercentageFeatureSet(seurat_obj, pattern = "^MT-")
+  | 
+  | # QC visualize
+  | p <- VlnPlot(seurat_obj, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+  | #VlnPlot(seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, pt.size=0)
+  | ggsave("violin_mt.png", plot = p, width = 10, height = 5, dpi = 300)
+  | 
+  | n_before <- ncol(seurat_obj)
+  | # Setting Thresholds
+  | seurat_obj <- subset(seurat_obj, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+  | cat(sprintf("QC: %d -> %d cells, %d genes\n", n_before, ncol(seurat_obj), nrow(seurat_obj)))
+  | 
+  --stdout--
+  > QC: 2700 -> 2638 cells, 13714 genes
+  --warnings(1)--
+  ! Default search for "data" layer in "RNA" assay yielded no results; utilizing "counts" layer instead.
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 1.98s
+
+===== CELL 16 =====
+  | seurat_obj <- NormalizeData(seurat_obj, normalization.method = "LogNormalize", scale.factor = 10000)
+  | 
+  --messages(1)--
+  * Normalizing layer: counts
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 0.47s
+
+===== CELL 18 =====
+  | seurat_obj <- FindVariableFeatures(seurat_obj, selection.method = "vst", nfeatures = 2000)
+  | #HVG visualization
+  | p <- VariableFeaturePlot(seurat_obj)
+  | top_features <- head(VariableFeatures(seurat_obj), 20)
+  | # --- FIX R2 (SC-08): LabelPoints() already returns a complete ggplot built on p;
+  | #     the tutorial then adds the whole plot again (p + plot2), duplicating every layer. ---
+  | p <- LabelPoints(plot = p, points = top_features, repel = TRUE)
+  | ggsave("VariableFeaturePlot.png", plot = p, width = 10, height = 5, dpi = 300, bg = "white")
+  | 
+  --messages(2)--
+  * Finding variable features for layer counts
+
+  * When using repel, set xnudge and ynudge to 0 for optimal results
+
+  --warnings(1)--
+  ! log-10 transformation introduced infinite values.
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 1.95s
+
+===== CELL 21 =====
+  | # --- NOTE (SC-01): scaling all 32,738 features is what makes DoHeatmap() able to draw
+  | #     arbitrary marker genes later (slot = "scale.data"). It is a deliberate trade-off,
+  | #     not an error; measured cost on this machine is reported in the doc. ---
+  | t_scale <- system.time(seurat_obj <- ScaleData(seurat_obj, features = rownames(seurat_obj)))
+  | cat(sprintf("ScaleData on %d features: %.2f s, objects %.2f GB\n",
+  |             nrow(seurat_obj), t_scale[["elapsed"]],
+  |             sum(sapply(ls(), function(o) object.size(get(o)))) / 2^30))
+  | 
+  --stdout--
+  > ScaleData on 13714 features: 2.19 s, objects 0.35 GB
+  --messages(1)--
+  * Centering and scaling data matrix
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 2.47s
+
+===== CELL 23 =====
+  | seurat_obj <- RunPCA(seurat_obj, features = VariableFeatures(object = seurat_obj))
+  | 
+  | # PCA visualization
+  | p<- VizDimLoadings(seurat_obj, dims = 1:2, reduction = "pca")
+  | ggsave("PCA_VizDimLoadings.png", plot = p, width = 10, height = 5, dpi = 300, bg = "white")
+  | p <- ElbowPlot(seurat_obj)
+  | ggsave("PCA.png", plot = p, width = 10, height = 5, dpi = 300, bg = "white")
+  | p <- DimPlot(seurat_obj, reduction = "pca") + NoLegend()
+  | ggsave("PCA_dimplot.png", plot = p, width = 10, height = 5, dpi = 300, bg = "white")
+  | # --- FIX R3 (SC-07): PCHeatmap() is a deprecated alias; DimHeatmap() is the supported call. ---
+  | png("PCA_heatmap_ALL.png", width = 10, height = 10, units = "in", res = 300)
+  | p <- DimHeatmap(seurat_obj, dims = 1:6, cells = 100, balanced = TRUE, ncol = 3)
+  | dev.off()
+  | 
+  --messages(1)--
+  * PC_ 1 
+Positive:  CST3, TYROBP, LST1, AIF1, FTL, FTH1, LYZ, FCN1, S100A9, TYMP 
+	   FCER1G, CFD, LGALS1, S100A8, CTSS, LGALS2, SERPINA1, IFITM3, SPI1, CFP 
+	   PSAP, IFI30, SAT1, COTL1, S100A11, NPC2, GRN, LGALS3, GSTP1, PYCARD 
+Negative:  MALAT1, LTB, IL32, IL7R, CD2, B2M, ACAP1, CD27, STK17A, CTSW 
+	   CD247, GIMAP5, AQP3, CCL5, SELL, TRAF3IP3, GZMA, MAL, CST7, ITM2A 
+	   MYC, GIMAP7, HOPX, BEX2, LDLRAP1, GZMK, ETS1, ZAP70, TNFAIP8, RIC3 
+PC_ 2 
+Positive:  CD79A, MS4A1, TCL1A, HLA-DQA1, HLA-DQB1, HLA-DRA, LINC00926, CD79B, HLA-DRB1, CD74 
+	   HLA-DMA, HLA-DPB1, HLA-DQA2, CD37, HLA-DRB5, HLA-DMB, HLA-DPA1, FCRLA, HVCN1, LTB 
+	   BLNK, P2RX5, IGLL5, IRF8, SWAP70, ARHGAP24, FCGR2B, SMIM14, PPP1R14A, C16orf74 
+Negative:  NKG7, PRF1, CST7, GZMB, GZMA, FGFBP2, CTSW, GNLY, B2M, SPON2 
+	   CCL4, GZMH, FCGR3A, CCL5, CD247, XCL2, CLIC3, AKR1C3, SRGN, HOPX 
+	   TTC38, APMAP, CTSC, S100A4, IGFBP7, ANXA1, ID2, IL32, XCL1, RHOC 
+PC_ 3 
+Positive:  HLA-DQA1, CD79A, CD79B, HLA-DQB1, HLA-DPB1, HLA-DPA1, CD74, MS4A1, HLA-DRB1, HLA-DRA 
+	   HLA-DRB5, HLA-DQA2, TCL1A, LINC00926, HLA-DMB, HLA-DMA, CD37, HVCN1, FCRLA, IRF8 
+	   PLAC8, BLNK, MALAT1, SMIM14, PLD4, P2RX5, IGLL5, LAT2, SWAP70, FCGR2B 
+Negative:  PPBP, PF4, SDPR, SPARC, GNG11, NRGN, GP9, RGS18, TUBB1, CLU 
+	   HIST1H2AC, AP001189.4, ITGA2B, CD9, TMEM40, PTCRA, CA2, ACRBP, MMD, TREML1 
+	   NGFRAP1, F13A1, SEPT5, RUFY1, TSC22D1, MPP1, CMTM5, RP11-367G6.3, MYL9, GP1BA 
+PC_ 4 
+Positive:  HLA-DQA1, CD79B, CD79A, MS4A1, HLA-DQB1, CD74, HIST1H2AC, HLA-DPB1, PF4, SDPR 
+	   TCL1A, HLA-DRB1, HLA-DPA1, HLA-DQA2, PPBP, HLA-DRA, LINC00926, GNG11, SPARC, HLA-DRB5 
+	   GP9, AP001189.4, CA2, PTCRA, CD9, NRGN, RGS18, CLU, TUBB1, GZMB 
+Negative:  VIM, IL7R, S100A6, IL32, S100A8, S100A4, GIMAP7, S100A10, S100A9, MAL 
+	   AQP3, CD2, CD14, FYB, LGALS2, GIMAP4, ANXA1, CD27, FCN1, RBP7 
+	   LYZ, S100A11, GIMAP5, MS4A6A, S100A12, FOLR3, TRABD2A, AIF1, IL8, IFI6 
+PC_ 5 
+Positive:  GZMB, NKG7, S100A8, FGFBP2, GNLY, CCL4, CST7, PRF1, GZMA, SPON2 
+	   GZMH, S100A9, LGALS2, CCL3, CTSW, XCL2, CD14, CLIC3, S100A12, RBP7 
+	   CCL5, MS4A6A, GSTP1, FOLR3, IGFBP7, TYROBP, TTC38, AKR1C3, XCL1, HOPX 
+Negative:  LTB, IL7R, CKB, VIM, MS4A7, AQP3, CYTIP, RP11-290F20.3, SIGLEC10, HMOX1 
+	   LILRB2, PTGES3, MAL, CD27, HN1, CD2, GDI2, CORO1B, ANXA5, TUBA1B 
+	   FAM110A, ATP1A1, TRADD, PPA1, CCDC109B, ABRACL, CTD-2006K23.1, WARS, VMO1, FYB 
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca]
+  # seurat_obj: idents=1 [scRNAseq]
+  --status-- OK in 6.42s
+
+===== CELL 27 =====
+  | seurat_obj <- FindNeighbors(seurat_obj, dims = 1:10)
+  | # Clustering
+  | seurat_obj <- FindClusters(seurat_obj, resolution = 0.5)
+  | 
+  --stdout--
+  > Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+  > 
+  > Number of nodes: 2638
+  > Number of edges: 95927
+  > 
+  > Running Louvain algorithm...
+  > Maximum modularity in 10 random starts: 0.8728
+  > Number of communities: 9
+  > Elapsed time: 0 seconds
+  --messages(2)--
+  * Computing nearest neighbor graph
+
+  * Computing SNN
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  --status-- OK in 1.43s
+
+===== CELL 29 =====
+  | # UMAP
+  | seurat_obj <- RunUMAP(seurat_obj, dims = 1:10)
+  | p <- DimPlot(seurat_obj, reduction = "umap")
+  | ggsave("UMAP.png", plot = p, width = 10, height = 5, dpi = 300)
+  | 
+  --messages(65)--
+  * 19:52:56 UMAP embedding parameters a = 0.9922 b = 1.112
+
+  * 19:52:56 Read 2638 rows and found 10 numeric columns
+
+  * 19:52:56 Using Annoy for neighbor search, n_neighbors = 30
+
+  * 19:52:56 Building Annoy index with metric = cosine, n_trees = 50
+
+  * 0%   10   20   30   40   50   60   70   80   90   100%
+
+  * [----|----|----|----|----|----|----|----|----|----|
+
+  * *
+  * |
+
+  * 19:52:56 Writing NN index file to temp file /tmp/Rtmpg7phNw/file18a4e0490a1b46
+
+  * 19:52:56 Searching Annoy index using 1 thread, search_k = 3000
+
+  * 19:52:57 Annoy recall = 100%
+
+  * 19:52:57 Commencing smooth kNN distance calibration using 1 thread
+  *  with target n_neighbors = 30
+
+  * 19:52:58 Initializing from normalized Laplacian + noise (using RSpectra)
+
+  * 19:52:58 Commencing optimization for 500 epochs, with 105140 positive edges
+
+  * 19:53:03 Optimization finished
+
+  --warnings(1)--
+  ! The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
+To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'
+This message will be shown once per session
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  --status-- OK in 7.68s
+
+===== CELL 33 =====
+  | p<- FeaturePlot(seurat_obj, features = c("PTPRC","ITGAM", "CD3D","CD19", "CD14", "CD4", "CD8A", "CD68","NCAM1"))
+  | ggsave("marker_Features.png", plot = p, width = 10, height = 10, dpi = 300)
+  | 
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  --status-- OK in 3.26s
+
+===== CELL 36 =====
+  | seurat_obj.markers <- FindAllMarkers(seurat_obj, only.pos = TRUE)
+  | # --- FIX R4 (SC-03): the tutorial computes the p_adj/log2FC-filtered table and throws it
+  | #     away (unassigned pipe); top10 then comes from the *unfiltered* table. Keep the
+  | #     filtered table, and fall back to the unfiltered one for clusters with <10 hits. ---
+  | markers_sig <- seurat_obj.markers %>%
+  |     dplyr::filter(p_val_adj < 0.05, avg_log2FC > 1)
+  | 
+  | top10 <- markers_sig %>%
+  |   group_by(cluster) %>%
+  |   slice_max(order_by = avg_log2FC, n = 10, with_ties = FALSE)
+  | cat(sprintf("FindAllMarkers: %d rows total, %d pass p_adj<0.05 & log2FC>1, %d used for heatmap\n",
+  |             nrow(seurat_obj.markers), nrow(markers_sig), nrow(top10)))
+  | print(table(markers_sig$cluster))
+  | 
+  | p<-DoHeatmap(seurat_obj, features = top10$gene) + NoLegend() +
+  |   theme(
+  |     axis.text.y = element_text(size = 6)
+  |   )
+  | ggsave("Marker_Heatmap.png", plot = p, width = 10, height = 10, dpi = 300)
+  | # --- ADD (SC-13): the tutorial never writes the marker table out; export it. ---
+  | write.csv(seurat_obj.markers, "markers_all_clusters.csv", row.names = FALSE)
+  | write.csv(top10, "markers_top10_per_cluster.csv", row.names = FALSE)
+  | 
+  --stdout--
+  > FindAllMarkers: 11629 rows total, 3447 pass p_adj<0.05 & log2FC>1, 90 used for heatmap
+  > 
+  >   0   1   2   3   4   5   6   7   8 
+  >  89 749 132 286 111 753 372 602 353 
+  --messages(10)--
+  * Calculating cluster 0
+
+  * For a (much!) faster implementation of the Wilcoxon Rank Sum Test,
+(default method for FindMarkers) please install the presto package
+--------------------------------------------
+install.packages('devtools')
+devtools::install_github('immunogenomics/presto')
+--------------------------------------------
+After installation of presto, Seurat will automatically use the more 
+efficient implementation (no further action necessary).
+This message will be shown once per session
+
+  * Calculating cluster 1
+
+  * Calculating cluster 2
+
+  * Calculating cluster 3
+
+  * Calculating cluster 4
+
+  * Calculating cluster 5
+
+  * Calculating cluster 6
+
+  * Calculating cluster 7
+
+  * Calculating cluster 8
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  --status-- OK in 324.68s
+
+===== CELL 39 =====
+  | # --- ADD (SC-02 support): cluster -> canonical marker -> label audit table. ---
+  | audit <- data.frame(
+  |   cluster = levels(Idents(seurat_obj)),
+  |   tutorial_marker = c("IL7R, CCR7","CD14, LYZ","IL7R, S100A4","MS4A1","CD8A",
+  |                       "FCGR3A, MS4A7","GNLY, NKG7","FCER1A, CST3","PPBP"),
+  |   tutorial_label  = c("Naive CD4 T","CD14+ Mono","Memory CD4 T","B","CD8 T",
+  |                       "FCGR3A+ Mono","NK","DC","Platelet"),
+  |   stringsAsFactors = FALSE)
+  | audit$top_markers <- sapply(audit$cluster, function(cl)
+  |   paste(head(markers_sig$gene[markers_sig$cluster == cl], 5), collapse = ", "))
+  | print(audit[, c("cluster", "tutorial_label", "top_markers")])
+  | write.csv(audit, "cluster_label_audit.csv", row.names = FALSE)
+  | 
+  --stdout--
+  >   cluster tutorial_label                                top_markers
+  > 1       0    Naive CD4 T               LDHB, CCR7, CD3D, CD3E, LEF1
+  > 2       1     CD14+ Mono         S100A8, LGALS2, FCN1, S100A9, CD14
+  > 3       2   Memory CD4 T                 IL32, LTB, CD3D, IL7R, CD2
+  > 4       3              B      CD79A, MS4A1, CD79B, LINC00926, TCL1A
+  > 5       4          CD8 T               CCL5, NKG7, GZMA, CST7, GZMK
+  > 6       5   FCGR3A+ Mono CDKN1C, HES4, RP11-290F20.3, MS4A7, FCGR3A
+  > 7       6             NK            GZMB, FGFBP2, SPON2, PRF1, GNLY
+  > 8       7             DC     FCER1A, SERPINF1, CLEC10A, ENHO, CLIC2
+  > 9       8       Platelet    GP9, AP001189.4, ITGA2B, TMEM40, LY6G6F
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  --status-- OK in 0.01s
+
+===== CELL 40 =====
+  | p<- FeaturePlot(seurat_obj, features = c("MS4A1", "GNLY","NKG7", "CD3E","IL7R","CD14", "FCER1A","CST3", "FCGR3A", "LYZ", "PPBP","CD8A"))
+  | ggsave("marker_Features_2.png", plot = p, width = 20, height = 10, dpi = 300)
+  | 
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  --status-- OK in 4.72s
+
+===== CELL 43 =====
+  | new.cluster.ids <- c("Naive CD4 T", "Memory CD4 T","CD14+ Mono", "B", "CD8 T", "FCGR3A+ Mono",
+  |     "NK", "DC", "Platelet")
+  | # --- FIX R5 (SC-02): RenameIdents() silently mislabels everything if the cluster count
+  | #     drifts (a different resolution, Seurat version or QC threshold is enough). Check it. ---
+  | # --- FIX R5 (SC-02): RenameIdents() silently mislabels everything if the cluster count
+  | #     drifts (a different resolution, Seurat version or QC threshold is enough). Check the
+  | #     count, print the audit table, and fall back to neutral labels instead of lying. ---
+  | n_cl <- nlevels(seurat_obj)
+  | if (n_cl == length(new.cluster.ids)) {
+  |   names(new.cluster.ids) <- levels(seurat_obj)
+  |   seurat_obj <- RenameIdents(seurat_obj, new.cluster.ids)
+  | } else {
+  |   warning(sprintf("%d clusters but %d reference names; keeping neutral labels. See cluster_label_audit.csv",
+  |                   n_cl, length(new.cluster.ids)), call. = FALSE)
+  |   neutral <- setNames(paste0("C", seq_len(n_cl) - 1L), levels(seurat_obj))
+  |   seurat_obj <- RenameIdents(seurat_obj, neutral)
+  | }
+  | print(table(Idents(seurat_obj)))
+  | # 重新可视化带注释的UMAP图
+  | p <- DimPlot(seurat_obj, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
+  | ggsave("cell annotations.png", plot = p, width = 10, height = 5, dpi = 300)
+  | 
+  --stdout--
+  > 
+  >  Naive CD4 T Memory CD4 T   CD14+ Mono            B        CD8 T FCGR3A+ Mono 
+  >          684          481          476          344          291          162 
+  >           NK           DC     Platelet 
+  >          155           32           13 
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [Naive CD4 T | Memory CD4 T | CD14+ Mono | B | CD8 T | FCGR3A+ Mono | NK | DC | Platelet]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  --status-- OK in 0.65s
+
+===== CELL 46 =====
+  | # DEG for  Naive CD4 T
+  | # --- FIX R5b (SC-02): if the adaptive guard above had to switch to neutral labels,
+  | #     these two FindMarkers() calls would both fail; point them at whatever label exists
+  | #     and say so, instead of silently producing nothing. ---
+  | if (!"Naive CD4 T" %in% levels(Idents(seurat_obj))) {
+  |   warning("label 'Naive CD4 T' absent (cluster drift); using the first cluster as ident.1", call. = FALSE)
+  | }
+  | id_naive <- if ("Naive CD4 T" %in% levels(Idents(seurat_obj))) "Naive CD4 T" else levels(Idents(seurat_obj))[1]
+  | naive_cd4_markers <- FindMarkers(seurat_obj, ident.1 = id_naive, min.pct = 0.25)
+  | 
+  | # p-value < 0.05
+  | naive_cd4_genes <- rownames(naive_cd4_markers[naive_cd4_markers$p_val_adj < 0.05, ])
+  | 
+  | # Memory CD4 T vs Naive CD4 T
+  | id_memory <- if ("Memory CD4 T" %in% levels(Idents(seurat_obj))) "Memory CD4 T" else levels(Idents(seurat_obj))[2]
+  | memory_vs_naive_markers <- FindMarkers(seurat_obj, ident.1 = id_memory, ident.2 = id_naive, min.pct = 0.25)
+  | 
+  | memory_vs_naive_genes <- rownames(memory_vs_naive_markers[memory_vs_naive_markers$p_val_adj < 0.05, ])
+  | 
+  | df <- naive_cd4_markers
+  | df$gene <- rownames(df)
+  | df$significance <- ifelse(df$p_val_adj < 0.05 & abs(df$avg_log2FC) > 0.5,
+  |                           "Significant", "Not significant")
+  | 
+  | #top Significant genes
+  | top_genes <- df %>%
+  |   dplyr::filter(significance == "Significant") %>%
+  |   dplyr::arrange(p_val_adj) %>%
+  |   head(15)
+  | 
+  | p <- ggplot(df, aes(x = avg_log2FC, y = -log10(pmax(p_val_adj, .Machine$double.xmin)),
+  |                     color = significance)) +
+  |   geom_point(alpha = 0.6) +
+  |   geom_text_repel(data = top_genes, aes(label = gene), size = 3, max.overlaps = 20) +
+  |   scale_color_manual(values = c("grey", "red")) +
+  |   theme_minimal() +
+  |   labs(title = "Volcano plot: Naive CD4 T markers",
+  |        x = "avg_log2FC", y = "-log10(adj. p-value)")
+  | 
+  | ggsave("Naive_Memory_CD4_DEG.png", plot = p, width = 6, height = 5, dpi = 300)
+  | #Geneset enrichment?
+  | # --- ADD (SC-04/SC-13): export the two DEG tables the tutorial only keeps in memory;
+  | #     the -log10(p_adj) axis is also finite now (p_adj = 0 used to give Inf). ---
+  | write.csv(cbind(gene = rownames(naive_cd4_markers), naive_cd4_markers),
+  |           "DEG_NaiveCD4_vs_rest.csv", row.names = FALSE)
+  | write.csv(cbind(gene = rownames(memory_vs_naive_markers), memory_vs_naive_markers),
+  |           "DEG_MemoryCD4_vs_NaiveCD4.csv", row.names = FALSE)
+  | cat(sprintf("Naive CD4 DEG: %d genes tested, %d significant (p_adj<0.05 & |log2FC|>0.5); %d significant by p_adj only\n",
+  |             nrow(df), sum(df$significance == "Significant"), length(naive_cd4_genes)))
+  | cat(sprintf("Memory vs Naive: %d genes tested, %d significant by p_adj\n",
+  |             nrow(memory_vs_naive_markers), length(memory_vs_naive_genes)))
+  | saveRDS(seurat_obj, file = "./pbmc3k_final.rds")
+  | 
+  --stdout--
+  > Naive CD4 DEG: 733 genes tested, 348 significant (p_adj<0.05 & |log2FC|>0.5); 439 significant by p_adj only
+  > Memory vs Naive: 887 genes tested, 641 significant by p_adj
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [Naive CD4 T | Memory CD4 T | CD14+ Mono | B | CD8 T | FCGR3A+ Mono | NK | DC | Platelet]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  # naive_cd4_markers: data.frame 733 rows x 5 cols
+  # memory_vs_naive_markers: data.frame 887 rows x 5 cols
+  --status-- OK in 31.27s
+
+===== CELL 48 =====
+  | # Load the required libraries
+  | library(Seurat)
+  | 
+  | # --- FIX R6 (SC-05): load() returns the *names* of the objects it created, and dumps
+  | #     them into the global environment; in a function or a knitted doc that silently
+  | #     leaks variables. Load into a private environment and assert the shapes instead. ---
+  | stim_env <- new.env()
+  | load("/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/pbmc_stim.RData", envir = stim_env)
+  | ctrl <- get("ctrl.sparse", envir = stim_env)
+  | stim <- get("stim.sparse", envir = stim_env)
+  | cat(sprintf("ctrl.sparse: %d genes x %d cells; stim.sparse: %d genes x %d cells\n",
+  |             nrow(ctrl), ncol(ctrl), nrow(stim), ncol(stim)))
+  | stopifnot(identical(rownames(ctrl), rownames(stim)))
+  | 
+  | # --- FIX R7 (SC-06): the tutorial integrates raw counts with no QC at all, so its UMAPs
+  | #     mix low-quality cells with real batch structure. Apply the same QC as Part 2. ---
+  | qc1 <- CreateSeuratObject(counts = ctrl, project = "ctrl")
+  | qc1[["percent.mt"]] <- PercentageFeatureSet(qc1, pattern = "^MT-")
+  | n1 <- ncol(qc1)
+  | qc1 <- subset(qc1, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+  | qc2 <- CreateSeuratObject(counts = stim, project = "stim")
+  | qc2[["percent.mt"]] <- PercentageFeatureSet(qc2, pattern = "^MT-")
+  | n2 <- ncol(qc2)
+  | qc2 <- subset(qc2, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
+  | cat(sprintf("QC: ctrl %d -> %d cells, stim %d -> %d cells\n", n1, ncol(qc1), n2, ncol(qc2)))
+  | ctrl_seurat <- qc1
+  | stim_seurat <- qc2
+  | ctrl_seurat$orig.ident <- "ctrl"
+  | stim_seurat$orig.ident <- "stim"
+  | 
+  | # Merge the datasets
+  | merged_seurat <- merge(ctrl_seurat, y = stim_seurat, add.cell.ids = c("ctrl", "stim"))
+  | # Normalize the data
+  | merged_seurat <- NormalizeData(merged_seurat)
+  | # Find variable features
+  | merged_seurat <- FindVariableFeatures(merged_seurat)
+  | # Scale the data
+  | merged_seurat <- ScaleData(merged_seurat)
+  | # Perform PCA
+  | merged_seurat <- RunPCA(merged_seurat)
+  | # Run UMAP
+  | merged_seurat <- RunUMAP(merged_seurat, dims = 1:10)
+  | p <- DimPlot(merged_seurat, group.by = "orig.ident")  # Use orig.ident to distinguish between ctrl and stim
+  | ggsave("UMAP_without_harmony.png", plot = p, width = 10, height = 5, dpi = 300)
+  | 
+  | # --- ADD (SC-06): quantify the batch structure instead of only looking at the UMAP.
+  | #     cross_knn = share of each cell's 30 nearest neighbours that come from the other
+  | #     sample; 0 = perfect separation, ~0.5 = fully mixed. ---
+  | cross_knn <- function(emb, sample, k = 30) {
+  |   nn <- FNN::get.knn(emb, k = k)$nn.index
+  |   mean(sample[nn] != sample)
+  | }
+  | smp <- as.character(merged_seurat$orig.ident)
+  | cross_pca <- cross_knn(Embeddings(merged_seurat, "pca")[, 1:10], smp)
+  | cat(sprintf("cross-sample neighbour fraction, PCA space (no harmony): %.4f\n", cross_pca))
+  | 
+  --stdout--
+  > ctrl.sparse: 35635 genes x 13019 cells; stim.sparse: 35635 genes x 12875 cells
+  > QC: ctrl 13019 -> 12932 cells, stim 12875 -> 12779 cells
+  > cross-sample neighbour fraction, PCA space (no harmony): 0.0287
+  --messages(71)--
+  * Normalizing layer: counts.ctrl
+
+  * Normalizing layer: counts.stim
+
+  * Finding variable features for layer counts.ctrl
+
+  * Finding variable features for layer counts.stim
+
+  * Centering and scaling data matrix
+
+  * PC_ 1 
+Positive:  C15orf48, TYROBP, CST3, FCER1G, SOD2, TIMP1, ANXA5, TYMP, LGALS3, KYNU 
+	   FTL, CD63, LGALS1, FCN1, CTSB, LYZ, S100A4, IGSF6, APOBEC3A, SPI1 
+	   ANXA2, PSAP, NPC2, CCL2, CD68, S100A11, NINJ1, CTSL, MAFB, HLA-DRA 
+Negative:  CCR7, TMSB4X, LTB, TRAT1, ITM2A, IL32, RGCC, CCL5, NKG7, ALOX5AP 
+	   GZMB, GNLY, CREM, CST7, PASK, SNHG8, MYC, CD8A, GPR171, BIRC3 
+	   PRF1, CD8B, GZMH, ADTRP, KLRD1, FGFBP2, TIGIT, RGS1, NOP58, CXCR3 
+PC_ 2 
+Positive:  IL8, CLEC5A, CD14, VCAN, S100A8, IER3, IL1B, MARCKSL1, PID1, CD9 
+	   GPX1, PLAUR, THBS1, OSM, PHLDA1, SLC7A11, S100A9, PPIF, CTB-61M7.2, INSIG1 
+	   C19orf59, GAPT, CXCL3, MGST1, OLR1, LIMS1, PFN1, GAPDH, TGFBI, RP11-290F20.3 
+Negative:  ISG15, IFIT3, IFIT1, TNFSF10, LY6E, IFIT2, CXCL10, RSAD2, IFI6, CXCL11 
+	   OAS1, IFITM3, IDO1, IL1RN, MT2A, TNFSF13B, CCL8, APOBEC3A, OASL, GBP1 
+	   FAM26F, HERC5, PLSCR1, HES4, DEFB1, WARS, LAP3, IL27, VAMP5, MNDA 
+PC_ 3 
+Positive:  NKG7, GNLY, GZMB, CCL5, PRF1, CST7, GZMH, KLRD1, GZMA, FGFBP2 
+	   ANXA1, CLIC3, APOBEC3G, TMSB4X, CTSW, FASLG, HOPX, KLRC1, CD8A, SRGN 
+	   OASL, SPON2, C12orf75, CXCR3, CCL4, IL32, IGFBP7, GAPDH, KLRB1, LAG3 
+Negative:  HLA-DQA1, CD79A, CD83, HLA-DQB1, HLA-DRA, CCR7, CD74, MS4A1, HLA-DRB1, HLA-DPA1 
+	   IRF8, HSP90AB1, HLA-DPB1, SYNGR2, ID3, HLA-DMA, HERPUD1, BLNK, MIR155HG, HVCN1 
+	   BANK1, HSPD1, REL, CD79B, BIRC3, TCL1A, HLA-DMB, TCF4, HSPE1, TSPAN13 
+PC_ 4 
+Positive:  LTB, TRAT1, CCR7, ADTRP, PASK, CCL2, CCL8, CMTM8, CTSL, SOCS3 
+	   CCL7, HPSE, S100A9, IL1RN, S100A8, ITM2A, APOBEC3A, CLEC4E, DEFB1, GPR171 
+	   LPAR6, FBLN7, RSAD2, MYC, AQP3, SOD2, CD300E, TNFAIP6, NGFRAP1, RGCC 
+Negative:  NKG7, GZMB, GNLY, CST7, CCL5, APOBEC3G, PRF1, CLIC3, KLRD1, GZMH 
+	   GZMA, HLA-DPA1, HLA-DPB1, HLA-DQA1, FGFBP2, CD74, CTSW, HLA-DQB1, CD83, HLA-DRB1 
+	   FASLG, HOPX, KLRC1, HERPUD1, SYNGR2, ID2, RAMP1, HLA-DRA, TNFRSF18, HLA-DMA 
+PC_ 5 
+Positive:  CCL7, CCL2, CCL8, LMNA, PLA2G7, TXN, SDS, HSPA1A, FABP5, EMP1 
+	   S100A9, CSTB, CCR1, CCR5, CAPG, TPM4, MGST1, CCNA1, SLC7A11, LILRB4 
+	   CXCL3, ATP6V1F, GCLM, IDO1, HSPA5, HSPA1B, ADAMDEC1, CD163, CXCL2, PDE4DIP 
+Negative:  VMO1, FCGR3A, MS4A4A, MS4A7, CXCL16, PPM1N, LST1, HN1, SMPDL3A, CH25H 
+	   CASP5, CDKN1C, AIF1, SERPINA1, LRRC25, PLAC8, ATP1B3, CD86, HCAR3, RP11-290F20.3 
+	   GBP5, LILRA5, RGS19, PILRA, C3AR1, TMSB4X, STXBP2, CFD, COTL1, EDN1 
+
+  * 19:59:39 UMAP embedding parameters a = 0.9922 b = 1.112
+
+  * 19:59:39 Read 25711 rows and found 10 numeric columns
+
+  * 19:59:39 Using Annoy for neighbor search, n_neighbors = 30
+
+  * 19:59:39 Building Annoy index with metric = cosine, n_trees = 50
+
+  * 0%   10   20   30   40   50   60   70   80   90   100%
+
+  * [----|----|----|----|----|----|----|----|----|----|
+
+  * *
+  * |
+
+  * 19:59:43 Writing NN index file to temp file /tmp/Rtmpg7phNw/file18a4e01957cf2c
+
+  * 19:59:43 Searching Annoy index using 1 thread, search_k = 3000
+
+  * 19:59:51 Annoy recall = 100%
+
+  * 19:59:52 Commencing smooth kNN distance calibration using 1 thread
+  *  with target n_neighbors = 30
+
+  * 19:59:53 Initializing from normalized Laplacian + noise (using RSpectra)
+
+  * 19:59:55 Commencing optimization for 200 epochs, with 1077546 positive edges
+
+  * 20:00:13 Optimization finished
+
+  --warnings(2)--
+  ! Feature names cannot have underscores ('_'), replacing with dashes ('-')
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [Naive CD4 T | Memory CD4 T | CD14+ Mono | B | CD8 T | FCGR3A+ Mono | NK | DC | Platelet]
+  # merged_seurat: 35635 genes x 25711 cells
+  # merged_seurat: reductions=[pca,umap]
+  # merged_seurat: idents=2 [ctrl | stim]
+  # ctrl_seurat: 35635 genes x 12932 cells
+  # ctrl_seurat: reductions=[]
+  # ctrl_seurat: idents=1 [ctrl]
+  # stim_seurat: 35635 genes x 12779 cells
+  # stim_seurat: reductions=[]
+  # stim_seurat: idents=1 [stim]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  # naive_cd4_markers: data.frame 733 rows x 5 cols
+  # memory_vs_naive_markers: data.frame 887 rows x 5 cols
+  --status-- OK in 68.42s
+
+===== CELL 51 =====
+  | #install.packages("harmony")
+  | library(harmony)
+  | # Run Harmony
+  | merged_seurat <- RunHarmony(merged_seurat, group.by.vars = "orig.ident")
+  | # Run UMAP with Harmony embeddings
+  | merged_seurat <- RunUMAP(merged_seurat, reduction = "harmony", dims = 1:10)
+  | # Plot UMAP with Harmony
+  | p <- DimPlot(merged_seurat, group.by = "orig.ident")
+  | ggsave("UMAP_with_harmony.png", plot = p, width = 10, height = 5, dpi = 300)
+  | 
+  | # --- ADD (SC-06): same metric after harmony, plus a clustering-based sanity check. ---
+  | cross_harmony <- cross_knn(Embeddings(merged_seurat, "harmony")[, 1:10], smp)
+  | merged_seurat <- FindNeighbors(merged_seurat, reduction = "harmony", dims = 1:10)
+  | merged_seurat <- FindClusters(merged_seurat, resolution = 0.5)
+  | tab <- table(merged_seurat$seurat_clusters, merged_seurat$orig.ident)
+  | share <- prop.table(tab, margin = 1)
+  | cat(sprintf("cross-sample neighbour fraction, harmony space: %.4f (PCA: %.4f)\n",
+  |             cross_harmony, cross_pca))
+  | cat(sprintf("clusters after harmony: %d; clusters with a sample share >0.9: %d; mean |share-0.5| = %.3f\n",
+  |             nrow(tab), sum(apply(share, 1, max) > 0.9), mean(abs(share[, 1] - 0.5))))
+  | write.csv(as.data.frame.matrix(tab), "harmony_cluster_by_sample.csv")
+  | # --- ADD: one tidy metrics file for the doc. ---
+  | write.csv(data.frame(metric = c("cells_ctrl", "cells_stim", "cells_merged",
+  |                                 "cross_knn_pca", "cross_knn_harmony",
+  |                                 "clusters_harmony", "clusters_dominated_gt90pct"),
+  |                      value = c(ncol(qc1), ncol(qc2), ncol(merged_seurat),
+  |                                round(cross_pca, 4), round(cross_harmony, 4),
+  |                                nrow(tab), sum(apply(share, 1, max) > 0.9))),
+  |           "integration_metrics.csv", row.names = FALSE)
+  | saveRDS(merged_seurat, file = "./pbmc_stim_merged_harmony.rds")
+  --stdout--
+  > Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+  > 
+  > Number of nodes: 25711
+  > Number of edges: 776093
+  > 
+  > Running Louvain algorithm...
+  > Maximum modularity in 10 random starts: 0.8902
+  > Number of communities: 12
+  > Elapsed time: 6 seconds
+  > cross-sample neighbour fraction, harmony space: 0.4051 (PCA: 0.0287)
+  > clusters after harmony: 12; clusters with a sample share >0.9: 0; mean |share-0.5| = 0.030
+  --messages(75)--
+  * Loading required package: Rcpp
+
+  * Transposing data matrix
+
+  * Initializing state using k-means centroids initialization
+
+  * Harmony 1/10
+
+  * Harmony 2/10
+
+  * Harmony 3/10
+
+  * Harmony 4/10
+
+  * Harmony converged after 4 iterations
+
+  * 20:00:38 UMAP embedding parameters a = 0.9922 b = 1.112
+
+  * 20:00:38 Read 25711 rows and found 10 numeric columns
+
+  * 20:00:38 Using Annoy for neighbor search, n_neighbors = 30
+
+  * 20:00:38 Building Annoy index with metric = cosine, n_trees = 50
+
+  * 0%   10   20   30   40   50   60   70   80   90   100%
+
+  * [----|----|----|----|----|----|----|----|----|----|
+
+  * *
+  * |
+
+  * 20:00:41 Writing NN index file to temp file /tmp/Rtmpg7phNw/file18a4e01ff0a44f
+
+  * 20:00:42 Searching Annoy index using 1 thread, search_k = 3000
+
+  * 20:00:51 Annoy recall = 100%
+
+  * 20:00:51 Commencing smooth kNN distance calibration using 1 thread
+  *  with target n_neighbors = 30
+
+  * 20:00:53 Initializing from normalized Laplacian + noise (using RSpectra)
+
+  * 20:00:54 Commencing optimization for 200 epochs, with 1082974 positive edges
+
+  * 20:01:12 Optimization finished
+
+  * Computing nearest neighbor graph
+
+  * Computing SNN
+
+  --state--
+  # sc_data: 32738 x 2700 matrix
+  # seurat_obj: 13714 genes x 2638 cells
+  # seurat_obj: reductions=[pca,umap]
+  # seurat_obj: clusters=9
+  # seurat_obj: idents=9 [Naive CD4 T | Memory CD4 T | CD14+ Mono | B | CD8 T | FCGR3A+ Mono | NK | DC | Platelet]
+  # merged_seurat: 35635 genes x 25711 cells
+  # merged_seurat: reductions=[pca,umap,harmony]
+  # merged_seurat: clusters=12
+  # merged_seurat: idents=12 [0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11]
+  # ctrl_seurat: 35635 genes x 12932 cells
+  # ctrl_seurat: reductions=[]
+  # ctrl_seurat: idents=1 [ctrl]
+  # stim_seurat: 35635 genes x 12779 cells
+  # stim_seurat: reductions=[]
+  # stim_seurat: idents=1 [stim]
+  # seurat_obj.markers: data.frame 11629 rows x 7 cols
+  # naive_cd4_markers: data.frame 733 rows x 5 cols
+  # memory_vs_naive_markers: data.frame 887 rows x 5 cols
+  --status-- OK in 100.53s
+
+===== SUMMARY =====
+cell 11  OK       7.67s warn=1 msg=7
+cell 13  OK       1.98s warn=1 msg=0
+cell 16  OK       0.47s warn=0 msg=1
+cell 18  OK       1.95s warn=1 msg=2
+cell 21  OK       2.47s warn=0 msg=1
+cell 23  OK       6.42s warn=0 msg=1
+cell 27  OK       1.43s warn=0 msg=2
+cell 29  OK       7.68s warn=1 msg=65
+cell 33  OK       3.26s warn=0 msg=0
+cell 36  OK     324.68s warn=0 msg=10
+cell 39  OK       0.01s warn=0 msg=0
+cell 40  OK       4.72s warn=0 msg=0
+cell 43  OK       0.65s warn=0 msg=0
+cell 46  OK      31.27s warn=0 msg=0
+cell 48  OK      68.42s warn=1 msg=71
+cell 51  OK     100.53s warn=0 msg=75
+### end: 2026-10-26 20:01:57

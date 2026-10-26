@@ -1,0 +1,2454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Single-cell RNA-seq (PBMC 3k) — Corrected &amp; Annotated Edition</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Single-cell RNA-seq (PBMC 3k) — Corrected &amp;
+Annotated Edition</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#single-cell-rna-seq-pbmc-3k-corrected-annotated-edition"
+id="toc-single-cell-rna-seq-pbmc-3k-corrected-annotated-edition">Single-cell
+RNA-seq (PBMC 3k) — Corrected &amp; Annotated Edition</a>
+<ul>
+<li><a href="#about-this-edition" id="toc-about-this-edition">0. About
+this edition</a></li>
+<li><a href="#issue-list-at-a-glance" id="toc-issue-list-at-a-glance">1.
+Issue list at a glance</a></li>
+<li><a href="#environment-and-data" id="toc-environment-and-data">2.
+Environment and data</a></li>
+<li><a href="#the-as-written-run-what-the-tutorial-actually-produces"
+id="toc-the-as-written-run-what-the-tutorial-actually-produces">3. The
+as-written run: what the tutorial actually produces</a></li>
+<li><a href="#part-1-load-data" id="toc-part-1-load-data">4. Part 1 —
+Load data</a></li>
+<li><a href="#part-2-quality-control" id="toc-part-2-quality-control">5.
+Part 2 — Quality control</a></li>
+<li><a href="#part-3-highly-variable-features"
+id="toc-part-3-highly-variable-features">6. Part 3 — Highly variable
+features</a></li>
+<li><a href="#part-4-scaling-and-pca" id="toc-part-4-scaling-and-pca">7.
+Part 4 — Scaling and PCA</a></li>
+<li><a href="#part-5-clustering-and-umap"
+id="toc-part-5-clustering-and-umap">8. Part 5 — Clustering and
+UMAP</a></li>
+<li><a href="#part-6-annotation-and-differential-expression"
+id="toc-part-6-annotation-and-differential-expression">9. Part 6 —
+Annotation and differential expression</a></li>
+<li><a href="#part-7-integration" id="toc-part-7-integration">10. Part 7
+— Integration</a></li>
+<li><a href="#part-8-scanpy" id="toc-part-8-scanpy">11. Part 8 —
+scanpy</a></li>
+<li><a href="#reconciling-the-two-halves"
+id="toc-reconciling-the-two-halves">12. Reconciling the two
+halves</a></li>
+<li><a href="#the-corrected-pass" id="toc-the-corrected-pass">13. The
+corrected pass</a></li>
+<li><a href="#reference-figures-outside-the-tutorials-scope"
+id="toc-reference-figures-outside-the-tutorials-scope">14. Reference
+figures outside the tutorial’s scope</a></li>
+<li><a href="#reproducing-this-module"
+id="toc-reproducing-this-module">15. Reproducing this module</a></li>
+<li><a href="#file-manifest" id="toc-file-manifest">16. File
+manifest</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="single-cell-rna-seq-pbmc-3k-corrected-annotated-edition">Single-cell
+RNA-seq (PBMC 3k) — Corrected &amp; Annotated Edition</h1>
+<p><strong>Course module 5 · scRNA-seq analysis</strong> Source
+tutorial: <em>Single Cell RNA-seq Analyze Tutorial</em>, Bowen Qin &amp;
+Zexian Zeng, Center for Life Sciences / Center for Quantitative Biology
+/ Academy for Advanced Interdisciplinary Studies, Peking University
+(<code>scRNA_seq_analyze_totorial_2026.html</code> in this
+directory).</p>
+<hr />
+<h2 id="about-this-edition">0. About this edition</h2>
+<p>This document is the corrected and annotated edition of the fifth
+course module. It follows the same protocol as the WES, RNA-seq,
+RNA-seq-application and TBCR-analysis modules of this repository:</p>
+<ol type="1">
+<li>the tutorial was executed <strong>as written</strong> — every code
+cell verbatim, in tutorial order, with no optimisation and no mid-run
+fixes;</li>
+<li>every problem encountered or predicted was <strong>recorded, not
+fixed</strong>, during that run (§1 lists them, the Part where each
+occurs explains it);</li>
+<li>a <strong>second, corrected pass</strong> was then run so that the
+effect of every correction can be measured rather than asserted
+(§13);</li>
+<li>documents, scripts, logs, figures and tables are committed
+together.</li>
+</ol>
+<p>Two properties make this module different from the previous four.</p>
+<p><strong>It is the first module with two toolchains on one
+dataset.</strong> Parts 1-7 are R/Seurat, Part 8 is Python/scanpy, both
+starting from the same <code>matrix.mtx</code>. The tutorial never
+reconciles the two, and they do not agree: the R half keeps 32,738
+features and finds 9 clusters, the Python half keeps 13,714 features and
+finds 8. §12 quantifies that difference cell by cell.</p>
+<p><strong>It is the first module where the tutorial cannot run to the
+end in either language.</strong> One missing <code>library()</code> call
+kills the R DEG cell, and one doubled comma kills a whole Python cell —
+together they cost 7 of the 25 figures and both deliverable objects
+(§3).</p>
+<p>What this edition adds on top of the original tutorial:</p>
+<ul>
+<li>the run itself, with per-cell timings, warnings and the exact error
+text (§3);</li>
+<li>twenty verified pitfalls (<code>SC-01</code> … <code>SC-20</code>),
+each with the corrected code and, where it matters, a measured
+effect;</li>
+<li>a pixel-level comparison of every regenerated figure against the 28
+reference PNGs shipped with the course (§3.4,
+<code>results/08_figure_comparison/</code>);</li>
+<li>a cross-tool reconciliation: what “9 clusters vs 8 clusters”
+actually means (§12);</li>
+<li>a corrected pass that reproduces the as-written numbers exactly, and
+adds the objects and tables the tutorial leaves in memory (§13).</li>
+</ul>
+<p>Severity ordering used throughout: <strong>fatal</strong> (the
+as-written code cannot produce its output), <strong>changes
+results</strong> (runs, but the labels/numbers are unreliable),
+<strong>robustness</strong> (works here, breaks elsewhere),
+<strong>hygiene</strong> (style, naming, unexported results).</p>
+<hr />
+<h2 id="issue-list-at-a-glance">1. Issue list at a glance</h2>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 6%" />
+<col style="width: 42%" />
+<col style="width: 11%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Part</th>
+<th style="text-align: left;">What goes wrong</th>
+<th style="text-align: left;">Severity</th>
+<th style="text-align: left;">Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SC-01</td>
+<td style="text-align: left;">4</td>
+<td
+style="text-align: left;"><code>ScaleData(features = rownames(seurat_obj))</code>
+scales all 32,738 features although the text says “using the selected
+features” (2,000 HVGs). It is not an error: <code>DoHeatmap()</code>
+draws markers from <code>scale.data</code>, so scaling only the HVGs
+would break the heatmap of arbitrary marker genes. It is a cost: 0.73 GB
+of objects and 4.2 s, versus 0.35 GB / 2.2 s for the 13,714-feature
+variant.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">Keep it, state the reason, and scale
+<code>unique(c(VariableFeatures, marker genes))</code> when memory
+matters.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-02</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">The cluster → cell-type mapping is written
+<strong>twice and inconsistently</strong>: the table in cell 39 says
+cluster 1 = CD14+ Mono, cluster 2 = Memory CD4 T; the
+<code>new.cluster.ids</code> vector in cell 43 says cluster 1 = Memory
+CD4 T, cluster 2 = CD14+ Mono. In this run the vector is right and the
+table is wrong (cluster 1 = CCR7/LEF1/NOSIP, i.e. CD4; cluster 2 =
+S100A8/FCN1/CD14, i.e. monocytes). Renumbering by Louvain is not stable:
+with a 30-HVG perturbation (§13.2) the same fixed vector mislabels 957
+cells (36%).</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">Derive labels from markers, assert the
+cluster count, and emit an audit table.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-03</td>
+<td style="text-align: left;">6</td>
+<td
+style="text-align: left;"><code>seurat_obj.markers %&gt;% group_by(cluster) %&gt;% dplyr::filter(avg_log2FC &gt; 1)</code>
+is a pipe whose value is discarded; <code>top10</code> is then taken
+from the <strong>unfiltered</strong> table with
+<code>slice_max(avg_log2FC)</code>, which ignores <code>p_val_adj</code>
+entirely. Filters are not applied.</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">Assign the filtered table, filter on
+<code>p_val_adj &lt; 0.05</code> too, then
+<code>slice_max()</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-04</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><code>naive_cd4_genes</code> and
+<code>memory_vs_naive_genes</code> are computed and never used again;
+the volcano maps <code>-log10(p_val_adj)</code>, which is
+<code>Inf</code> when <code>p_val_adj</code> underflows to 0 (not
+triggered here — the smallest is 1.24e-115 — but one fewer decimal in
+the test would trigger it); no DEG table is exported.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">Use
+<code>pmax(p_val_adj, .Machine$double.xmin)</code>, export both tables,
+use the gene lists.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-05</td>
+<td style="text-align: left;">7</td>
+<td
+style="text-align: left;"><code>data_pbmc_multi &lt;- load("pbmc_stim.RData")</code>
+assigns the <strong>names</strong> of the loaded objects, not the
+objects, and dumps <code>ctrl.sparse</code>/<code>stim.sparse</code>
+into the global environment; the code then retrieves them with
+<code>get()</code>. Inside a function or a knitted document this
+silently leaks or fails.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;"><code>load(..., envir = e)</code> into a
+private environment.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-06</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">Part 7 integrates <strong>raw,
+unfiltered</strong> counts — no <code>percent.mt</code>, no
+<code>nFeature</code> cut, unlike Part 2 — and after
+<code>RunHarmony()</code> only plots a UMAP: no
+<code>FindNeighbors()</code>/<code>FindClusters()</code>, so the effect
+of batch correction is never quantified.</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">QC both samples (13,019 → 12,932 and
+12,875 → 12,779 cells), and measure mixing instead of eyeballing it
+(§10).</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-07</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>PCHeatmap()</code> is a deprecated
+alias (still present in Seurat 5.1.0, no warning emitted), and
+<code>ElbowPlot()</code> shows 20 PCs by default while every downstream
+step uses <code>dims = 1:10</code>.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;"><code>DimHeatmap(dims = 1:6)</code>; set
+<code>ndims = 20</code> explicitly and record why 10 is used.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-08</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><code>p &lt;- p + plot2</code>, where
+<code>plot2</code> is itself a full ggplot built on <code>p</code>,
+produces a <strong>two-panel figure</strong> (the left panel is
+<code>p</code>, the right is <code>plot2</code>), not “one figure with
+duplicated layers”. The reference <code>VariableFeaturePlot.png</code>
+ships with that artifact: its two halves are the same scatter, labelled
+differently.</td>
+<td style="text-align: left;">hygiene</td>
+<td
+style="text-align: left;"><code>p &lt;- LabelPoints(plot = p, points = top_features, repel = TRUE)</code>,
+one panel.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-09</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>sc.pl.pca_variance_ratio(adata, log=True,,save="scanpy_PCA_ratio.png")</code>
+— the doubled comma is a <code>SyntaxError</code>. Python compiles a
+cell as a whole, so <strong>nothing</strong> in that cell runs: not only
+the ratio plot, but also <code>sc.tl.pca()</code>,
+<code>sc.pp.neighbors()</code> and <code>sc.tl.umap()</code>. Everything
+downstream then fails with
+<code>KeyError: 'No "neighbors" in .uns'</code>.</td>
+<td style="text-align: left;">fatal</td>
+<td style="text-align: left;">One comma removed.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-10</td>
+<td style="text-align: left;">2, 8</td>
+<td style="text-align: left;">The two halves filter the same 2,700 cells
+with different thresholds (<code>nFeature_RNA &lt; 2500</code> vs
+<code>n_genes_by_counts &lt; 2000</code>), so they describe 2,638 versus
+2,635 cells and 9 versus 8 clusters. Neither the text nor the code
+mentions the mismatch.</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">Align to one threshold; §12 shows that
+2,500 on the Python side gives exactly 2,638 cells.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-11</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>sc.pp.scale(adata, max_value = 10)</code>
+is called at the end of cell 64 and again at the start of cell 67. The
+second call re-clips already-clipped values (a no-op on this data, but
+it silently rescales if <code>max_value</code> ever differs).</td>
+<td style="text-align: left;">hygiene</td>
+<td style="text-align: left;">Keep one call.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-12</td>
+<td style="text-align: left;">8</td>
+<td
+style="text-align: left;"><code>rename_categories("leiden", new_cluster_names)</code>
+requires exactly one name per category and fails with
+<code>ValueError: leiden is neither in .obs nor in .var</code>-style
+errors otherwise; with 8 names and 9 categories the cell dies. The names
+are positional — assigned by category order, not by marker evidence —
+and they are <strong>wrong</strong>: the cluster called
+<code>CD8 T</code> is 78.1% Seurat Naive CD4 T cells (CD8A 0.14, CD8B
+0.24, IL7R 1.61), and the cluster called <code>NK</code> is 61.8% CD8 T
+plus 33.3% NK.</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">Check the count, and build the mapping
+from <code>rank_genes_groups</code> output (§11.4).</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-13</td>
+<td style="text-align: left;">6, 8</td>
+<td style="text-align: left;">Neither half exports the marker tables it
+computes; <code>Scanpy</code>’s <code>save=</code> concatenates the
+function name with the string, producing
+<code>highest_expr_genesscanpy_highest_expr_genes.png</code>,
+<code>violinscanpy_violin_plot_QC.png</code>,
+<code>umapscanpy_final_umap.png</code>. That is exactly why the copies
+shipped with the course had to be renamed.</td>
+<td style="text-align: left;">hygiene</td>
+<td style="text-align: left;">Export
+<code>markers_all_clusters.csv</code>,
+<code>clusterN_markers.csv</code>,
+<code>cluster_label_audit*.csv</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-14</td>
+<td style="text-align: left;">1, 8</td>
+<td style="text-align: left;"><code>genes.tsv</code> contains 95
+duplicated rows over 91 duplicated symbols (32,738 rows, 32,643 unique
+names; <code>7SK</code> appears 4×) and 21 symbols containing
+<code>_</code>. Seurat rewrites <code>_</code> to <code>-</code>
+(“Feature names cannot have underscores, replacing with dashes”),
+scanpy’s <code>var_names_make_unique()</code> renames duplicates
+<code>ACE</code> → <code>ACE-1</code>. The two halves therefore disagree
+on gene names in both directions.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">Record both mappings; prefer
+<code>gene_ids</code> for joins.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-15</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">The data directory is an <strong>old Cell
+Ranger 1.1.0 layout</strong>: <code>barcodes.tsv</code>,
+<code>genes.tsv</code>, <code>matrix.mtx</code>, no
+<code>features.tsv</code>, no <code>*.gz</code>. <code>Read10X()</code>
+and <code>read_10x_mtx()</code> both cope, but any newer tool expecting
+<code>features.tsv.gz</code> will not.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">None needed here; documented.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-16</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><code>geom_text_repel()</code> is called
+but <code>library(ggrepel)</code> never is (only Seurat, dplyr, ggplot2
+are loaded). The whole DEG cell dies with
+<code>could not find function "geom_text_repel"</code> — which also
+means <code>saveRDS(seurat_obj, "pbmc3k_final.rds")</code> on its last
+line never executes.</td>
+<td style="text-align: left;">fatal</td>
+<td style="text-align: left;"><code>library(ggrepel)</code> in Part
+1.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-17</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>CreateSeuratObject()</code> runs
+with its default <code>min.cells = 0</code>, keeping all 32,738 features
+(19,024 of them all-zero after QC) while scanpy’s
+<code>filter_genes(min_cells = 3)</code> keeps 13,714. This is not
+harmless: 30 of 2,000 HVGs change, the Louvain solution moves
+(modularity 0.8584 vs 0.8728, cluster sizes ±5%), and the two hard-coded
+annotation lists stop agreeing (§13.2).</td>
+<td style="text-align: left;">changes results</td>
+<td style="text-align: left;">Declare the gene universe explicitly; do
+not change it silently.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-18</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">The two Part-7 UMAPs are <strong>not
+reproducible run to run</strong>: two runs on identical input give
+structural correlation 0.5631 (<code>UMAP_without_harmony</code>) and
+0.5676 (<code>UMAP_with_harmony</code>), the same magnitude as the
+difference to the reference figures (0.5664, 0.5689). uwot is
+multithreaded; <code>RunUMAP()</code> has no thread-invariant seed.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">Compare group structure or embeddings,
+never pixels; set <code>n.threads = 1</code> if bitwise reproducibility
+is required.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-19</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">The shipped reference
+<code>Marker_Heatmap.png</code> is 3,000 × 6,000 px, i.e. 10 × 20 inches
+at 300 dpi, while the tutorial’s
+<code>ggsave(..., width = 10, height = 10)</code> gives 3,000 × 3,000.
+The reference figure was not produced by the code in the tutorial.</td>
+<td style="text-align: left;">hygiene</td>
+<td style="text-align: left;">None; documented as an inconsistency in
+the course materials.</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-20</td>
+<td style="text-align: left;">7</td>
+<td
+style="text-align: left;"><code>RunHarmony(merged_seurat, group.by.vars = "orig.ident")</code>
+omits <code>dims</code>, so it integrates on all 50 PCs from
+<code>RunPCA()</code> (default <code>npcs = 50</code>), while the
+following <code>RunUMAP(reduction = "harmony", dims = 1:10)</code> uses
+the first 10 harmony components. Batch correction and visualisation are
+computed on different dimensionalities.</td>
+<td style="text-align: left;">robustness</td>
+<td style="text-align: left;">Pass <code>dims = 1:10</code> (or
+<code>1:20</code>) explicitly and use the same set for the UMAP.</td>
+</tr>
+</tbody>
+</table>
+<p>Two further observations that are not code bugs but belong in the
+record:</p>
+<ul>
+<li>the tutorial’s own <code>.Rmd</code>/HTML never mentions a random
+seed, yet the whole module is stochastic (Louvain, UMAP, harmony);</li>
+<li>the 28 reference PNGs in this directory are the teacher’s 2025
+output, 13 of them byte-identical to the 2024 version; three of them
+(<code>UMAP_noPCA.png</code>, <code>UMAP_three_stages.png</code>,
+<code>immune_markers.png</code>) are not produced by any code in the
+tutorial (§14).</li>
+</ul>
+<hr />
+<h2 id="environment-and-data">2. Environment and data</h2>
+<h3 id="environment">2.1 Environment</h3>
+<p>No environment was built for this module. The teacher’s own
+environment is shared and contains both halves:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate /lustre1/share/miniconda3/envs/scRNA_seq</span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R</td>
+<td>4.4.1</td>
+<td></td>
+</tr>
+<tr>
+<td>Seurat</td>
+<td>5.1.0</td>
+<td>SeuratObject 5.0.2; layer-based v5 objects</td>
+</tr>
+<tr>
+<td>harmony</td>
+<td>1.2.1</td>
+<td></td>
+</tr>
+<tr>
+<td>ggrepel</td>
+<td>0.9.6</td>
+<td>installed, but never loaded by the tutorial (SC-16)</td>
+</tr>
+<tr>
+<td>dplyr / ggplot2 / patchwork</td>
+<td>1.1.4 / 3.5.1 / 1.3.0</td>
+<td></td>
+</tr>
+<tr>
+<td>Matrix / uwot / leiden / igraph</td>
+<td>1.7.1 / 0.2.2 / 0.4.3.1 / 2.1.1</td>
+<td></td>
+</tr>
+<tr>
+<td>FNN / RANN</td>
+<td>1.1.4.1 / 2.6.2</td>
+<td>used only by the corrected mixing metric</td>
+</tr>
+<tr>
+<td>presto</td>
+<td><strong>absent</strong></td>
+<td>without it <code>FindAllMarkers()</code> falls back to the slow
+Wilcoxon path: one cell takes 330 s</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.12.7</td>
+<td></td>
+</tr>
+<tr>
+<td>scanpy / anndata</td>
+<td>1.10.3 / 0.10.9</td>
+<td></td>
+</tr>
+<tr>
+<td>leidenalg / igraph</td>
+<td>0.11.6</td>
+<td></td>
+</tr>
+<tr>
+<td>numpy / pandas / seaborn</td>
+<td>2.0.2 / 2.2.3 / 0.13.2</td>
+<td></td>
+</tr>
+<tr>
+<td>Pillow</td>
+<td>11.0.0</td>
+<td>used by the figure comparison script</td>
+</tr>
+</tbody>
+</table>
+<p>This module runs on the login node, serially, as lessons 3-5 of this
+course do: the whole thing is 2,700 cells (plus 25,894 in Part 7), peaks
+at ~4 GB, and the longest single cell is <code>FindAllMarkers()</code>
+at 5.5 min. There is no alignment step and no scheduler involvement, so
+no <code>sbatch</code> wrapper was added — the same reasoning recorded
+for the RNA-seq and TBCR modules.</p>
+<h3 id="input-data">2.2 Input data</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Path</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lustre1/share/scRNA_seq/hg19/</code></td>
+<td><code>barcodes.tsv</code> (2,700), <code>genes.tsv</code> (32,738),
+<code>matrix.mtx</code> (2,286,884 non-zero entries), Cell Ranger 1.1.0
+/ hg19</td>
+</tr>
+<tr>
+<td><code>/lustre1/share/qinbowen/pbmc_stim.RData</code></td>
+<td><code>ctrl.sparse</code> (35,635 × 13,019), <code>stim.sparse</code>
+(35,635 × 12,875), sparse <code>dgCMatrix</code></td>
+</tr>
+<tr>
+<td><code>/lustre1/share/scRNA_seq_student/qinbowen_2025/</code></td>
+<td>the teacher’s output, used only as reference</td>
+</tr>
+</tbody>
+</table>
+<p>The matrix is the standard 10x PBMC 3k dataset: 2,700 cells, median
+817 genes and 2,197 UMIs per cell, 2.03% median mitochondrial fraction.
+<code>genes.tsv</code> has 95 duplicated symbols and 21 symbols
+containing <code>_</code> (SC-14).</p>
+<h3 id="run-layout">2.3 Run layout</h3>
+<pre><code>/lustre1/user/bjx131_pkuhpc/scrna_run_20261026/
+├── hg19/                     copy of the count matrix (rsync, as the tutorial&#39;s cell 7 asks)
+├── pbmc_stim.RData           copy of the stimulation data set
+├── rr/                       R, as written  (figures produced in this directory)
+├── rr_fixed/                 R, corrected  (MIN_CELLS = 0)
+├── rr_mincells3/             R, corrected, gene universe aligned to scanpy (§13.2)
+├── py/  py_asis/             Python, as written
+├── py_fixed/                 Python, corrected (N_GENES_MAX = 2000, the tutorial value)
+├── py_align2500/             Python, corrected with the Seurat threshold (§12.3)
+├── logs/                     one log + one status TSV per run
+└── scripts/                  cell files + drivers + analysis scripts</code></pre>
+<p>Every code cell of the tutorial was extracted from the HTML with its
+original numbering (cells 11, 13, 16 … for R; 54, 55, 57 … for Python)
+and executed by a small driver:</p>
+<ul>
+<li><code>scripts/run_cells.R</code> — evaluates one cell at a time in
+<strong>one persistent R session</strong>, catching errors, warnings and
+messages per cell, recording elapsed time and the state of every object
+after the cell;</li>
+<li><code>scripts/run_cells.py</code> — the same for Python, in one
+persistent namespace.</li>
+</ul>
+<p>The drivers reproduce notebook semantics exactly: a cell that raises
+is recorded and the next cell still runs. Nothing is auto-corrected,
+retried or reordered. This matters here: it is what turns “the tutorial
+has a bug” into “18 of 25 figures exist, and here is the cell where the
+other 7 die”.</p>
+<h3 id="output-layout-in-this-repository">2.4 Output layout in this
+repository</h3>
+<pre><code>scRNA-seq/
+├── scRNA_seq_analyze_totorial_2026.html   course material (unmodified)
+├── scRNA_seq_lecture_2026.pdf             course slides (unmodified)
+├── *.png                                  28 reference figures (unmodified)
+├── ref/                                   this document, its Chinese edition, the results guide
+└── results/
+    ├── 01_qc/                  QC figures + qc_summary.csv + qc_rederivation_rawmatrix.csv
+    ├── 02_hvg_pca/             variable-feature and PCA figures (both halves, both variants)
+    ├── 03_clustering/          UMAP figures + cluster_sizes.csv
+    ├── 04_annotation/          marker/annotation figures, marker tables, audit and correspondence tables
+    ├── 05_deg/                 volcano + DEG tables + scanpy rank/dotplot figures
+    ├── 06_integration/         harmony figures + integration_metrics.csv + cluster-by-sample table
+    ├── 07_objects/             pbmc3k.h5ad + pbmc3k_obs.csv
+    ├── 08_figure_comparison/   three comparison tables + the written comparison
+    ├── 09_run_logs/            per-cell logs and status tables of all six runs
+    └── scripts/                everything needed to regenerate the above</code></pre>
+<p><code>pbmc3k_final.rds</code> is deliberately <strong>not</strong>
+committed: it is 331 MiB because Seurat keeps a dense
+<code>scale.data</code> matrix for all 32,738 features. One
+<code>saveRDS()</code> line in Part 6 regenerates it.</p>
+<hr />
+<h2 id="the-as-written-run-what-the-tutorial-actually-produces">3. The
+as-written run: what the tutorial actually produces</h2>
+<h3 id="r-half-parts-1-7">3.1 R half (Parts 1-7)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Step</th>
+<th>s</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td><code>Read10X</code> + <code>CreateSeuratObject</code></td>
+<td>7.2</td>
+<td>32,738 × 2,700; warning: <code>_</code> → <code>-</code> in feature
+names</td>
+</tr>
+<tr>
+<td>13</td>
+<td>mitochondrial QC + violin</td>
+<td>1.9</td>
+<td>2,700 → 2,638 cells</td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>NormalizeData</code></td>
+<td>0.8</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>FindVariableFeatures</code> (vst, 2,000)</td>
+<td>4.2</td>
+<td>warning: log-10 of zero dispersion</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>ScaleData</code> (all 32,738 features)</td>
+<td>5.8</td>
+<td>0.73 GB of objects</td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>RunPCA</code> + 4 plots</td>
+<td>8.7</td>
+<td>50 PCs</td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>FindNeighbors(1:10)</code> +
+<code>FindClusters(0.5)</code></td>
+<td>1.3</td>
+<td>9 communities, modularity 0.8584</td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>RunUMAP(1:10)</code></td>
+<td>6.7</td>
+<td>65 messages (uwot progress)</td>
+</tr>
+<tr>
+<td>33</td>
+<td>9-marker <code>FeaturePlot</code></td>
+<td>3.0</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td><code>FindAllMarkers(only.pos)</code> + heatmap</td>
+<td><strong>330.3</strong></td>
+<td>11,986 rows; no presto</td>
+</tr>
+<tr>
+<td>39</td>
+<td>annotation table (comments only)</td>
+<td>0.0</td>
+<td></td>
+</tr>
+<tr>
+<td>40</td>
+<td>12-marker <code>FeaturePlot</code></td>
+<td>4.3</td>
+<td></td>
+</tr>
+<tr>
+<td>43</td>
+<td><code>RenameIdents</code> + annotated UMAP</td>
+<td>0.6</td>
+<td>9 labels</td>
+</tr>
+<tr>
+<td>46</td>
+<td>DEG + volcano + <code>saveRDS</code></td>
+<td>11.3</td>
+<td><strong>ERROR:
+<code>could not find function "geom_text_repel"</code></strong></td>
+</tr>
+<tr>
+<td>48</td>
+<td>merge + no-harmony UMAP</td>
+<td>63.1</td>
+<td>35,635 × 25,894</td>
+</tr>
+<tr>
+<td>51</td>
+<td>harmony + UMAP</td>
+<td>60.1</td>
+<td>20-dim harmony embedding</td>
+</tr>
+</tbody>
+</table>
+<p>Total 509 s, of which <code>FindAllMarkers()</code> is 65%. Cell 46
+computed both <code>FindMarkers()</code> results (724 and 650 rows)
+before dying at the plotting call, so the DEG numbers exist in the log
+but neither the volcano nor <code>pbmc3k_final.rds</code> does. Cell
+51’s harmony embedding is 50-dimensional (SC-20):
+<code>RunHarmony()</code> defaults to every PC of the <code>pca</code>
+reduction, of which <code>RunPCA()</code> produced 50 for the merged
+object.</p>
+<h3 id="python-half-part-8">3.2 Python half (Part 8)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Step</th>
+<th>s</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>54</td>
+<td>imports</td>
+<td>0.0</td>
+<td></td>
+</tr>
+<tr>
+<td>55</td>
+<td><code>read_10x_mtx</code> + <code>var_names_make_unique</code></td>
+<td>0.5</td>
+<td>2,700 × 32,738</td>
+</tr>
+<tr>
+<td>57</td>
+<td><code>highest_expr_genes</code></td>
+<td>0.8</td>
+<td>figure</td>
+</tr>
+<tr>
+<td>59</td>
+<td><code>filter_cells(200)</code> + <code>filter_genes(3)</code> + QC
+violin</td>
+<td>1.1</td>
+<td>2,700 × 13,714 after gene filtering</td>
+</tr>
+<tr>
+<td>61</td>
+<td>two scatters + thresholds + normalize + log1p</td>
+<td>0.4</td>
+<td>2,635 cells</td>
+</tr>
+<tr>
+<td>64</td>
+<td>HVG + subset + scale</td>
+<td>0.9</td>
+<td>1,833 HVGs</td>
+</tr>
+<tr>
+<td>67</td>
+<td>PCA + ratio plot + neighbors + UMAP</td>
+<td>0.0</td>
+<td><strong>SyntaxError (SC-09) — nothing in the cell ran</strong></td>
+</tr>
+<tr>
+<td>70</td>
+<td>leiden + UMAP + rank_genes_groups</td>
+<td>0.0</td>
+<td><code>KeyError: 'No "neighbors" in .uns'</code></td>
+</tr>
+<tr>
+<td>72</td>
+<td>dotplot</td>
+<td>0.0</td>
+<td><code>ValueError: groupby has to be a valid observation</code></td>
+</tr>
+<tr>
+<td>75</td>
+<td>rename + final UMAP + write h5ad</td>
+<td>0.0</td>
+<td><code>ValueError: leiden is neither in .obs nor in .var</code></td>
+</tr>
+</tbody>
+</table>
+<p>Total 3.8 s and five figures. There is no
+<code>pbmc3k.h5ad</code>.</p>
+<h3 id="the-bottom-line">3.3 The bottom line</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>Produced</th>
+<th>Missing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seurat figures</td>
+<td>13 of 14</td>
+<td><code>Naive_Memory_CD4_DEG.png</code></td>
+</tr>
+<tr>
+<td>scanpy figures</td>
+<td>5 of 11</td>
+<td>PCA, PCA variance ratio, markers, rank, rank violin, dotplot, final
+UMAP</td>
+</tr>
+<tr>
+<td>Objects</td>
+<td>0 of 2</td>
+<td><code>pbmc3k_final.rds</code>, <code>pbmc3k.h5ad</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>18 of 25 figures, 0 of 2 objects.</strong> The corrected pass
+(§13) produces 25 of 25 plus the ratio plot the tutorial intended but
+never rendered, plus both objects.</p>
+<h3 id="figure-fidelity-against-the-28-reference-pngs">3.4 Figure
+fidelity against the 28 reference PNGs</h3>
+<p>Every regenerated figure was compared with the reference by pixel
+size, painted-colour count and a 64 × 64 normalised structural
+correlation
+(<code>results/08_figure_comparison/compare_aswritten_vs_reference.tsv</code>).</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Figure</th>
+<th>px (ours / ref)</th>
+<th>correlation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PCA_heatmap_ALL.png</code></td>
+<td>3000×3000 / 3000×3000</td>
+<td><strong>1.0000</strong></td>
+</tr>
+<tr>
+<td><code>violin_mt.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9982</td>
+</tr>
+<tr>
+<td><code>marker_Features_2.png</code></td>
+<td>6000×3000 / 6000×3000</td>
+<td>0.9965</td>
+</tr>
+<tr>
+<td><code>marker_Features.png</code></td>
+<td>3000×3000 / 3000×3000</td>
+<td>0.9957</td>
+</tr>
+<tr>
+<td><code>UMAP_with_harmony.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9953</td>
+</tr>
+<tr>
+<td><code>UMAP_without_harmony.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9941</td>
+</tr>
+<tr>
+<td><code>UMAP.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9914</td>
+</tr>
+<tr>
+<td><code>cell annotations.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9898</td>
+</tr>
+<tr>
+<td><code>PCA_dimplot.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9875</td>
+</tr>
+<tr>
+<td><code>PCA_VizDimLoadings.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9775</td>
+</tr>
+<tr>
+<td><code>VariableFeaturePlot.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9751</td>
+</tr>
+<tr>
+<td><code>PCA.png</code></td>
+<td>3000×1500 / 3000×1500</td>
+<td>0.9603</td>
+</tr>
+<tr>
+<td><code>Marker_Heatmap.png</code></td>
+<td>3000×<strong>3000</strong> / 3000×<strong>6000</strong></td>
+<td>0.7250</td>
+</tr>
+<tr>
+<td>scanpy: highest-expr, HVG, 2 scatters, QC violin</td>
+<td>identical sizes</td>
+<td>0.9992 - 1.0000</td>
+</tr>
+</tbody>
+</table>
+<p>A correlation of 1.0000 on the PC heatmap is not a coincidence: it is
+the same PCA, the same 100 balanced cells per PC and a deterministic
+plotting path, so the PNG is reproducible bit-for-bit up to re-encoding.
+The heatmap’s 0.7250 is entirely an aspect-ratio effect (SC-19). The two
+Part-7 UMAPs are the only figures whose difference is real, and it is
+<em>within</em> run-to-run noise (SC-18: 0.5631 between our own two runs
+versus 0.5664 against the reference).</p>
+<hr />
+<h2 id="part-1-load-data">4. Part 1 — Load data</h2>
+<h3 id="what-the-tutorial-does">4.1 What the tutorial does</h3>
+<p><code>Read10X()</code> reads the three files of the old Cell Ranger
+layout into a 32,738 × 2,700 sparse matrix;
+<code>CreateSeuratObject()</code> wraps it. Two warnings appear and both
+are informative:</p>
+<pre><code>Feature names cannot have underscores (&#39;_&#39;), replacing with dashes (&#39;-&#39;)</code></pre>
+<p>21 symbols in <code>genes.tsv</code> contain <code>_</code>
+(<code>RP11-442N24__B.1</code>, <code>Metazoa_SRP</code>, …). Seurat
+silently rewrites them, so any later lookup by the original symbol
+fails. The Python half does the opposite with duplicates: 95 rows are
+duplicates over 91 symbols (32,738 rows, 32,643 unique names) and
+<code>var_names_make_unique()</code> turns the second <code>ACE</code>
+into <code>ACE-1</code>. Gene-name joins between the two halves
+therefore need <code>gene_ids</code>, not symbols.</p>
+<pre><code>Default search for &quot;data&quot; layer in &quot;RNA&quot; assay yielded no results; utilizing &quot;counts&quot; layer instead.</code></pre>
+<p>A Seurat 5 message: <code>PercentageFeatureSet()</code> asked for a
+<code>data</code> layer that does not exist yet, because
+<code>NormalizeData()</code> has not run. Functionally harmless.</p>
+<h3 id="observed">4.2 Observed</h3>
+<table>
+<tbody>
+<tr>
+<td>matrix</td>
+<td>32,738 features × 2,700 cells, 2,286,884 non-zero</td>
+</tr>
+<tr>
+<td>median genes / UMIs / mt%</td>
+<td>817 / 2,197 / 2.03%</td>
+</tr>
+<tr>
+<td>range, genes</td>
+<td>212 - 3,422</td>
+</tr>
+<tr>
+<td>range, mt%</td>
+<td>0 - 22.6%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pitfalls-and-tuning">4.3 Pitfalls and tuning</h3>
+<p>SC-14 (symbol rewriting, duplicates) and SC-15 (old layout, no
+<code>features.tsv</code>) live here. <code>Read10X()</code> accepts the
+old layout; <code>scanpy.read_10x_mtx()</code> does too, via its
+<code>gex_only</code> default.</p>
+<p>Tuning: <code>CreateSeuratObject(min.cells = 3)</code> is the natural
+way to bring the R gene universe in line with scanpy’s
+<code>filter_genes(min_cells = 3)</code>. Do not do it casually — SC-17
+quantifies what it costs.</p>
+<h3 id="extensions">4.4 Extensions</h3>
+<p><code>Read10X_h5()</code> if the run came from Cell Ranger 3+;
+<code>ReadMtx()</code> for anything else; and for multimodal data the
+<code>features.tsv</code> type column decides which features are gene
+expression.</p>
+<hr />
+<h2 id="part-2-quality-control">5. Part 2 — Quality control</h2>
+<h3 id="what-and-why">5.1 What and why</h3>
+<p>Three filters, three failure modes: too few genes = empty or dead
+droplet; too many genes = doublet; high mitochondrial fraction =
+stressed or dying cell whose cytoplasmic mRNA leaked out.</p>
+<h3 id="observed-1">5.2 Observed</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>rule</td>
+<td><code>nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5</code></td>
+</tr>
+<tr>
+<td>cells kept</td>
+<td><strong>2,638</strong> of 2,700 (97.7%)</td>
+</tr>
+<tr>
+<td>dropped, too few genes</td>
+<td>0</td>
+</tr>
+<tr>
+<td>dropped, too many genes</td>
+<td>5</td>
+</tr>
+<tr>
+<td>dropped, mt ≥ 5%</td>
+<td>57</td>
+</tr>
+<tr>
+<td>after QC: median genes / UMIs / mt%</td>
+<td>820 / 2,214 / 2.01% (max mt 4.99%)</td>
+</tr>
+</tbody>
+</table>
+<p>The scanpy half keeps <strong>2,635</strong> cells with
+<code>n_genes &lt; 2000</code> (SC-10). An independent recount on the
+raw matrix with the same numbers gives 2,634 — the difference is one
+borderline cell whose mitochondrial fraction scanpy computes on the
+<em>gene-filtered</em> matrix (13,714 genes) while Seurat uses all
+32,738. It is recorded in
+<code>results/01_qc/qc_rederivation_rawmatrix.csv</code>.</p>
+<h3 id="pitfalls">5.3 Pitfalls</h3>
+<p>The threshold disagreement (SC-10) is the substantive one: it is the
+origin of the 9-versus-8-cluster confusion of §12. Note also that the
+mitochondrial pattern <code>^MT-</code> matches only the 13 genes
+actually present; a <code>^MT\.</code> pattern (MitoCarta-style) or a
+mouse dataset (<code>^mt-</code>) needs a different string, and the
+tutorial’s pattern silently returns zero genes if it does not match —
+<code>PercentageFeatureSet()</code> then errors in a way that is easy to
+misread as a data problem.</p>
+<h3 id="tuning">5.4 Tuning</h3>
+<p><code>nFeature</code> upper bound is dataset-specific: PBMC 3k is a
+shallow 2016 run (median 817 genes), so 2,500 is generous; a modern 10x
+run has a median above 2,000 and the same cut would delete most cells.
+Plot <code>nFeature</code> vs <code>nCount</code> and
+<code>nFeature</code> vs <code>mt%</code> (the tutorial’s two scanpy
+scatters) before choosing.</p>
+<hr />
+<h2 id="part-3-highly-variable-features">6. Part 3 — Highly variable
+features</h2>
+<p><code>FindVariableFeatures(selection.method = "vst", nfeatures = 2,000)</code>
+fits a loess curve of variance against mean expression and ranks the
+standardised residuals. Output: <code>VariableFeaturePlot.png</code>,
+2,000 features out of 32,738.</p>
+<p>Two observations:</p>
+<ul>
+<li>the <code>log-10 transformation introduced infinite values</code>
+warning is expected: <code>vst</code> works on <code>log10</code> of the
+dispersion, and genes with zero variance give <code>-Inf</code>. Seurat
+drops them; the message is informational.</li>
+<li><code>LabelPoints()</code> labels the 20 highest-variance genes:
+PPBP, LYZ, S100A9, IGLL5, FTL, GNLY, PF4, FTH1, GNG11, S100A8, FCER1A,
+HLA-DRA, CD74, CLU, NKG7, CST3, GZMB, CCL4, C1QA, HLA-DPB1. All are
+leukocyte markers, which is the sanity check that the method works.</li>
+</ul>
+<p>SC-08 is here: <code>p &lt;- p + plot2</code> renders <strong>two
+panels</strong>, and the reference figure carries that artifact. Both
+variants are in <code>results/02_hvg_pca/</code>:
+<code>VariableFeaturePlot.png</code> (as written, two panels, 0.9751
+against the reference) and
+<code>VariableFeaturePlot_corrected.png</code> (one panel).</p>
+<hr />
+<h2 id="part-4-scaling-and-pca">7. Part 4 — Scaling and PCA</h2>
+<p><code>ScaleData(features = rownames(seurat_obj))</code> centres and
+scales all 32,738 features (SC-01), then
+<code>RunPCA(features = VariableFeatures(...))</code> uses the 2,000
+HVGs and returns 50 PCs.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>scaled features</td>
+<td>32,738 (13,714 non-empty)</td>
+</tr>
+<tr>
+<td>objects after scaling</td>
+<td>0.73 GB</td>
+</tr>
+<tr>
+<td><code>ScaleData</code> time</td>
+<td>4.2 s</td>
+</tr>
+<tr>
+<td>PCs</td>
+<td>50</td>
+</tr>
+<tr>
+<td>plots</td>
+<td><code>PCA_VizDimLoadings.png</code>, <code>PCA.png</code> (elbow, 20
+dims), <code>PCA_dimplot.png</code>, <code>PCA_heatmap_ALL.png</code> (6
+heatmaps × 100 cells)</td>
+</tr>
+</tbody>
+</table>
+<p><code>PCHeatmap()</code> is a deprecated alias of
+<code>DimHeatmap()</code>; in Seurat 5.1.0 it still works and emits no
+warning, so it is easy to keep using it for years (SC-07). The elbow
+shows the usual PBMC 3k shape — a break around PC 7-10 — which is why
+<code>dims = 1:10</code> is defensible; but the elbow is drawn for 20
+PCs and the choice of 10 is never justified in the text.</p>
+<p><code>PCA_heatmap_ALL.png</code> is also the figure that proves our
+PCA is identical to the teacher’s: 1.0000 structural correlation.</p>
+<hr />
+<h2 id="part-5-clustering-and-umap">8. Part 5 — Clustering and UMAP</h2>
+<pre><code>FindNeighbors(seurat_obj, dims = 1:10)      # SNN graph on 10 PCs
+FindClusters(seurat_obj, resolution = 0.5)  # Louvain
+RunUMAP(seurat_obj, dims = 1:10)</code></pre>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>graph</td>
+<td>2,638 nodes, 95,650 edges</td>
+</tr>
+<tr>
+<td>Louvain</td>
+<td>modularity 0.8584, <strong>9 communities</strong></td>
+</tr>
+<tr>
+<td>cluster sizes</td>
+<td>657 / 503 / 471 / 339 / 307 / 175 / 144 / 28 / 14</td>
+</tr>
+<tr>
+<td>UMAP</td>
+<td><code>UMAP.png</code>, <code>num_epochs</code> defaults; warnings
+about uwot replacing Python UMAP</td>
+</tr>
+</tbody>
+</table>
+<p>Cluster sizes are already the answer to “is this a real biological
+split”: 657 and 503 are the two CD4 compartments, 471 monocytes, 339 B,
+307 CD8, 175 FCGR3A+ monocytes, 144 NK, and then the two tiny ones — 28
+dendritic cells and 14 platelets. The platelet cluster is 0.5% of the
+data; at <code>resolution = 0.5</code> it survives, at 0.3 it would
+not.</p>
+<hr />
+<h2 id="part-6-annotation-and-differential-expression">9. Part 6 —
+Annotation and differential expression</h2>
+<h3 id="the-two-hard-coded-mappings-disagree-sc-02">9.1 The two
+hard-coded mappings disagree (SC-02)</h3>
+<p>The tutorial states the cluster → cell-type mapping twice:</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 17%" />
+<col style="width: 32%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">cluster</th>
+<th style="text-align: left;">table in cell 39</th>
+<th style="text-align: left;"><code>new.cluster.ids</code> in cell
+43</th>
+<th style="text-align: left;">what the markers say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Naive CD4 T</td>
+<td style="text-align: left;">Naive CD4 T</td>
+<td style="text-align: left;">CD4 (LDHB, IL7R, LTB, CD3D, IL32)</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>CD14+ Mono</strong></td>
+<td style="text-align: left;"><strong>Memory CD4 T</strong></td>
+<td style="text-align: left;"><strong>CD4</strong> (CCR7, NOSIP, LEF1,
+FHIT, NELL2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>Memory CD4 T</strong></td>
+<td style="text-align: left;"><strong>CD14+ Mono</strong></td>
+<td style="text-align: left;"><strong>monocyte</strong> (LGALS2, S100A8,
+FCN1, S100A9, CD14)</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">B (CD79A, MS4A1, CD79B)</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">CD8 T</td>
+<td style="text-align: left;">CD8 T</td>
+<td style="text-align: left;">CD8 (GZMK, CCL5, GZMA, CST7)</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">FCGR3A+ Mono</td>
+<td style="text-align: left;">FCGR3A+ Mono</td>
+<td style="text-align: left;">FCGR3A+ mono (CDKN1C, HES4, MS4A7,
+FCGR3A)</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NK (GZMB, FGFBP2, SPON2, PRF1)</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">DC</td>
+<td style="text-align: left;">DC</td>
+<td style="text-align: left;">DC (SERPINF1, FCER1A, CLEC10A)</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">platelet (GP9, ITGA2B, LY6G6F)</td>
+</tr>
+</tbody>
+</table>
+<p>In this run the <strong>vector</strong> is right and the
+<strong>table</strong> is wrong: a student who copies the table into
+<code>new.cluster.ids</code> mislabels 503 CD4 T cells as monocytes and
+471 monocytes as CD4 T. Both outputs are in
+<code>results/04_annotation/cluster_label_audit.csv</code>, with the
+observed programme per cluster derived from a marker panel
+(<code>marker_panel_mean_expression_seurat.csv</code>).</p>
+<p>The final object’s labels, checked the same way, are all correct:</p>
+<table>
+<thead>
+<tr>
+<th>label</th>
+<th>cells</th>
+<th>evidence (mean log-normalised)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive CD4 T</td>
+<td>657</td>
+<td>IL7R 1.70, CCR7 0.58, LEF1 0.57, CD14 0.03</td>
+</tr>
+<tr>
+<td>Memory CD4 T</td>
+<td>503</td>
+<td>IL7R 1.19, CCR7 0.84, CD14 0.03</td>
+</tr>
+<tr>
+<td>CD14+ Mono</td>
+<td>471</td>
+<td>CD14 1.53, LYZ 5.09, S100A8 3.91</td>
+</tr>
+<tr>
+<td>B</td>
+<td>339</td>
+<td>MS4A1 2.17, CD79A 2.80</td>
+</tr>
+<tr>
+<td>CD8 T</td>
+<td>307</td>
+<td>CD8A 1.01, CD8B 0.79, NKG7 3.36</td>
+</tr>
+<tr>
+<td>FCGR3A+ Mono</td>
+<td>175</td>
+<td>FCGR3A 2.75, MS4A7 1.71</td>
+</tr>
+<tr>
+<td>NK</td>
+<td>144</td>
+<td>GNLY 4.17, GZMB 3.68, KLRF1 0.52</td>
+</tr>
+<tr>
+<td>DC</td>
+<td>28</td>
+<td>FCER1A 2.11, CLEC10A 1.28</td>
+</tr>
+<tr>
+<td>Platelet</td>
+<td>14</td>
+<td>PPBP 5.85, PF4 4.93</td>
+</tr>
+</tbody>
+</table>
+<p>They are correct <em>by luck</em>: §13.2 shows that a change of 30
+HVGs (1.5% of the 2,000) is enough to renumber clusters 1 and 2 and turn
+the same fixed vector into 957 mislabelled cells.</p>
+<h3 id="markers-and-the-heatmap">9.2 Markers and the heatmap</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td><code>FindAllMarkers(only.pos = TRUE)</code></td>
+<td>11,986 rows over 9 clusters, 330 s (no presto)</td>
+</tr>
+<tr>
+<td>passing
+<code>p_val_adj &lt; 0.05 &amp; avg_log2FC &gt; 1</code></td>
+<td>3,483</td>
+</tr>
+<tr>
+<td>used for the heatmap</td>
+<td>90 (10 per cluster)</td>
+</tr>
+<tr>
+<td>per-cluster significant counts</td>
+<td>89 (cluster 0) … 753 (cluster 5)</td>
+</tr>
+</tbody>
+</table>
+<p>SC-03: the filter is computed and discarded, so <code>top10</code>
+comes from the unfiltered table and <code>slice_max(avg_log2FC)</code>
+happily picks a gene with <code>p_val_adj = 0.2</code>. The corrected
+pass filters first (3,483 rows), then takes the top 10 per cluster; the
+resulting heatmap differs from the reference at 0.9865.</p>
+<h3 id="the-deg-cell-dies-sc-16">9.3 The DEG cell dies (SC-16)</h3>
+<p><code>geom_text_repel()</code> needs <code>library(ggrepel)</code>.
+The tutorial loads Seurat, dplyr and ggplot2 only. The cell therefore
+fails <em>after</em> the expensive part:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td><code>FindMarkers(ident.1 = "Naive CD4 T")</code></td>
+<td>724 genes, 353 with <code>p_val_adj &lt; 0.05</code>, 199 also
+<code>|log2FC| &gt; 0.5</code></td>
+</tr>
+<tr>
+<td><code>FindMarkers("Memory CD4 T", "Naive CD4 T")</code></td>
+<td>650 genes, 129 at <code>p_val_adj &lt; 0.05</code></td>
+</tr>
+<tr>
+<td>error</td>
+<td><code>could not find function "geom_text_repel"</code></td>
+</tr>
+<tr>
+<td>consequence</td>
+<td>no <code>Naive_Memory_CD4_DEG.png</code>, <strong>and no
+<code>pbmc3k_final.rds</code></strong></td>
+</tr>
+</tbody>
+</table>
+<p>The volcano’s top genes by <code>p_val_adj</code> are LDHB
+(1.2e-115), IL7R (1.8e-102), LTB (1.9e-97), CD3D (2.0e-91), IL32
+(7.7e-86) — i.e. “naive CD4 T” is distinguished from the rest mostly by
+<em>higher</em> naive markers plus absence of monocyte/B/NK genes, which
+is what <code>avg_log2FC &gt; 0</code> means here.</p>
+<p>SC-04: the <code>-log10(p_val_adj)</code> axis is finite on this
+dataset (smallest 1.24e-115) but is one rounding away from
+<code>Inf</code>; the two gene lists are computed and never used;
+nothing is exported.</p>
+<hr />
+<h2 id="part-7-integration">10. Part 7 — Integration</h2>
+<h3 id="what-the-tutorial-does-1">10.1 What the tutorial does</h3>
+<p>Load <code>pbmc_stim.RData</code>, make two Seurat objects, set
+<code>orig.ident</code>, <code>merge()</code>, then — with no QC at all
+— <code>NormalizeData</code> → <code>FindVariableFeatures</code> →
+<code>ScaleData</code> → <code>RunPCA</code> →
+<code>RunUMAP(1:10)</code> → <code>DimPlot</code> (SC-06), then
+<code>RunHarmony(group.by.vars = "orig.ident")</code> →
+<code>RunUMAP(reduction = "harmony", dims = 1:10)</code> →
+<code>DimPlot</code>.</p>
+<h3 id="observed-2">10.2 Observed</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>ctrl / stim cells</td>
+<td>13,019 / 12,875 (35,635 features)</td>
+</tr>
+<tr>
+<td>merged</td>
+<td>25,894 cells</td>
+</tr>
+<tr>
+<td>after the QC the tutorial omits</td>
+<td>12,932 / 12,779 → <strong>25,711</strong> (−183, −0.7%)</td>
+</tr>
+<tr>
+<td>UMAP before harmony</td>
+<td><code>UMAP_without_harmony.png</code></td>
+</tr>
+<tr>
+<td>UMAP after harmony</td>
+<td><code>UMAP_with_harmony.png</code></td>
+</tr>
+<tr>
+<td>harmony input</td>
+<td><strong>all 50 PCs</strong> (SC-20), UMAP uses first 10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quantifying-what-the-tutorial-only-shows">10.3 Quantifying what
+the tutorial only shows</h3>
+<p>The corrected pass adds a metric that can be computed without
+clustering: for each cell, the fraction of its 30 nearest neighbours
+that come from the <em>other</em> sample (0 = perfectly separated, 0.5 =
+fully mixed).</p>
+<table>
+<thead>
+<tr>
+<th>space</th>
+<th>cross-sample neighbour fraction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCA, 10 PCs, no harmony</td>
+<td><strong>0.0287</strong></td>
+</tr>
+<tr>
+<td>harmony, 10 dims</td>
+<td><strong>0.4051</strong></td>
+</tr>
+</tbody>
+</table>
+<p>and, after clustering the harmony embedding at resolution 0.5:</p>
+<table>
+<tbody>
+<tr>
+<td>clusters</td>
+<td>12</td>
+</tr>
+<tr>
+<td>clusters with &gt;90% of cells from one sample</td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>mean absolute deviation of the ctrl share from 0.5</td>
+<td>0.030</td>
+</tr>
+</tbody>
+</table>
+<p>The largest cluster holds 6,065 cells (3,096 ctrl / 2,969 stim); the
+smallest, 92 (38 / 54). This is what “harmony worked” looks like as a
+number instead of a picture: the cross-sample neighbour fraction rises
+from 2.9% to 40.5% (before correction 97% of every cell’s 30 neighbours
+come from its own sample), while the two samples stay balanced inside
+every cluster.</p>
+<p>SC-18: the two UMAPs are not reproducible run to run (0.5631 / 0.5676
+between two runs with identical input), which is why this section
+compares embeddings and cluster composition rather than pixels.</p>
+<hr />
+<h2 id="part-8-scanpy">11. Part 8 — scanpy</h2>
+<h3 id="what-survives-and-what-does-not">11.1 What survives and what
+does not</h3>
+<p>Cells 54-64 run in 3.8 s and produce five figures. Cell 67 contains
+the doubled comma (SC-09). Because Python compiles each cell as a unit,
+the <code>SyntaxError</code> deletes the entire cell: PCA is never
+computed, so <code>neighbors()</code> cannot build, <code>umap()</code>
+cannot run, and cells 70, 72 and 75 fail in cascade
+(<code>KeyError: 'No "neighbors" in .uns'</code>,
+<code>groupby has to be a valid observation</code>,
+<code>leiden is neither in .obs nor in .var</code>).</p>
+<p>This is also why the course’s reference set has no
+<code>pca_variance_ratio</code> figure: the teacher’s own run hit the
+same wall, and the shortened filename list confirms that only five
+scanpy figures were ever produced.</p>
+<h3 id="the-numbers-the-python-half-does-reach">11.2 The numbers the
+Python half does reach</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>after <code>filter_cells(200)</code> +
+<code>filter_genes(3)</code></td>
+<td>2,700 × <strong>13,714</strong> genes</td>
+</tr>
+<tr>
+<td>after <code>n_genes &lt; 2000 &amp; pct_mt &lt; 5</code></td>
+<td><strong>2,635</strong> cells</td>
+</tr>
+<tr>
+<td>HVGs (<code>min_mean 0.0125, max_mean 3, min_disp 0.5</code>)</td>
+<td><strong>1,833</strong></td>
+</tr>
+<tr>
+<td>PCA</td>
+<td>50 components, <code>arpack</code></td>
+</tr>
+<tr>
+<td>neighbours / UMAP</td>
+<td>10 / 40 PCs</td>
+</tr>
+</tbody>
+</table>
+<p>The corrected pass completes the rest: 8 leiden communities at
+resolution 0.9 (534 / 643 / 340 / 497 / 432 / 142 / 35 / 12 cells),
+<code>rank_genes_groups</code> (Wilcoxon), dotplot, and
+<code>pbmc3k.h5ad</code>.</p>
+<h3 id="the-positional-naming-is-wrong-sc-12">11.3 The positional naming
+is wrong (SC-12)</h3>
+<p>With the tutorial’s threshold the 8 names fit exactly — and two of
+them land on the wrong clusters. Evidence from
+<code>rank_genes_groups</code> and from the cross-tool contingency table
+(§12.2):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 6%" />
+<col style="width: 14%" />
+<col style="width: 26%" />
+<col style="width: 29%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">scanpy cluster</th>
+<th style="text-align: left;">cells</th>
+<th style="text-align: left;">name assigned</th>
+<th style="text-align: left;">top markers</th>
+<th style="text-align: left;">Seurat composition</th>
+<th style="text-align: left;">verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">534</td>
+<td style="text-align: left;">CD4 T</td>
+<td style="text-align: left;">RPS12, RPS27, RPL32</td>
+<td style="text-align: left;">70.6% Memory CD4 T, 26.2% Naive CD4 T</td>
+<td style="text-align: left;">acceptable (a CD4 cluster)</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">643</td>
+<td style="text-align: left;"><strong>CD8 T</strong></td>
+<td style="text-align: left;">LDHB, LTB, CD3D, IL32, TPT1</td>
+<td style="text-align: left;"><strong>78.1% Naive CD4 T</strong>, 18.2%
+Memory CD4 T</td>
+<td style="text-align: left;"><strong>wrong</strong> (CD8A 0.14, CD8B
+0.24)</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">340</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">CD74, CD79A, HLA-DRA</td>
+<td style="text-align: left;">99.1% B</td>
+<td style="text-align: left;">correct</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">497</td>
+<td style="text-align: left;">CD14+ Monocytes</td>
+<td style="text-align: left;">LYZ, S100A9, S100A8</td>
+<td style="text-align: left;">92.4% CD14+ Mono</td>
+<td style="text-align: left;">correct</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">432</td>
+<td style="text-align: left;">NK</td>
+<td style="text-align: left;">NKG7, CST7, GZMA, CTSW</td>
+<td style="text-align: left;"><strong>61.8% CD8 T</strong>, 33.3%
+NK</td>
+<td style="text-align: left;">partly wrong</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">142</td>
+<td style="text-align: left;">FCGR3A+ Monocytes</td>
+<td style="text-align: left;">LST1, FCGR3A, FCER1G</td>
+<td style="text-align: left;">97.2% FCGR3A+ Mono</td>
+<td style="text-align: left;">correct</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">35</td>
+<td style="text-align: left;">Dendritic</td>
+<td style="text-align: left;">HLA-DPA1, HLA-DPB1, HLA-DRA</td>
+<td style="text-align: left;">77.1% DC</td>
+<td style="text-align: left;">correct</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Platelet</td>
+<td style="text-align: left;">PF4, PPBP, GNG11</td>
+<td style="text-align: left;">100% Platelet</td>
+<td style="text-align: left;">correct</td>
+</tr>
+</tbody>
+</table>
+<p><code>rename_categories()</code> assigns names by category order,
+i.e. by “which community Louvain numbered first”, which has no
+relationship to biology. Two of eight labels are therefore substantively
+wrong, and one of them (<code>CD8 T</code>, 24% of the data) is the
+largest cluster in the final UMAP.</p>
+<h3 id="what-the-corrected-pass-does-instead">11.4 What the corrected
+pass does instead</h3>
+<p>Assert the category count, build the mapping from
+<code>rank_genes_groups</code> top markers, print an audit table, and
+only then rename. With the tutorial’s threshold that yields 8 categories
+and the renaming proceeds; with the aligned threshold (§12.3) it yields
+9 and the corrected script refuses to guess, keeping numeric labels and
+writing <code>cluster_label_audit_py.csv</code> for a human
+decision.</p>
+<hr />
+<h2 id="reconciling-the-two-halves">12. Reconciling the two halves</h2>
+<h3 id="the-9-versus-8-puzzle">12.1 The 9-versus-8 puzzle</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Seurat</th>
+<th>scanpy (tutorial)</th>
+<th>scanpy (aligned)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cells</td>
+<td>2,638</td>
+<td>2,635</td>
+<td><strong>2,638</strong></td>
+</tr>
+<tr>
+<td>genes</td>
+<td>32,738</td>
+<td>13,714</td>
+<td>13,714</td>
+</tr>
+<tr>
+<td>HVGs</td>
+<td>2,000 (vst)</td>
+<td>1,833 (dispersion)</td>
+<td>1,838</td>
+</tr>
+<tr>
+<td>PCs used</td>
+<td>10</td>
+<td>40</td>
+<td>40</td>
+</tr>
+<tr>
+<td>resolution</td>
+<td>0.5 (Louvain)</td>
+<td>0.9 (leiden)</td>
+<td>0.9 (leiden)</td>
+</tr>
+<tr>
+<td>clusters</td>
+<td><strong>9</strong></td>
+<td><strong>8</strong></td>
+<td><strong>9</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The headline “R gives 9 clusters, Python gives 8” is usually
+explained as “different algorithms”. That is not the whole story:
+raising the Python threshold from 2,000 to 2,500 gives <strong>exactly
+the Seurat cell count</strong> (2,638) and <strong>9 clusters</strong>.
+The cluster count is dominated by the QC threshold, not by Louvain vs
+leiden.</p>
+<p>The two 9-cluster solutions still differ in composition: Seurat
+splits CD4 into naive/memory and separates NK from CD8, while the
+aligned scanpy solution has a ribosomal-high CD4 cluster and a merged
+CD8/NK cluster.</p>
+<h3 id="cross-tool-contingency-table">12.2 Cross-tool contingency
+table</h3>
+<p>Barcodes are shared, so the two partitions can be crossed directly
+(2,635 cells present in both objects;
+<code>results/04_annotation/cluster_correspondence_counts.csv</code>):</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>Seurat label</th>
+<th>CD4 T</th>
+<th>CD8 T</th>
+<th>B</th>
+<th>CD14+ Mono</th>
+<th>NK</th>
+<th>FCGR3A+ Mono</th>
+<th>Dendritic</th>
+<th>Platelet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Naive CD4 T</td>
+<td>140</td>
+<td>502</td>
+<td>1</td>
+<td>0</td>
+<td>13</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Memory CD4 T</td>
+<td>377</td>
+<td>117</td>
+<td>1</td>
+<td>0</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CD14+ Mono</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>459</td>
+<td>0</td>
+<td>4</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td>1</td>
+<td>1</td>
+<td>337</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CD8 T</td>
+<td>16</td>
+<td>23</td>
+<td>1</td>
+<td>0</td>
+<td>267</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>FCGR3A+ Mono</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>37</td>
+<td>0</td>
+<td>138</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>NK</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>144</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>DC</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>27</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Platelet</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>12</td>
+</tr>
+</tbody>
+</table>
+<p>Columns are the scanpy clusters as named by the tutorial. The table
+is close to diagonal for B, monocytes, DC and platelets, and completely
+off-diagonal for the two large T compartments: scanpy’s “CD8 T” column
+is 78% Seurat’s naive CD4 T.</p>
+<h3 id="what-can-and-cannot-be-compared">12.3 What can and cannot be
+compared</h3>
+<p>Comparable, and compared in this module: cell counts after QC,
+cluster counts, cluster composition by marker panel, marker ranks, DEG
+counts, integration metrics.</p>
+<p>Not comparable: cluster <em>numbers</em> (both methods number
+communities by their own rule), gene sets (32,738 vs 13,714 before HVG
+selection), and the resolution parameters (0.5 Louvain is not 0.9 leiden
+— the two happened to give 9 and 8 communities here, which is a
+coincidence, not a calibration).</p>
+<p>Two settings that would let the halves meet:
+<code>CreateSeuratObject(min.cells = 3)</code> (13,714 genes, but see
+SC-17) and <code>n_genes &lt; 2500</code> in scanpy (2,638 cells, 9
+clusters). Doing both gives 2,638 cells on both sides; we did not,
+because the tutorial’s figures are calibrated to the values it uses, and
+because SC-17 shows the gene-universe change is not free.</p>
+<hr />
+<h2 id="the-corrected-pass">13. The corrected pass</h2>
+<h3 id="what-was-changed-and-nothing-else">13.1 What was changed, and
+nothing else</h3>
+<p><code>results/scripts/scRNA_seq_R_cells_corrected.R</code> and
+<code>..._py_cells_corrected.py</code> are the tutorial with every
+change tagged <code># --- FIX ... (SC-xx)</code> and every addition
+tagged <code># --- ADD ...</code>. The corrections that matter for
+output are:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>fix</th>
+<th>effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>library(ggrepel)</code> (SC-16)</td>
+<td>the DEG cell completes: volcano plot, DEG tables,
+<code>pbmc3k_final.rds</code></td>
+</tr>
+<tr>
+<td>one comma in <code>pca_variance_ratio</code> (SC-09)</td>
+<td>PCA/neighbours/UMAP run; <code>scanpy_PCA_ratio.png</code> appears
+(it does not exist in the reference set)</td>
+</tr>
+<tr>
+<td><code>pmax(p_val_adj, .Machine$double.xmin)</code> (SC-04)</td>
+<td>volcano axis is finite by construction</td>
+</tr>
+<tr>
+<td>filtered marker table assigned (SC-03)</td>
+<td>heatmap uses 90 significant genes instead of the top-10 by
+<code>log2FC</code> only</td>
+</tr>
+<tr>
+<td>cluster-count guard + audit tables (SC-02, SC-12)</td>
+<td>the mapping is derived from markers and printed; drift becomes a
+warning, not a silent mislabel</td>
+</tr>
+<tr>
+<td>QC before integration + <code>dims</code> on harmony + clustering
+after (SC-06, SC-20)</td>
+<td>25,711 cells, 12 clusters, mixing metrics</td>
+</tr>
+<tr>
+<td><code>load()</code> into a private environment (SC-05)</td>
+<td>no global-environment leakage</td>
+</tr>
+<tr>
+<td>tables exported (SC-13)</td>
+<td>10 CSVs that the tutorial only had in memory</td>
+</tr>
+</tbody>
+</table>
+<p>The corrected R run reproduces the as-written numbers exactly: 2,638
+cells, 9 clusters, 11,986 marker rows, 724 and 650 DEG rows, 25,894
+merged cells, modularity 0.8584. Nine of their thirteen shared figures
+are <strong>byte-identical</strong> to the as-written ones
+(<code>results/08_figure_comparison/compare_aswritten_vs_corrected.tsv</code>);
+the four that differ are the two deliberate ones
+(<code>VariableFeaturePlot</code> single-panel,
+<code>Marker_Heatmap</code> with the significance filter) and the two
+Part-7 UMAPs (SC-18 nondeterminism).</p>
+<h3 id="the-gene-universe-experiment-sc-17">13.2 The gene-universe
+experiment (SC-17)</h3>
+<p>Running the same corrected script with <code>MIN_CELLS=3</code> —
+i.e. the scanpy gene universe — keeps the same 2,638 cells but
+changes:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th><code>MIN_CELLS = 0</code> (tutorial)</th>
+<th><code>MIN_CELLS = 3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>features</td>
+<td>32,738</td>
+<td>13,714</td>
+</tr>
+<tr>
+<td>HVGs shared with the other setting</td>
+<td>—</td>
+<td>1,970 of 2,000 (98.5%)</td>
+</tr>
+<tr>
+<td>Louvain modularity</td>
+<td>0.8584</td>
+<td>0.8728</td>
+</tr>
+<tr>
+<td>cluster sizes</td>
+<td>657/503/471/339/307/175/144/28/14</td>
+<td>684/481/476/344/291/162/155/32/13</td>
+</tr>
+<tr>
+<td>marker rows</td>
+<td>11,986</td>
+<td>11,629</td>
+</tr>
+<tr>
+<td>naive-CD4 DEG rows</td>
+<td>724</td>
+<td>733</td>
+</tr>
+<tr>
+<td>memory-vs-naive DEG rows</td>
+<td>650</td>
+<td>887</td>
+</tr>
+<tr>
+<td>final labels</td>
+<td>correct</td>
+<td><strong>clusters 1 and 2 swapped</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the important one. With <code>MIN_CELLS = 3</code>,
+Louvain numbers the monocyte community 1 and the memory-CD4 community 2;
+the tutorial’s fixed <code>new.cluster.ids</code> vector then assigns
+“Memory CD4 T” to a cluster whose cells have CD14 1.51 / LYZ 5.07 / IL7R
+0.19, and “CD14+ Mono” to a cluster with CD14 0.03 / IL7R 1.69 —
+<strong>957 cells (36% of the dataset)</strong> carry the wrong label
+while every figure still looks plausible. Only an audit table catches
+this.</p>
+<h3 id="what-the-corrected-python-pass-adds">13.3 What the corrected
+Python pass adds</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr>
+<td>cells / genes</td>
+<td>2,635 / 13,714 (tutorial threshold), 2,638 (aligned threshold,
+appendix)</td>
+</tr>
+<tr>
+<td>HVGs</td>
+<td>1,833 / 1,838</td>
+</tr>
+<tr>
+<td>clusters</td>
+<td>8 (tutorial) / 9 (aligned)</td>
+</tr>
+<tr>
+<td>figures</td>
+<td>12 (the 11 reference ones plus <code>pca_variance_ratio</code>)</td>
+</tr>
+<tr>
+<td>tables</td>
+<td>8 <code>clusterN_markers.csv</code>,
+<code>cluster_label_audit_py.csv</code>,
+<code>pbmc3k_obs.csv</code></td>
+</tr>
+<tr>
+<td>object</td>
+<td><code>pbmc3k.h5ad</code> (2,635 cells, 19.5 MiB, gzip)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="corrections-we-deliberately-did-not-make">13.4 Corrections we
+deliberately did not make</h3>
+<ul>
+<li><strong>No seeding of Louvain/UMAP/harmony.</strong> The tutorial
+has no seed and the reference figures are unseeded; adding one would
+make our figures less comparable, not more.</li>
+<li><strong>No unified resolution.</strong> 0.5 Louvain and 0.9 leiden
+are what the tutorial uses; making them “equivalent” is impossible and
+pretending otherwise would hide §12.</li>
+<li><strong>No <code>presto</code> installation.</strong>
+<code>FindAllMarkers()</code> takes 330 s without it; installing it
+would cut that to seconds but change Seurat’s numerical path, so the
+module documents the cost instead.</li>
+<li><strong>No re-labelling of the delivered Seurat object.</strong> Its
+labels are right (§9.1), and rewriting them would break comparability
+with the reference figures.</li>
+</ul>
+<hr />
+<h2 id="reference-figures-outside-the-tutorials-scope">14. Reference
+figures outside the tutorial’s scope</h2>
+<p>Three of the 28 reference PNGs are not produced by any code in the
+tutorial and were therefore not attempted:</p>
+<ul>
+<li><code>UMAP_noPCA.png</code> and <code>UMAP_PCA_vs_noPCA.png</code> —
+a comparison of UMAP with and without PCA, from the teacher’s 2025
+slides;</li>
+<li><code>UMAP_three_stages.png</code> — three-panel workflow
+illustration used in the lecture;</li>
+<li><code>immune_markers.png</code> — the Cell Signaling Technology
+immune-marker cheat sheet, i.e. an external reference image, not an
+analysis output.</li>
+</ul>
+<p>The teacher’s 2025 directory also contains HIV/EBV viral
+quantification material (<code>virus_star_ref/</code>,
+<code>ebv.fasta</code>, <code>HIV.fasta</code>,
+<code>virus.fa/gtf</code>). None of it is referenced by the tutorial, so
+it is out of scope for this module.</p>
+<p>One further inconsistency is recorded rather than fixed: the
+reference <code>Marker_Heatmap.png</code> is 3,000 × 6,000 px while the
+tutorial’s <code>ggsave()</code> asks for 10 × 10 inches at 300 dpi
+(SC-19).</p>
+<hr />
+<h2 id="reproducing-this-module">15. Reproducing this module</h2>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. environment (teacher&#39;s shared env; no build needed)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /lustre1/share/miniconda3/etc/profile.d/conda.sh</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="va">E</span><span class="op">=</span>/lustre1/share/miniconda3/envs/scRNA_seq</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. stage data exactly as the tutorial&#39;s cell 7 asks</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="va">RUN</span><span class="op">=</span>/lustre1/user/<span class="va">$USER</span>/scrna_run</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/<span class="dt">{rr</span><span class="op">,</span><span class="dt">py</span><span class="op">,</span><span class="dt">logs</span><span class="op">,</span><span class="dt">scripts}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-r</span> /lustre1/share/scRNA_seq/hg19 <span class="va">$RUN</span>/</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> /lustre1/share/qinbowen/pbmc_stim.RData <span class="va">$RUN</span>/</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. the as-written run (18 of 25 figures, two fatal cells)</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> results/scripts/<span class="pp">*</span>.R results/scripts/<span class="pp">*</span>.py <span class="va">$RUN</span>/scripts/</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span>/rr <span class="kw">&amp;&amp;</span> <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="va">$RUN</span>/scripts/run_cells.R <span class="dt">\</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_aswritten.R <span class="va">$RUN</span>/logs R_aswritten</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span>/py <span class="kw">&amp;&amp;</span> <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_aswritten.py <span class="va">$RUN</span>/logs Py_aswritten</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. the corrected run (25 of 25 figures + both objects)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/rr_fixed <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/rr_fixed <span class="kw">&amp;&amp;</span> <span class="va">MIN_CELLS</span><span class="op">=</span>0 <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="dt">\</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/run_cells.R <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_corrected.R <span class="va">$RUN</span>/logs R_corrected</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/py_fixed <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/py_fixed <span class="kw">&amp;&amp;</span> <span class="va">N_GENES_MAX</span><span class="op">=</span>2000 <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="dt">\</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_corrected.py <span class="va">$RUN</span>/logs Py_corrected</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. the appendix runs (gene-universe and threshold alignment)</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/rr_mincells3 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/rr_mincells3 <span class="kw">&amp;&amp;</span> <span class="va">MIN_CELLS</span><span class="op">=</span>3 <span class="va">$E</span><span class="ex">/bin/Rscript</span> <span class="dt">\</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/run_cells.R <span class="va">$RUN</span>/scripts/scRNA_seq_R_cells_corrected.R <span class="va">$RUN</span>/logs R_mincells3</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$RUN</span>/py_align2500 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> <span class="va">$RUN</span>/py_align2500 <span class="kw">&amp;&amp;</span> <span class="va">N_GENES_MAX</span><span class="op">=</span>2500 <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="dt">\</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="va">$E</span><span class="ex">/bin/python</span> <span class="va">$RUN</span>/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="va">$RUN</span>/scripts/scRNA_seq_py_cells_corrected.py <span class="va">$RUN</span>/logs Py_align2500</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. tables and the figure comparison</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$RUN</span> <span class="kw">&amp;&amp;</span> <span class="va">$E</span><span class="ex">/bin/Rscript</span> scripts/table_qc_clusters.R <span class="va">$RUN</span> ../class/scRNA-seq/results</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="va">$E</span><span class="ex">/bin/python</span> scripts/compare_figs.py <span class="va">$RUN</span> ../class/scRNA-seq <span class="dt">\</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    results/08_figure_comparison/compare_corrected_vs_reference.tsv rr_fixed py_fixed</span></code></pre></div>
+<p>The tutorial’s own placeholders
+(<code>data_dir &lt;- "yourfolder/hg19"</code>,
+<code>load("pbmc_stim.RData")</code>,
+<code>read_10x_mtx("yourfolder/hg19")</code>) are the only edits in the
+as-written cell files, and they are marked <code>#@@NOTE</code> at the
+top of each file. Everything else is verbatim, including the doubled
+comma.</p>
+<hr />
+<h2 id="file-manifest">16. File manifest</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Path</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref/scRNA_seq_analyze_corrected.md</code></td>
+<td>this document (English)</td>
+</tr>
+<tr>
+<td><code>ref/scRNA_seq_analyze_corrected_zh.md</code></td>
+<td>Chinese edition</td>
+</tr>
+<tr>
+<td><code>ref/scRNA_seq_analyze_results_guide.md</code></td>
+<td>reading guide for <code>results/</code> plus exercises</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_R_cells_aswritten.R</code></td>
+<td>tutorial R cells, verbatim except the two paths</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_py_cells_aswritten.py</code></td>
+<td>tutorial Python cells, verbatim including the
+<code>SyntaxError</code></td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_R_cells_corrected.R</code></td>
+<td>corrected R cells, every change tagged</td>
+</tr>
+<tr>
+<td><code>results/scripts/scRNA_seq_py_cells_corrected.py</code></td>
+<td>corrected Python cells, every change tagged</td>
+</tr>
+<tr>
+<td><code>results/scripts/run_cells.R</code>,
+<code>run_cells.py</code></td>
+<td>notebook-semantics drivers (one session, per-cell status)</td>
+</tr>
+<tr>
+<td><code>results/scripts/table_qc_clusters.R</code></td>
+<td>QC accounting and cluster-size tables</td>
+</tr>
+<tr>
+<td><code>results/scripts/marker_panel_audit.{R,py}</code></td>
+<td>marker-panel means per cluster, both halves</td>
+</tr>
+<tr>
+<td><code>results/scripts/annotation_audit.R</code></td>
+<td>the two hard-coded mappings vs the observed programmes</td>
+</tr>
+<tr>
+<td><code>results/scripts/cluster_correspondence.{R,py}</code></td>
+<td>cross-tool contingency table</td>
+</tr>
+<tr>
+<td><code>results/scripts/compare_figs.py</code></td>
+<td>figure comparison against the 28 references</td>
+</tr>
+<tr>
+<td><code>results/09_run_logs/*_cell_log.txt</code></td>
+<td>per-cell code, stdout, warnings, errors, object state</td>
+</tr>
+<tr>
+<td><code>results/09_run_logs/*_cell_summary.tsv</code></td>
+<td>one row per cell: status, seconds, warning/error counts</td>
+</tr>
+<tr>
+<td><code>results/08_figure_comparison/*.tsv</code></td>
+<td>three machine-readable comparison tables</td>
+</tr>
+<tr>
+<td><code>results/08_figure_comparison/figure_comparison.md</code></td>
+<td>the same, written out with interpretation</td>
+</tr>
+<tr>
+<td><code>results/07_objects/pbmc3k.h5ad</code></td>
+<td>the Part-8 deliverable object (19.5 MiB)</td>
+</tr>
+<tr>
+<td><code>results/07_objects/pbmc3k_obs.csv</code></td>
+<td>per-cell metadata: cluster, QC metrics</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

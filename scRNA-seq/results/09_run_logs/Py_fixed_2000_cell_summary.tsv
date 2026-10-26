@@ -1,0 +1,12 @@
+cell	status	seconds	n_warn	error	warn_first	state
+0	OK	0.0	0			
+54	OK	0.0	0			
+55	OK	0.54	0			adata: 2700 cells x 32738 genes
+57	OK	0.81	0			adata: 2700 cells x 32738 genes
+59	OK	1.13	0			adata: 2700 cells x 13714 genes ;; obs['n_genes_by_counts']: median=816.000 max=3400.0 ;; obs['pct_counts_mt']: median=2.031 max=22.6
+61	OK	0.45	0			adata: 2635 cells x 13714 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+64	OK	1.01	1		UserWarning: Received a view of an AnnData. Making a copy.	adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+67	OK	15.49	0			adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0 ;; obsm['X_pca']: (2635, 50) ;; obsm['X_umap']: (2635, 2)
+70	OK	8.38	1		UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.	adata: 2635 cells x 1833 genes ;; obs['leiden']: 8 categories [0; 1; 2; 3; 4; 5; 6; 7] ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0 ;; obsm['X_pca']: (2635, 50) ;; obsm['X_umap']: (2635, 2) ;; uns['rank_genes_groups']: present (method=wilcoxon)
+72	OK	0.69	0			adata: 2635 cells x 1833 genes ;; obs['leiden']: 8 categories [0; 1; 2; 3; 4; 5; 6; 7] ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0 ;; obsm['X_pca']: (2635, 50) ;; obsm['X_umap']: (2635, 2) ;; uns['rank_genes_groups']: present (method=wilcoxon)
+75	OK	1.35	0			adata: 2635 cells x 1833 genes ;; obs['leiden']: 8 categories [CD4 T; CD8 T; B; CD14+ Monocytes; NK; FCGR3A+ Monocytes; Dendritic; Platelet] ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0 ;; obsm['X_pca']: (2635, 50) ;; obsm['X_umap']: (2635, 2) ;; uns['rank_genes_groups']: present (method=wilcoxon)

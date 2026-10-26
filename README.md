@@ -59,6 +59,25 @@
         ├── 03_cdr3_length/                  # Part 3: CDR3 nt/aa 长度分布
         ├── 04_diversity/                    # Part 4: 375 样本多样性 CSV + 三张相关图 (原样)
         └── 05_corrected/                    # 修正版: raw/L1/L2 三套指标 + TRB 扩展 + 对拍图
+└── scRNA-seq/                              # 单细胞 RNA-seq 模块 (第五节课, 实跑完成)
+    ├── scRNA_seq_analyze_totorial_2026.html  # 教材原文 (Part 0-8, 30 个代码单元, 无输出)
+    ├── scRNA_seq_lecture_2026.pdf            # 课程幻灯片 (11 页)
+    ├── *.png                                 # 28 张参考图 (教师 2025 输出, 未改动)
+    ├── ref/                                  # 矫正增强文档 (构建走 WES/ref/build.sh)
+    │   ├── scRNA_seq_analyze_corrected{.md,.html,.pdf}     # 矫正增强版: 原样跑 + 矫正跑 + 20 条坑位取证
+    │   ├── scRNA_seq_analyze_corrected_zh{.md,.html,.pdf}  # 同一矫正版的中文版
+    │   └── scRNA_seq_analyze_results_guide{.md,.html,.pdf} # 结果逐类导读 + 8 个动手练习
+    └── results/                              # 实跑分析产物 (无任何原始数据)
+        ├── 01_qc/                           # Part 2: 质控图 + 两份账目表 (运行值 / 原始矩阵重算值)
+        ├── 02_hvg_pca/                      # Part 3-4: HVG 与 PCA 图 (Seurat/scanpy 两侧, 原样/修正两版)
+        ├── 03_clustering/                   # Part 5: UMAP + 三种聚类方案的群大小表
+        ├── 04_annotation/                   # Part 6: marker 图/表 + 两份硬编码映射审计 + 跨工具列联表
+        ├── 05_deg/                          # Part 6: 火山图 + DEG 明细 + scanpy 排名/小提琴/点图
+        ├── 06_integration/                  # Part 7: harmony 前后 UMAP + 混合度指标
+        ├── 07_objects/                      # Part 8: pbmc3k.h5ad + 逐细胞元数据
+        ├── 08_figure_comparison/            # 与 28 张参考图的机器可读/书面比对
+        ├── 09_run_logs/                     # 六次运行的逐单元日志与状态表
+        └── scripts/                          # 13 个脚本: 教材单元/驱动器/审计与比对
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
@@ -77,6 +96,10 @@
 > **矫正增强版（TBCR_analysis_corrected）**：把第四节课教材（TRUST3 输出的 TCR/BCR 组库下游分析：克隆型/基因使用/CDR3 长度/多样性指数）在登录节点**原样实跑一轮**（2026-10-19，纯 R，约 45 秒）后，再**补跑一份修正版**对拍写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 9 条问题登记表（核心三条：`nrow()` 冒充唯一 CDR3、`partial` 黑名单漏掉 `out_of_frame`、队列循环跳过 Part 3 的质量过滤；另有插补序列、单克隆 `NaN`、log2 vs 自然对数、`*` 占位符当基因等）。中文版 `_zh` 与英文版数字逐一对拍一致（218 个数字 token 出现次数完全相同）。构建：`WES/ref/build.sh ../../TBCR-analysis/ref/TBCR_analysis_corrected.md "TCR/BCR Repertoire Downstream Analysis · Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
 >
 > **分析结果（TBCR-analysis/results/）**：原样四部分产物（克隆型频率直方图、IGHV/IGHJ top10、V-J 热图、CDR3 nt/aa 长度分布、375 样本多样性 CSV 与三张相关图、全部脚本与日志）+ `05_corrected/` 修正版（raw/L1/L2 三套逐样本指标、TRB 扩展 CSV、全部修正图与 `corrected_summary.txt`）——**不含任何原始数据**（TRUST3 产物在共享只读路径 `/lustre1/share/airr/data/`，未复制）。讲解文档 `TBCR-analysis/ref/TBCR_analysis_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 2 五条命令现场复现 raw/L1/L2 三口径差异）。
+
+> **矫正增强版（scRNA_seq_analyze_corrected）**：把第五节课教材（PBMC 3k：R/Seurat 的 Part 1-7 + Python/scanpy 的 Part 8，共 30 个代码单元）在登录节点**原样实跑一轮**（2026-10-26，一次 R 会话 509 s + 一次 Python 命名空间 4 s）后，再**跑一份修正版**对拍写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 20 条问题登记表。两条致命：R 侧从未 `library(ggrepel)`（DEG 单元连带 `saveRDS` 全灭）、Python 侧 `log=True,,save=` 双逗号 `SyntaxError` 抹掉整个单元（PCA/近邻/UMAP 全没跑）；**原样跑只产出 25 张图里的 18 张、2 个对象里的 0 个**。改变结果的几条：教材把 cluster→细胞类型映射写了两份且互相矛盾（cell 39 的表与 cell 43 的向量在 cluster 1/2 上互换，本次运行里向量对、表错）；scanpy 的位置式命名 8 个标签错 2 个（名为 `CD8 T` 的群 78.1% 是 Seurat 的 Naive CD4 T）；两侧 QC 阈值不一致（2500 vs 2000）正是"R 9 群 vs Python 8 群"的主因——把 Python 阈值提到 2500 就得到与 Seurat 完全相同的 2,638 个细胞和 9 个群。另记录：基因全集改动（`min_cells=3`，只有 30/2000 个 HVG 变化）会让同一份固定注释向量标错 957 个细胞（36%）；Part 7 的 UMAP 不可跨运行复现（同输入两次运行结构相关仅 0.563，与对参考图同量级）；参考图 `Marker_Heatmap.png` 是 3000×6000 px，而教材 `ggsave` 只能给 3000×3000。中文版 `_zh` 与英文版结构、数字逐一对拍。构建：`WES/ref/build.sh ../../scRNA-seq/ref/scRNA_seq_analyze_corrected.md "Single-cell RNA-seq (PBMC 3k) — Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **分析结果（scRNA-seq/results/）**：原样跑与修正跑的图（质控、HVG/PCA、聚类 UMAP、marker 与注释、火山图与 DEG、harmony 前后 UMAP、scanpy 的 11 张）＋ 教材算了却从未落盘的表（11,986 行 marker、90 行每群 top10、两张 DEG 明细、每群前 200 的 scanpy marker）＋ 两份硬编码映射的审计表与跨工具列联表 ＋ 与 28 张参考图的逐图像素比对（`PCA_heatmap_ALL.png` 结构相关 **1.0000**，即逐像素可复现）＋ 六次运行的逐单元日志 ＋ `pbmc3k.h5ad` 交付对象——**不含任何原始数据**（计数矩阵在共享只读路径 `/lustre1/share/scRNA_seq/hg19`，未复制；331 MiB 的 `pbmc3k_final.rds` 与 120 MiB 的合并对象不入库，各一行 `saveRDS()` 可重建）。讲解文档 `scRNA-seq/ref/scRNA_seq_analyze_results_guide.html/pdf` 逐类导读 + 8 个动手练习（练习 3 一条 awk 命令现场证伪 `CD8 T` 标签）。
 
 ## WES 路线图内容一览 / What the roadmap covers
 
@@ -127,7 +150,7 @@ mkdir -p "$BASE"/{0_fastq,1_alignment/OC,1_alignment/PBMC,2_variant_call,3_annot
 
 按路线图第 1–10 节顺序执行即可；推荐用 SLURM (`sbatch`) 提交 BWA/GATK 等重计算步骤，不要在登录节点直接跑。
 
-后三节课（RNA-seq、RNA-seq 下游应用、TCR/BCR 组库）都是**登录节点串行直跑**，与 WES 的 sbatch 纪律不同：`conda activate RNA-seq` / `rnaimmune` / `airr` 后按各自 `ref/` 下的矫正版文档执行即可。
+后四节课（RNA-seq、RNA-seq 下游应用、TCR/BCR 组库、单细胞 RNA-seq）都是**登录节点串行直跑**，与 WES 的 sbatch 纪律不同：`conda activate RNA-seq` / `rnaimmune` / `airr` / 直接用教师共享环境 `/lustre1/share/miniconda3/envs/scRNA_seq`（R+Seurat 与 Python+scanpy 同一环境）后，按各自 `ref/` 下的矫正版文档执行即可。
 
 ## 致谢 / Credits
 

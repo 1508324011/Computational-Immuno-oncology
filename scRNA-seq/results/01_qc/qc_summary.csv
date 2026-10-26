@@ -1,0 +1,5 @@
+"tool","cell_rule","gene_rule","cells_in","cells_kept","genes_kept","evidence"
+"Seurat (tutorial Part 2-7, as written)","nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5","CreateSeuratObject default (min.cells = 0): 32738 features",2700,2638,32738,"09_run_logs/R_tutorial_cell_log.txt (cell 13)"
+"Seurat (corrected run, MIN_CELLS = 3)","nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5","CreateSeuratObject(min.cells = 3): 13714 features",2700,2638,13714,"09_run_logs/R_corrected_mincells0_cell_log.txt + min.cells=3 pass"
+"scanpy (tutorial Part 8, n_genes < 2000)","n_genes >= 200 & n_genes_by_counts < 2000 & pct_counts_mt < 5","filter_genes(min_cells = 3): 13714 features",2700,2635,13714,"09_run_logs/Py_asis_cell_log.txt (cell 61)"
+"scanpy (corrected run, N_GENES_MAX = 2500)","n_genes >= 200 & n_genes_by_counts < 2500 & pct_counts_mt < 5","filter_genes(min_cells = 3): 13714 features",2700,2638,13714,"09_run_logs/Py_fixed_2500_cell_log.txt (cell 61)"

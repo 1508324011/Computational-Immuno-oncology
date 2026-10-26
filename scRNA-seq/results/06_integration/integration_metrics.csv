@@ -1,0 +1,8 @@
+"metric","value"
+"cells_ctrl",12932
+"cells_stim",12779
+"cells_merged",25711
+"cross_knn_pca",0.0287
+"cross_knn_harmony",0.4051
+"clusters_harmony",12
+"clusters_dominated_gt90pct",0

@@ -1,0 +1,15 @@
+figure	aswritten_exists	corrected_exists	identical_bytes	struct_corr
+violin_mt.png	True	True	True	1.0
+VariableFeaturePlot.png	True	True	False	0.0825
+PCA_VizDimLoadings.png	True	True	True	1.0
+PCA.png	True	True	True	1.0
+PCA_dimplot.png	True	True	True	1.0
+PCA_heatmap_ALL.png	True	True	True	1.0
+UMAP.png	True	True	True	1.0
+marker_Features.png	True	True	True	1.0
+Marker_Heatmap.png	True	True	False	0.9865
+marker_Features_2.png	True	True	True	1.0
+cell annotations.png	True	True	True	1.0
+Naive_Memory_CD4_DEG.png	False	True	-	-
+UMAP_without_harmony.png	True	True	False	0.5631
+UMAP_with_harmony.png	True	True	False	0.5676

@@ -1,0 +1,5 @@
+"rule","cells_kept","cells_dropped_lowFeature","cells_dropped_highFeature","cells_dropped_by_mt_only"
+"nFeature > 200 & nFeature < 2500 & pct_mt < 5  (Seurat rule, all 32738 genes)",2638,0,5,57
+"nFeature >= 200 & nFeature < 2000 & pct_mt < 5   (scanpy rule, all 32738 genes)",2634,0,9,57
+"nFeature > 200 & nFeature < 2000 & pct_mt < 5    (Seurat rule, threshold of scanpy)",2634,0,9,57
+"nFeature >= 200 & nFeature < 2500 & pct_mt < 5   (scanpy rule, threshold of Seurat)",2638,0,5,57

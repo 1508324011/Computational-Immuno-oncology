@@ -1,0 +1,11 @@
+cell	status	seconds	n_warn	error	warn_first	state
+54	OK	0.0	0			
+55	OK	0.51	0			adata: 2700 cells x 32738 genes
+57	OK	0.8	0			adata: 2700 cells x 32738 genes
+59	OK	1.11	0			adata: 2700 cells x 13714 genes ;; obs['n_genes_by_counts']: median=816.000 max=3400.0 ;; obs['pct_counts_mt']: median=2.031 max=22.6
+61	OK	0.44	0			adata: 2635 cells x 13714 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+64	OK	0.9	1		UserWarning: Received a view of an AnnData. Making a copy.	adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+67	ERROR	0.0	0	SyntaxError: invalid syntax (<cell 67>, line 4)		adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+70	ERROR	0.0	0	"KeyError: 'No ""neighbors"" in .uns'"		adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+72	ERROR	0.0	0	ValueError: groupby has to be a valid observation. Given leiden, is not in observations: ['n_genes', 'n_genes_by_counts', 'total_counts', 'total_counts_mt', 'pct_counts_mt']		adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0
+75	ERROR	0.0	0	ValueError: leiden is neither in `.obs` nor in `.var`.		adata: 2635 cells x 1833 genes ;; obs['n_genes_by_counts']: median=819.000 max=1996.0 ;; obs['pct_counts_mt']: median=2.011 max=5.0

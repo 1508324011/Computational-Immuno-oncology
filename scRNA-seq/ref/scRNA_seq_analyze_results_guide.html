@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>scRNA-seq 分析结果讲解</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">scRNA-seq 分析结果讲解</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#scrna-seq-分析结果讲解"
+id="toc-scrna-seq-分析结果讲解">scRNA-seq 分析结果讲解</a>
+<ul>
+<li><a href="#怎么读这个目录" id="toc-怎么读这个目录">1.
+怎么读这个目录</a></li>
+<li><a href="#逐类导读" id="toc-逐类导读">2. 逐类导读</a></li>
+<li><a href="#手把手练习" id="toc-手把手练习">3. 手把手练习</a></li>
+<li><a href="#一句话总结" id="toc-一句话总结">4. 一句话总结</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="scrna-seq-分析结果讲解">scRNA-seq 分析结果讲解</h1>
+<p>本文件导读 <code>scRNA-seq/results/</code>
+下的全部产物，并给出可以亲手复现的练习。配套的矫正增强版文档在
+<code>ref/scRNA_seq_analyze_corrected.md</code>（英文）与
+<code>ref/scRNA_seq_analyze_corrected_zh.md</code>（中文）。</p>
+<h2 id="怎么读这个目录">1. 怎么读这个目录</h2>
+<pre><code>results/
+├── 01_qc/                  Part 2：质控图 + 两份账目表（运行值与原始矩阵重算值）
+├── 02_hvg_pca/             Part 3-4：高变基因图、PCA 四张图；两侧、两版并存
+├── 03_clustering/          Part 5：UMAP 图 + 三种聚类方案的群大小表
+├── 04_annotation/          Part 6：注释图、marker 表、审计表、跨工具列联表
+├── 05_deg/                 Part 6：火山图 + 两张 DEG 表 + scanpy 排名/小提琴/点图
+├── 06_integration/         Part 7：去批次前后 UMAP + 混合度指标 + 分样本群占比
+├── 07_objects/             Part 8：pbmc3k.h5ad + 逐细胞元数据表
+├── 08_figure_comparison/   与课程随附 28 张参考图的机器可读/书面比对
+├── 09_run_logs/            六次运行的逐单元日志与状态表
+└── scripts/                重新生成以上全部内容的 13 个脚本</code></pre>
+<p>约定：</p>
+<ul>
+<li>文件名里带 <code>_corrected</code>
+的是修正版；不带的是<strong>原样跑</strong>的产出。</li>
+<li>Seurat 侧的图直接在 <code>scripts/run_cells.R</code>
+的工作目录里生成；scanpy 侧的图在 <code>figures/</code>
+子目录里，文件名保留了 scanpy 的 <code>save=</code>
+前缀（<code>highest_expr_genesscanpy_...png</code>），因为这就是教材代码的行为。</li>
+<li>每个 <code>09_run_logs/*_cell_log.txt</code> 里，每个单元都有
+<code>--status--</code>、<code>--warnings</code>、<code>--state--</code>
+三段；<code>--state--</code>
+记录该单元结束后对象是多少细胞、多少群、什么标签。</li>
+</ul>
+<h2 id="逐类导读">2. 逐类导读</h2>
+<h3 id="qc">2.1 <code>01_qc/</code></h3>
+<p><code>violin_mt.png</code> 是 Seurat
+的三个小提琴图（基因数、UMI、线粒体占比），<code>violinscanpy_violin_plot_QC.png</code>
+与两张 <code>scatterscanpy_scatter_*.png</code> 是 scanpy
+侧对应的质控视图。两张散点的用途是<strong>在定阈值之前</strong>看形状：<code>total_counts</code>
+vs <code>n_genes_by_counts</code>
+应该是线性关系，偏离线性且在右上的点是双细胞；<code>total_counts</code>
+vs <code>pct_counts_mt</code> 右上角是濒死细胞。</p>
+<p>表比图重要：</p>
+<ul>
+<li><code>qc_summary.csv</code>：四次运行（Seurat 原样、Seurat
+对齐基因全集、scanpy 教材阈值、scanpy
+对齐阈值）各自的规则、输入/保留细胞数、基因数，最后一列给出该数字出自哪份日志。</li>
+<li><code>qc_rederivation_rawmatrix.csv</code>：在原始矩阵上按同样数字独立重算，用来解释”为什么同样写
+<code>&lt; 5%</code>，Seurat 留 2,638 个细胞而 scanpy 留 2,635
+个”。结论：线粒体占比在 scanpy 里是按<strong>过滤后</strong>的 13,714
+基因矩阵算的，边界细胞的占比会落在 5% 两侧。</li>
+<li><code>qc_metric_distribution.csv</code>：三个指标在全部细胞与保留细胞上的中位/最小/最大，用来判断阈值卡得松还是紧。</li>
+</ul>
+<h3 id="hvg_pca">2.2 <code>02_hvg_pca/</code></h3>
+<p>Seurat
+侧：<code>VariableFeaturePlot.png</code>（原样，<strong>两联</strong>——左边是
+<code>p</code>，右边是 <code>p + 标注</code>，教材
+<code>p &lt;- p + plot2</code>
+的真实效果）、<code>VariableFeaturePlot_corrected.png</code>（单联，修正后）、<code>PCA_VizDimLoadings.png</code>（PC1/PC2
+的载荷，可直接读出哪些基因在驱动主成分）、<code>PCA.png</code>（肘图，20
+维）、<code>PCA_dimplot.png</code>（前两个 PC 上的细胞散点，9
+个群已经能看出轮廓）、<code>PCA_heatmap_ALL.png</code>（6 个 PC × 每个
+100 个平衡细胞的热图，Seurat 社区里常说的”看 PC
+上有没有结构”就看它）。</p>
+<p>scanpy
+侧：<code>filter_genes_dispersionscanpy_HVG.png</code>（均值-离散度散点，HVG
+被标红）、<code>pcascanpy_PCA.png</code>（PC1/PC2，按 CST3
+上色）、<code>pca_variance_ratioscanpy_PCA_ratio.png</code>（碎石图，<strong>参考图里没有这一张</strong>——教材那个单元格因双逗号整段没跑）。</p>
+<h3 id="clustering">2.3 <code>03_clustering/</code></h3>
+<p><code>UMAP.png</code> 是 Seurat 9 群的
+UMAP；<code>umapscanpy_markers.png</code> 是 scanpy 的 13 联图（leiden +
+12 个 marker）。</p>
+<p><code>cluster_sizes.csv</code> 把三种聚类方案并排放：</p>
+<ul>
+<li>Seurat：9 群，657 / 503 / 471 / 339 / 307 / 175 / 144 / 28 /
+14；</li>
+<li>scanpy（教材阈值 2,000）：8 群，534 / 643 / 340 / 497 / 432 / 142 /
+35 / 12；</li>
+<li>scanpy（对齐阈值 2,500）：9 群，559 / 615 / 340 / 209 / 155 / 281 /
+430 / 36 / 13。</li>
+</ul>
+<p>读法：先看最小的两群（DC 28-36 个、血小板 12-14
+个）是否在三种方案里都稳定存在——在，说明它们是真实细胞类型而不是噪声；再看两个大
+T 腔室是否被拆分——Seurat 拆了 naive/memory CD4，scanpy
+拆的是”核糖体高”的一个 CD4 群。</p>
+<h3 id="annotation">2.4 <code>04_annotation/</code></h3>
+<p>图：<code>marker_Features.png</code>（9 个谱系
+marker）、<code>marker_Features_2.png</code>（12 个细分
+marker）、<code>Marker_Heatmap.png</code>（原样：top10 只看 log2FC）与
+<code>Marker_Heatmap_corrected.png</code>（先卡
+<code>p_val_adj &lt; 0.05 &amp; log2FC &gt; 1</code> 再取
+top10）、<code>cell annotations.png</code>（Seurat 9 群带标签
+UMAP）、<code>umapscanpy_final_umap.png</code>（scanpy 8 群带标签
+UMAP）。</p>
+<p>表：这一节真正的价值在表里。</p>
+<ul>
+<li><code>marker_panel_mean_expression_seurat.csv</code> /
+<code>..._scanpy.csv</code>：一个 40 个 marker ×
+各群均值的面板，一眼能看出每个群到底是什么。例如 Seurat 的
+<code>Platelet</code> 群 PPBP 5.85、PF4 4.93，而 RPS12 只有
+1.34（血小板核糖体含量低）。</li>
+<li><code>cluster_label_audit.csv</code>：教材的两份硬编码映射（cell 39
+的表 vs cell 43 的向量）并排，加上观测到的程序与该群的 top5
+marker。本次运行里 cluster 1 是 CD4、cluster 2
+是单核，所以<strong>向量对、表错</strong>。</li>
+<li><code>cluster_label_audit_py.csv</code>：scanpy 侧的同类审计，8
+个群各自的 top5 marker 与细胞数。</li>
+<li><code>cluster_correspondence_counts.csv</code> 及两份 share
+表：Seurat 标签 × scanpy 群的列联表。<code>CD8 T</code> 这一列 78% 是
+Seurat 的 naive CD4 T，是教材位置式命名出错最直接的证据。</li>
+<li><code>markers_all_clusters.csv</code>（11,986
+行）、<code>markers_top10_per_cluster.csv</code>（90
+行）、<code>cluster0_markers.csv</code> …
+<code>cluster7_markers.csv</code>（scanpy，每群前 200
+个）：教材算了但从未落盘的 marker 统计。</li>
+<li><code>appendix_mincells3_*.csv</code>：基因全集改成 13,714
+后的同一批表，用来看”改动 30 个 HVG 会让什么跟着动”。</li>
+</ul>
+<h3 id="deg">2.5 <code>05_deg/</code></h3>
+<p><code>Naive_Memory_CD4_DEG.png</code>
+是教材本想画、但原样跑崩溃的那张火山图（<code>library(ggrepel)</code>
+缺失）；横轴 <code>avg_log2FC</code>、纵轴
+<code>-log10(p_adj)</code>，灰色是有差异但不显著的基因，红色是显著项。</p>
+<p><code>DEG_NaiveCD4_vs_rest.csv</code>（724 个基因）与
+<code>DEG_MemoryCD4_vs_NaiveCD4.csv</code>（650 个基因）是两张明细表，含
+<code>p_val</code>、<code>p_val_adj</code>、<code>avg_log2FC</code>、<code>pct.1</code>、<code>pct.2</code>。scanpy
+侧的
+<code>rank_genes_groups_leidenscanpy_rank_genes_groups.png</code>（8
+群各列前 25）、<code>..._violin.png</code>（群 0 的前 10
+个基因表达分布）、<code>dotplot_scanpy_rank_genes_groups_dotplot.png</code>（17
+个经典 marker × 8 群）是同一件事的另一种算法。</p>
+<h3 id="integration">2.6 <code>06_integration/</code></h3>
+<p><code>UMAP_without_harmony.png</code> 与
+<code>UMAP_with_harmony.png</code> 是教材唯一教的两张图，按
+<code>orig.ident</code>（ctrl /
+stim）上色。原样跑只到这里；<strong>看图得到的结论是”去批次成功了”，但图本身不可跨运行复现</strong>（同一输入两次运行结构相关只有
+0.563），所以本节配了数字：</p>
+<ul>
+<li><code>integration_metrics.csv</code>：ctrl 与 stim 细胞数（QC 后
+12,932 / 12,779）、合并后 25,711、跨样本近邻比例（PCA 空间 0.0287 →
+harmony 空间 0.4051）、harmony 聚类数 12、单样本占比 &gt;90% 的群数
+0。</li>
+<li><code>harmony_cluster_by_sample.csv</code>：12 个群里 ctrl/stim
+各多少细胞，最大群 6,065（3,096 / 2,969），最小群 92（38 / 54）。</li>
+</ul>
+<p>读法：跨样本近邻比例从 3% 升到
+41%，说明两批细胞被拉到一起了；同时每个群内部两样本接近 1:1（偏离 0.5
+的平均绝对值 0.030），说明没有把某一种细胞”整合没了”。</p>
+<h3 id="objects">2.7 <code>07_objects/</code></h3>
+<p><code>pbmc3k.h5ad</code> 是 Part 8 的交付对象：2,635 个细胞、1,833
+个高变基因（<code>X</code> 是 scale 后的矩阵，<code>raw</code> 保留全部
+13,714 个基因的 log 标准化值），<code>obs</code> 里有
+<code>leiden</code>（已改名为 8 个细胞类型）与全部 scanpy
+质控指标。<code>pbmc3k_obs.csv</code> 是同一份 <code>obs</code>
+的纯文本版，方便不装 anndata 的人读。</p>
+<p><code>pbmc3k_final.rds</code> 没有入库：Seurat 为全部 32,738
+个基因保留稠密 <code>scale.data</code>，文件 331 MiB；Part 6 里那行
+<code>saveRDS()</code> 一行即可重建。</p>
+<h3 id="figure_comparison">2.8 <code>08_figure_comparison/</code></h3>
+<p>四张表 + 一份书面报告：</p>
+<ul>
+<li><code>compare_aswritten_vs_reference.tsv</code>：原样跑 vs 28
+张参考图；</li>
+<li><code>compare_corrected_vs_reference.tsv</code>：修正版 vs
+参考图；</li>
+<li><code>compare_appendix_mincells3_vs_reference.tsv</code>：两个附录运行
+vs 参考图；</li>
+<li><code>compare_aswritten_vs_corrected.tsv</code>：我们自己的两版之间的逐字节比较。</li>
+</ul>
+<p>每行给出像素尺寸、结构相关（1.0000 =
+降采样后结构一致）、着色数量与各色占比。<code>figure_comparison.md</code>
+是同一批数据的解读，包括”为什么热图的 0.7250
+是长宽比造成的”和”为什么两张 harmony UMAP 的 0.56 等于噪声”。</p>
+<h3 id="run_logs-与-scripts">2.9 <code>09_run_logs/</code> 与
+<code>scripts/</code></h3>
+<p>六次运行各有一份
+<code>*_cell_log.txt</code>（逐单元的代码、stdout、警告、报错、对象状态）与
+<code>*_cell_summary.tsv</code>（每单元一行）。<code>R_tutorial_*</code>
+是原样跑，<code>R_corrected_mincells0_*</code>
+是交付版修正跑，<code>R_corrected_mincells3_*</code>
+是基因全集附录，<code>Py_asis_*</code> / <code>Py_fixed_2000_*</code> /
+<code>Py_fixed_2500_*</code> 同理。</p>
+<p><code>scripts/</code> 里 13
+个文件分三类：教材单元文件（<code>*_cells_aswritten.*</code>、<code>*_cells_corrected.*</code>）、驱动器（<code>run_cells.R</code>、<code>run_cells.py</code>）、分析脚本（<code>table_qc_clusters.R</code>、<code>marker_panel_audit.*</code>、<code>annotation_audit.R</code>、<code>cluster_correspondence.*</code>、<code>compare_figs.py</code>）。所有脚本都用绝对路径或命令行参数，不依赖当前目录。</p>
+<h2 id="手把手练习">3. 手把手练习</h2>
+<p><strong>练习 1：证明原样跑确实少了 7 张图。</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">&quot;^  --status-- ERROR&quot;</span> results/09_run_logs/R_tutorial_cell_log.txt   <span class="co"># 1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">&quot;^  --status-- ERROR&quot;</span> results/09_run_logs/Py_asis_cell_log.txt      <span class="co"># 4</span></span></code></pre></div>
+<p>R 侧 13 张图 + scanpy 侧 5 张 = 18 张；<code>25 - 18 = 7</code>。再看
+<code>Py_asis_cell_log.txt</code> 里 cell 67 的报错行，注意报错类型是
+<code>SyntaxError</code>——整个单元格一行都没执行。</p>
+<p><strong>练习 2：算一下少的那张火山图值不值得补。</strong> 从
+<code>05_deg/DEG_NaiveCD4_vs_rest.csv</code> 里数出
+<code>p_val_adj &lt; 0.05 &amp; |avg_log2FC| &gt; 0.5</code>
+的基因数（199），再数只满足 <code>p_val_adj &lt; 0.05</code>
+的（353）。差值说明”显著”到底被 log2FC 门槛砍掉了多少。</p>
+<p><strong>练习 3：验证”CD8 T”那个标签是错的。</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F,</span> <span class="st">&#39;NR==1 || $1==&quot;CD8A&quot; || $1==&quot;CD8B&quot; || $1==&quot;IL7R&quot;&#39;</span> <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    results/04_annotation/marker_panel_mean_expression_scanpy.csv</span></code></pre></div>
+<p>scanpy 侧名为 <code>CD8 T</code> 的群里 CD8A = 0.14、CD8B = 0.24，而
+IL7R = 1.61——它是 CD4 T 群。再对照
+<code>cluster_correspondence_counts.csv</code>：这一列 78.1% 是 Seurat
+的 Naive CD4 T。</p>
+<p><strong>练习 4：把两份硬编码映射的冲突找出来。</strong></p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">column</span> <span class="at">-s,</span> <span class="at">-t</span> results/04_annotation/cluster_label_audit.csv <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-c1-120</span></span></code></pre></div>
+<p>看 <code>table_label</code> 与 <code>rename_label</code> 两列在第
+1、2 行（cluster 1、2）的差别，再看 <code>observed_programme</code>
+判定谁对。然后打开教材 cell 39 与 cell
+43，确认这两份清单确实同时存在。</p>
+<p><strong>练习 5：复现”30 个 HVG 改变 36% 的标签”。</strong> 比较
+<code>results/04_annotation/cluster_label_audit.csv</code> 与
+<code>appendix_mincells3_cluster_label_audit.csv</code> 的
+<code>top5_markers</code> 列：对照 run 里 cluster 1 是
+CD4（CCR7/LEF1），附录 run 里 cluster 1
+是单核（S100A8/FCN1）。教材的固定向量在后者会把 957 个细胞标反。</p>
+<p><strong>练习 6：理解为什么 harmony 的图不能比像素。</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F</span><span class="st">&#39;\t&#39;</span> <span class="st">&#39;NR==1 || $1==&quot;UMAP_without_harmony.png&quot; || $1==&quot;UMAP_with_harmony.png&quot;&#39;</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    results/08_figure_comparison/compare_aswritten_vs_corrected.tsv</span></code></pre></div>
+<p>我们自己的两次运行（同代码同输入）相关只有 0.5631 /
+0.5676，与对参考图的 0.5664 / 0.5689 同量级。改用
+<code>integration_metrics.csv</code> 的跨样本近邻比例做判据。</p>
+<p><strong>练习 7：把 scanpy 的阈值改成 2,500，看群数。</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /tmp/t2500 <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> /tmp/t2500 <span class="kw">&amp;&amp;</span> <span class="va">N_GENES_MAX</span><span class="op">=</span>2500 <span class="va">MPLBACKEND</span><span class="op">=</span>Agg <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/lustre1/share/miniconda3/envs/scRNA_seq/bin/python</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  /path/to/results/scripts/run_cells.py <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  /path/to/results/scripts/scRNA_seq_py_cells_corrected.py /tmp/t2500 Py2500</span></code></pre></div>
+<p>结果：2,638 个细胞（与 Seurat 完全相同）、9 个 leiden 群，8
+个硬编码名字不再够用——修正版会保留数字标签并写出审计表。</p>
+<p><strong>练习 8：给自己的数据定阈值。</strong> 读一组新的 10x
+数据，先画 <code>nFeature</code> vs <code>nCount</code> 与
+<code>nFeature</code> vs <code>mt%</code> 两张散点，再决定上下限；然后用
+<code>qc_rederivation_rawmatrix.csv</code>
+的列结构记下每个阈值丢了多少细胞，别只记留下的数量。</p>
+<h2 id="一句话总结">4. 一句话总结</h2>
+<p>这 25 张图里有 18 张是教材代码原样能产出的，另 7
+张死在两个字符级的错误上（少一行
+<code>library(ggrepel)</code>、多一个逗号）；而即使产出的那 18
+张，也有两张注释的映射互相矛盾、8 个 scanpy 标签错 2
+个——所以本目录里每个”看起来对”的图，都配了一张能查的表。</p>
+</body>
+</html>
