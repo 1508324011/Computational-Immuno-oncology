@@ -181,6 +181,10 @@ BCR assembly frequency distribution (895 rows are in assemblies seen 1-5 times, 
 
 The `factor(..., levels = unique(...))` construction matters: `table()` on a plain character vector sorts alphabetically and, more importantly, drops nothing here but would drop empty levels; fixing the levels to the observed order keeps the identifier order stable, so `BCR_consensus_df$Var1` lines up with the assembly numbering.
 
+![Figure 1 — `BCR_consensus_frequency_distribution.png`: how often each assembled BCR consensus appears in the demo sample.](./figures/01_clonotype.png){width=70%}
+
+The shape is the whole point of the panel: 659 of 745 BCR assemblies are seen exactly once, and the tail is a handful of assemblies seen 7-18 times. That long tail is the clonal expansion signal — a repertoire with no expansion would sit almost entirely in the first bar. Two caveats before using it as a clonality measure: `Freq` counts *rows* (report lines), not reads, so an assembly sequenced deeply and an assembly seen once look identical here; and the x axis is a factor of assembly ids, so the bar order carries no meaning beyond "observed order".
+
 ### 3.5 Pitfalls
 
 - **`table()` returns a factor column.** `as.data.frame(table(...))` gives `Var1` (the assembly id, as a factor) and `Freq`. Any downstream ordering must go through `as.character()` first.
@@ -255,6 +259,18 @@ Top IGHJ:
 
 Top V-J pair: `IGHV3-15*01` + `IGHJ5*02`, 288 reads, 0.1362 of IGH mass.
 
+![Figure 2 — `top10_IGHV_genes.png`: the ten most-used IGHV alleles by read count.](./figures/top10_IGHV.png){width=70%}
+
+A bar chart of usage is the fastest way to see whether a sample is skewed: the top allele here (`IGHV3-15*01`) carries 15.6% of IGH reads, and the top ten together dominate the distribution. Read the lengths as evidence about *allele* not *gene* usage — `IGHV3-15*01` and a hypothetical `IGHV3-15*04` are separate bars, which makes the table sparse and the top-ten list allele-driven rather than gene-driven.
+
+![Figure 3 — `top10_IGHJ_genes.png`: the J-segment counterpart.](./figures/top10_IGHJ.png){width=70%}
+
+J usage is far more concentrated than V usage: `IGHJ5*02` alone takes 35.5% of IGH reads, and the top three cover 81%. That asymmetry is expected — there are ~80 V alleles but only ~12 J alleles in use here, so each J carries more mass — and it is the reason a V-J heatmap is informative while a J-only plot is nearly a ranking of six numbers. Note that `*` (unassigned J) would rank fourth: it is absent from this plot only because the tutorial's top-ten cut happens to exclude it.
+
+![Figure 4 — `heatmap_VJ.png`: V-J pairing counts, J on the rows and V on the columns, colour = `total_count`.](./figures/heatmap_VJ.png){width=100%}
+
+This is the pairing view, and it is also the module's best example of a plot that is technically correct and practically unreadable. The strong cells are real and interpretable — `IGHJ5*02` × a handful of V alleles, `IGHJ6*02` × `IGHV1-69`-type alleles — but eighty allele-level V labels rotated at 45° overlap into a grey band, most of the grid is empty because 173 V-J pairs cannot fill 12 × 80 cells, and the `*` row/column sits at the axes as a reminder that unassigned segments are being treated as genes (TBCR-07). Two one-line fixes make it usable: collapse alleles to gene level (`sub("\\*.*", "", V)`) and drop the `*` category before plotting. Both are left to the corrected pass / extensions rather than silently changed here.
+
 ### 4.5 Pitfalls
 
 - **TBCR-01 (header line).** As discussed in §2.3, the `#count` line is skipped only because of `comment.char`. This is invisible in the tutorial but becomes a data-corruption bug the moment anyone passes `comment.char = ""` or reads the file with `readr::read_tsv()` (which does not treat `#` as a comment by default and would keep the header as a row).
@@ -309,6 +325,14 @@ nt_length_df <- IGH_filter_df %>% group_by(nt_length) %>% summarise(total_count 
 | kept rows whose nt length is **not** a multiple of 3 | **2** |
 
 The 47.7% partial rate is not a defect of the sample: TRUST3 reports a junction whenever it can assemble enough of the CDR3 to call it, and roughly half of the assemblies in this tumour do not cover the full junction. Dropping them is correct for length analysis — but note that it also drops half the reads, which is why Part 4 must make an explicit decision about the same sequences (TBCR-08).
+
+![Figure 5 — `CDR3_nt_length_distribution.png`: CDR3 nucleotide length after removing `partial` rows only.](./figures/CDR3_nt_length.png){width=70%}
+
+The distribution is close to what a functional repertoire should look like — mode 66 nt (22 codons), range 30-102, and a smooth bell around the mode. The two bars that break it are visible once you look for them: the **46 nt** and **71 nt** rows, which are the two `out_of_frame` assemblies that survived the `!= "partial"` blacklist (TBCR-03). They sit at lengths that are not multiples of three, i.e. physically impossible as in-frame junctions, and they are exactly why the filter should be a whitelist on amino acids rather than a blacklist on one label.
+
+![Figure 6 — `CDR3_aa_length_distribution.png`: the same rows in amino acids.](./figures/CDR3_aa_length.png){width=70%}
+
+This panel shows the same two artefacts from the other side: `nchar()` counts the `?` and `_` placeholders of the eight imputed sequences as residues (TBCR-04), so their lengths are one or two residues too long, and the out-of-frame rows land on non-integer-looking positions relative to the bell. The biological read is otherwise standard: 10-34 aa, mode 22, i.e. the canonical CDR3 loop length of a human BCR. Keep the figure and the filter decision together — the plot alone cannot tell you whether the tail is biology or bookkeeping.
 
 ### 5.5 Pitfalls
 
@@ -413,6 +437,18 @@ Spearman correlations, as written:
 
 The sign pattern is the expected one: richness and entropy move together; CPK is high in samples that are deep but not necessarily diverse (it is a ratio to reads, so a small sample with few reads can reach CPK 1000); CPK and clonality are strongly anti-correlated because a repertoire dominated by one clone has few unique CDR3s per read.
 
+![Figure 7 — `diveristy_cor_entropy.png` (the filename typo is the tutorial's): diversity against Shannon entropy across the 375 TCGA-OV samples.](./figures/diversity_cor_entropy.png){width=70%}
+
+The tight monotone relationship (Spearman 0.7957 as written) is a consistency check rather than a discovery: both quantities measure richness, one as a count and one as a weighted sum, so a sample cannot have many unique CDR3s and low entropy. The scatter around the line is the interesting part — samples that fall below it have many singletons (high richness, low evenness), which is the signature of a repertoire assembled from low-support sequences.
+
+![Figure 8 — `CPK_cor_entropy.png`: clones per thousand reads against entropy.](./figures/CPK_cor_entropy.png){width=70%}
+
+Much weaker (rho −0.2470) and rightly so: CPK normalises by reads while entropy normalises by clone frequencies, so a deeply sequenced but evenly distributed sample and a shallow but clonal sample can land on the same CPK. A weak correlation here is not a failed analysis; it is the evidence that CPK and entropy are not measuring the same thing despite both being "diversity" numbers.
+
+![Figure 9 — `CPK_cor_clonality.png`: CPK against clonality, the strongest of the three relationships.](./figures/CPK_cor_clonality.png){width=70%}
+
+The funnel is the message: at low CPK the clonality values spread from 0 to 0.7, and as CPK grows the cloud collapses onto a floor near zero, giving rho −0.8790. Notice also what the red fit does at the right edge — it extrapolates **below zero**, which is impossible for `1 − H/log(n)`; a linear model on a bounded index is fine for describing a trend and wrong for predicting an individual sample. One point (`TCGA-23-1113`) is missing from this panel because its single clone makes clonality `NaN` in the as-written code (TBCR-05).
+
 ### 6.5 Pitfalls
 
 - **TBCR-02 (diversity is `nrow`, not unique CDR3).** TRUST's report is keyed by the full V/D/J/C assignment, so one CDR3 can appear on several rows. The demo sample: 354 rows, 345 unique CDR3nt, and only 173 unique CDR3aa (the amino-acid level collapses synonymous variants). `nrow()` therefore overstates richness by 2.6% here; cohort-wide the median overstatement is about 2x after also correcting the sequence-quality filter (§7).
@@ -463,6 +499,38 @@ Entropy is reported in both nats (matching the formula) and bits (matching the c
 | Gini-Simpson | 0.9568 | 0.9393 | 0.9385 |
 
 The demo sample has 354 IGH rows, 169 `partial`, 2 `out_of_frame`, 8 imputed and 175 valid; L1 keeps 183 rows which collapse to 177 unique CDR3nt.
+
+![Figure 10 — `corrected_top10_IGHV_genes.png`: IGHV usage with the `*` placeholder excluded.](./figures/corrected_top10_IGHV.png){width=70%}
+
+Compare with Figure 2: the top five are identical (`IGHV3-15*01`, `IGHV5-51*03`, `IGHV4-31*03`, `IGHV1-18*04`, `IGHV3-23*01`), the table simply has one fewer entry (80 → 79) and every percentage is computed against a denominator that no longer contains reads with no V call. The point of showing both is that TBCR-07 changes the *normalisation*, not the biology — which is why it is a cheap correction that should still be made explicit.
+
+![Figure 11 — `corrected_top10_IGHJ_genes.png`: the J counterpart under the same denominator.](./figures/corrected_top10_IGHJ.png){width=70%}
+
+Same story on the J side: `IGHJ5*02` (35.5%), `IGHJ4*02` (23.3%) and `IGHJ6*02` (22.6%) are unchanged, the ranking below them shifts slightly because `*` no longer occupies a slot. If a downstream claim depended on "the fourth most used J segment", the correction would change it; if it depended on the top three, it would not.
+
+![Figure 12 — `corrected_CDR3_nt_length_distribution.png`: nucleotide lengths under the L2 filter (175 rows).](./figures/corrected_CDR3_nt.png){width=70%}
+
+The two impossible bars are gone. Every retained length is now a multiple of three, the mode stays at 66 nt with 474 reads, and the range 30-102 nt is unchanged — so the correction removed exactly the two `out_of_frame` rows and nothing else. This is what "a filter that does what its comment says" looks like: the bell does not move, the impossible spikes disappear.
+
+![Figure 13 — `corrected_CDR3_aa_length_distribution.png`: the amino-acid view under L2.](./figures/corrected_CDR3_aa.png){width=70%}
+
+With `partial`, `out_of_frame` **and** the eight imputed sequences removed, the distribution is 10-34 aa with mode 22 aa. The visible change against Figure 6 is at the edges: the imputed sequences were inflating individual counts by one or two residues, which matters when the statistic of interest is "the fraction of CDR3s longer than 20 aa" rather than the mode.
+
+![Figure 14 — `raw_vs_corrected_diversity.png`: raw diversity (report rows) against corrected diversity (unique CDR3nt, L1), log-log, with y = x drawn.](./figures/raw_vs_corrected_diversity.png){width=70%}
+
+Every one of the 375 samples falls **below** the identity line, which is the single most important consequence of the correction: the as-written index is an upward-biased count, never an unbiased one, because TRUST splits one CDR3 into several rows when it assigns different V alleles or constant regions. The bias is proportionally larger at low diversity (about 2× for repertoires with <10 clones of raw diversity) and compresses towards ~1.2× at 10,000+ — i.e. it distorts exactly the samples where clonality claims are made. The points sitting on the bottom edge (corrected = 1, raw = 6-10) are the samples that collapse to a single clone, the ones whose clonality is undefined in §7.4.
+
+![Figure 15 — `corrected_diversity_cor_entropy.png`: the richness-entropy relationship after correction.](./figures/corrected_diversity_cor_entropy.png){width=70%}
+
+Same shape as Figure 7, slightly tighter and with a lower x range, because the count axis halves. The correlation barely moves (0.7957 → 0.7862), which is the reassuring pattern of a scale correction: the *ordering* of samples is preserved (Spearman 0.9975 between raw and L1 diversity) even though every absolute number changed. Contrast this with a correction that changes ranks — that would be a red flag about the correction, not about the data.
+
+![Figure 16 — `corrected_CPK_cor_entropy.png`: CPK against entropy under L1.](./figures/corrected_CPK_cor_entropy.png){width=70%}
+
+The weakest of the three relationships survives at −0.2421 (from −0.2470). Read it as evidence that CPK's normalisation by reads is what decouples it from entropy — after removing partial and duplicated rows, both quantities changed by different factors but stayed just as weakly related, so the weak relation is structural rather than an artefact of the counting bug.
+
+![Figure 17 — `corrected_CPK_cor_clonality.png`: CPK against clonality under L1, the strongest relation of the set.](./figures/corrected_CPK_cor_clonality.png){width=70%}
+
+rho −0.8729 (from −0.8790): the correlation is robust, the cloud is not identical. After correction the clonality values sit higher on average (median 0.1843 → 0.2196, i.e. removing duplicated rows makes each sample look *more* clonal, because the collapsed clone counts concentrate the mass), and the funnel is slightly narrower at low CPK. The three samples with no valid clone are absent rather than plotted at zero — the corrected pass returns `NA` instead of a fabricated value (TBCR-05).
 
 ### 7.3 Cohort (375 samples)
 

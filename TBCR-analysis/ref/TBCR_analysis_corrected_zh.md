@@ -181,6 +181,10 @@ BCR assembly 出现次数分布（895 行落在出现 1-5 次的 assembly 里，
 
 `factor(..., levels = unique(...))` 这个构造是必要的：对普通字符向量调用 `table()` 会按字母序排序，并按观测顺序固定 levels 后，`BCR_consensus_df$Var1` 才能与 assembly 编号稳定对应。
 
+![图 1 — `BCR_consensus_frequency_distribution.png`：demo 样本里每个 BCR consensus 被看到几次。](./figures/01_clonotype.png){width=70%}
+
+形状本身就是这张图的全部意义：745 个 BCR assembly 里有 659 个只出现一次，尾部是少数被看到 7-18 次的 assembly。那条长尾就是克隆扩增信号——一个没有扩增的库几乎全部落在第一根柱子里。当作克隆性指标用之前有两个告诫：`Freq` 数的是**行**（report 行）而不是读段，所以一个测得很深的 assembly 与一个只见到一次的 assembly 在这张图上完全一样；x 轴是 assembly 编号的因子，柱序除"观测顺序"外没有含义。
+
 ### 3.5 坑
 
 - **`table()` 返回因子列。** `as.data.frame(table(...))` 给出 `Var1`（assembly id，因子）与 `Freq`。任何下游排序都必须先 `as.character()`。
@@ -255,6 +259,18 @@ IGHJ 前三：
 
 最高 V-J 配对：`IGHV3-15*01` + `IGHJ5*02`，288 条读段，占 IGH 质量 0.1362。
 
+![图 2 — `top10_IGHV_genes.png`：按读段数排的前十个 IGHV 等位。](./figures/top10_IGHV.png){width=70%}
+
+使用频率柱状图是看"这个样本是否偏斜"最快的办法：最高那条 `IGHV3-15*01` 占 IGH 读段的 15.6%，前十名合起来主导了整个分布。注意要按**等位**而非**基因**来读——`IGHV3-15*01` 与假想的 `IGHV3-15*04` 是两根不同的柱子，这让表格变稀疏，也让"前十"由等位而非基因驱动。
+
+![图 3 — `top10_IGHJ_genes.png`：J 段的对应版本。](./figures/top10_IGHJ.png){width=70%}
+
+J 的使用比 V 集中得多：`IGHJ5*02` 一条就占 IGH 读段的 35.5%，前三名合起来 81%。这种不对称是预期的——这里 V 有约 80 个等位在用、J 只有约 12 个，每个 J 自然分到更多质量——也正是为什么 V-J 热图有信息量、而只画 J 的图几乎就是六个数字的排名。还要注意 `*`（未分配 J）本应排第四：它没出现在这张图里，只是因为教材的 top-10 截断恰好把它排除在外。
+
+![图 4 — `heatmap_VJ.png`：V-J 配对计数，J 在行、V 在列，颜色 = `total_count`。](./figures/heatmap_VJ.png){width=100%}
+
+这是配对视角，同时也是本模块"技术上正确、实际上读不动"的最佳例子。那些深色格子是真实可解释的——`IGHJ5*02` 与少数几个 V 等位、`IGHJ6*02` 与 `IGHV1-69` 类等位——但 80 个等位级的 V 标签斜着 45° 叠成一条灰带，整张网格大部分是空的（173 个 V-J 对填不满 12×80 个格子），而 `*` 那一行一列就摆在坐标轴上，提醒你未分配的片段正被当成基因处理（TBCR-07）。两行改动就能让它可用：把等位折叠到基因层（`sub("\\*.*", "", V)`）、并在作图前去掉 `*` 类别。这两处留给修正版/扩展，而不是在这里悄悄改掉。
+
 ### 4.5 坑
 
 - **TBCR-01（表头行）。** 见 §2.3：`#count` 行被跳过纯粹依赖 `comment.char`。这在教材里看不出来，但只要有人传 `comment.char = ""`，或用 `readr::read_tsv()` 读（它默认不把 `#` 当注释，会把表头保留为一行），立刻变成数据污染。
@@ -309,6 +325,14 @@ nt_length_df <- IGH_filter_df %>% group_by(nt_length) %>% summarise(total_count 
 | 保留行中核苷酸长度**不是** 3 的倍数 | **2** |
 
 47.7% 的 partial 比例不是样本缺陷：只要能组装出足够 CDR3 就会报告，而这个肿瘤里约一半 assembly 未覆盖完整连接区。做长度分析时剔除它们是正确做法——但注意这也剔掉了一半读段，所以 Part 4 必须对同一批序列做明确决定（TBCR-08）。
+
+![图 5 — `CDR3_nt_length_distribution.png`：只去掉 `partial` 行之后的 CDR3 核苷酸长度。](./figures/CDR3_nt_length.png){width=70%}
+
+分布接近一个功能库该有的样子——众数 66 nt（22 个密码子）、范围 30-102、众数附近是平滑的钟形。破坏它的两根柱子只要去找就能看见：**46 nt** 与 **71 nt**，正是躲过 `!= "partial"` 黑名单的两个 `out_of_frame` assembly（TBCR-03）。它们落在不是 3 的倍数的长度上，即物理上不可能是框内连接，这也是"过滤应该用氨基酸白名单而不是单标签黑名单"的直接证据。
+
+![图 6 — `CDR3_aa_length_distribution.png`：同一批行的氨基酸版本。](./figures/CDR3_aa_length.png){width=70%}
+
+这张面板从另一侧暴露同样两个问题：`nchar()` 把八个插补序列里的 `?`、`_` 占位符当成残基计数（TBCR-04），所以它们的长度多了一两位；而框外行相对于钟形落在"不该有"的位置上。生物学解读本身是标准的：10-34 aa、众数 22，即人 BCR 的经典 CDR3 环长。把图与过滤决定放在一起看——光看图无法判断那条尾巴是生物学还是记账错误。
 
 ### 5.5 坑
 
@@ -413,6 +437,18 @@ Spearman 相关（原样）：
 
 符号模式符合预期：丰富度与熵同向；CPK 在深度大但未必多样的样本里可以很高（它是相对读段的比值，读段少的小样本反而可能达到 CPK 1000）；CPK 与 clonality 强负相关，因为单克隆主导的组库每读段对应的唯一 CDR3 很少。
 
+![图 7 — `diveristy_cor_entropy.png`（文件名拼写错误是教材原文）：375 个 TCGA-OV 样本的多样性与 Shannon 熵。](./figures/diversity_cor_entropy.png){width=70%}
+
+这条紧密的单调关系（原样跑 Spearman 0.7957）是一致性检查而非发现：两者都在量丰富度，一个用计数、一个用加权和，所以一个样本不可能"唯一 CDR3 很多而熵很低"。有意思的是线周围的散开——落在线下方的样本 singleton 多（丰富度高、均匀度低），那是"库由低支持度序列拼出来"的签名。
+
+![图 8 — `CPK_cor_entropy.png`：每千读段克隆数对熵。](./figures/CPK_cor_entropy.png){width=70%}
+
+关系弱得多（rho −0.2470），而且本来就该弱：CPK 按读段归一，熵按克隆频率归一，于是一个测得深但分布均匀的样本与一个测得浅但很克隆化的样本可以落在同一个 CPK 上。这里的弱相关不是分析失败，而是 CPK 与熵尽管都叫"多样性"、量的却不是同一件事的证据。
+
+![图 9 — `CPK_cor_clonality.png`：CPK 对 clonality，三者中最强的关系。](./figures/CPK_cor_clonality.png){width=70%}
+
+漏斗形状本身就是信息：低 CPK 处 clonality 从 0 一直散到 0.7，随着 CPK 变大云团塌到接近 0 的地板上，给出 rho −0.8790。还要注意红色拟合线在右端做了什么——它外推到了**零以下**，而 `1 − H/log(n)` 不可能为负；在有界指标上做线性模型用于描述趋势没问题，用于预测单个样本则错误。图里少了一个点（`TCGA-23-1113`），因为它的单克隆让 clonality 在原样代码里成了 `NaN`（TBCR-05）。
+
 ### 6.5 坑
 
 - **TBCR-02（diversity 是 `nrow` 而非唯一 CDR3）。** TRUST 的 report 以完整 V/D/J/C 赋值为键，同一 CDR3 可出现在多行。演示样本：354 行、345 条唯一 CDR3nt、只有 173 条唯一 CDR3aa（氨基酸层把同义变异合并）。此处 `nrow()` 高估丰富度 2.6%；队列层面在同时修正序列质量过滤后，中位数高估约两倍（§7）。
@@ -463,6 +499,38 @@ Spearman 相关（原样）：
 | Gini-Simpson | 0.9568 | 0.9393 | 0.9385 |
 
 演示样本 354 条 IGH 行中：169 条 `partial`、2 条 `out_of_frame`、8 条插补、175 条有效；L1 保留 183 行，折成 177 条唯一 CDR3nt。
+
+![图 10 — `corrected_top10_IGHV_genes.png`：排除 `*` 占位符后的 IGHV 使用。](./figures/corrected_top10_IGHV.png){width=70%}
+
+与图 2 对照：前五名完全相同（`IGHV3-15*01`、`IGHV5-51*03`、`IGHV4-31*03`、`IGHV1-18*04`、`IGHV3-23*01`），表里只少了一项（80 → 79），每个百分比换成了不含"无 V 调用"读段的分母。两张图都摆出来的意义是：TBCR-07 改的是**归一化**而不是生物学——所以它是一处便宜、但仍必须显式做出的修正。
+
+![图 11 — `corrected_top10_IGHJ_genes.png`：同一分母下的 J 版本。](./figures/corrected_top10_IGHJ.png){width=70%}
+
+J 侧同理：`IGHJ5*02`（35.5%）、`IGHJ4*02`（23.3%）、`IGHJ6*02`（22.6%）都不变，下面几名因为 `*` 不再占位而略动。如果某个下游结论依赖"第四常用的 J 段"，修正会改变它；如果依赖前三名，就不会。
+
+![图 12 — `corrected_CDR3_nt_length_distribution.png`：L2 过滤下的核苷酸长度（175 行）。](./figures/corrected_CDR3_nt.png){width=70%}
+
+不可能的两根柱子没了。保留的每个长度都是 3 的倍数，众数仍是 66 nt / 474 读段，范围 30-102 nt 不变——说明修正恰好只去掉了那两个 `out_of_frame` 行，别的没动。这就是"过滤真的做到了注释里写的事"的样子：钟形不动，不可能的尖刺消失。
+
+![图 13 — `corrected_CDR3_aa_length_distribution.png`：L2 下的氨基酸视图。](./figures/corrected_CDR3_aa.png){width=70%}
+
+去掉 `partial`、`out_of_frame` **以及**八个插补序列之后，分布是 10-34 aa、众数 22 aa。相对图 6 可见的变化在边缘：插补序列曾把个别计数虚增了一两位，当统计量是"长度超过 20 aa 的 CDR3 占比"而不是众数时，这会真的影响结果。
+
+![图 14 — `raw_vs_corrected_diversity.png`：原样多样性（report 行）对修正多样性（唯一 CDR3nt，L1），双对数，红色虚线是 y = x。](./figures/raw_vs_corrected_diversity.png){width=70%}
+
+375 个样本**全部**落在等值线下方——这是本次修正最重要的后果：原样指标是系统性偏高的计数，永远不可能无偏，因为 TRUST 在给同一 CDR3 分配不同 V 等位或恒定区时会把它拆成多行。偏差在低多样性处按比例更大（原样多样性 <10 个克隆的样本约 2 倍），到 10,000 以上压缩到约 1.2 倍——也就是说它恰好扭曲了那些被用来下"克隆性"结论的样本。贴着底边（修正值 = 1、原样 6-10）的点，就是折叠后只剩一个克隆的样本，也正是 §7.4 里 clonality 未定义的那几个。
+
+![图 15 — `corrected_diversity_cor_entropy.png`：修正后的丰富度-熵关系。](./figures/corrected_diversity_cor_entropy.png){width=70%}
+
+形状与图 7 相同，略紧一些，x 范围下移，因为计数轴减半。相关系数几乎不动（0.7957 → 0.7862），这正是"尺度修正"应有的样子：绝对数全变了，但样本的**排序**被保留（原样与 L1 多样性的 Spearman 0.9975）。反过来，如果某个修正改变了排序，那是关于修正本身的危险信号，而不是关于数据的。
+
+![图 16 — `corrected_CPK_cor_entropy.png`：L1 下 CPK 对熵。](./figures/corrected_CPK_cor_entropy.png){width=70%}
+
+三者中最弱的关系保持在 −0.2421（原 −0.2470）。把它读成"CPK 按读段归一这件事本身就让它与熵脱钩"的证据——去掉 partial 与重复行之后，两个量按不同倍数变化，却依旧同样弱地相关，说明这种弱关系是结构性的，不是计数 bug 的产物。
+
+![图 17 — `corrected_CPK_cor_clonality.png`：L1 下 CPK 对 clonality，本组最强的关系。](./figures/corrected_CPK_cor_clonality.png){width=70%}
+
+rho −0.8729（原 −0.8790）：相关是稳健的，云团并不相同。修正后 clonality 平均值上移（中位 0.1843 → 0.2196，即去掉重复行后每个样本看起来**更**克隆化，因为折叠把质量集中了），低 CPK 处漏斗略窄。三个没有有效克隆的样本是缺席而不是被画在 0 上——修正版返回 `NA` 而不是编造一个值（TBCR-05）。
 
 ### 7.3 队列（375 样本）
 
