@@ -110,6 +110,14 @@ Outputs: `GZMA_cor_PRF1.png`, `CTLA4_cor_CYT.png`.
 ### Interpretation
 GZMA and PRF1 are strongly co-expressed (Spearman ρ=0.93) — expected, both are cytolytic effector genes released by CD8 T cells / NK cells upon degranulation. CTLA4 vs CYT shows a striking **Pearson–Spearman gap**: Pearson r=0.16 (p=0.32, not significant) but Spearman ρ=0.80 (p≈0). This is the textbook signature of an **outlier-driven or non-linear monotone** relationship — Pearson (linear, sensitive to outliers/magnitude) is dampened, Spearman (rank-based, monotone) captures the strong ordinal co-variation. The lesson: report both, and when they diverge, inspect the scatter before trusting either.
 
+![Figure 1 — `GZMA_cor_PRF1.png`: granzyme A against perforin across the 42 melanoma samples (CPM), with Pearson and Spearman annotated.](./figures/GZMA_cor_PRF1.png){width=70%}
+
+Two effector genes from the same degranulation programme, so the tight relationship is the expected result and it doubles as a pipeline check: if these two did *not* correlate, the CPM normalisation or the row extraction would be wrong before any biology was involved. Note the annotation `p = 0` — `rcorr`'s p-value is below double precision, so the label prints a literal zero (APP-05); cosmetic, but it is the kind of thing a referee notices.
+
+![Figure 2 — `CTLA4_cor_CYT.png`: CTLA4 against the CYT signature (mean of GZMA and PRF1).](./figures/CTLA4_cor_CYT.png){width=70%}
+
+This is the figure that justifies reporting both coefficients. Pearson r = 0.16 (p = 0.32, "no relationship") while Spearman rho = 0.80 (p ≈ 0) — the ranks agree almost perfectly but the *magnitudes* do not, because a handful of samples sit far to the right with high CTLA4 that the linear fit cannot accommodate. Read the scatter, not the numbers: the cloud is monotone but strongly compressed at low CTLA4, i.e. CTLA4 is on a different scale from CYT. Only the rank statement ("more CTLA4 tends to come with more cytolytic activity") survives; the linear statement does not, and quoting r = 0.16 alone would have hidden a real association.
+
 ### Tuning
 - For a non-biased p-value label use `format.pval(pearson_corr$P[1,2], digits=3, eps=1e-4)`.
 - `rcorr` handles matrix input too: `rcorr(t(exprsn[c('GZMA','PRF1','CTLA4'),]))` gives a 3×3 correlation matrix in one call.
@@ -166,6 +174,14 @@ Outputs: `survival_CYT.png`, `cox.png`.
 
 ### Interpretation
 The KM curves separate (CYT-high has better OS), but neither the log-rank nor any single Cox covariate reaches significance in this 42-patient cohort — expected: the cohort is small, the model is saturated (6 covariates on 29 events, ~5 events/variable, below the usual 10 EPV rule), and CYT is duplicated as continuous + grouped. The point is the **workflow**, not a novel biomarker claim. CTLA4 expression alone is essentially flat (HR≈1.000, p=0.94) — consistent with CTLA4 being the drug target whose effect is mediated through the immune context (CYT), not through its own expression level.
+
+![Figure 3 — `survival_CYT.png`: Kaplan-Meier overall survival by CYT-high (n = 21) versus CYT-low (n = 21), with confidence bands and the number-at-risk table.](./figures/survival_CYT.png){width=70%}
+
+The curves separate in the expected direction — CYT-high survives longer — but they overlap inside their confidence bands for most of the follow-up and the log-rank test does not reach significance. Read the risk table before the curves: the number at risk halves within the first year or two, so beyond that point the comparison rests on a handful of patients and the apparent separation is fragile. With 42 patients and 29 events this figure can generate a hypothesis; it cannot test one.
+
+![Figure 4 — `cox.png`: the multivariate Cox model as a forest plot (Age, Gender, Stage, CYT, CYT_level, CTLA4).](./figures/cox.png){width=70%}
+
+Every confidence interval crosses the hazard-ratio line of 1, which is the honest summary of a saturated model: 6 covariates on 29 events is ~5 events per variable, half the usual 10-EPV rule. Read the point estimates rather than the significance stars — Gender (HR 1.93), CYT_level low (1.94) and Stage (1.38) all lean the expected way, they are simply unpowered. The structural problem is visible in the row list itself: `CYT` and `CYT_level` are the same variable twice (one continuous, one dichotomised), so they compete for the same information and inflate each other's standard errors. Concordance 0.679 is the one number worth quoting: the model ranks patients better than chance, not much better.
 
 ### Tuning
 - Drop the redundant `CYT_level` (or `CYT`) from the Cox model to reduce collinearity; re-run and watch the standard errors shrink.
@@ -256,6 +272,22 @@ During the lesson-3 run the blocker was recorded in `mcp_counter_blocked.txt`; t
 ### Interpretation
 The seven methods disagree in both cell-type granularity (TIMER 6 types → xCell 39 types) and output scale. The textbook's central point — **only absolute-fraction methods may be drawn as stacked bars** — is demonstrated by the two quanTIseq plots: the stacked bar (`qts_barplot.png`, fractions summing to 1) is correct for quanTIseq (an absolute method), while the dot/facet plot (`qts_scatterplot.png`, free y-scales per cell type) is the safe choice for any method. The heatmap with `scale='row'` (`qts_heatmap_row_scaled.png`) is the fair cross-sample comparison: each cell type is z-scored so a high-Macrophage sample reads red regardless of whether the method's units are fractions or arbitrary scores.
 
+![Figure 5 — `qts_barplot.png`: quanTIseq cell fractions as stacked bars, one bar per sample, summing to 1.](./figures/qts_barplot.png){width=70%}
+
+Stacked bars are only legitimate for absolute-fraction methods, and quanTIseq is one of them — so the geometry is honest here. What the figure actually shows, however, is that most of every bar is the pale "uncharacterized cell" category (60-90% in these tumours): immune cells are the thin slivers at the right-hand end. That is a correct output of the method (tumour samples contain many cells no signature explains), but it makes the immune signal visually unreadable — which is precisely why the same numbers are re-drawn twice more below.
+
+![Figure 6 — `qts_scatterplot.png`: the same fractions as a dot/facet plot with a free y-scale per cell type.](./figures/qts_scatterplot.png){width=70%}
+
+The safe choice for any method, absolute or relative: one panel per cell type, each with its own axis, so a population that never exceeds 5% still shows its variation. This is the figure to read when you want to compare *samples within a cell type*; the stacked bar is the figure to read when you want the composition of one sample.
+
+![Figure 7 — `qts_heatmap.png`: the unscaled cell-type × sample matrix.](./figures/qts_heatmap.png){width=70%}
+
+Left unscaled on purpose. The dominant colour band is again the uncharacterized fraction (and, among immune types, macrophages), which is the raw structure — but note how the low-abundance populations (B cells, DC, NK) flatten into a single shade. A reader who only saw this heatmap would conclude that the cohort varies in macrophage content and not much else, which is an artefact of the shared colour scale.
+
+![Figure 8 — `qts_heatmap_row_scaled.png`: the same matrix z-scored **per cell type**.](./figures/qts_heatmap_row_scaled.png){width=70%}
+
+The fair cross-sample comparison, and the one figure in Part 3 that answers "which sample is high in which population". Row scaling puts every cell type on its own axis, so a sample high in B cells reads red even though B cells are numerically tiny. Two things to keep in mind while reading it: z-scores are *relative* — a red cell means "high for this cohort", not "high in absolute terms" — and row scaling of a 42-sample matrix makes single outliers look dramatic, so cross-check any striking row against Figure 6.
+
 ### Tuning
 - The local-marker fix is now applied; `ref/MCPcounter_genes.txt` and `ref/MCPcounter_probesets.txt` are versioned with the repo, so re-runs are fully offline.
 - `config_env$xcell_cores` controls xCell parallelism; raise it for larger cohorts.
@@ -307,6 +339,26 @@ Outputs: `res_tide.txt`, `tide_heatmap.png`, `tide_predicted_responder.png`, `ti
 
 ### Interpretation
 AUC ≈ 0.79 (raw) / 0.77 (smoothed) means TIDE discriminates responders from non-responders well in this cohort — consistent with the original TIDE paper's melanoma validation. The TIDE < 0 rule and the ROC direction agree. The bar plots show most predicted-responders sit in the CTL-high facet (T cells present) and most non-responders in CTL-low, illustrating TIDE's two-axis logic (dysfunction in CTL-high, exclusion in CTL-low).
+
+![Figure 9 — `tide_heatmap.png`: the TIDE output matrix (TIDE, IFNG, MSI, CD274, CD8, dysfunction, exclusion, MDSC, CAF, TAM M2, CTL…) as a row-scaled heatmap with the clinical metadata as column annotation.](./figures/tide_heatmap.png){width=70%}
+
+Eleven TIDE-derived features for 42 patients, z-scored per row so the colour compares patients rather than features (TIDE and MSI are on completely different scales). Read it column-wise against the annotation bar: the CTL/Dysfunction/Exclusion block is the two-axis story — CTL-high patients with high Dysfunction are the ones TIDE expects to respond to checkpoint blockade, CTL-low patients with high Exclusion are the ones it expects to fail regardless. Note also that `Responder` (the true clinical label) is drawn in the same annotation strip, which is what makes the next two figures interpretable.
+
+![Figure 10 — `tide_predicted_responder.png`: TIDE score per patient, faceted by CTL status, filled by TIDE's **prediction**.](./figures/tide_predicted_responder.png){width=70%}
+
+The rule is `TIDE < 0 → predicted responder`, and the facet split is what makes the rule meaningful: in the CTL-high facet most bars are negative (predicted response), in the CTL-low facet most are positive. Blue/red fills follow the sign mechanically, so this figure is really a picture of the threshold — useful for spotting patients near zero, whose call would flip with any small change to `--vthres`.
+
+![Figure 11 — `tide_responder.png`: the same bars, filled by the **true** clinical response instead.](./figures/tide_responder.png){width=70%}
+
+Putting this next to Figure 10 is the whole point of drawing both: the fills disagree in a minority of patients, and those disagreements are the errors the ROC below summarises. Reading the two panels side by side is also the fastest way to see the failure mode — several true responders sit high (positive TIDE), i.e. TIDE missed them, rather than the reverse.
+
+![Figure 12 — `roc.png`: ROC for TIDE as a predictor of clinical response (raw curve, AUC = 0.787).](./figures/roc.png){width=70%}
+
+The curve is step-shaped because 42 patients give 42 thresholds — every step is one patient crossing the cut. The staircase is therefore a sample-size artefact, not a model property, and the comparison to the dashed diagonal is the only thing to read: AUC 0.787 means that for a randomly chosen responder/non-responder pair, TIDE ranks them correctly 79% of the time. Note the axis convention: x is 1 − specificity (rising to the right), so a *good* model bows to the top-left, and the direction assumption (`lower TIDE → responder`) is already baked in by pROC.
+
+![Figure 13 — `roc_smooth.png`: the same ROC with binormal smoothing (AUC = 0.772).](./figures/roc_smooth.png){width=70%}
+
+Smoothing trades the honest staircase for a curve you can compare across models — and costs 0.015 AUC, which is the useful part of the message: the raw AUC of a 42-patient cohort is optimistic precisely because the staircase is fitted to the same 42 points. When reporting this number, quote the smoothed value as the conservative estimate and `ci.auc()` for its interval; a bare "AUC 0.79" from a cohort this size is a point estimate with a very wide neighbourhood.
 
 ### Tuning
 - `--vthres` lets you set a custom TIDE threshold (default 0.0); raising it trades sensitivity for specificity.

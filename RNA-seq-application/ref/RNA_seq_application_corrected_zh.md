@@ -110,6 +110,14 @@ spearman_corr <- rcorr(sig, exprsn['CTLA4',], type='spearman')
 ### 结果解读
 GZMA 与 PRF1 强共表达（Spearman ρ=0.93）—— 符合预期，两者都是 CD8 T 细胞 / NK 细胞脱颗粒时释放的杀伤效应基因。CTLA4 vs CYT 出现显著的 **Pearson–Spearman 分裂**：Pearson r=0.16（p=0.32，不显著）但 Spearman ρ=0.80（p≈0）。这是**离群驱动或非线性单调**关系的教科书特征——Pearson（线性、对离群/量级敏感）被压低，Spearman（基于秩、单调）捕捉到强序共变。教训：两个都报，出现分歧时先看散点图再决定信哪个。
 
+![图 1 — `GZMA_cor_PRF1.png`：42 个黑色素瘤样本里 granzyme A 对 perforin（CPM），图上标注 Pearson 与 Spearman。](./figures/GZMA_cor_PRF1.png){width=70%}
+
+两个基因来自同一套脱颗粒程序，所以强相关是预期结果，同时也是一次流程体检：这两个要是**不**相关，那先要查的是 CPM 标准化或行提取，而不是生物学。注意标注里的 `p = 0`——`rcorr` 的 p 值低于双精度下限，标签就打印成字面的 0（APP-05），属观感问题，但审稿人会盯着看。
+
+![图 2 — `CTLA4_cor_CYT.png`：CTLA4 对 CYT 特征（GZMA 与 PRF1 的均值）。](./figures/CTLA4_cor_CYT.png){width=70%}
+
+这张图就是"两个系数都要报"的理由。Pearson r = 0.16（p = 0.32，"无关系"），而 Spearman rho = 0.80（p ≈ 0）——秩几乎完全一致，但**幅度**对不上：少数样本 CTLA4 极高，线性拟合吃不消。要读散点而不是那两个数：云是单调的，只是在低 CTLA4 处被强烈压缩，说明 CTLA4 与 CYT 不在同一个量纲上。只有秩的表述（"CTLA4 越高、细胞毒活性倾向越高"）站得住，线性表述站不住；只报 r = 0.16 会把一个真实关联藏起来。
+
 ### 参数调优
 - 要无偏 p 值标注，用 `format.pval(pearson_corr$P[1,2], digits=3, eps=1e-4)`。
 - `rcorr` 也接受矩阵输入：`rcorr(t(exprsn[c('GZMA','PRF1','CTLA4'),]))` 一次出 3×3 相关矩阵。
@@ -166,6 +174,14 @@ ggforest(cox_model, data = metadata, main = "Cox Proportional Hazards Model", fo
 
 ### 结果解读
 KM 曲线分离（CYT-high 的 OS 更好），但 log-rank 与任一 Cox 协变量在这 42 人队列都不显著——符合预期：队列小、模型饱和（6 协变量对 29 事件，约 5 事件/变量，低于通常的 10 EPV 经验值），且 CYT 以连续+分组重复入模。本 Part 的重点是**工作流**，不是新生物标志物宣称。CTLA4 表达本身基本平（HR≈1.000，p=0.94）—— 与 CTLA4 是药物靶点、其效应经免疫上下文（CYT）介导而非经自身表达水平一致。
+
+![图 3 — `survival_CYT.png`：按 CYT 高（n = 21）与 CYT 低（n = 21）分组的 Kaplan-Meier 总生存，带置信带与风险人数表。](./figures/survival_CYT.png){width=70%}
+
+曲线按预期方向分开——CYT 高组活得更久——但在大部分随访时间里两条曲线的置信带重叠，log-rank 也没到显著。读曲线之前先读风险人数表：风险人数在一两年内就减半，之后再往下比就只剩个位数病人，看似拉开的那段其实是脆的。42 个病人、29 个事件，这张图能生成假设，测不了假设。
+
+![图 4 — `cox.png`：多因素 Cox 模型的森林图（Age、Gender、Stage、CYT、CYT_level、CTLA4）。](./figures/cox.png){width=70%}
+
+所有置信区间都跨过 HR = 1 的那条线，这就是饱和模型的诚实写照：29 个事件上放 6 个协变量，约 5 事件/变量，只有通常 10-EPV 规则的一半。要读的是点估计而不是显著性星号——Gender（HR 1.93）、CYT_level low（1.94）、Stage（1.38）方向都对，只是没有把握度。结构性问题从变量清单就能看出来：`CYT` 与 `CYT_level` 是同一个变量的两份（一份连续、一份二分组），它们争抢同一份信息、互相抬高标准误。唯一值得引用的是 concordance 0.679：模型排序病人比随机好，好得不多。
 
 ### 参数调优
 - 去掉冗余的 `CYT_level`（或 `CYT`）降共线，重跑看标准误缩小。
@@ -256,6 +272,22 @@ quanTIseq 的 `rmgenes` 变体（下游所有图都用它）为 11 细胞型 × 
 ### 结果解读
 七种方法在细胞型粒度（TIMER 6 型 → xCell 39 型）与输出尺度上都不同。教材的核心论点——**只有绝对分数法能画堆叠柱**——由两张 quanTIseq 图示范：堆叠柱（`qts_barplot.png`，分数和为 1）对 quanTIseq（绝对法）正确，而点/分面图（`qts_scatterplot.png`，每细胞型自由 y 轴）是对任何方法都安全的选择。`scale='row'` 的热图（`qts_heatmap_row_scaled.png`）是公平的跨样本比较：每个细胞型被 z-score，所以巨噬细胞高的样本读红，与方法单位是分数还是任意值无关。
 
+![图 5 — `qts_barplot.png`：quanTIseq 的细胞比例堆叠柱，每个样本一根、各段和为 1。](./figures/qts_barplot.png){width=70%}
+
+堆叠柱只对"绝对比例"方法合法，而 quanTIseq 正是其中之一——所以这里的几何是诚实的。但图里实际显示的是：每根柱子大部分都是浅色的"未分类细胞"（这些肿瘤里占 60-90%），免疫细胞只是右端那些细条。这是方法的正确输出（肿瘤样本里确实有大量细胞任何 signature 都解释不了），但它让免疫信号在视觉上读不出来——这正是同样的数字要在下面再画两遍的原因。
+
+![图 6 — `qts_scatterplot.png`：同样的比例画成点/分面图，每个细胞类型独立 y 轴。](./figures/qts_scatterplot.png){width=70%}
+
+任何方法都安全的选择：每个细胞类型一格、各有自己的轴，于是哪怕从不超过 5% 的群体也能看出差别。要比较"同一细胞类型里的不同样本"，读这张；要看"单个样本的组成"，读堆叠柱。
+
+![图 7 — `qts_heatmap.png`：未缩放的细胞类型 × 样本矩阵。](./figures/qts_heatmap.png){width=70%}
+
+故意不缩放。最占色的仍然是未分类那一行（免疫类型里则是巨噬细胞），这是原始结构——但注意低丰度群体（B 细胞、DC、NK）被压成同一种颜色。只看到这张热图的读者会得出"这个队列只有巨噬细胞含量在变，别的没差别"，那是共用色标造成的假象。
+
+![图 8 — `qts_heatmap_row_scaled.png`：同一个矩阵按**每个细胞类型**做 z 分数。](./figures/qts_heatmap_row_scaled.png){width=70%}
+
+公平的跨样本比较，也是 Part 3 里唯一能回答"哪个样本哪种细胞多"的图。按行缩放后每种细胞类型各有自己的轴，于是 B 细胞明明数值很小、该高的样本照样是红的。读它有两个要点：z 分数是**相对**的——红表示"相对本队列偏高"，不是绝对偏高；在 42 个样本上做行缩放会让单点离群看起来很夸张，所以任何惊人的行都要回到图 6 交叉核对。
+
 ### 参数调优
 - 本地标志集修复已应用；`ref/MCPcounter_genes.txt` 与 `ref/MCPcounter_probesets.txt` 已入库，重跑完全离线。
 - `config_env$xcell_cores` 控制 xCell 并行；大队列可调高。
@@ -307,6 +339,26 @@ TIDE_roc_smooth <- roc(Responder ~ TIDE, data=res_tide, aur=TRUE, smooth=TRUE)
 
 ### 结果解读
 AUC ≈ 0.79（原始）/ 0.77（平滑）意味着 TIDE 在本队列能较好区分应答与无应答——与 TIDE 原文黑色素瘤验证一致。TIDE < 0 规则与 ROC 方向吻合。柱图显示多数预测应答者落在 CTL-high 分面（T 细胞在场），多数无应答者在 CTL-low，体现 TIDE 的双轴逻辑（CTL-high 走功能失调轴，CTL-low 走排除轴）。
+
+![图 9 — `tide_heatmap.png`：TIDE 输出矩阵（TIDE、IFNG、MSI、CD274、CD8、Dysfunction、Exclusion、MDSC、CAF、TAM M2、CTL…）按行缩放的热图，列注释是临床元数据。](./figures/tide_heatmap.png){width=70%}
+
+11 个 TIDE 衍生特征 × 42 个病人，按行 z 分数，让颜色比较的是病人而不是特征（TIDE 与 MSI 不在同一个量纲上）。对着注释条竖着读：CTL/Dysfunction/Exclusion 这一块就是两轴故事——CTL 高且 Dysfunction 高的病人，是 TIDE 认为对检查点阻断有反应的那批；CTL 低且 Exclusion 高的，是它认为无论如何都会失败的那批。注意 `Responder`（真实临床标签）也画在同一条注释带上，这正是下面两张图可读的前提。
+
+![图 10 — `tide_predicted_responder.png`：每个病人的 TIDE 分数，按 CTL 状态分面，按 TIDE 的**预测**着色。](./figures/tide_predicted_responder.png){width=70%}
+
+规则是 `TIDE < 0 → 预测有反应`，而分面让这条规则有意义：CTL 高的分面里多数柱子为负（预测响应），CTL 低的分面里多数为正。蓝/红填充是符号的机械结果，所以这张图其实是"阈值长什么样"的照片——用来挑出那些贴着 0 的病人，他们的判定会随 `--vthres` 的一点改动而翻转。
+
+![图 11 — `tide_responder.png`：同样的柱子，改按**真实**临床反应着色。](./figures/tide_responder.png){width=70%}
+
+把它和图 10 并排放就是画两张的全部意义：填充在少数病人上不一致，而这些不一致正是下面 ROC 概括掉的错误。并排还能最快看出失败模式——几个真实响应者落在高（正 TIDE）的位置，即 TIDE 漏掉了他们，而不是反过来。
+
+![图 12 — `roc.png`：TIDE 预测临床反应的 ROC（原始曲线，AUC = 0.787）。](./figures/roc.png){width=70%}
+
+曲线呈阶梯状，因为 42 个病人只有 42 个阈值——每一级台阶就是一个病人在越过切点。阶梯是样本量造成的，不是模型性质；能读的只有它相对虚线的位置：AUC 0.787 意味着随机取一个响应者和一个非响应者，TIDE 有 79% 的概率把两者排序排对。注意坐标约定：x 是 1 − 特异度（向右升高），所以**好**模型向左上凸，而"TIDE 越低越可能响应"这个方向假设已经被 pROC 预先定好了。
+
+![图 13 — `roc_smooth.png`：同一张 ROC 做双正态平滑（AUC = 0.772）。](./figures/roc_smooth.png){width=70%}
+
+平滑用诚实的阶梯换来一条可跨模型比较的曲线——代价是 0.015 的 AUC，而这恰恰是最有用的一句话：42 个病人的原始 AUC 偏乐观，正因为它是在同 42 个点上拟合出来的阶梯。报这个数时，用平滑值作为保守估计、用 `ci.auc()` 给出区间；只写一句"AUC 0.79"在这个样本量下是一个邻域很宽的点估计。
 
 ### 参数调优
 - `--vthres` 可设自定义 TIDE 阈值（默认 0.0）；调高以特异性换敏感性。

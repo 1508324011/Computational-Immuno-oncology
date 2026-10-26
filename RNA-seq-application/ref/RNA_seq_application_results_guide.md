@@ -12,9 +12,21 @@
 - `GZMA_cor_PRF1.png`：GZMA vs PRF1 散点 + Pearson/Spearman 标注。两个杀伤效应基因强共表达（Pearson r=0.71，Spearman ρ=0.93）。
 - `CTLA4_cor_CYT.png`：CTLA4 vs CYT 签名散点。注意 Pearson–Spearman 分裂（r=0.16 p=0.32 vs ρ=0.80 p≈0）——离群/非线性单调的教科书特征。
 
+![图 1 — `CTLA4_cor_CYT.png`：CTLA4 对 CYT 签名。](./figures/CTLA4_cor_CYT.png){width=70%}
+
+把这张图当作"为什么两个系数都要报"的教具：云在秩上几乎完全单调（ρ=0.80），但幅度上被少数高 CTLA4 样本压歪（r=0.16）。只报 Pearson 会得出"没关系"，只报 Spearman 会高估线性可分性——两个一起报，再指着散点说清楚是哪一种关系。
+
 ### 03_survival_analysis/ —— Part 2
 - `survival_CYT.png`：KM 曲线，CYT high/low 各 21 例，带 log-rank p、置信区间、风险表。
 - `cox.png`：多变量 Cox 森林图（Age/Gender/Stage/CYT/CYT_level/CTLA4），6 协变量均不显著（队列小+CYT 重复入模共线），Concordance=0.679。
+
+![图 2 — `survival_CYT.png`：KM 曲线（CYT high/low 各 21 例，带风险表）。](./figures/survival_CYT.png){width=70%}
+
+先看风险表再看曲线：风险人数在一两年内减半，之后每条曲线只剩个位数病人，所以后段的"分离"是脆的。42 例、29 事件下，这张图的用途是展示流程与方向，不是证明疗效。
+
+![图 3 — `cox.png`：多变量 Cox 森林图。](./figures/cox.png){width=70%}
+
+所有 CI 都跨过 1，这正是"29 个事件上放 6 个协变量"的结果（约 5 事件/变量，低于 10 EPV）。变量清单本身就暴露了结构问题：`CYT` 与 `CYT_level` 是同一变量的两份，互相抬高标准误。要引用就引 Concordance 0.679。
 
 ### 04_immune_infiltration/ —— Part 3（重点）
 - `qts_barplot.png`：quanTIseq 堆叠柱（**绝对分数法才能这样画**），前 10 样本，按细胞型着色。
@@ -25,12 +37,36 @@
 - `mcp_counter_blocked.txt`：APP-01 阻塞与矫正记录（conda MCPcounter 1.1.0 http 硬编码 → 登录节点 reset；随后用本地 https 标志集矫正跑出，11 细胞型 × 42 样本）。
 - `log_part3.txt`：完整运行日志。
 
+![图 4 — `qts_barplot.png`：quanTIseq 的绝对比例，堆叠柱画法在这里是正确的。](./figures/qts_barplot.png){width=70%}
+
+读这张图的第一件事不是看免疫细胞，而是看浅色的"未分类细胞"有多大——它占了每根柱子的六到九成，免疫细胞只是右端那些细条。这是方法的正确输出（肿瘤里确实有大量细胞无 signature 可解释），但也是"堆叠柱不适合看低丰度群体"的直接演示。
+
+![图 5 — `qts_scatterplot.png`：点/分面图，每个细胞类型独立 y 轴。](./figures/qts_scatterplot.png){width=70%}
+
+任何方法都安全的选择。当某个群体永远不超过 5% 时，堆叠柱里它是看不见的，而这里它有自己的一格。要比"同一种细胞在不同样本间"的高低，读这张。
+
+![图 6 — `qts_heatmap_row_scaled.png`：按细胞类型 z-score 后的热图。](./figures/qts_heatmap_row_scaled.png){width=70%}
+
+公平的跨样本比较，本节最该看的一张。按行缩放后每种细胞类型各有一条自己的色阶，于是 B 细胞这种数值极小的群体也能看出"谁高谁低"。两个提醒：z 分数是相对的（红 = 相对本队列偏高，不是绝对高）；42 个样本的行缩放会让单点离群看起来夸张，任何惊人的行都回到图 5 核对。
+
 ### 05_tide/ —— Part 4
 - `res_tide.txt`：我们自己跑 `tidepy` 的输出（42 样本 × 14 列，字节尺寸与教师预跑副本一致）。
 - `tide_heatmap.png`：TIDE 各指标热图（按行 z-score），列注释含真实/预测应答、CTL.flag、No.benefits、Age/Gender/Stage。
 - `tide_predicted_responder.png` / `tide_responder.png`：TIDE 分柱图，按 CTL.flag 分面，分别按**预测**与**真实**应答着色——对比即读预测 vs 真实。
 - `roc.png` / `roc_smooth.png`：ROC 曲线，AUC=0.7872（原始）/ 0.7718（平滑）。
 - `log_tidepy.txt`：tidepy 运行日志（含三行预期 `[WARN]`）。
+
+![图 7 — `tide_heatmap.png`：TIDE 各指标按行 z-score 的热图，列注释含真实/预测应答与 CTL.flag。](./figures/tide_heatmap.png){width=70%}
+
+对着注释条竖着读：CTL/Dysfunction/Exclusion 这块就是 TIDE 的两轴逻辑。注意它把真实应答（`Responder`）也画在同一条注释带上，所以这张图可以直接回答"预测和真实在哪些病人上打架"。
+
+![图 8 — `tide_predicted_responder.png` 与 `tide_responder.png`：同一批柱图，分别按预测与真实着色。](./figures/tide_predicted_responder.png){width=70%}
+
+并排看就是读"预测 vs 真实"最快的办法：多数柱子两边一致，少数不一致——那些不一致就是 ROC 概括掉的错误。TIDE 的规则是 `TIDE < 0 → 预测响应`，所以贴近 0 的病人判定会随 `--vthres` 翻转，值得单独列出来。
+
+![图 9 — `roc.png` / `roc_smooth.png`：AUC 0.7872（原始）与 0.7718（平滑）。](./figures/roc.png){width=70%}
+
+阶梯状不是模型的性质，而是 42 个病人只有 42 个阈值。能读的只有它相对虚线的位置（AUC 0.787 ≈ 随机抽一对时 79% 排序正确），以及平滑后掉的那 0.015——原始 AUC 偏乐观，因为它是在同一批 42 个点上拟合出来的。报数时用平滑值 + `ci.auc()`。
 
 ### */scripts/
 每个 Part 一个脚本（`.R` 或 `.sh`），代码逐字取自教材，文件头登记所有偏差（交互式→Rscript、setwd、LC_ALL=C、跨 Part 对象重派生、MCPcounter tryCatch 等）。
