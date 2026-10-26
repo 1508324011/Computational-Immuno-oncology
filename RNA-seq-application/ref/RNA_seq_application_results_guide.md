@@ -17,12 +17,12 @@
 把这张图当作"为什么两个系数都要报"的教具：云在秩上几乎完全单调（ρ=0.80），但幅度上被少数高 CTLA4 样本压歪（r=0.16）。只报 Pearson 会得出"没关系"，只报 Spearman 会高估线性可分性——两个一起报，再指着散点说清楚是哪一种关系。
 
 ### 03_survival_analysis/ —— Part 2
-- `survival_CYT.png`：KM 曲线，CYT high/low 各 21 例，带 log-rank p、置信区间、风险表。
+- `survival_CYT.png`：KM 曲线，CYT high/low 各 21 例，带 log-rank p（**p = 0.027，显著**）、置信区间、风险表。
 - `cox.png`：多变量 Cox 森林图（Age/Gender/Stage/CYT/CYT_level/CTLA4），6 协变量均不显著（队列小+CYT 重复入模共线），Concordance=0.679。
 
 ![图 2 — `survival_CYT.png`：KM 曲线（CYT high/low 各 21 例，带风险表）。](./figures/survival_CYT.png){width=70%}
 
-先看风险表再看曲线：风险人数在一两年内减半，之后每条曲线只剩个位数病人，所以后段的"分离"是脆的。42 例、29 事件下，这张图的用途是展示流程与方向，不是证明疗效。
+先看两条数字：log-rank p = 0.027（刚好显著），而风险人数在一两年内就减半、之后每条曲线只剩个位数病人——所以"显著"是 42 个病人给出的显著，不是稳定估计。这张图的用途是展示流程与方向，不是证明疗效。
 
 ![图 3 — `cox.png`：多变量 Cox 森林图。](./figures/cox.png){width=70%}
 
