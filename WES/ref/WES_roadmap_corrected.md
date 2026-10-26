@@ -990,6 +990,30 @@ mathematical artifact), plus a 169-Mb "loss" spanning half of chr1 at depth ~0.5
 Exactly what a 0.5× tumor + 0.5× single-normal reference must produce: the reference's
 bin variances are pure noise, so every bin deviates "significantly".
 
+![Figure 1 — `4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png` (demo round, `-m amplicon`, 0.5× tumor + 0.5× normal).](./figures/cnv_scatter_amplicon_demo.png){width=70%}
+
+Copy ratio (log2) per bin, chromosome by chromosome, with the segmented values in orange. On a 0.5×/0.5× pair the grey bin cloud is enormous — bins range from −1.5 to +1.5 log2 on every chromosome — and the segments chase that noise instead of describing arm-level structure. The orange calls reach `cn` = 324, 1601, 6345 in the `.call.cns` file, which is impossible for a diploid genome: the reference has almost no bins, so its variance estimate is meaningless and every deviation looks significant. This figure is the *demonstration* that a run can succeed, produce a scatter plot, and still be worthless.
+
+> **中文批注：** 这张图的用处是反例教学——"跑通了、出图了"与"结果可信"是两件事。灰点散布宽度（±1.5 log2）本身就说明参考不可用，橙色的分段只是把噪声连成线。
+
+![Figure 2 — `4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png` (full round, `-m amplicon`, job 3053).](./figures/cnv_scatter_amplicon_full.png){width=70%}
+
+On the full-depth pair the same command produces a much better-looking figure — and it is still wrong, which is the more dangerous case. Everything here is computed from **target bins alone** (the `*.antitargetcoverage.cnn` files are 31 bytes: headers with no rows), so there is no genome-wide baseline anchoring the log2 ratios. The consequence is visible rather than dramatic: the arm-level events are present but muted (chr9 loss ≈ −0.5 instead of −0.76, chr8 gain ≈ +0.45 instead of +0.49) and the scatter has none of the off-target density that would let a reader see the whole-genome floor.
+
+> **中文批注：** 这是更危险的情形：数字看起来合理、图也漂亮，但 290 个分段里没有一个高权重事件——因为 off-target 基线被模式 flag 丢掉了。
+
+![Figure 3 — `4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-scatter.png` (full round, corrected `-m hybrid` + access file, job 3055).](./figures/cnv_scatter_hybrid_full.png){width=70%}
+
+Same tumour, same normal, one flag changed. The difference is not cosmetic: with 55 Mb of antitarget space in the model, the bin cloud tightens around 0 (most bins are within ±0.5 log2), the off-target floor is visible across the whole genome, and the orange segments now sit on real arm-level shifts — chr9 down to −0.76, chr8 up to +0.49, chrY at −2.05 (a female patient, so both tumour and normal "lose" chrY). Compare the chr9 block in Figures 2 and 3: the same biology, one of them legible.
+
+> **中文批注：** 对比图 2 与图 3 的 chr9：同一份数据，amplicon 模式给 −0.5、hybrid 模式给 −0.76 且权重 7,416。这就是"一个 flag 的实测代价"。
+
+![Figure 4 — `4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-diagram.png` (the `--diagram` output, converted from PDF).](./figures/cnv_diagram_hybrid_full.png){width=85%}
+
+The karyotype view of the same call set: red = gain, blue = loss, one ideogram per chromosome. Read it as a whole-genome gestalt rather than for individual bins — chr9 is blue end to end (the 9q single-copy loss), chr8 and chr20-21 carry large red blocks (gains, with 8q24/MYC inside the chr8 block), chrX is pale and chrY is a thin mostly-empty bar. This is a *low-TMB, copy-number-driven* HGSOC karyotype, which is the other half of the story §9 tells with TMB = 1.78 mut/Mb. Note what the diagram cannot show: gene labels, because the 3-column BED carries no `gene` column (pitfall 3 in §10.3).
+
+> **中文批注：** 这张图适合"一眼看基因组形态"：chr9 整条蓝、chr8/chr20/chr21 大红块、chrY 几乎空——典型的低 TMB、臂级 CNV 驱动的 HGSOC。要看基因名就得先按 §10.3 的第 3 条补注释。
+
 **Full round, roadmap-verbatim (`-m amplicon`, job 3053):** no crash, plausible-looking
 numbers — and the tell is still there: the `*.antitargetcoverage.cnn` files are
 **31 bytes / 0 bytes** (headers only). Amplicon mode simply *has no antitarget

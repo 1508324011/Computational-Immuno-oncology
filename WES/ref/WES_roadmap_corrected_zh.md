@@ -737,7 +737,17 @@ cnvkit.py batch \
 
 **Demo 轮：** 它*跑通了*（没崩）——产出教科书级垃圾：`log2` 高达 **+11.6** 的片段、整数化 `cn` 值 324、1601、6345（二倍体样本的拷贝数不可能超过 ~2× 倍性；>10 的值是"参考为空"的数学伪象），外加一个 0.5× 深度下横跨 chr1 一半、169 Mb 的"缺失"。这正是 0.5× 肿瘤 + 0.5× 单正常参考的必然产物：参考的 bin 方差全是噪声，于是每个 bin 都"显著"偏离。
 
+![图 1 — `4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png`（demo 轮，`-m amplicon`，0.5× 肿瘤 + 0.5× 正常）。](./figures/cnv_scatter_amplicon_demo.png){width=70%}
+
+纵轴是每个 bin 的拷贝数比值（log2），按染色体排开，橙色是分段值。0.5×/0.5× 这一对里灰色点云极宽——每条染色体上的 bin 都散布在 −1.5 到 +1.5 log2 之间——而橙色分段只是沿着噪声连线。`.call.cns` 里的橙色判读达到 `cn` = 324、1601、6345，二倍体基因组不可能出现这种值：参考里几乎没有 bin，方差估计因此毫无意义，于是"每个 bin 都显著"。这张图的用途是**反例**：一次运行可以成功、可以出图，同时毫无价值。
+
+
 **全量轮，按原版（`-m amplicon`，作业 3053）：** 不崩、数字乍看合理——但破绽仍在：`*.antitargetcoverage.cnn` 文件是 **31 字节 / 0 字节**（只剩表头）。amplicon 模式*根本没有抗靶区基线*，一切都只从靶区 bin 算。检出集（290 个片段：cn=0 ×1、cn=1 ×58、cn=2 ×191、cn=3 ×39）乍看像样——但权重和真正要紧的臂级事件全部哑火，因为没有脱靶 bin，log2 比值失去了全基因组范围的锚。
+
+![图 2 — `4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png`（全量轮，`-m amplicon`，作业 3053）。](./figures/cnv_scatter_amplicon_full.png){width=70%}
+
+换成全深度数据后，同一条命令产出的图**好看了很多**——而这才是更危险的情形。这里的一切只从**靶区 bin** 算出（`*.antitargetcoverage.cnn` 是 31 字节的表头空文件），没有全基因组基线来锚定 log2 比值。后果不是戏剧性的崩坏，而是"臂级事件都在、但都被压扁"：chr9 缺失约 −0.5（矫正版 −0.76）、chr8 增益约 +0.45（矫正版 +0.49），并且图里看不到任何脱靶 bin 的密度——而正是那层密度让人能判断"全基因组的底在哪里"。
+
 
 **全量轮，矫正版（`-m hybrid` + access 文件，作业 3055）：** 真实抗靶区覆盖（1.4-Mb 抗靶区 BED、约 55 Mb 的脱靶分 bin空间）→ 357 个片段（cn=0 ×1、cn=1 ×69、cn=2 ×202、cn=3 ×35），**高权重臂级事件**如下：
 
@@ -752,6 +762,14 @@ cnvkit.py batch \
 | chr14q / 16p / 17p 焦点缺失 | −0.33 至 −0.75 | 1 | ~200–300 | 亚臂级缺失 |
 
 这是一个**核型上自洽的 HGSOC 图景**（低 TMB、臂级 CNV 驱动——另一半故事见 §9 的 TMB=1.78）。amplicon 模式那一轮在可比权重下*一条都看不到*——一个错误旗标的具象代价，实测在案。
+
+![图 3 — `4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-scatter.png`（全量轮，矫正 `-m hybrid` + access 文件，作业 3055）。](./figures/cnv_scatter_hybrid_full.png){width=70%}
+
+同一份肿瘤、同一个正常对照，只改一个旗标。差别不是观感：约 55 Mb 的抗靶区空间进入模型后，点云收紧到 0 附近（多数 bin 落在 ±0.5 log2 内），全基因组都能看到脱靶底部，橙色分段于是落在真实的臂级位移上——chr9 下到 −0.76、chr8 上到 +0.49、chrY 到 −2.05（女性患者，肿瘤与正常都"丢"了 chrY）。把图 2 与图 3 的 chr9 区块并排看：同一份生物学，其中一张可读。
+
+![图 4 — `4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-diagram.png`（`--diagram` 输出，由 PDF 转换）。](./figures/cnv_diagram_hybrid_full.png){width=85%}
+
+同一套判读的核型视图：红 = 增益、蓝 = 缺失，每条染色体一根 ideogram。它适合看"全基因组形态"而不是看单个 bin——chr9 整条蓝（9q 单拷贝缺失），chr8 与 chr20-21 是大块红（其中 chr8 那块包含 8q24/MYC），chrX 淡、chrY 是一条几乎空的细条。这就是**低 TMB、臂级 CNV 驱动**的 HGSOC 核型，也正是 §9 用 TMB = 1.78 mut/Mb 讲的另一半故事。它看不到的是基因名：3 列 BED 没有 `gene` 列（§10.3 第 3 条）。
 
 ## 10.3 坑与矫正（问题 #4）
 

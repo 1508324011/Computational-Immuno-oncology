@@ -193,6 +193,22 @@ hybrid 版 `call.cns` 里的高权重事件（`awk '$NF>1000'` 可直接筛出�
 HGSOC 图景。demo 轮的 `call.cns` 则是反面教材：cn 值 324/1601/6345——参考为空时的数学
 伪象，0.5× 数据 + amplicon 模式的双重噪声。
 
+![图 1 — `demo/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png`：demo 轮（`-m amplicon`，0.5×）的散点。](./figures/cnv_scatter_amplicon_demo.png){width=70%}
+
+灰点云宽达 ±1.5 log2，橙色分段只是沿噪声连线；对应的 `call.cns` 里 `cn` 到了 324/1601/6345——二倍体不可能的取值。看到这张图就该停下：参考里没有 bin，方差估计无意义，"每个 bin 都显著"。
+
+![图 2 — `full/4_cnv/cnvkit_out/OC_sorted.markdup.BQSR-scatter.png`：全量轮按原样（`-m amplicon`，作业 3053）。](./figures/cnv_scatter_amplicon_full.png){width=70%}
+
+更危险的那种：图好看了，但一切只来自靶区 bin（`antitargetcoverage.cnn` 31 字节 = 空表头）。臂级事件都在，却被压扁——chr9 约 −0.5（矫正版 −0.76）、chr8 约 +0.45（矫正版 +0.49），且图里完全没有脱靶 bin 的密度层。
+
+![图 3 — `full/4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-scatter.png`：全量轮矫正版（`-m hybrid` + access，作业 3055）。](./figures/cnv_scatter_hybrid_full.png){width=70%}
+
+同一批 BAM，只改一个旗标。点云收紧到 ±0.5 内、全基因组都能看到脱靶底部，橙色分段落在真实臂级位移上。把图 2 与图 3 的 chr9 区块并排看，就是"一个 flag 的实测代价"。
+
+![图 4 — `full/4_cnv/cnvkit_out_hybrid/OC_sorted.markdup.BQSR-diagram.pdf`（转 PNG）：全基因组核型视图。](./figures/cnv_diagram_hybrid_full.png){width=85%}
+
+红=增益、蓝=缺失。整条 chr9 蓝（9q 单拷贝缺失）、chr8 与 chr20-21 大块红（chr8 那块含 8q24/MYC）、chrX 淡、chrY 几乎空（女性）。适合一眼看"这个基因组长什么样"，不适合看单个 bin；基因名缺失是因为 3 列 BED 没有 `gene` 列。
+
 ## 10. HsMetrics（`full/qc/*.hs_metrics.txt`，矫正补充步骤）
 
 **是什么：** CollectHsMetrics 的靶区覆盖度报告——**整条原版路线图唯一缺失的指标**，
