@@ -347,6 +347,14 @@ results_table$label <- ifelse(results_table$regulate != "not sig", results_table
 
 **解读——SEQC 真值核验。** 每个方向都与已知答案一致：**UHR 上调**：免疫球蛋白 lambda 链 IGLC2/IGLC3（UHR 混样含免疫细胞 RNA）——教科书级；**HBR 高（即 UHR 下调）**：MIAT、YWHAH、MAPK8IP2、ACO2、SYNGR1、SEPTIN3——脑富集转录本。两个深度下 top 基因是同一条转录本（IGLC2，|logFC| > 10、FDR ~1e-145）——信号在 1 万读段时已饱和；深度买到的是**更多**被检出的基因（45 → 319），不是不同答案。这正是 mini/homework 配对的核心课程点。
 
+![图 1 — `volcano_plot.pdf`（homework 轮，171 上调 / 148 下调 / 512 不显著）。](./figures/volcano_homework.png){width=70%}
+
+先看坐标范围再读结论：纵轴顶到 300（即 FDR ~1e-300），因为每组只有 3 个重复、而 HBR/UHR 是两个完全不同的样本池，差异是"人造"的极端。这带来一个读图陷阱——`FDR = 0.05` 的那条横阈线在 1.3 的位置，在这种尺度下与 0 无法区分，所以整张图在视觉上等于"全部显著"。真正该看的是灰点（不显著）那一小撮的边界，以及 |log2FC| = 1 竖线两侧的密度对比。
+
+![图 2 — `volcano_plot.pdf`（mini 轮，15 上调 / 30 下调 / 66 不显著）。](./figures/volcano_mini.png){width=70%}
+
+同一段代码在 10k reads/样本的 mini 数据上：点少、纵轴范围小得多（FDR 最小值在 1e-30 量级），阈值线因此可见——这让"mini 轮图更好看但结论更弱"变得具体。两轮对比的正确读法是**方向一致性**：两轮里 IGLC2/IGLC3 都是最强的上调基因，SYNGR1/SEPTIN3/YWHAH 都在下调侧，说明 10k reads 已足以定方向，只是定不了幅度。
+
 **坑。** RNA-15（`ggrepel: 9 / 280 unlabeled`——去拥挤提示，良性）。glmLRT 收拟合对象；多传参数会改变被检验项（mini 轮收割时踩过并当场纠正——教程原文 `glmLRT(fit)` 才是对的）。
 
 **调优。** `topTags(n = Inf)` 再按 logFC 排序，能看见被 FDR 排序遮住的大效应基因。**扩展。** `decideTests` 跨对比做 Venn；`topTags` 默认 BH 校正就是这里的 FDR。
@@ -371,6 +379,14 @@ ggsave("GO_dotplot_up_regulate.pdf", plot = go_dotplot, width = 7, height = 5)
 **原理。** 富集问的是：上调基因集相对背景在注释条目上是否过度代表。`keyType = "SYMBOL"` 直接喂基因符号（免手工转 ID）；`ont = "ALL"` 合并 BP+MF+CC；`pvalueCutoff = 1` 关掉展示侧阈值，让 top-10 按真实显著性排序。
 
 **实跑。** mini 15 个上调基因 / homework 171 个。homework top GO 条目（p.adjust 0.0075–0.0088）：*viral RNA genome replication*、*single-stranded viral RNA replication via double-stranded DNA intermediate*、*glycosyl compound catabolic process*、*protein targeting to mitochondrion*、*DNA dealkylation*、*cytidine catabolic process*、*cytidine deamination*、*cytidine-to-uridine editing*。教师参考 `GO_dotplot.pdf` 的 top 条目相同（*viral RNA genome replication*、*glycosyl compound catabolic process*，p.adjust 0.0075）——与参考交叉验证通过，不只是自洽。
+
+![图 3 — `GO_dotplot_up_regulate.pdf`（homework 轮，171 个上调基因的富集前十）。](./figures/go_dotplot_homework.png){width=70%}
+
+这张图必须带着三个数字一起读：`Count`（3-6 个基因）、`GeneRatio`（0.028-0.058）、`p.adjust`（0.0082-0.0088）。也就是说前十条通路全部由三到六个基因撑起来，而色带覆盖的显著性区间窄到几乎看不出差别——最上面那条 `protein targeting to mitochondrion` 的 GeneRatio 明显更高，只是因为它基因少、比例被天然放大。真正有生物学含义的是中间那一串 cytidine deamination / cytidine to uridine editing / DNA deamination：它们来自 AID/APOBEC 家族的少数几个基因，正是 B 细胞亲和成熟的特征，而不是"通路富集"。读法：先看 Count 再看色，Count 小于 5 的条目一律当作提示。
+
+![图 4 — `GO_dotplot_up_regulate.pdf`（mini 轮，15 个上调基因）。](./figures/go_dotplot_mini.png){width=70%}
+
+15 个基因做 `ont = "ALL"` 的富集，本质上是"用几个基因去问一万多条通路"，得到的条目数量与基因数同量级，p 值只能当排序用。把它与 homework 轮并排，能看到随基因数增加，条目如何从"三五个基因的偶然"过渡到"真有一个家族在动"。
 
 **坑——RNA-07/08，都在合并版 "CODES" 单元格上。** 分步单元格用 `#` 注释掉 KEGG（正确）。合并版单元格却把整个 KEGG 块包进 `''' … '''`。R 里 `'''` **不是**注释：它解析成空串 `''` 加一个开串符 `'`，于是整块变成**一个巨型字符串字面量**，被 R 求值后自动打印——它**碰巧**表现得像个块注释，什么都不做。失效模式是潜伏的：块内一旦出现单引号就会提前闭串，剩余代码全部变成**活代码**。一律把 `'''` 块当非可执行文本。RNA-08：homework 的合并版单元格还在过滤 `"_direct"`（mini 命名）——homework 产物叫 `_quasi`，它找到零个文件、死在 tximport；分步路径（`grepl("quasi")`）才是可执行的。
 
@@ -408,6 +424,18 @@ gene_map <- setNames(gene_anno$gene_name, sub("\\..*$", "", gene_anno$transcript
 ```
 
 矫正后运行（`heatmap_DEG_corrected.pdf`）：**0/50 NA**，行标签是 IGLC2、IGLC3、MCM5、SERPIND1、LIF、…——真实的 top DEG 基因。
+
+![图 5 — `heatmap_DEG.pdf`（homework 轮，原样）：**每一行标签都是 NA**。](./figures/heatmap_homework_aswritten.png){width=85%}
+
+这是本模块最值得记住的一张图：颜色、聚类、注释条全对，HBR 与 UHR 两列阵营分明，上下两个方向块也清楚——唯一的问题是 50 行基因名全是 `NA`。而它**不报错、不警告**，脚本照常写出 PDF，所以只看"跑完了没"是发现不了的。正确的检查方式只有一条：把图打开，看行名是不是符号。修复是一行（把 `gene_map` 的键也去掉版本号），见下一张。
+
+![图 6 — `heatmap_DEG_corrected.pdf`（同一段代码 + 一行修正）：行名恢复为 IGLC2、IGLC3、MCM5、SERPIND1、LIF…](./figures/heatmap_homework_corrected.png){width=85%}
+
+对照两张图：颜色模式、列聚类、注释条完全一致——说明修正只动了标签，没有动数据。这一点很重要，因为它证明"全 NA"是纯记账 bug（`sub("\\..*$", "")` 去掉了 rownames 的版本号、却用带版本号的键去查 `gene_map`，`match` 全部落空），而不是表达矩阵或差异分析出了问题。
+
+![图 7 — `heatmap_DEG_mini_final.pdf`（mini 轮，行名正常）。](./figures/heatmap_mini.png){width=85%}
+
+同一个 bug 在 mini 轮**没有触发**，因为 mini 轮的 `gene_map` 用的是另一份（未带版本号的）注释表。这条差异解释了为什么"老师给的参考图看起来没问题"：参考图是第三种变体（带版本号的 ENST 行名，见附录 B），而印刷版作业的代码路径会产出全 NA——同一个教程的三条路径，三种结果。
 
 **坑。** RNA-09（上述）。RNA-10：教师参考 `heatmap_DEG.pdf` 的行标签是**带版本号的 ENST ID**——既非基因名（mini 风格）也非全 NA（印刷版 homework 风格）：参考跑用的是又一种代码变体，不能当这块的对拍基准（附录 B）。homework 块还丢了 mini 版的 `scale = "row"`——行是裸 logCPM，高表达基因会把 scale="row" 才能显示的图案在视觉上淹没。
 

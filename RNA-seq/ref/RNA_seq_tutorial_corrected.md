@@ -347,6 +347,14 @@ results_table$label <- ifelse(results_table$regulate != "not sig", results_table
 
 **Interpretation — the SEQC truth check.** Every direction matches the known answer: **UHR up**: immunoglobulin lambda chains IGLC2/IGLC3 (UHR's pool includes immune-cell RNA) — textbook; **HBR up (i.e., UHR-down)**: MIAT, YWHAH, MAPK8IP2, ACO2, SYNGR1, SEPTIN3 — brain-enriched transcripts. The top gene is the same transcript at both depths (IGLC2, |logFC| > 10 at FDR ~1e-145) — the signal was already saturated at 10k reads; depth bought *more* called genes (45 → 319), not a different answer. That is the core lesson of the mini/homework pairing.
 
+![图 1 — `volcano_plot.pdf`（homework 轮，171 上调 / 148 下调 / 512 不显著）。](./figures/volcano_homework.png){width=70%}
+
+先看坐标范围再读结论：纵轴顶到 300（即 FDR ~1e-300），因为每组只有 3 个重复、而 HBR/UHR 是两个完全不同的样本池，差异是"人造"的极端。这带来一个读图陷阱——`FDR = 0.05` 的那条横阈线在 1.3 的位置，在这种尺度下与 0 无法区分（图里那条横虚线其实就在 0 附近），所以整张图在视觉上等于"全部显著"。真正该看的是纵向分布里灰点（不显著）那一小撮的边界，以及横纵虚线（|log2FC| = 1）内外两侧的密度对比。
+
+![图 2 — `volcano_plot.pdf`（mini 轮，15 上调 / 30 下调 / 66 不显著）。](./figures/volcano_mini.png){width=70%}
+
+同一段代码在 10k reads/样本的 mini 数据上：点少、纵轴范围小得多（FDR 最小值在 1e-30 量级），阈值线因此可见——这让"mini 轮图更好看但结论更弱"变得具体。两轮对比的正确读法是**方向一致性**：两个轮次里 IGLC2/IGLC3 都是最强的上调基因，SYNGR1/SEPTIN3/YWHAH 都在下调侧，说明 10k reads 已经足以定方向，只是定不了幅度。
+
 **Pitfalls.** RNA-15 (`ggrepel: 9 / 280 unlabeled data points` — decluttering, benign). glmLRT takes the fitted object; passing extra arguments changes the tested term (caught and corrected during our mini-round harvest — the tutorial's own call `glmLRT(fit)` is the right one).
 
 **Tuning.** `topTags(n = Inf)` then sorting by logFC shows strong-effect genes the FDR sort hides. **Extensions.** `decideTests` + Venn across contrasts; `topTags` with `adjust.method = "BH"` is the default FDR here.
@@ -375,6 +383,14 @@ ggsave("GO_dotplot_up_regulate.pdf", plot = go_dotplot, width = 7, height = 5)
 **Pitfalls — RNA-07/08, both about the consolidated "CODES" cell.** The step-by-step cells comment KEGG out with `#` (correct). The consolidated cell instead wraps the whole KEGG block in `''' … '''`. In R, `'''` is **not** a comment: it parses as an empty string `''` followed by a string-opener `'`, so the entire block becomes **one giant string literal** that R evaluates and auto-prints — it *accidentally* behaves like a block comment, doing nothing. The failure mode is latent: any apostrophe inside the block would close the string early and the remaining code becomes **live**. Treat `'''` blocks as non-executable prose, always. And RNA-08: the homework's consolidated cell still filters `"_direct"` (the mini naming) — with homework outputs named `_quasi` it finds zero files and dies at tximport; the step-by-step path (`grepl("quasi")`) is the executable one.
 
 **Interpretation.** The cytidine-deamination/cytidine-to-uridine-editing cluster is not noise: immunoglobulin-expressing cells run AID/APOBEC-driven cytidine deamination for affinity maturation — the GO readout of the same IG signal the volcano shows. The "viral RNA genome replication" style categories are an annotation-side effect of the IG/ERV-region genes in the up set (read with the teacher's reference, which shows the same).
+
+![图 3 — `GO_dotplot_up_regulate.pdf`（homework 轮，171 个上调基因的富集前十）。](./figures/go_dotplot_homework.png){width=70%}
+
+这张图必须带着三个数字一起读：`Count`（3-6 个基因）、`GeneRatio`（0.028-0.058）、`p.adjust`（0.0082-0.0088）。也就是说前十条通路全部由三到六个基因撑起来，而色带覆盖的显著性区间窄到几乎看不出差别——最上面那条 `protein targeting to mitochondrion` 的 GeneRatio 明显更高，只是因为它只有一个/三个基因，比例天然被放大。真正有生物学含义的是中间那一串 cytidine deamination / cytidine to uridine editing / DNA deamination：它们来自 AID/APOBEC 家族的少数几个基因，正是 B 细胞亲和成熟的特征，而不是"通路富集"。读法：先看 Count 再看色，Count 小于 5 的条目一律当作提示。
+
+![图 4 — `GO_dotplot_up_regulate.pdf`（mini 轮，15 个上调基因）。](./figures/go_dotplot_mini.png){width=70%}
+
+15 个基因做 `ont = "ALL"` 的富集，本质上是"用几个基因去问一万多条通路"，得到的条目数量与基因数同量级，p 值只能当排序用。把它与 homework 轮并排，能看到随基因数增加条目如何从"三五个基因的偶然"过渡到"真有一个家族在动"——这也是本模块反复强调的：富集分析在小基因集上没有推断力，只有描述力。
 
 **Tuning.** `enrichKEGG` needs ENTREZ IDs (the commented block does the conversion) and network access to KEGG REST — the reason it's the step usually left off in class. **Extensions.** `compareCluster` across up/down/both sets; GSEA (`gseGO`) on the whole ranked table uses more than the top set.
 
@@ -408,6 +424,18 @@ gene_map <- setNames(gene_anno$gene_name, sub("\\..*$", "", gene_anno$transcript
 ```
 
 Our corrected run (`heatmap_DEG_corrected.pdf`): **0 of 50 NA**, row labels IGLC2, IGLC3, MCM5, SERPIND1, LIF, … — the real top-DEG genes.
+
+![图 5 — `heatmap_DEG.pdf`（homework 轮，原样）：**每一行标签都是 NA**。](./figures/heatmap_homework_aswritten.png){width=85%}
+
+这是本模块最值得记住的一张图：颜色、聚类、注释条全对，HBR 与 UHR 两列阵营分明，上下两个方向块也清楚——唯一的问题是 50 行基因名全是 `NA`。而它**不报错、不警告**，脚本照常写出 PDF，所以只看"跑完了没"是发现不了的。正确的检查方式只有一条：把图打开，看行名是不是符号。修复是一行（把 `gene_map` 的键也去掉版本号），见下一张。
+
+![图 6 — `heatmap_DEG_corrected.pdf`（同一段代码 + 一行修正）：行名恢复为 IGLC2、IGLC3、MCM5、SERPIND1、LIF…](./figures/heatmap_homework_corrected.png){width=85%}
+
+对照两张图：颜色模式、列聚类、注释条完全一致——说明修正只动了标签，没有动数据。这一点很重要，因为它证明"全 NA"是纯记账 bug（`sub("\\..*$", "")` 去掉了 rownames 的版本号、却用带版本号的键去查 `gene_map`，`match` 全部落空），而不是表达矩阵或差异分析出了问题。行名恢复后这张图才第一次可以用于讲生物学：上块是 UHR 侧（免疫球蛋白、浆细胞相关），下块是 HBR 侧。
+
+![图 7 — `heatmap_DEG_mini_final.pdf`（mini 轮）。](./figures/heatmap_mini.png){width=85%}
+
+mini 轮的行名是正常的（基因符号），也就是说同一个 bug 在 mini 轮**没有触发**——因为 mini 轮的 `gene_map` 用的是另一份（未带版本号的）注释表。这条差异解释了为什么"老师给的参考图看起来没问题"：参考图是 mini 风格的行名，而印刷版作业的代码路径会产出全 NA。同一个教程的两条路径行为不同，是这个 bug 藏了这么久的原因。
 
 **Pitfalls.** RNA-09 (above). RNA-10: the teacher's reference `heatmap_DEG.pdf` has **versioned ENST IDs as row labels** — neither gene names (mini-style) nor all-NA (printed-homework-style): the reference run used yet another code variant, so it is not a valid oracle for this block (Appendix B). The homework block also drops the mini version's `scale = "row"` — rows are raw logCPM, so a highly expressed gene visually swamps the pattern scale="row" would show.
 

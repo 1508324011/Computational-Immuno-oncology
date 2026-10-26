@@ -28,7 +28,38 @@
 
 **09_R/**：两轮的图。**homework 轮有一对热图证据**：`heatmap_DEG.pdf`（照教程原文跑出，50 行标签全部是 "NA"——沉默 bug 的直接产物）与 `heatmap_DEG_corrected.pdf`（一行修复后，50 行全是真实基因名）。mini 轮的 `heatmap_DEG_mini_final.pdf` 标签正常——mini 版热图代码本来就正确，作业版是被重写坏的。
 
+![图 1 — `heatmap_DEG.pdf`（homework 轮，原样）：**50 行标签全是 NA**，但图本身没有任何异常。](./figures/heatmap_homework_aswritten.png){width=85%}
+
+这就是"沉默 bug"长什么样：HBR/UHR 两列阵营分明、上下两个方向块清楚、注释条也正常，唯一的问题是行名。脚本不报错、不警告，PDF 照常写出——所以检查方式只能是把图打开看一眼行名。
+
+![图 2 — `heatmap_DEG_corrected.pdf`：一行修复后，行名恢复为 IGLC2、IGLC3、MCM5、LIF…](./figures/heatmap_homework_corrected.png){width=85%}
+
+两张图并排看：颜色模式、列聚类、注释条完全一致，说明修的是标签不是数据——"全 NA"是记账 bug（rownames 去了版本号、`gene_map` 的键还带版本号，`match` 全落空），不是表达矩阵或差异分析出错。
+
+![图 3 — `heatmap_DEG_mini_final.pdf`（mini 轮）：同一个教程的另一条代码路径，行名正常。](./figures/heatmap_mini.png){width=85%}
+
+**同一份教程、两条路径行为不同**，这是这个 bug 能活这么久的原因：mini 轮的 `gene_map` 用的是没版本号的注释表，所以不触发；作业版重写时换了带版本号的注释表。仓库里两条路径的产物都在，正好当对照。仓库内亲手数一遍：`pdftotext heatmap_DEG.pdf - | grep -c '^NA$'` → 50，对 corrected 版同一条命令 → 0。
+
+
 **scripts/ 与 log/**：运行脚本原样（含 sbatch 头——homework 轮实际是教程原生登录节点跑，SLURM 头仅溯源保留）；`log/` 是 summary（逐步时间戳）、deviations（全部偏差与实锤发现）、R 分析日志（kept/DEG/Matched/top 基因的原始打印）。
+
+### 09_R 的图怎么读
+
+![图 4 — `volcano_plot.pdf`（homework 轮）：171 上调 / 148 下调 / 512 不显著。](./figures/volcano_homework.png){width=70%}
+
+纵轴顶到 300（FDR ~1e-300）是"每组 3 个重复 + 两个完全不同的样本池"的结果，也带来一个读图陷阱：`FDR = 0.05` 的横阈线在 1.3 的位置，这种尺度下与 0 分不出来，于是整张图在视觉上等于"全部显著"。真正该看的是灰点（不显著）的边界和 |log2FC| = 1 竖线两侧的密度。
+
+![图 5 — `volcano_plot.pdf`（mini 轮）：15 上调 / 30 下调 / 66 不显著，纵轴范围小得多，阈值线可见。](./figures/volcano_mini.png){width=70%}
+
+两轮对比的正确读法是**方向一致性**：IGLC2/IGLC3 在两轮里都是最强上调，SYNGR1/SEPTIN3/YWHAH 都在下调侧——10k reads 足以定方向，定不了幅度。这正是 SEQC 真值自检（练习 5）要你看的东西。
+
+![图 6 — `GO_dotplot_up_regulate.pdf`（homework 轮，171 个上调基因）。](./figures/go_dotplot_homework.png){width=70%}
+
+带三个数字一起读：`Count` 3-6、`GeneRatio` 0.028-0.058、`p.adjust` 0.0082-0.0088。前十条通路全由三到六个基因撑起，色带区间窄到看不出差别；最上面那条 `protein targeting to mitochondrion` 的 GeneRatio 高只是因为它基因少、比例被放大。有生物学含义的是中间那串 cytidine deamination / cytidine to uridine editing——AID/APOBEC 家族的少数基因，B 细胞亲和成熟的特征。规则：先看 Count，Count < 5 的条目当提示看。
+
+![图 7 — `GO_dotplot_up_regulate.pdf`（mini 轮，15 个上调基因）。](./figures/go_dotplot_mini.png){width=70%}
+
+15 个基因做 `ont = "ALL"` 富集，等于用几个基因问一万多条通路——条目数和基因数同量级，p 值只能当排序。与 homework 轮并排，能看到条目如何随基因数从"三五个基因的偶然"过渡到"真有一个家族在动"。
 
 ## 3. 动手练习（全部仓库内可完成）
 
