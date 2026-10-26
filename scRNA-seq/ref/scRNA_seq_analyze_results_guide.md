@@ -30,6 +30,14 @@ results/
 
 `violin_mt.png` 是 Seurat 的三个小提琴图（基因数、UMI、线粒体占比），`violinscanpy_violin_plot_QC.png` 与两张 `scatterscanpy_scatter_*.png` 是 scanpy 侧对应的质控视图。两张散点的用途是**在定阈值之前**看形状：`total_counts` vs `n_genes_by_counts` 应该是线性关系，偏离线性且在右上的点是双细胞；`total_counts` vs `pct_counts_mt` 右上角是濒死细胞。
 
+![图 1 — Seurat 的三个质控小提琴图（2,700 个细胞）：基因数、UMI、线粒体占比。](./figures/01_violin_mt.png){width=100%}
+
+看三件事：基因数左侧长尾有没有触到 200（这里没有，所以那一侧一个细胞都没丢）、右侧 2,500 之外还剩多少（5 个）、线粒体占比 5% 之外的右侧肩有多厚（57 个）。中位 817 基因 / 2,197 UMI 是 2016 年浅测序数据的典型值，换成现代 10x 数据时同一组阈值会删掉大部分细胞。
+
+![图 2 — `total_counts` 对 `pct_counts_mt`：定阈值之前必须先看形状。](./figures/04_scanpy_scatter_mt.png){width=100%}
+
+这是一张"阈值到底切在哪里"的图。濒死细胞丢掉胞质 mRNA、线粒体转录本相对升高，于是往左上漂；5% 那条竖线穿过的是稀疏的上云，不是某个自然空隙——所以任何线粒体阈值都是约定。对照图 3 的另一种形状：`total_counts` 对 `n_genes_by_counts`。
+
 表比图重要：
 
 - `qc_summary.csv`：四次运行（Seurat 原样、Seurat 对齐基因全集、scanpy 教材阈值、scanpy 对齐阈值）各自的规则、输入/保留细胞数、基因数，最后一列给出该数字出自哪份日志。
@@ -39,6 +47,14 @@ results/
 ### 2.2 `02_hvg_pca/`
 
 Seurat 侧：`VariableFeaturePlot.png`（原样，**两联**——左边是 `p`，右边是 `p + 标注`，教材 `p <- p + plot2` 的真实效果）、`VariableFeaturePlot_corrected.png`（单联，修正后）、`PCA_VizDimLoadings.png`（PC1/PC2 的载荷，可直接读出哪些基因在驱动主成分）、`PCA.png`（肘图，20 维）、`PCA_dimplot.png`（前两个 PC 上的细胞散点，9 个群已经能看出轮廓）、`PCA_heatmap_ALL.png`（6 个 PC × 每个 100 个平衡细胞的热图，Seurat 社区里常说的"看 PC 上有没有结构"就看它）。
+
+![图 3 — `VariableFeaturePlot.png`（原样）：两联图，左半是 `p`、右半是 `p + 标注`。](./figures/05_variable_features_aswritten.png){width=100%}
+
+这张图是教材 `p <- p + plot2` 的直接后果，也是"参考图里带着 bug"的证据：课程随附的参考 PNG 是同样的两联版式，所以我们按原样跑出来的图与它相关 0.9751。修正成单联后（`VariableFeaturePlot_corrected.png`）反而与参考图不同——这不代表分析错了。
+
+![图 4 — `PCA_heatmap_ALL.png`：6 个主成分 × 每个 100 个平衡细胞。](./figures/11_pca_heatmap.png){width=85%}
+
+本模块复现度最高的图（对参考图结构相关 **1.0000**）。读法是逐块看：PC1 是单核对淋巴（CD14/LYZ/S100A8 对 IL7R/CD3D），PC2 是 B 细胞（MS4A1/CD79B/HLA-*），PC3 是血小板（GP9/ITGA2B/PPBP）。如果某个主成分的基因清单读不出生物学含义，那它就是"不该继续用"的成分。
 
 scanpy 侧：`filter_genes_dispersionscanpy_HVG.png`（均值-离散度散点，HVG 被标红）、`pcascanpy_PCA.png`（PC1/PC2，按 CST3 上色）、`pca_variance_ratioscanpy_PCA_ratio.png`（碎石图，**参考图里没有这一张**——教材那个单元格因双逗号整段没跑）。
 
@@ -54,6 +70,14 @@ scanpy 侧：`filter_genes_dispersionscanpy_HVG.png`（均值-离散度散点，
 
 读法：先看最小的两群（DC 28-36 个、血小板 12-14 个）是否在三种方案里都稳定存在——在，说明它们是真实细胞类型而不是噪声；再看两个大 T 腔室是否被拆分——Seurat 拆了 naive/memory CD4，scanpy 拆的是"核糖体高"的一个 CD4 群。
 
+![图 5 — `UMAP.png`：Seurat 的 9 群解（2,638 个细胞）。](./figures/14_umap_seurat.png){width=100%}
+
+先看两颗小卫星再回头看大块：DC（28 个细胞）与血小板（14 个）在图上与一切分离，marker 也毫不含糊，说明它们是真细胞类型而不是噪声；单核臂（2、5）与 T 叶（0、1、4）之间那条空白则是真实的转录差异。不要读群间距离——UMAP 的距离不是定量的。
+
+![图 6 — `umapscanpy_markers.png`：leiden 解 + 12 个 marker 面板。](./figures/15_scanpy_markers_grid.png){width=100%}
+
+一张顶九张的排版。第一格是 8 群的 leiden 解，其余格是同一嵌入上的 marker 叠加；它的价值在于"两个独立工具是否看到同样的结构"：B、单核、血小板在三套结果里都各自成群，而 CD8/NK 的边界在这里被合并、在 Seurat 里被分开。
+
 ### 2.4 `04_annotation/`
 
 图：`marker_Features.png`（9 个谱系 marker）、`marker_Features_2.png`（12 个细分 marker）、`Marker_Heatmap.png`（原样：top10 只看 log2FC）与 `Marker_Heatmap_corrected.png`（先卡 `p_val_adj < 0.05 & log2FC > 1` 再取 top10）、`cell annotations.png`（Seurat 9 群带标签 UMAP）、`umapscanpy_final_umap.png`（scanpy 8 群带标签 UMAP）。
@@ -67,11 +91,31 @@ scanpy 侧：`filter_genes_dispersionscanpy_HVG.png`（均值-离散度散点，
 - `markers_all_clusters.csv`（11,986 行）、`markers_top10_per_cluster.csv`（90 行）、`cluster0_markers.csv` … `cluster7_markers.csv`（scanpy，每群前 200 个）：教材算了但从未落盘的 marker 统计。
 - `appendix_mincells3_*.csv`：基因全集改成 13,714 后的同一批表，用来看"改动 30 个 HVG 会让什么跟着动"。
 
+![图 7 — `marker_Features_2.png`：12 个细分 marker 的 FeaturePlot。](./figures/17_featureplot_markers2.png){width=100%}
+
+注释时最该看的一张。逐格读：MS4A1 只亮 B 岛，GNLY/NKG7 只亮 NK，FCER1A/CST3 只亮 28 个细胞的 DC，PPBP 只亮血小板，FCGR3A 把非经典单核和经典单核分开。注意它**定不了**两件事：cluster 0 与 1 在这十二个 marker 上无法区分（都是 CD4，IL7R/CD3E 两边都亮），所以 naive/memory 之分只能靠 `FindMarkers`；以及单个 marker 会共享（LYZ 在 naive CD4 T 里也有 0.96）。
+
+![图 8 — `Marker_Heatmap_corrected.png`：先卡显著性再取 top10 的热图。](./figures/19_heatmap_corrected.png){width=85%}
+
+把这张和原样版 `Marker_Heatmap.png` 并排看，就是 SC-03 的直观形态：原样版按 `avg_log2FC` 从**未过滤**表里取前 10，可能把 `p_val_adj = 0.2` 的基因画进图；修正版从 3,483 个显著 marker 里选 90 个。B、单核、血小板三块在两版里几乎不变（效应压倒性），变化最大的是 CD4 两块（差 2-4 倍而非 20 倍）。
+
+![图 9 — `cell annotations.png`：Seurat 的 9 个标签。](./figures/20_umap_annotated_seurat.png){width=100%}
+
+用它核对后面所有论述：单核臂 = `CD14+ Mono`（471）+ `FCGR3A+ Mono`（175），T 叶 = `Naive CD4 T`（657）+ `Memory CD4 T`（503）+ `CD8 T`（307）。这些标签在本轮是对的，但 §13.2 的对照实验说明：只要 30 个 HVG 变化，同一串固定名字就会把 1、2 号群互换，而这些图看起来完全正常。
+
 ### 2.5 `05_deg/`
 
 `Naive_Memory_CD4_DEG.png` 是教材本想画、但原样跑崩溃的那张火山图（`library(ggrepel)` 缺失）；横轴 `avg_log2FC`、纵轴 `-log10(p_adj)`，灰色是有差异但不显著的基因，红色是显著项。
 
 `DEG_NaiveCD4_vs_rest.csv`（724 个基因）与 `DEG_MemoryCD4_vs_NaiveCD4.csv`（650 个基因）是两张明细表，含 `p_val`、`p_val_adj`、`avg_log2FC`、`pct.1`、`pct.2`。scanpy 侧的 `rank_genes_groups_leidenscanpy_rank_genes_groups.png`（8 群各列前 25）、`..._violin.png`（群 0 的前 10 个基因表达分布）、`dotplot_scanpy_rank_genes_groups_dotplot.png`（17 个经典 marker × 8 群）是同一件事的另一种算法。
+
+![图 10 — `Naive_Memory_CD4_DEG.png`：教材本该产出、原样跑却崩溃的火山图。](./figures/21_volcano_naive_cd4.png){width=100%}
+
+两个峰都要读：正向的高峰（LDHB、IL7R、LTB、CD3D、IL32、CD3E）说明 naive CD4 T"有"T 细胞程序；负向的低峰（HLA-DRA/DRB1/DRB5/DPA1/DPB1、CD74、TYROBP、CYBA）说明它同样"没有"MHC-II 与髓系机器——而这半边在教材 `only.pos = TRUE` 的 marker 表里完全看不到。724 个基因里 353 个显著、199 个通过双条件。
+
+![图 11 — `rank_genes_groups`（scanpy，Wilcoxon）：8 群各 25 个基因。](./figures/22_scanpy_rank.png){width=100%}
+
+Python 侧的对照。读法是逐列问"这份清单连贯吗"：0 列顶部是 RPS12/RPS27/RPL32（核糖体高，技术轴）、1 列是 LDHB/CD3D/LTB/IL32（CD4）、2 列是 CD74/CD79A/HLA-DRA（B）、3 列是 LYZ/S100A9/S100A8（单核）、4 列是 NKG7/GZMA/CTSW（NK/CD8 细胞毒）、5 列是 LST1/FCGR3A（非经典单核）、6 列是 HLA-DP/DR + FCER1A（DC）、7 列是 PF4/PPBP/GP9（血小板）。把这份顺序与教材的 8 个名字对照，就能看出哪两个名字落错了位置。
 
 ### 2.6 `06_integration/`
 
@@ -81,6 +125,14 @@ scanpy 侧：`filter_genes_dispersionscanpy_HVG.png`（均值-离散度散点，
 - `harmony_cluster_by_sample.csv`：12 个群里 ctrl/stim 各多少细胞，最大群 6,065（3,096 / 2,969），最小群 92（38 / 54）。
 
 读法：跨样本近邻比例从 3% 升到 41%，说明两批细胞被拉到一起了；同时每个群内部两样本接近 1:1（偏离 0.5 的平均绝对值 0.030），说明没有把某一种细胞"整合没了"。
+
+![图 12 — `UMAP_without_harmony.png` 与 `UMAP_with_harmony.png`：去批次前后。](./figures/26_umap_no_harmony.png){width=100%}
+
+上图：去批次之前，ctrl（红）与 stim（青）各占一块，只在一条细缝处相接——批次效应压过了生物学。下图：harmony 之后，两种颜色在每座岛上交错。
+
+![图 13 — 去批次之后（`UMAP_with_harmony.png`）。](./figures/27_umap_harmony.png){width=100%}
+
+图好看不等于结论可靠，所以本节配了数字：跨样本近邻比例 PCA 空间 0.0287 → harmony 空间 0.4051，聚类后 12 个群没有一个的单样本占比超过 90%。同时注意两条不可见的信息：harmony 用全部 50 个 PC 而 UMAP 只用前 10（SC-20）；同一份代码两次运行的结构相关只有 0.563（SC-18），所以"图看起来像"不能作为判断依据。
 
 ### 2.7 `07_objects/`
 

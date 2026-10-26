@@ -286,6 +286,22 @@ SC-14（符号改写、重复）与 SC-15（旧版布局、无 `features.tsv`）
 
 scanpy 侧用 `n_genes < 2000` 保留 **2,635** 个细胞（SC-10）。在原始矩阵上按同样数字独立重算得到 2,634——差的这一个细胞，是线粒体占比在 scanpy 里按**过滤后**的 13,714 基因矩阵计算、而 Seurat 用全部 32,738 个特征，边界细胞的占比因此落在 5% 两侧。记录在 `results/01_qc/qc_rederivation_rawmatrix.csv`。
 
+![图 1 — Seurat 对全部 2,700 个细胞的质控分布：每细胞基因数、UMI 数、线粒体占比，以及教材的三条阈值。](./figures/01_violin_mt.png){width=100%}
+
+对着规则 `nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5` 来读。基因数分布是 2016 年浅测序数据的典型形状——中位 817，左侧长尾从未触到 200（所以那一侧**一个**细胞都没丢），右侧有一层薄薄的肩（5 个细胞，也是这套流程唯一会当成双细胞删掉的东西）。线粒体占比整体压在 5% 以下，右侧小肩就是被删的 57 个细胞。高 UMI 处**没有**第二个峰，这正是"三个数字就够了、不必上双细胞检测器"的依据。
+
+![图 2 — scanpy 用 `calculate_qc_metrics` 算出的同样三个指标（在 `filter_cells(min_genes=200)` 与 `filter_genes(min_cells=3)` 之后）。](./figures/02_scanpy_violin_qc.png){width=100%}
+
+这张面板不是上面那张的复制品，而差异恰好是要点：它的分布是在**过滤后的 13,714 基因**矩阵上算的，Seurat 那张用的是全部 32,738 个特征。线粒体占比是个比值，去掉 19,024 个全零基因就改变了边界细胞的分母——这正是"同样写 `< 5%`、Seurat 留 2,638 而 scanpy 留 2,635"的那一个细胞的来源（SC-10）。
+
+![图 3 — 每个细胞的 `total_counts` 对 `n_genes_by_counts`。](./figures/03_scanpy_scatter_genes.png){width=70%}
+
+这张图就是教材没点名的双细胞检验。主云几乎完全线性——每多一个 UMI 就按固定速率多拿基因——双细胞会落在线上方（同样的 UMI 数却拿到两个细胞的基因量）。这里主云紧致、上方没有分离出来的分支，所以"基因数上限 2,500"实际上是在代理双细胞过滤。
+
+![图 4 — `total_counts` 对 `pct_counts_mt`。](./figures/04_scanpy_scatter_mt.png){width=70%}
+
+读法相反：濒死细胞丢掉胞质 mRNA，线粒体转录本仍留在尚完整的细胞器里，于是往左上漂。5% 那条竖线是穿过稀疏上云画的，而不是穿过某个空隙——这是对任何线粒体阈值诚实的描述：它是一条约定，不是物理边界。
+
 ### 5.3 坑
 
 实质性的是阈值不一致（SC-10）：它就是 §12 里"9 群 vs 8 群"的源头。另需注意 `^MT-` 只匹配实际存在的 13 个基因；换成 `^MT\.`（MitoCarta 风格）或小鼠数据（`^mt-`）要改正则，而一旦不匹配，`PercentageFeatureSet()` 的表现会被误读成数据问题。
@@ -307,6 +323,22 @@ scanpy 侧用 `n_genes < 2000` 保留 **2,635** 个细胞（SC-10）。在原始
 
 SC-08 在此：`p <- p + plot2` 画出的是**两联图**，参考图带着这个痕迹。`results/02_hvg_pca/` 两个版本都在：`VariableFeaturePlot.png`（原样、两联、对参考 0.9751）与 `VariableFeaturePlot_corrected.png`（修正、单联）。
 
+![图 5 — 教材原文的 `VariableFeaturePlot.png`：两联图，因为 `p <- p + plot2` 把旧图和有标注的图并排打印了。](./figures/05_variable_features_aswritten.png){width=100%}
+
+左右两半都是同一批 32,738 个基因、2,000 个 HVG 标红；左半没有基因名，右半标了二十个。这是全模块最干净的"代码能跑、产出看起来能用、但做的不是作者本意"的例子——而且下一张图会证明教师自己的参考图也带着同一个痕迹。
+
+![图 6 — 课程随附的参考 `VariableFeaturePlot.png`：同样的两联版式，也就是说这个痕迹被当作"预期产出"发了出去。](./figures/ref_variable_featureplot_2panel.png){width=100%}
+
+把它和图 5 并排看，才是判断"复现"的正确方式：我们的原样跑与之结构相关 0.9751（尺寸相同、点云相同、标注相同），因为两者是同一个两联 bug 的产物。反过来，一个学生"修好"这张图再与参考图对比，会得出"我的分析与老师不同"的错误结论。
+
+![图 7 — 修正后的单联版（`VariableFeaturePlot_corrected.png`）。](./figures/06_variable_features_corrected.png){width=100%}
+
+修正版用 `LabelPoints(repel = TRUE)` 画一张散点并把二十个标注挂上去。它与参考图的相关度按构造掉到 0.0713：两张图是同一份数据的不同画面。标注本身是体检项——PPBP、LYZ、S100A9、IGLL5、FTL、GNLY、PF4、FTH1、GNG11、S100A8、FCER1A、HLA-DRA、CD74、CLU、NKG7、CST3、GZMB、CCL4、C1QA、HLA-DPB1 全是白细胞基因，说明 `vst` 在 PBMC 上选对了。
+
+![图 8 — 另一侧的 scanpy 选 HVG：标准化离散度对平均表达，选出 1,833 个基因。](./figures/07_scanpy_hvg.png){width=100%}
+
+两种方法不可互换，这张图就是原因所在：`vst` 对"方差 ~ log 均值"的 loess 拟合做标准化，能提拔均值不高但极端的基因（PF4、PPBP）；scanpy 的 `min_mean 0.0125 / max_mean 3 / min_disp 0.5` 卡的是分箱后标准化数据的离散度，在 13,714 个基因的宇宙里返回 1,833 个。两个数都不错——它们用不同的方差模型回答同一个问题："哪些基因的变化超出其表达水平所预测的程度"。
+
 ---
 
 ## 7. Part 4 —— 标准化与 PCA
@@ -322,6 +354,30 @@ SC-08 在此：`p <- p + plot2` 画出的是**两联图**，参考图带着这�
 | 出图 | `PCA_VizDimLoadings.png`、`PCA.png`（肘图，20 维）、`PCA_dimplot.png`、`PCA_heatmap_ALL.png`（6 张热图 × 100 细胞） |
 
 `PCHeatmap()` 是 `DimHeatmap()` 的废弃别名；Seurat 5.1.0 里仍可用且不报警告，很容易一用多年（SC-07）。肘图呈 PBMC 3k 的经典形状——拐点在 PC 7-10 之间——这正是 `dims = 1:10` 的依据；但肘图画的是 20 维，而正文从未解释为什么取 10。
+
+![图 9 — `PCA_VizDimLoadings`：PC1 与 PC2 上正负载荷最大的基因。](./figures/08_pca_loadings.png){width=100%}
+
+载荷是 PCA 可解释的那一半。PC1 由单核-淋巴的对比主导（一侧 LYZ、S100A8、S100A9、CD14，另一侧 IL7R、CD3D、LTB），PC2 把 FCGR3A+ 单核与 NK 分开。如果某个主成分拿不出一份连贯的基因清单，那就是"该停止使用它"的信号——这里前几个成分在生物学上可读，这是选 `dims = 1:10` 的一个虽弱但真实的理由。
+
+![图 10 — `PCA.png`：20 个主成分的标准差肘图。](./figures/09_pca_elbow.png){width=100%}
+
+肘部弯在 PC 7-10 附近然后变平，这就是 `dims = 1:10`（用于 `FindNeighbors`、`FindClusters`、`RunUMAP`）的非正式依据。注意这张图**没有**做什么：它只画 20 维，而 `RunPCA` 算了 50 维；它也不给判据——取 10 是视觉惯例，SC-07 记录的就是教材从未把"画 20"和"用 10"对上。
+
+![图 11 — `PCA_dimplot`：所有细胞落在 PC1/PC2 平面上。`DimPlot()` 是在 `FindClusters()` **之前**调的，此刻全部细胞仍只有一个身份——单一颜色，`+ NoLegend()` 又把图例去掉了。](./figures/10_pca_dimplot.png){width=100%}
+
+不要在这张图里找群：只有一个身份层时颜色不携带任何信息，参考图也是同样的单色（相关 0.9875）。它展示的是聚类**之前**数据的形状——中央一团密实的 T 细胞云、右侧一条独立的臂、左下一个小小的离群瓣——足够得出「不止一个群体」，远不够给任何一个群命名。带颜色的版本要等 `FindClusters()` 之后才有意义，即图 19。
+
+![图 12 — `PCA_heatmap_ALL`：前 6 个主成分，每个成分取该成分两端均匀分布的 100 个细胞，右侧印着定义该面板的基因。](./figures/11_pca_heatmap.png){width=100%}
+
+每行一个基因、每列一个细胞，面板本身自带解释：PC1 是单核-淋巴的对比轴（CD14、LYZ、S100A8/S100A9、FCN1 对 MALAT1、IL7R、CD3D），PC2 是 B 细胞身份（MS4A1、CD79B、CD74、HLA-DRA/DRB1），PC3 是血小板板块（GP9、ITGA2B、PPBP、SPARC、TREM1）——只有 14 个细胞的血小板群独占一个主成分，这正是它没有在聚类里消失的原因。块状结构就是「好成分」的样子：一组共调控基因在被抽样的细胞里一起亮起来。这张图同时是我们最强的复现证据——与教师参考 PNG 的结构相关为 **1.0000**，即同一份 PCA、同样的平衡抽样、同一条绘图路径，文件几乎逐比特重现。
+
+![图 13 — scanpy 的 PCA（PC1/PC2，按 CST3 上色），在 1,833 个 HVG 上、`sc.pp.scale(max_value = 10)` 之后计算。](./figures/12_scanpy_pca.png){width=70%}
+
+与图 11 对照很有教益：同样的生物学，但轴的朝向与尺度不同——scanpy 在 1,833 个基因上把每个基因标准化到单位方差（截断 10），Seurat 先 scale 32,738 个再投影 2,000 个 HVG。哪个朝向都不是"标准"，主成分本身只定义到符号和旋转——所以两侧 PCA 长得不一样是预期结果，不是 bug。
+
+![图 14 — `pca_variance_ratio`：教材自己的代码从未画出的那张图。](./figures/13_scanpy_pca_ratio.png){width=70%}
+
+它在 28 张参考图里缺席的原因很朴素：画它的那个单元带着双逗号（SC-09），而 Python 以整单元格编译，于是 `SyntaxError` 把同一单元格里写着的 PCA、近邻图和 UMAP 一起抹掉了。我们这张来自修正版；累计曲线要到 PC 40 附近才到约 95%，这正是"近邻图用 `n_pcs = 40`"在这份数据上说得通的理由。
 
 `PCA_heatmap_ALL.png` 同时也是"我们的 PCA 与教师完全相同"的证据：结构相关 1.0000。
 
@@ -343,6 +399,14 @@ RunUMAP(seurat_obj, dims = 1:10)
 | UMAP | `UMAP.png`；关于 uwot 取代 Python UMAP 的警告 |
 
 群大小本身已经回答了"这是不是真实生物学拆分"：657 与 503 是两个 CD4 腔室，471 单核、339 B、307 CD8、175 FCGR3A+ 单核、144 NK，最后两个小群——28 个树突状细胞、14 个血小板。血小板群只占 0.5%，在 `resolution = 0.5` 下能保留，0.3 就没了。
+
+![图 15 — 2,638 个细胞的 Seurat 9 群 UMAP（`UMAP.png`）。](./figures/14_umap_seurat.png){width=100%}
+
+拓扑就是 PBMC 3k 的教科书图景：一大片 T 细胞叶（0、1、4），一条被大片空白隔开的单核臂（2、5），一座紧凑的 B 岛（3），加两颗小卫星——NK（6）和最外角上的 DC（7）与血小板（8）。第一件要检查的不是颜色，而是两个小群：2,638 个细胞里的 28 个与 14 个（1.1% 与 0.5%），它们在图上与一切清晰分离，marker 面板（FCER1A/CLEC10A 对 PPBP/PF4）毫不含糊。视觉上的告诫是：UMAP 的群间距离不是定量的，所以"cluster 2 离 cluster 0 很远"绝不能读成"单核与 CD4 T 的差异比 B 细胞更大"。
+
+![图 16 — 同一份数据的 scanpy 版本：分辨率 0.9 的 leiden 加十二个 marker 面板（`umapscanpy_markers.png`）。](./figures/15_scanpy_markers_grid.png){width=100%}
+
+一张顶九张：第一格是 leiden 解（教材阈值下 8 群），其余格是同一嵌入上叠加的 marker 基因。把它当作两个独立工具的一致性检查来读——B 细胞只在某一群里点亮 MS4A1/CD79A，单核点亮 CD14/LYZ/FCGR3A，血小板点亮 PPBP——同时注意它与 Seurat 不一致的地方：NK 的 marker（GNLY、NKG7、KLRF1）在这里跨了两个群，因为 40 维 PC 的近邻图把 CD8 T 与 NK 并成一个邻域，这个分辨率再按另一条边界把它切开。
 
 ---
 
@@ -382,6 +446,18 @@ RunUMAP(seurat_obj, dims = 1:10)
 
 对得**靠运气**：§13.2 显示，只要 2,000 个 HVG 里变 30 个（1.5%），cluster 1 与 2 就互换编号，同一个固定向量立刻变成 957 个细胞标错。
 
+![图 17 — `marker_Features`：教材第一个 `FeaturePlot` 调的九个宽谱系 marker——PTPRC、ITGAM、CD3D、CD19、CD14、CD4、CD8A、CD68、NCAM1。](./figures/16_featureplot_markers.png){width=100%}
+
+这是粗筛的那一遍，值得逐格读，注意它点亮了哪一群、**哪些群仍然是暗的**。PTPRC（CD45）到处都亮——那是内置的阳性对照，说明留下来的每个细胞确实是白细胞。ITGAM（CD11b）与 CD68 点亮单核臂（cluster 2 与 5）；CD3D 与 CD4 点亮 T 叶（0、1、4）；CD8A 标记该叶的细胞毒边缘（4）以及较弱的 NK；CD19 只点亮一座紧凑的岛——cluster 3，B 细胞；CD14 标经典单核（2）；NCAM1（CD56）标 NK 群（6）。两个局限立刻暴露，也正是需要第二张面板的原因：CD4 对 CD8A 无法区分 cluster 0 与 1（两者都是 CD4 T），而 28 个细胞的 DC 与 14 个细胞的血小板群在这种「通用层级」的 marker 上几乎看不出来。
+
+![图 18 — `marker_Features_2`：教材第二个 `FeaturePlot` 调的十二个细粒度 marker——MS4A1、GNLY、NKG7、CD3E、IL7R、CD14、FCER1A、CST3、FCGR3A、LYZ、PPBP、CD8A。](./figures/17_featureplot_markers2.png){width=100%}
+
+这张面板定下了九个群里的七个：MS4A1 单独划出 B 岛，GNLY/NKG7 划出 NK 群，FCER1A/CST3 划出 28 个细胞的 DC 群，PPBP 划出 14 个细胞的血小板群，FCGR3A 把非经典单核（5）与 CD14/LYZ 的经典单核（2）分开，CD8A 标出细胞毒 T 腔室。要点是它**没有**定下什么：cluster 0 与 1 在这十二个 marker 上完全无法区分——IL7R 与 CD3E 在两边都亮，谁也没有 naive 或 memory 专属的 marker。所以教材的 `Naive CD4 T` / `Memory CD4 T` 之分，在教材的任何一张图里都无法验证；它完全依赖 `FindMarkers`（图 23）以及那串固定名字恰好落在哪个编号上（SC-02）。另外这十二个 marker 里有两个是共享而非特异的——LYZ 在 naive CD4 T 里也表达 0.96、在单核里 5.09，CD68 同时染单核与一部分 DC——这就是注释要用 marker **对**的原因。
+
+![图 19 — Seurat 对象的最终注释 UMAP（`cell annotations.png`）。](./figures/20_umap_annotated_seurat.png){width=100%}
+
+九个标签直接画在数据上，与 §9.1 的审计表一一对应。把它当作下游所有论述的对照：单核臂是 `CD14+ Mono`（cluster 2，471 个细胞）与 `FCGR3A+ Mono`（cluster 5，175），上部 T 叶是 `Naive CD4 T`（0，657）加 `Memory CD4 T`（1，503），最远的 cluster 4 是 `CD8 T`（307）。后文任何涉及某个腔室的说法都可以用这里的颜色核对——这正是为什么 §13.2 里"30 个 HVG 扰动后 cluster 1/2 互换"这种错标在这张图里看起来完全正常。
+
 ### 9.2 Marker 与热图
 
 | | |
@@ -392,6 +468,18 @@ RunUMAP(seurat_obj, dims = 1:10)
 | 每群显著数 | 89（cluster 0）… 753（cluster 5） |
 
 SC-03：过滤算完就丢，`top10` 来自未过滤表，`slice_max(avg_log2FC)` 完全可以把 `p_val_adj = 0.2` 的基因选进去。修正版先过滤（3,483 行）再每群取 10 个；由此得到的热图与参考图相关 0.9865。
+
+![图 20 — 原样的 `Marker_Heatmap.png`：每群按 `avg_log2FC` 取前 10 个基因，取自带**未过滤**的 marker 表。](./figures/18_heatmap_aswritten.png){width=85%}
+
+块状结构看起来令人放心——每群都有一组亮的基因、在别处都暗——但这张图正是 SC-03 的视觉形态。因为过滤算完就丢（`dplyr::filter()` 写在一条没人赋值的管道里），`slice_max(avg_log2FC)` 只按效应量排序，完全可以把 `p_val_adj = 0.2` 的基因与 `p_val_adj = 1e-40` 的基因并排放。读者从颜色上看不出这一点：图里画的是标准化计数，一个不显著的基因只要在少数细胞里高，看起来照样很有说服力。
+
+![图 21 — 修正版热图：从通过 `p_val_adj < 0.05 & avg_log2FC > 1` 的 3,483 个 marker 里选 90 个。](./figures/19_heatmap_corrected.png){width=85%}
+
+同样的九个块、同样的颜色、不同的基因清单。有意思的对比是哪些块**保持**清晰：B 细胞（CD79A/MS4A1/TCL1A）、单核（LYZ/S100A8/S100A9）与血小板（PPBP/PF4）在两版里几乎一样，因为它们的效应是压倒性的；变化最大的是 CD4 那两块，因为"naive vs memory"是细微对比（log2FC 2-4 而非 20），这正是显著性过滤的价值所在。对参考图相关 0.7586——可见差距来自被剔掉的基因，而不是聚类变了。
+
+![图 22 — 课程随附的参考 `Marker_Heatmap.png`：3,000 × 6,000 px，即 300 dpi 下 10 × 20 英寸。](./figures/ref_marker_heatmap_3000x6000.png){width=50%}
+
+教材的 `ggsave("Marker_Heatmap.png", width = 10, height = 10)` 只能产出 3,000 × 3,000。参考图高了一倍（SC-19），所以它**不是**教材代码的产物——想必是用了更高的画布给九个块腾地方。这就是为什么它与我们 3,000 × 3,000 输出的比对分数是 0.7250，而本模块其余图都在 0.96 以上：差别在长宽比，不在数据。
 
 ### 9.3 DEG 单元崩了（SC-16）
 
@@ -407,6 +495,10 @@ SC-03：过滤算完就丢，`top10` 来自未过滤表，`slice_max(avg_log2FC)
 火山图按 `p_val_adj` 排前五的是 LDHB（1.2e-115）、IL7R（1.8e-102）、LTB（1.9e-97）、CD3D（2.0e-91）、IL32（7.7e-86）——即"naive CD4 T 相对其余细胞"主要是 naive marker 更高、单核/B/NK 基因更低，这正是 `avg_log2FC > 0` 的含义。
 
 SC-04：`-log10(p_val_adj)` 在本数据上是有界值（最小 1.24e-115），但离 `Inf` 只差一次舍入；两个基因列表算完不用；两张表都不落盘。
+
+![图 23 — `Naive_Memory_CD4_DEG.png`：教材要求画、却从未得到的那张火山图。横轴 `avg_log2FC`（naive CD4 T 对其余全部细胞），纵轴 `-log10(p_val_adj)`，红色是通过代码自身两条标准的基因。](./figures/21_volcano_naive_cd4.png){width=100%}
+
+这张图有**两个**峰，两个都要读。高那个（y > 85）在正向——LDHB、IL7R、LTB、CD3D、IL32、CD3E——即 naive CD4 T 由「**有** T 细胞程序」来定义。低一些的第二个峰（y 55-80）在负向，由抗原提呈与髓系基因主导：HLA-DRA、HLA-DRB1、HLA-DRB5、HLA-DPA1、HLA-DPB1、CD74、TYROBP、CYBA。所以 naive 状态同样由「**没有**什么」来定义——没有 MHC-II、没有髓系机器——而这恰恰是教材那张只取正向（`only.pos = TRUE`）的 marker 表永远看不到的。724 个受检基因里 353 个通过 `p_val_adj < 0.05`、199 个同时通过两条标准；红色包络与灰色团之间那道竖向空隙，就是效应量过滤在起作用。两个代码细节：这个单元之所以存在，是因为补了 `library(ggrepel)`（SC-16）；纵轴之所以有界，是因为把 `p_val_adj` 用 `.Machine$double.xmin` 托了底（SC-04）——在约 13k 个基因上，它离 `Inf` 只差一次舍入。
 
 ---
 
@@ -445,6 +537,14 @@ SC-04：`-log10(p_val_adj)` 在本数据上是有界值（最小 1.24e-115），
 | ctrl 占比偏离 0.5 的平均绝对值 | 0.030 |
 
 最大的群 6,065 个细胞（3,096 ctrl / 2,969 stim），最小的 92 个（38 / 54）。这就是"harmony 起作用了"的数字版：跨样本近邻比例从 2.9% 升到 40.5%（去批次前，每个细胞的 30 个近邻里有 97% 来自同一样本），而每个群内部两个样本仍然平衡。
+
+![图 24 — `UMAP_without_harmony.png`：合并后的 25,894 个 ctrl+stim 细胞，按 `orig.ident` 上色。](./figures/26_umap_no_harmony.png){width=100%}
+
+两种颜色、两个瓣：control 与 stimulated 各占一块，只在一条细缝处接触。这是教科书式的批次混淆——刺激既是生物学效应，也是技术漂移（两次 10x 运行、捕获效率不同），未校正的嵌入让技术那部分占了主导。这张图同时也是教材**完全不质控**画出来的（SC-06）：没有线粒体阈值、没有基因数阈值，于是两个瓣各自背着自己的低质量细胞。
+
+![图 25 — `UMAP_with_harmony.png`：同样这批细胞 `RunHarmony(group.by.vars = "orig.ident")` 之后。](./figures/27_umap_harmony.png){width=100%}
+
+颜色在每一座岛上都交错开，这就是"批次被去掉了"的视觉主张。把图当作假设、把上面那张表当作检验：跨样本近邻比例从 PCA 空间的 0.0287 升到 harmony 空间的 0.4051；修正版聚类后得到 12 个群，**没有一个**群的单样本占比超过 90%（ctrl 占比偏离 0.5 的平均绝对值 0.030）。这张图展示不了的两点告诫：harmony 用了全部 50 个 PC 而 UMAP 只用前 10（SC-20）；同一份代码跑两次会给出结构不同的图（我们自己两次之间 0.5631，SC-18）——所以任何关于混合程度的结论都不该建立在像素相似度上。
 
 SC-18：两张 UMAP 不可跨运行复现（同一输入两次运行之间 0.5631 / 0.5676），所以本节比较的是嵌入与群组成，不是像素。
 
@@ -490,6 +590,22 @@ cell 54-64 用 3.8 s 跑完，产出 5 张图。cell 67 里是那个双逗号（
 ### 11.4 修正版怎么做
 
 先断言类别数，再由 `rank_genes_groups` 的主要 marker 反推映射，打印审计表，最后才改名。按教材阈值会得到 8 个类别、改名照常进行；按对齐阈值（§12.3）会得到 9 个，修正版拒绝猜测，保留数字标签并写出 `cluster_label_audit_py.csv` 交给人判断。
+
+![图 26 — `rank_genes_groups`（Wilcoxon）对 8 个 leiden 群、每群 25 个基因。](./figures/22_scanpy_rank.png){width=100%}
+
+`FindAllMarkers` 的 Python 对应物，也是教材从不落盘的那张表（SC-13）。每一列是一个群、按得分排的头部基因；自上而下读每一列并问"这份清单连贯吗"——group 0 顶部是 RPS12/RPS27/RPL32，说明这一群很大程度由核糖体含量定义，那是技术轴而非细胞类型。这张图让位置式命名 bug（SC-12）变得可见：group 1 的头部基因（LDHB、LTB、CD3D、IL32、TPT1）是 CD4 T 的基因，而教材把 group 1 命名为 `CD8 T`。
+
+![图 27 — `rank_genes_groups_violin`（group 0）：它的前十个基因在各群中的表达分布。](./figures/23_scanpy_rank_violin.png){width=70%}
+
+小提琴图回答了排名清单回答不了的问题：这个"marker"是特异的，还是只是更高一点？如果某基因在所有群里都整体右移且长尾，那是类管家式的差异；如果它在某一群里是单个紧峰、在别处贴着地板，那才是真 marker。用这一格去核对图 26 的第一列，再决定是否相信据此推出的标签。
+
+![图 28 — `dotplot`：17 个经典 marker × 8 个 leiden 群。颜色 = 平均表达，大小 = 表达细胞比例。](./figures/24_scanpy_dotplot.png){width=100%}
+
+这是 Python 侧信息量最大的注释图，也是教材八个名字里有两个可以当场核对的地方。`CD8 T` 这一列是明确的失败：CD8A/CD8B 只在少量细胞里出现且均值低，而 IL7R 很亮——这是 CD4 的谱型，不是 CD8。`NK` 这一列属于更微妙的情形：它**确实**高水平带着 NKG7/GNLY/GZMB，所以按 marker 叫 NK 说得过去；但它同时表达 CD3E、CD8A、CD8B，而跨工具对账表（§12.2）显示这一群里有 61.8% 的细胞是 Seurat 的 CD8 T——一个 NK/CD8 细胞毒混合群，诚实的标签应该是「NK/CD8 细胞毒」而不是任何一个单一名字。**正确**标签的视觉签名是「只出现在一列里」：小而深的点（均值高、细胞少）或大而浅的点（均值中等、细胞多）。两列对同一批 marker 都有响应，就是聚类把两个群体合并了的信号。
+
+![图 29 — scanpy 的最终 UMAP，把教材那八个标签画在数据上。](./figures/25_scanpy_final_umap.png){width=70%}
+
+把它与图 19 并排，两个方法的分歧就从抽象变具体了：这里 T 叶是一个 `CD4 T` 群加一个其实属于 CD4 的 `CD8 T` 群，NK 被折进 CD8，血小板是 12 个细胞的孤岛。这张图内部自洽、而在两个位置生物学上错误——这正是 `results/04_annotation/` 里那些审计表存在的理由。
 
 ---
 

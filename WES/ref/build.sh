@@ -48,7 +48,11 @@ if [ -n "$BAD" ]; then
 fi
 
 # ---------------------------------------------------------------- HTML -------
+# --embed-resources: figures are inlined as base64 so a single .html file can be
+# handed to students (repo convention: self-contained HTML). Figures must therefore
+# live next to the markdown (ref/figures/...).
 pandoc "$MD" -o "$BASE.html" --standalone --toc --toc-depth=2 \
+    --embed-resources --resource-path=. \
     --metadata title="$HTMLTITLE" \
     --metadata lang=zh-CN
 
@@ -56,7 +60,10 @@ pandoc "$MD" -o "$BASE.html" --standalone --toc --toc-depth=2 \
 # NOTE: no --metadata lang for the PDF on purpose: lang=en keeps typst hyphenation
 # (and thus clean wrapping of long English words) enabled; CJK wraps regardless.
 HDR=$(mktemp /tmp/corrected_hdr_XXXX.typ)
-TYP=$(mktemp /tmp/corrected_XXXX.typ)
+# The .typ must live NEXT TO the markdown, otherwise typst resolves relative image
+# paths against /tmp and every figure fails with "file not found". (Found 2026-10-26
+# when figures were first added to these documents.)
+TYP=$(mktemp "./.typbuild_XXXX.typ")
 BBOX=$(mktemp /tmp/bbox_XXXX.html)
 trap 'rm -f "$TYP" "$BBOX" "$HDR"' EXIT
 
@@ -64,6 +71,10 @@ cat >"$HDR" <<'TYPST'
 // denser tables: 8pt cells + tighter insets (equal-% columns are narrow)
 #set table(inset: (x: 4pt, y: 4pt))
 #show table.cell: set text(size: 8pt)
+// Figures carry their own number inside the caption ("Figure 7 — ..."), so typst's
+// automatic "Figure N:" prefix must be suppressed; otherwise every caption would read
+// "Figure 7: Figure 7 — ...". Same reason the tables are unnumbered.
+#show figure.where(kind: image): set figure(numbering: none)
 TYPST
 
 pandoc "$MD" -t typst -s -o "$TYP" \

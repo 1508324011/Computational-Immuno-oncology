@@ -286,6 +286,22 @@ Three filters, three failure modes: too few genes = empty or dead droplet; too m
 
 The scanpy half keeps **2,635** cells with `n_genes < 2000` (SC-10). An independent recount on the raw matrix with the same numbers gives 2,634 — the difference is one borderline cell whose mitochondrial fraction scanpy computes on the *gene-filtered* matrix (13,714 genes) while Seurat uses all 32,738. It is recorded in `results/01_qc/qc_rederivation_rawmatrix.csv`.
 
+![Figure 1 — Seurat QC distributions for all 2,700 cells: genes per cell, UMIs per cell, and mitochondrial percentage, with the tutorial's three thresholds.](./figures/01_violin_mt.png){width=100%}
+
+Read the violins against the rule `nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5`. The nFeature distribution has the healthy shape of a shallow 2016 run — median 817 genes, a long left tail that never reaches 200 (hence **0** cells lost on that side) and a thin right shoulder above 2,500 (5 cells, the only candidates for doublets this pipeline ever removes). The mitochondrial violin is nearly flat below 5% with a small right shoulder; that shoulder is the 57 cells removed. There is no second mode at high UMI, which is why nothing more elaborate than these three numbers is warranted here.
+
+![Figure 2 — The same QC metrics computed by scanpy (`calculate_qc_metrics`), after `filter_cells(min_genes=200)` and `filter_genes(min_cells=3)`.](./figures/02_scanpy_violin_qc.png){width=100%}
+
+The Python panel is not a copy of the R panel and the difference matters: these distributions are computed on the **13,714-gene** filtered matrix, while Seurat's are computed on all 32,738 features. The mitochondrial percentage is a ratio, so removing 19,024 all-zero genes moves its denominator for the borderline cells — this is exactly the one-cell discrepancy that makes Seurat keep 2,638 and scanpy 2,635 (SC-10).
+
+![Figure 3 — `total_counts` versus `n_genes_by_counts` for every cell.](./figures/03_scanpy_scatter_genes.png){width=70%}
+
+This pair is the doublet test the tutorial never names. The main cloud is almost perfectly linear — every extra UMI buys genes at a constant rate — and doublets sit *above* that line (two cells' worth of genes for the same UMI count). Here the cloud is tight and there is no separated upper branch, so 2,500 genes as the upper cut is doing the doublet job by proxy.
+
+![Figure 4 — `total_counts` versus `pct_counts_mt`.](./figures/04_scanpy_scatter_mt.png){width=70%}
+
+The opposite reading applies: dying cells lose cytoplasmic mRNA while mitochondrial transcripts stay inside the still-intact organelle, so they drift up and to the left. The vertical cut at 5% is drawn through the sparse upper cloud rather than through a gap, which is the honest description of any mitochondrial threshold — it is a convention, not a physical boundary.
+
 ### 5.3 Pitfalls
 
 The threshold disagreement (SC-10) is the substantive one: it is the origin of the 9-versus-8-cluster confusion of §12. Note also that the mitochondrial pattern `^MT-` matches only the 13 genes actually present; a `^MT\.` pattern (MitoCarta-style) or a mouse dataset (`^mt-`) needs a different string, and the tutorial's pattern silently returns zero genes if it does not match — `PercentageFeatureSet()` then errors in a way that is easy to misread as a data problem.
@@ -307,6 +323,22 @@ Two observations:
 
 SC-08 is here: `p <- p + plot2` renders **two panels**, and the reference figure carries that artifact. Both variants are in `results/02_hvg_pca/`: `VariableFeaturePlot.png` (as written, two panels, 0.9751 against the reference) and `VariableFeaturePlot_corrected.png` (one panel).
 
+![Figure 5 — `VariableFeaturePlot.png` as the tutorial writes it: two panels, because `p <- p + plot2` prints the old plot beside the labelled one.](./figures/05_variable_features_aswritten.png){width=100%}
+
+Both halves show the same 32,738 genes with the 2,000 HVGs in red; the left half has no gene labels, the right half labels twenty. This is the cleanest example in the module of code that runs, produces a usable-looking file, and still does something other than what its author meant — and the next figure shows that the teacher's own reference figure carries the same artefact.
+
+![Figure 6 — The reference `VariableFeaturePlot.png` shipped with the course: the same two-panel layout, i.e. the artefact was shipped as the expected output.](./figures/ref_variable_featureplot_2panel.png){width=100%}
+
+Comparing this with Figure 5 is how "reproduction" should be judged: our as-written run agrees with the reference at a structural correlation of 0.9751 (identical size, identical point cloud, identical labels), because both were produced by the same two-panel bug. A student who "fixes" the plot and then compares to the reference would conclude, wrongly, that their analysis had diverged.
+
+![Figure 7 — The corrected single panel (`VariableFeaturePlot_corrected.png`).](./figures/06_variable_features_corrected.png){width=100%}
+
+The corrected version draws one scatter with the twenty labels attached by `LabelPoints(repel = TRUE)`. Its correlation with the reference drops to 0.0713 *by construction*: the panels are different pictures of the same data. The labels themselves are the sanity check — PPBP, LYZ, S100A9, IGLL5, FTL, GNLY, PF4, FTH1, GNG11, S100A8, FCER1A, HLA-DRA, CD74, CLU, NKG7, CST3, GZMB, CCL4, C1QA, HLA-DPB1 are all leukocyte genes, which is what `vst` should select on PBMCs.
+
+![Figure 8 — scanpy's HVG selection on the other half: normalised dispersion against mean expression, 1,833 genes selected.](./figures/07_scanpy_hvg.png){width=100%}
+
+The two methods are not interchangeable and this figure is where you can see why: `vst` standardises a loess fit of variance on log-mean and can promote a gene with modest mean (PF4, PPBP), while scanpy's `min_mean 0.0125 / max_mean 3 / min_disp 0.5` cuts on the dispersion of the normalised, binned data and returns 1,833 genes from a 13,714-gene universe. Neither number is wrong; they answer "which genes vary more than their expression level predicts" with different variance models.
+
 ---
 
 ## 7. Part 4 — Scaling and PCA
@@ -322,6 +354,30 @@ SC-08 is here: `p <- p + plot2` renders **two panels**, and the reference figure
 | plots | `PCA_VizDimLoadings.png`, `PCA.png` (elbow, 20 dims), `PCA_dimplot.png`, `PCA_heatmap_ALL.png` (6 heatmaps × 100 cells) |
 
 `PCHeatmap()` is a deprecated alias of `DimHeatmap()`; in Seurat 5.1.0 it still works and emits no warning, so it is easy to keep using it for years (SC-07). The elbow shows the usual PBMC 3k shape — a break around PC 7-10 — which is why `dims = 1:10` is defensible; but the elbow is drawn for 20 PCs and the choice of 10 is never justified in the text.
+
+![Figure 9 — `PCA_VizDimLoadings` for PC1 and PC2: the genes with the largest positive and negative loadings in each component.](./figures/08_pca_loadings.png){width=100%}
+
+Loadings are the interpretable half of a PCA. PC1 is dominated by the monocyte-versus-lymphocyte axis (LYZ, S100A8, S100A9, CD14 on one side; IL7R, CD3D, LTB on the other), PC2 separates FCGR3A+ monocytes and NK cells. If a component had no coherent gene list, that would be the signal to stop using it — here the first components are biologically legible, which is a weak but real argument for `dims = 1:10`.
+
+![Figure 10 — `PCA.png`: the standard-deviation elbow for 20 components.](./figures/09_pca_elbow.png){width=100%}
+
+The elbow bends around PC 7-10 and then flattens, which is the (informal) justification for the `dims = 1:10` used by `FindNeighbors`, `FindClusters` and `RunUMAP`. Note what the plot does *not* do: it shows 20 components although `RunPCA` computed 50, and it offers no criterion — the choice of 10 is a visual convention, and SC-07 records that the tutorial never reconciles the 20 drawn with the 10 used.
+
+![Figure 11 — `PCA_dimplot`: every cell placed on PC1 and PC2. `DimPlot()` is called *before* `FindClusters()`, so all cells still share a single identity — one colour, and `+ NoLegend()` removes the key.](./figures/10_pca_dimplot.png){width=100%}
+
+Do not read clusters into this panel: with one identity level the colour carries no information, and the reference figure is single-coloured in exactly the same way (correlation 0.9875). What it does show is the *shape* of the data before any clustering — a dense central T-cell cloud, a separate arm to the right, and a small outlying lobe at the lower left — which is enough to conclude "more than one population exists" and not nearly enough to name any of them. The colour-coded version only becomes meaningful after `FindClusters()`, and it appears as Figure 19.
+
+![Figure 12 — `PCA_heatmap_ALL`: the top 6 components, each drawn for 100 cells taken evenly from the extremes of that component, with the genes that define each panel printed at its right.](./figures/11_pca_heatmap.png){width=100%}
+
+Each row is a gene, each column a cell, and the panels are self-describing: PC1 is the monocyte-versus-lymphocyte axis (CD14, LYZ, S100A8/S100A9, FCN1 against MALAT1, IL7R, CD3D), PC2 is B-cell identity (MS4A1, CD79B, CD74, HLA-DRA/DRB1), PC3 is the platelet plate (GP9, ITGA2B, PPBP, SPARC, TREM1) — the 14-cell platelet cluster earns a component of its own, which is exactly why it survives clustering. The block structure is what a "good" component looks like: a set of co-regulated genes switching on together across the sampled cells. This figure is also our strongest reproduction evidence — its structural correlation with the teacher's reference PNG is **1.0000**, i.e. the same PCA, the same balanced sampling and the same plotting path reproduce the file essentially bit for bit.
+
+![Figure 13 — scanpy's PCA (PC1/PC2, coloured by CST3) computed on 1,833 HVGs after `sc.pp.scale(max_value = 10)`.](./figures/12_scanpy_pca.png){width=70%}
+
+Comparing this with Figure 11 is instructive: the same biology appears, but the axes are oriented and scaled differently, because scanpy scaled each gene to unit variance (clipping at 10) over 1,833 genes while Seurat scaled 32,738 and then projected the 2,000 HVGs. Neither orientation is canonical — components are only defined up to sign and rotation — so a "different-looking PCA" between the two halves is expected and not a bug.
+
+![Figure 14 — `pca_variance_ratio` — the figure the tutorial's own code never produced.](./figures/13_scanpy_pca_ratio.png){width=70%}
+
+This panel is missing from the 28 reference figures for a mundane reason: the cell that draws it contains the doubled comma (SC-09), and Python compiles a cell as a unit, so the `SyntaxError` also deleted the PCA, the neighbour graph and the UMAP that were written in the same cell. Ours comes from the corrected pass; the cumulative curve reaching ~95% only around PC 40 is why the tutorial's `n_pcs = 40` for the neighbour graph is defensible on this dataset.
 
 `PCA_heatmap_ALL.png` is also the figure that proves our PCA is identical to the teacher's: 1.0000 structural correlation.
 
@@ -343,6 +399,14 @@ RunUMAP(seurat_obj, dims = 1:10)
 | UMAP | `UMAP.png`, `num_epochs` defaults; warnings about uwot replacing Python UMAP |
 
 Cluster sizes are already the answer to "is this a real biological split": 657 and 503 are the two CD4 compartments, 471 monocytes, 339 B, 307 CD8, 175 FCGR3A+ monocytes, 144 NK, and then the two tiny ones — 28 dendritic cells and 14 platelets. The platelet cluster is 0.5% of the data; at `resolution = 0.5` it survives, at 0.3 it would not.
+
+![Figure 15 — The Seurat 9-cluster UMAP of 2,638 cells (`UMAP.png`).](./figures/14_umap_seurat.png){width=100%}
+
+The topology is the PBMC 3k textbook picture: one large T-cell lobe (clusters 0, 1 and 4), a monocyte arm (2 and 5) that is separated by a long bridge of empty space, a compact B island (3), and the two small satellites — NK (6) and the immune-poor corner holding DC (7) and platelets (8). What to check first is not the colours but the two tiny clusters: 28 and 14 cells out of 2,638 are 1.1% and 0.5%, they are visually separate from everything, and their marker panels (FCER1A/CLEC10A vs PPBP/PF4) are unambiguous. The visual caveat: UMAP distances between clusters are not quantitative, so "cluster 2 is far from cluster 0" must never be read as "monocytes are more different from CD4 T than B cells are".
+
+![Figure 16 — The same data clustered by scanpy: leiden at resolution 0.9 plus twelve marker panels (`umapscanpy_markers.png`).](./figures/15_scanpy_markers_grid.png){width=100%}
+
+One figure that replaces nine: the first panel is the leiden solution (8 groups at the tutorial's threshold), and the rest are the marker genes overlaid on the same embedding. Read it as a consistency check between two independent tools — B cells light up MS4A1/CD79A in exactly one group, monocytes light up CD14/LYZ/FCGR3A, platelets light up PPBP — and note where it disagrees with Seurat: NK markers (GNLY, NKG7, KLRF1) are spread over two groups here, because the 40-PC neighbour graph merges CD8 T and NK into one neighbourhood that this resolution then splits on a different boundary.
 
 ---
 
@@ -382,6 +446,18 @@ The final object's labels, checked the same way, are all correct:
 
 They are correct *by luck*: §13.2 shows that a change of 30 HVGs (1.5% of the 2,000) is enough to renumber clusters 1 and 2 and turn the same fixed vector into 957 mislabelled cells.
 
+![Figure 17 — `marker_Features`: the nine broad markers of the tutorial's first `FeaturePlot` call — PTPRC, ITGAM, CD3D, CD19, CD14, CD4, CD8A, CD68, NCAM1.](./figures/16_featureplot_markers.png){width=100%}
+
+This is the coarse pass, and it is worth reading marker by marker, noting which cluster lights up *and which ones stay dark*. PTPRC (CD45) is bright everywhere — the built-in positive control that every retained cell really is a leukocyte. ITGAM (CD11b) and CD68 light the monocyte arm (clusters 2 and 5); CD3D and CD4 light the T lobe (0, 1, 4); CD8A marks the cytotoxic edge of that lobe (4) and, faintly, NK; CD19 lights exactly one compact island, cluster 3, the B cells; CD14 the classical monocytes (2); NCAM1 (CD56) the NK group (6). Two limitations are visible immediately and they motivate the second panel: CD4 versus CD8A does not resolve clusters 0 and 1 (both are CD4 T cells), and the 28-cell DC and 14-cell platelet clusters barely register on markers chosen at this level of generality.
+
+![Figure 18 — `marker_Features_2`: the twelve fine-grained markers of the second `FeaturePlot` call — MS4A1, GNLY, NKG7, CD3E, IL7R, CD14, FCER1A, CST3, FCGR3A, LYZ, PPBP, CD8A.](./figures/17_featureplot_markers2.png){width=100%}
+
+This panel settles seven of the nine clusters: MS4A1 alone isolates the B island, GNLY/NKG7 the NK group, FCER1A/CST3 the 28-cell DC cluster, PPBP the 14-cell platelet cluster, FCGR3A separates non-classical monocytes (5) from the CD14/LYZ classical ones (2), and CD8A tags the cytotoxic T compartment. Note what it does *not* settle: clusters 0 and 1 are indistinguishable on all twelve markers — IL7R and CD3E are bright in both, and neither carries a naive- or memory-specific marker. The tutorial's `Naive CD4 T` / `Memory CD4 T` split therefore cannot be verified from any figure in the tutorial; it rests entirely on `FindMarkers` (Figure 23) and on where a fixed name vector happens to land (SC-02). Two of the twelve markers are also shared rather than specific — LYZ is expressed at 0.96 in naive CD4 T and 5.09 in monocytes, CD68 stains monocytes *and* a fraction of DC — which is why annotation is done with marker *pairs*.
+
+![Figure 19 — The final annotated UMAP of the Seurat object (`cell annotations.png`).](./figures/20_umap_annotated_seurat.png){width=100%}
+
+Nine labels drawn on the data, one per cluster, matching the audit table in §9.1. Use this figure as the reference for everything downstream: the monocyte arm is `CD14+ Mono` (cluster 2, 471 cells) and `FCGR3A+ Mono` (cluster 5, 175), the upper T lobe is `Naive CD4 T` (0, 657) plus `Memory CD4 T` (1, 503), and the far cluster 4 is `CD8 T` (307). Any claim in a later section that touches a compartment can be checked against this colour, which is why the mislabelling risk in §13.2 (cluster 1/2 swapped after a 30-HVG perturbation) would have looked completely normal in this picture.
+
 ### 9.2 Markers and the heatmap
 
 | | |
@@ -392,6 +468,18 @@ They are correct *by luck*: §13.2 shows that a change of 30 HVGs (1.5% of the 2
 | per-cluster significant counts | 89 (cluster 0) … 753 (cluster 5) |
 
 SC-03: the filter is computed and discarded, so `top10` comes from the unfiltered table and `slice_max(avg_log2FC)` happily picks a gene with `p_val_adj = 0.2`. The corrected pass filters first (3,483 rows), then takes the top 10 per cluster; the resulting heatmap differs from the reference at 0.9865.
+
+![Figure 20 — `Marker_Heatmap.png` as written: the top 10 genes per cluster by `avg_log2FC`, taken from the **unfiltered** marker table.](./figures/18_heatmap_aswritten.png){width=85%}
+
+The block structure is reassuring — each cluster has a bright gene set that is dark everywhere else — but this figure is the visual form of SC-03. Because the filter was computed and discarded (`dplyr::filter()` inside a pipe whose value nobody assigned), `slice_max(avg_log2FC)` ranks by effect size alone and can, and does, put a gene with `p_val_adj = 0.2` next to a gene with `p_val_adj = 1e-40`. A reader cannot see that from the colours: the values plotted are normalised counts, so a non-significant gene still looks convincing if it is high in a few cells.
+
+![Figure 21 — The corrected heatmap: 90 genes chosen from the 3,483 markers that pass `p_val_adj < 0.05 & avg_log2FC > 1`.](./figures/19_heatmap_corrected.png){width=85%}
+
+Same nine blocks, same colours, different gene list. The interesting comparison is which blocks *stay* sharp: B cells (CD79A/MS4A1/TCL1A), monocytes (LYZ/S100A8/S100A9) and platelets (PPBP/PF4) look the same in both versions because their effects are overwhelming; the CD4 blocks change most, because "naive vs memory" is a subtle contrast (log2FC of 2-4 rather than 20) and that is exactly where a significance filter earns its keep. Correlation with the reference: 0.7586 — the visible gap is the removed genes, not a different clustering.
+
+![Figure 22 — The reference `Marker_Heatmap.png` shipped with the course: 3,000 × 6,000 px, i.e. 10 × 20 inches at 300 dpi.](./figures/ref_marker_heatmap_3000x6000.png){width=50%}
+
+The tutorial's `ggsave("Marker_Heatmap.png", width = 10, height = 10)` can only produce 3,000 × 3,000. The reference is twice as tall (SC-19), so it was **not** produced by the code in the tutorial — presumably a taller canvas was used to give the nine blocks room. This is why its comparison score with our 3,000 × 3,000 output is 0.7250 while everything else in the module sits above 0.96: the difference is aspect ratio, not data.
 
 ### 9.3 The DEG cell dies (SC-16)
 
@@ -407,6 +495,10 @@ SC-03: the filter is computed and discarded, so `top10` comes from the unfiltere
 The volcano's top genes by `p_val_adj` are LDHB (1.2e-115), IL7R (1.8e-102), LTB (1.9e-97), CD3D (2.0e-91), IL32 (7.7e-86) — i.e. "naive CD4 T" is distinguished from the rest mostly by *higher* naive markers plus absence of monocyte/B/NK genes, which is what `avg_log2FC > 0` means here.
 
 SC-04: the `-log10(p_val_adj)` axis is finite on this dataset (smallest 1.24e-115) but is one rounding away from `Inf`; the two gene lists are computed and never used; nothing is exported.
+
+![Figure 23 — `Naive_Memory_CD4_DEG.png`: the volcano plot the tutorial asks for and never gets. X is `avg_log2FC` (naive CD4 T versus the rest), Y is `-log10(p_val_adj)`, red marks genes passing both of the code's own criteria.](./figures/21_volcano_naive_cd4.png){width=100%}
+
+The plot has two crests, and reading both is the point. The higher one (y > 85) sits on the positive side — LDHB, IL7R, LTB, CD3D, IL32, CD3E — i.e. naive CD4 T cells are *defined by having* the T-cell programme. The second, lower crest (y 55-80) sits on the negative side and is dominated by antigen-presentation and myeloid genes: HLA-DRA, HLA-DRB1, HLA-DRB5, HLA-DPA1, HLA-DPB1, CD74, TYROBP, CYBA. The naive state is therefore described just as much by *absence* — no MHC-II, no myeloid machinery — which is exactly what the tutorial's one-sided `only.pos = TRUE` marker table never shows. Of the 724 genes tested, 353 pass `p_val_adj < 0.05` and 199 pass both criteria; the vertical gap between the red envelope and the grey mass is the effect-size filter at work. Two code details worth noticing: this cell exists only because `library(ggrepel)` was added (SC-16), and the Y axis is finite only because `p_val_adj` was floored at `.Machine$double.xmin` (SC-04) — on ~13k genes it is one rounding away from `Inf`.
 
 ---
 
@@ -445,6 +537,14 @@ and, after clustering the harmony embedding at resolution 0.5:
 | mean absolute deviation of the ctrl share from 0.5 | 0.030 |
 
 The largest cluster holds 6,065 cells (3,096 ctrl / 2,969 stim); the smallest, 92 (38 / 54). This is what "harmony worked" looks like as a number instead of a picture: the cross-sample neighbour fraction rises from 2.9% to 40.5% (before correction 97% of every cell's 30 neighbours come from its own sample), while the two samples stay balanced inside every cluster.
+
+![Figure 24 — `UMAP_without_harmony.png`: the 25,894 merged ctrl+stim cells, coloured by `orig.ident`.](./figures/26_umap_no_harmony.png){width=100%}
+
+Two colours, two lobes: the control and stimulated samples each occupy their own region and touch only at a thin seam. This is textbook batch confounding — the stimulation is a biological effect *and* a technical shift (different 10x run, different capture efficiency), and the uncorrected embedding lets the technical part dominate. It is also the figure the tutorial draws with **no QC at all** (SC-06): no mitochondrial cut, no feature cut, so the two lobes each carry their own burden of low-quality cells.
+
+![Figure 25 — `UMAP_with_harmony.png`: the same cells after `RunHarmony(group.by.vars = "orig.ident")`.](./figures/27_umap_harmony.png){width=100%}
+
+The colours interleave across every island, which is the visual claim "batch removed". Treat the picture as a hypothesis and the numbers in the table above as the test: the cross-sample neighbour fraction rises from 0.0287 (PCA space) to 0.4051 (harmony space), and after clustering the corrected pass finds 12 clusters of which **none** has more than 90% of its cells from one sample (mean |ctrl share − 0.5| = 0.030). One caveat that this figure cannot show: harmony uses all 50 PCs here while the UMAP uses the first 10 (SC-20), and two runs of the same code produce structurally different images (0.5631 between our own runs, SC-18) — so no conclusion about mixing should ever rest on pixel similarity.
 
 SC-18: the two UMAPs are not reproducible run to run (0.5631 / 0.5676 between two runs with identical input), which is why this section compares embeddings and cluster composition rather than pixels.
 
@@ -490,6 +590,22 @@ With the tutorial's threshold the 8 names fit exactly — and two of them land o
 ### 11.4 What the corrected pass does instead
 
 Assert the category count, build the mapping from `rank_genes_groups` top markers, print an audit table, and only then rename. With the tutorial's threshold that yields 8 categories and the renaming proceeds; with the aligned threshold (§12.3) it yields 9 and the corrected script refuses to guess, keeping numeric labels and writing `cluster_label_audit_py.csv` for a human decision.
+
+![Figure 26 — `rank_genes_groups` (Wilcoxon) for the eight leiden groups, 25 genes each.](./figures/22_scanpy_rank.png){width=100%}
+
+The Python counterpart of `FindAllMarkers`, and the table the tutorial never writes to disk (SC-13). Each column is one group with its top genes ranked by score; read the columns top-down and ask whether the list is coherent — RPS12/RPS27/RPL32 at the top of group 0 means that group is defined largely by ribosomal content, which is a technical axis, not a cell type. This is the figure that makes the positional-naming bug (SC-12) visible: group 1's top genes (LDHB, LTB, CD3D, IL32, TPT1) are CD4 T-cell genes, yet the tutorial names group 1 `CD8 T`.
+
+![Figure 27 — `rank_genes_groups_violin` for group 0: expression of its top ten genes, cluster by cluster.](./figures/23_scanpy_rank_violin.png){width=70%}
+
+The violin view answers the question a ranked list cannot: is the "marker" specific, or merely higher? If a gene's distribution is shifted in every group with a long tail, it is a housekeeping-like difference; if it has a single tight peak in one group and a floor elsewhere, it is a real marker. Use this panel to sanity-check the first column of Figure 26 before trusting any label derived from it.
+
+![Figure 28 — `dotplot`: 17 canonical markers across the eight leiden groups. Colour = mean expression, size = fraction of cells expressing.](./figures/24_scanpy_dotplot.png){width=100%}
+
+This is the single most informative annotation figure in the Python half, and it is where two of the tutorial's eight names can be checked. Column `CD8 T` is the clear failure: CD8A/CD8B appear in a modest fraction of its cells with low mean, while IL7R is bright — a CD4 profile, not a CD8 one. Column `NK` is the subtler case: it *does* carry NKG7/GNLY/GZMB at high level, so calling it NK is defensible on markers, but it also expresses CD3E, CD8A and CD8B, and the cross-tool table (§12.2) shows that 61.8% of its cells are Seurat CD8 T cells — a cytotoxic NK/CD8 mixture whose honest label would be "NK/CD8 cytotoxic" rather than either single name. The visual signature of a *correct* label is a mark confined to one column: a small dark dot (high mean, few cells) or a large pale one (moderate mean, many cells). Two columns responding to the same marker set is the signal that clustering merged two populations.
+
+![Figure 29 — The final scanpy UMAP with the tutorial's eight labels drawn on the data.](./figures/25_scanpy_final_umap.png){width=70%}
+
+Compare this with Figure 19 and the two methods' disagreements become concrete rather than abstract: here the T lobe is a single `CD4 T` group plus a `CD8 T` group that is actually CD4, NK is folded into CD8, and the platelet satellite is a 12-cell island. The picture is internally consistent and biologically wrong in two places — the exact failure mode that motivates the audit tables in `results/04_annotation/`.
 
 ---
 

@@ -307,6 +307,11 @@ TBCR-analysis/results/**/*.g.vcf.gz
 # scRNA_seq_analyze_results_guide.md). NO raw data.
 !scRNA-seq/results/**
 
+# Documentation figures live in <module>/ref/figures/ and must escape sec.3's
+# *scatter*.png rule (the scanpy QC scatters are named ...scatter...png) and
+# *diagram*.pdf.
+!*/ref/figures/**
+
 # The course's own 28 reference PNGs (scRNA-seq/*.png) are archived at module root,
 # so two of them must escape sec.3's *scatter*.png rule as well.
 !scRNA-seq/*.png
