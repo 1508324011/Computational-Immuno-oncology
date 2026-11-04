@@ -1,0 +1,301 @@
+/gpfs1/home/bjx131_pkuhpc/class/scRNA-seq-scVelo/results/scripts/scVelo_py_cells_aswritten.py:152: DeprecationWarning: Automatic neighbor calculation is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please compute neighbors first with Scanpy.
+  scv.pp.moments(adata, n_pcs=30, n_neighbors=30)
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/preprocessing/moments.py:71: DeprecationWarning: `neighbors` is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please compute neighbors with Scanpy.
+  neighbors(
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+AnnData object with n_obs × n_vars = 3696 × 27998
+    obs: 'clusters_coarse', 'clusters', 'S_score', 'G2M_score'
+    var: 'highly_variable_genes'
+    uns: 'clusters_coarse_colors', 'clusters_colors', 'day_colors', 'neighbors', 'pca'
+    obsm: 'X_pca', 'X_umap'
+    layers: 'spliced', 'unspliced'
+    obsp: 'distances', 'connectivities'
+  (0, 18)	2.0
+  (0, 25)	2.0
+  (0, 32)	14.0
+  (0, 35)	2.0
+  (0, 54)	1.0
+  (0, 76)	1.0
+  (0, 97)	1.0
+  (0, 104)	1.0
+  (0, 109)	3.0
+  (0, 135)	1.0
+  (0, 154)	1.0
+  (0, 156)	1.0
+  (0, 158)	1.0
+  (0, 171)	1.0
+  (0, 198)	2.0
+  (0, 216)	1.0
+  (0, 247)	1.0
+  (0, 257)	3.0
+  (0, 258)	1.0
+  (0, 264)	13.0
+  (0, 265)	2.0
+  (0, 274)	1.0
+  (0, 277)	1.0
+  (0, 278)	1.0
+  (0, 325)	4.0
+  :	:
+  (3695, 27067)	1.0
+  (3695, 27071)	1.0
+  (3695, 27072)	1.0
+  (3695, 27074)	1.0
+  (3695, 27084)	1.0
+  (3695, 27136)	1.0
+  (3695, 27140)	1.0
+  (3695, 27149)	3.0
+  (3695, 27153)	21.0
+  (3695, 27154)	11.0
+  (3695, 27160)	1.0
+  (3695, 27169)	1.0
+  (3695, 27184)	4.0
+  (3695, 27206)	1.0
+  (3695, 27209)	2.0
+  (3695, 27211)	1.0
+  (3695, 27218)	1.0
+  (3695, 27220)	1.0
+  (3695, 27221)	1.0
+  (3695, 27222)	3.0
+  (3695, 27230)	1.0
+  (3695, 27231)	2.0
+  (3695, 27243)	2.0
+  (3695, 27246)	8.0
+  (3695, 27256)	2.0
+
+[[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]]
+(3696, 27998)
+  (0, 18)	2.0
+  (0, 25)	2.0
+  (0, 32)	14.0
+  (0, 35)	2.0
+  (0, 54)	1.0
+  (0, 76)	1.0
+  (0, 97)	1.0
+  (0, 104)	1.0
+  (0, 109)	3.0
+  (0, 135)	1.0
+  (0, 154)	1.0
+  (0, 156)	1.0
+  (0, 158)	1.0
+  (0, 171)	1.0
+  (0, 198)	2.0
+  (0, 216)	1.0
+  (0, 247)	1.0
+  (0, 257)	3.0
+  (0, 258)	1.0
+  (0, 264)	13.0
+  (0, 265)	2.0
+  (0, 274)	1.0
+  (0, 277)	1.0
+  (0, 278)	1.0
+  (0, 325)	4.0
+  :	:
+  (3695, 27067)	1.0
+  (3695, 27071)	1.0
+  (3695, 27072)	1.0
+  (3695, 27074)	1.0
+  (3695, 27084)	1.0
+  (3695, 27136)	1.0
+  (3695, 27140)	1.0
+  (3695, 27149)	3.0
+  (3695, 27153)	21.0
+  (3695, 27154)	11.0
+  (3695, 27160)	1.0
+  (3695, 27169)	1.0
+  (3695, 27184)	4.0
+  (3695, 27206)	1.0
+  (3695, 27209)	2.0
+  (3695, 27211)	1.0
+  (3695, 27218)	1.0
+  (3695, 27220)	1.0
+  (3695, 27221)	1.0
+  (3695, 27222)	3.0
+  (3695, 27230)	1.0
+  (3695, 27231)	2.0
+  (3695, 27243)	2.0
+  (3695, 27246)	8.0
+  (3695, 27256)	2.0   (0, 24)	2.0
+  (0, 25)	1.0
+  (0, 60)	1.0
+  (0, 90)	1.0
+  (0, 115)	1.0
+  (0, 154)	1.0
+  (0, 155)	2.0
+  (0, 168)	1.0
+  (0, 170)	2.0
+  (0, 209)	1.0
+  (0, 338)	1.0
+  (0, 398)	2.0
+  (0, 402)	1.0
+  (0, 427)	1.0
+  (0, 447)	2.0
+  (0, 500)	3.0
+  (0, 504)	1.0
+  (0, 508)	1.0
+  (0, 562)	2.0
+  (0, 564)	1.0
+  (0, 583)	1.0
+  (0, 645)	2.0
+  (0, 666)	1.0
+  (0, 676)	1.0
+  (0, 678)	1.0
+  :	:
+  (3695, 26579)	2.0
+  (3695, 26609)	1.0
+  (3695, 26621)	1.0
+  (3695, 26654)	1.0
+  (3695, 26655)	1.0
+  (3695, 26683)	1.0
+  (3695, 26723)	1.0
+  (3695, 26751)	4.0
+  (3695, 26753)	1.0
+  (3695, 26765)	1.0
+  (3695, 26776)	1.0
+  (3695, 26785)	1.0
+  (3695, 26872)	2.0
+  (3695, 26931)	2.0
+  (3695, 26985)	1.0
+  (3695, 27022)	1.0
+  (3695, 27148)	1.0
+  (3695, 27178)	1.0
+  (3695, 27184)	2.0
+  (3695, 27188)	4.0
+  (3695, 27209)	2.0
+  (3695, 27213)	1.0
+  (3695, 27218)	1.0
+  (3695, 27245)	3.0
+  (3695, 27997)	2.0
+                 clusters_coarse       clusters   S_score  G2M_score
+index                                                               
+AAACCTGAGAGGGATA   Pre-endocrine  Pre-endocrine -0.224902  -0.252071
+AAACCTGAGCCTTGAT          Ductal         Ductal -0.014707  -0.232610
+AAACCTGAGGCAATTA       Endocrine          Alpha -0.171255  -0.286834
+        highly_variable_genes
+index                        
+Xkr4                    False
+Gm37381                   NaN
+Rp1                       NaN
+AxisArrays with keys: X_pca, X_umap
+[harness] wrote figures/01_proportions.png
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing neighbors
+    finished (0:00:07) --> added 
+    'distances' and 'connectivities', weighted adjacency matrices (adata.obsp)
+computing moments based on connectivities
+    finished (0:00:00) --> added 
+    'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)
+computing velocities
+    finished (0:00:01) --> added 
+    'velocity', velocity vectors for each individual cell (adata.layers)
+computing velocity graph (using 1/32 cores)
+WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,
+or disable the progress bar using `show_progress_bar=False`.
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000004598c2f900077952'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/gpfs1/home/bjx131_pkuhpc/class/scRNA-seq-scVelo/results/scripts/scVelo_py_cells_aswritten.py:193: DeprecationWarning: `get_df` is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please `AnnData::get_df` or Scanpy's `scanpy.get.obs_df` or `scanpy.get.var_df`.
+  s_genes = scv.get_df(adata[:, s_genes], 'spearmans_score', sort_values=True).index
+/gpfs1/home/bjx131_pkuhpc/class/scRNA-seq-scVelo/results/scripts/scVelo_py_cells_aswritten.py:194: DeprecationWarning: `get_df` is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please `AnnData::get_df` or Scanpy's `scanpy.get.obs_df` or `scanpy.get.var_df`.
+  g2m_genes = scv.get_df(adata[:, g2m_genes], 'spearmans_score', sort_values=True).index
+/gpfs1/home/bjx131_pkuhpc/class/scRNA-seq-scVelo/results/scripts/scVelo_py_cells_aswritten.py:207: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+  import pkg_resources
+    finished (0:00:09) --> added 
+    'velocity_graph', sparse matrix with cosine correlations (adata.uns)
+computing velocity embedding
+    finished (0:00:00) --> added
+    'velocity_umap', embedded velocity vectors (adata.obsm)
+[harness] wrote figures/02_velocity_embedding_stream.png
+[harness] wrote figures/03_velocity_embedding.png
+[harness] wrote figures/04_phaseportrait_markers.png
+[harness] wrote figures/05_cpe_groups_velocity.png
+ranking velocity genes
+    finished (0:00:02) --> added 
+    'rank_velocity_genes', sorted scores by group ids (adata.uns) 
+    'spearmans_score', spearmans correlation scores (adata.var)
+   Ductal Ngn3 low EP Ngn3 high EP  ...    Alpha    Delta Epsilon
+0  Notch2       Ptpn3        Pde1c  ...  Zcchc16    Zdbf2   Tmcc3
+1    Sox5       Hacd1        Ptprs  ...    Nlgn1   Spock3    Heg1
+2   Krt19       Hspa8         Pclo  ...    Nell1  Akr1c19  Gpr179
+3   Hspa8      Gm8113     Rap1gap2  ...   Prune2    Ptprt    Ica1
+4    Ano6       Kcnq1        Ttyh2  ...     Ksr2   Snap25   Ncoa7
+
+[5 rows x 8 columns]
+[harness] wrote figures/06_top5_ngn3_high_ep.png
+[harness] wrote figures/07_top5_pre_endocrine.png
+calculating cell cycle phase
+-->     'S_score' and 'G2M_score', scores of cell cycle phases (adata.obs)
+[harness] wrote figures/08_cellcycle_gradients.png
+[harness] wrote figures/09_phase_marker_genes.png
+[harness] wrote figures/10_phaseportrait_hells_top2a.png
+[harness] wrote figures/11_velocity_embedding_stream_repeat.png
+### Session Info ###
+
+anndata         v0.11.4
+cycler          v0.12.1
+h5py            v3.12.1
+igraph          v0.11.6
+joblib          v1.4.2
+kiwisolver      v1.4.7
+legacy_api_wrap v1.5
+leidenalg       v0.10.2
+llvmlite        v0.43.0
+matplotlib      v3.8.2
+more_itertools  v10.3.0
+natsort         v8.4.0
+numba           v0.60.0
+numpy           v1.26.4
+packaging       v26.3
+pandas          v2.2.0
+platformdirs    v4.2.2
+pynndescent     v0.5.13
+pyparsing       v3.1.4
+pytz            v2024.2
+scanpy          v1.10.4
+scipy           v1.12.0
+scvelo          v0.3.4
+six             v1.17.0
+texttable       v1.7.2
+threadpoolctl   v3.7.0
+tqdm            v4.66.5
+[harness] wrote aswritten_adata.h5ad (3696 x 2000)
+
+[harness] captured 11 figures (expected 11)
+
+real	0m42.616s
+user	0m45.560s
+sys	0m10.012s

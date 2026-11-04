@@ -1,0 +1,9 @@
+clusters,top5,top10,n_genes_ranked
+Ductal,Notch2 / Sox5 / Krt19 / Hspa8 / Ano6,Notch2 / Sox5 / Krt19 / Hspa8 / Ano6 / Rbms3 / Cdh1 / Nr2f6 / Igf1r / Grb10,100
+Ngn3 low EP,Ptpn3 / Hacd1 / Hspa8 / Gm8113 / Kcnq1,Ptpn3 / Hacd1 / Hspa8 / Gm8113 / Kcnq1 / Stard10 / Hnf1aos1 / Trp53cor1 / Pcdh9 / Grb10,100
+Ngn3 high EP,Pde1c / Ptprs / Pclo / Rap1gap2 / Ttyh2,Pde1c / Ptprs / Pclo / Rap1gap2 / Ttyh2 / Grik2 / Kcnb2 / Rbfox3 / Map3k15 / Fam135a,100
+Pre-endocrine,Pam / Sdk1 / Baiap3 / Abcc8 / Gnas,Pam / Sdk1 / Baiap3 / Abcc8 / Gnas / Ptprn2 / Asic2 / Sez6l / Pcsk2 / Rimbp2,100
+Beta,Pax6 / Unc5c / Nnat / Tmem108 / Ptprt,Pax6 / Unc5c / Nnat / Tmem108 / Ptprt / Ap1s2 / Scg3 / Kcnmb2 / Phyhipl / Tenm3,100
+Alpha,Zcchc16 / Nlgn1 / Nell1 / Prune2 / Ksr2,Zcchc16 / Nlgn1 / Nell1 / Prune2 / Ksr2 / Chrm3 / Cdh2 / Ndst4 / Nfasc / Unc79,100
+Delta,Zdbf2 / Spock3 / Akr1c19 / Ptprt / Snap25,Zdbf2 / Spock3 / Akr1c19 / Ptprt / Snap25 / Ank2 / Cpm / Slc16a12 / Ap1s2 / Fam155a,100
+Epsilon,Tmcc3 / Heg1 / Gpr179 / Ica1 / Ncoa7,Tmcc3 / Heg1 / Gpr179 / Ica1 / Ncoa7 / Sorcs1 / Srrm3 / Mamld1 / Zcchc16 / Unc79,100

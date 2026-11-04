@@ -1,0 +1,191 @@
+{
+  "n_cells_raw": 3696,
+  "n_genes_raw": 27998,
+  "X_nnz_raw": 9298890,
+  "n_genes_filtered": 7197,
+  "n_genes_hvg": 2000,
+  "n_velocity_genes_stochastic": 1038,
+  "dynamical_fit_columns": [
+    "fit_alpha",
+    "fit_beta",
+    "fit_gamma",
+    "fit_t_",
+    "fit_likelihood",
+    "fit_r2",
+    "fit_scaling"
+  ],
+  "n_velocity_genes_dynamical": 1078,
+  "dynamical_median_likelihood": 0.24187746177283304,
+  "dynamical_frac_likelihood_gt_0": 0.9995,
+  "fit_gamma_n": 2000,
+  "fit_gamma_median": 0.26334832809903086,
+  "fit_gamma_iqr": [
+    0.18086715391050384,
+    0.4064815414031637
+  ],
+  "top20_jaccard_stochastic_vs_dynamical": 0.1321813515212097,
+  "cellcycle_pearson_S": 0.9639135138579775,
+  "cellcycle_pearson_G2M": 0.9731147406619511,
+  "phase_counts": {},
+  "cellcycle_S_top5": [
+    "Mcm6",
+    "Hells",
+    "Tyms",
+    "Pola1",
+    "Uhrf1"
+  ],
+  "cellcycle_G2M_top5": [
+    "Hn1",
+    "Top2a",
+    "Kif23",
+    "Ckap2l",
+    "Kif2c"
+  ],
+  "sensitivity": [
+    {
+      "variant": "main (2000 HVG, k=30)",
+      "n_top_genes": 2000,
+      "n_neighbors": 30,
+      "recompute_pca": false,
+      "n_genes": 2000,
+      "n_velocity_genes": 1038,
+      "speed_median": 23.264451882885517,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 1.0,
+      "top3": "Ductal:Notch2 / Sox5 / Krt19 | Ngn3 low EP:Ptpn3 / Hacd1 / Hspa8 | Ngn3 high EP:Pde1c / Ptprs / Pclo | Pre-endocrine:Pam / Sdk1 / Baiap3 | Beta:Pax6 / Unc5c / Nnat | Alpha:Zcchc16 / Nlgn1 / Nell1 | Delta:Zdbf2 / Spock3 / Akr1c19 | Epsilon:Tmcc3 / Heg1 / Gpr179"
+    },
+    {
+      "variant": "1000 HVG, k=30",
+      "n_top_genes": 1000,
+      "n_neighbors": 30,
+      "recompute_pca": false,
+      "n_genes": 1000,
+      "n_velocity_genes": 700,
+      "speed_median": 11.890783588241721,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 0.5008011815077033,
+      "top3": "Ductal:Notch2 / Krt19 / Hspa8 | Ngn3 low EP:Hspa8 / Gm8113 / Hnf1aos1 | Ngn3 high EP:Pde1c / Pclo / Rap1gap2 | Pre-endocrine:Pam / Sdk1 / Baiap3 | Beta:Pax6 / Unc5c / Nnat | Alpha:Zcchc16 / Nlgn1 / Nell1 | Delta:Zdbf2 / Spock3 / Akr1c19 | Epsilon:Tmcc3 / Ica1 / Ncoa7"
+    },
+    {
+      "variant": "3000 HVG, k=30",
+      "n_top_genes": 3000,
+      "n_neighbors": 30,
+      "recompute_pca": false,
+      "n_genes": 3000,
+      "n_velocity_genes": 1175,
+      "speed_median": 23.944894461163763,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 0.9880952380952381,
+      "top3": "Ductal:Notch2 / Sox5 / Krt19 | Ngn3 low EP:Ptpn3 / Hacd1 / Hspa8 | Ngn3 high EP:Pde1c / Ptprs / Pclo | Pre-endocrine:Pam / Sdk1 / Baiap3 | Beta:Pax6 / Unc5c / Nnat | Alpha:Zcchc16 / Nlgn1 / Nell1 | Delta:Zdbf2 / Spock3 / Akr1c19 | Epsilon:Tmcc3 / Heg1 / Gpr179"
+    },
+    {
+      "variant": "2000 HVG, k=15",
+      "n_top_genes": 2000,
+      "n_neighbors": 15,
+      "recompute_pca": false,
+      "n_genes": 2000,
+      "n_velocity_genes": 834,
+      "speed_median": 25.110549453295008,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 0.5798534798534798,
+      "top3": "Ductal:Sox5 / Kcnq1 / Hspa8 | Ngn3 low EP:Kcnq1 / Hnf1aos1 / Hspa8 | Ngn3 high EP:Pde1c / Pclo / Rap1gap2 | Pre-endocrine:Pam / Baiap3 / Sdk1 | Beta:Pax6 / Unc5c / Ptprt | Alpha:Zcchc16 / Ndst4 / Chrm3 | Delta:Fam155a / Akr1c19 / Zdbf2 | Epsilon:Tmcc3 / Heg1 / Gpr179"
+    },
+    {
+      "variant": "2000 HVG, k=50",
+      "n_top_genes": 2000,
+      "n_neighbors": 50,
+      "recompute_pca": false,
+      "n_genes": 2000,
+      "n_velocity_genes": 1158,
+      "speed_median": 22.409437247500197,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 0.6647030505726158,
+      "top3": "Ductal:Notch2 / Krt19 / Sox5 | Ngn3 low EP:Hacd1 / Ptpn3 / Gm8113 | Ngn3 high EP:Pde1c / Ptprs / Pclo | Pre-endocrine:Pam / Sdk1 / Baiap3 | Beta:Pax6 / Nnat / Unc5c | Alpha:Nlgn1 / Zcchc16 / Ldlrad4 | Delta:Zdbf2 / Spock3 / Pip5k1b | Epsilon:Heg1 / Tmcc3 / Ica1"
+    },
+    {
+      "variant": "2000 HVG, k=30, PCA recomputed",
+      "n_top_genes": 2000,
+      "n_neighbors": 30,
+      "recompute_pca": true,
+      "n_genes": 2000,
+      "n_velocity_genes": 1036,
+      "speed_median": 22.860299863322528,
+      "n_genes_ranked_median": 100.0,
+      "top20_jaccard_vs_stochastic_main": 0.7804206662902315,
+      "top3": "Ductal:Notch2 / Sox5 / Hspa8 | Ngn3 low EP:Ptpn3 / Hspa8 / Dcbld1 | Ngn3 high EP:Pde1c / Pclo / Ptprs | Pre-endocrine:Baiap3 / Pam / Sdk1 | Beta:Pax6 / Unc5c / Nnat | Alpha:Zcchc16 / Nell1 / Ksr2 | Delta:Zdbf2 / Ptprt / Akr1c19 | Epsilon:Heg1 / Ica1 / Tmcc3"
+    }
+  ],
+  "min_corr_sweep": [
+    {
+      "min_corr": 0.1,
+      "n_genes_passing_threshold": 1861,
+      "table_capped_by_n_genes": 100,
+      "n_rows_median": 100.0,
+      "top3_Ductal": "Notch2 / Adamts16 / Tcf7l2",
+      "top3_Beta": "Kctd8 / Nnat / Sphkap"
+    },
+    {
+      "min_corr": 0.3,
+      "n_genes_passing_threshold": 1469,
+      "table_capped_by_n_genes": 100,
+      "n_rows_median": 100.0,
+      "top3_Ductal": "Notch2 / Adamts16 / Tcf7l2",
+      "top3_Beta": "Kctd8 / Nnat / Sphkap"
+    },
+    {
+      "min_corr": 0.5,
+      "n_genes_passing_threshold": 973,
+      "table_capped_by_n_genes": 100,
+      "n_rows_median": 100.0,
+      "top3_Ductal": "Notch2 / Adamts16 / Tcf7l2",
+      "top3_Beta": "Kctd8 / Nnat / Sphkap"
+    },
+    {
+      "min_corr": 0.7,
+      "n_genes_passing_threshold": 430,
+      "table_capped_by_n_genes": 100,
+      "n_rows_median": 100.0,
+      "top3_Ductal": "Notch2 / Adamts16 / Tcf7l2",
+      "top3_Beta": "Kctd8 / Nnat / Sphkap"
+    },
+    {
+      "min_corr": 0.9,
+      "n_genes_passing_threshold": 27,
+      "table_capped_by_n_genes": 100,
+      "n_rows_median": 25.0,
+      "top3_Ductal": "Adamts16 / Vtcn1 / Tubb3",
+      "top3_Beta": "Sphkap / Scg3 / Map1b"
+    }
+  ],
+  "n_genes_sweep": [
+    {
+      "n_genes": 10,
+      "table_rows": 10,
+      "n_rows_per_cluster_median": 10.0
+    },
+    {
+      "n_genes": 50,
+      "table_rows": 50,
+      "n_rows_per_cluster_median": 50.0
+    },
+    {
+      "n_genes": 100,
+      "table_rows": 100,
+      "n_rows_per_cluster_median": 100.0
+    },
+    {
+      "n_genes": 300,
+      "table_rows": 300,
+      "n_rows_per_cluster_median": 300.0
+    }
+  ],
+  "runtime_minutes": 4.72,
+  "versions": {
+    "python": "3.11.18",
+    "scvelo": "0.3.4",
+    "scanpy": "1.10.4",
+    "numpy": "1.26.4",
+    "pandas": "2.2.0",
+    "matplotlib": "3.8.2"
+  }
+}

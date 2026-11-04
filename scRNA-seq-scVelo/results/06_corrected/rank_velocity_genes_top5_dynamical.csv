@@ -1,0 +1,9 @@
+clusters,top5,n_ranked
+Ductal,Notch2 / Adamts16 / Tcf7l2 / Bcl11b / Krt19,100
+Ngn3 low EP,Adamts16 / Notch2 / Idh2 / Hspa8 / Cnksr3,100
+Ngn3 high EP,Ptprs / Sel1l / Vwa5b2 / Tgfbr1 / Mtch1,100
+Pre-endocrine,Syt7 / Abcc8 / Scg5 / Baiap3 / Pcsk2,100
+Beta,Kctd8 / Nnat / Sphkap / Sdk2 / Zbtb7c,100
+Alpha,Skap1 / Gpr179 / Rab27a / Nfasc / Rasgrf2,100
+Delta,P2ry1 / Pdia5 / Gpr179 / Hat1 / Nucks1,100
+Epsilon,Gpr179 / Prdx4 / Rab27a / Syt13 / Dock11,100

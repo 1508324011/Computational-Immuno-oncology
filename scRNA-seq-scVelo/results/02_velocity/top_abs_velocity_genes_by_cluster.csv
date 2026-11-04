@@ -1,0 +1,161 @@
+clusters,rank,gene,mean_velocity,n_cells_positive
+Ductal,1,Malat1,25.18121,916
+Ductal,2,Meg3,8.966645,916
+Ductal,3,Rbms3,2.1286964,812
+Ductal,4,Ttll3,1.2141256,916
+Ductal,5,Zbtb20,1.152674,897
+Ductal,6,Grb10,1.1314467,872
+Ductal,7,Sox5,1.0781721,860
+Ductal,8,Auts2,1.0739584,853
+Ductal,9,Dapk1,1.0331348,902
+Ductal,10,Hspa8,0.9939847,912
+Ductal,11,Pbx1,0.9766586,859
+Ductal,12,Tshz2,0.8443569,913
+Ductal,13,Rrm2b,0.8353413,916
+Ductal,14,Foxp1,0.834892,916
+Ductal,15,Meis2,0.8280706,898
+Ductal,16,Rbpms,0.76668245,906
+Ductal,17,Gse1,-0.7314444,19
+Ductal,18,Kcnq1,0.7308313,881
+Ductal,19,Actb,-0.70097816,183
+Ductal,20,Shank2,0.6937879,707
+Ngn3 low EP,1,Malat1,28.789211,262
+Ngn3 low EP,2,Meg3,9.370019,262
+Ngn3 low EP,3,Rbms3,1.6347108,221
+Ngn3 low EP,4,Auts2,1.5010043,258
+Ngn3 low EP,5,Ttll3,1.2033087,262
+Ngn3 low EP,6,Gse1,-1.1591997,0
+Ngn3 low EP,7,Rap1gap2,1.1344131,252
+Ngn3 low EP,8,Pard3,1.1274039,191
+Ngn3 low EP,9,Zbtb20,1.118309,256
+Ngn3 low EP,10,Grb10,1.067263,242
+Ngn3 low EP,11,Dapk1,0.96678334,256
+Ngn3 low EP,12,Park2,0.9667011,249
+Ngn3 low EP,13,Foxp1,0.96282995,260
+Ngn3 low EP,14,Pbx1,0.9548473,241
+Ngn3 low EP,15,Plcl1,0.9470565,241
+Ngn3 low EP,16,Actb,-0.8659156,37
+Ngn3 low EP,17,Hspa8,0.86575663,261
+Ngn3 low EP,18,Shank2,0.8609056,197
+Ngn3 low EP,19,Sox5,0.8196078,216
+Ngn3 low EP,20,Rrm2b,0.78913856,262
+Ngn3 high EP,1,Malat1,24.560764,641
+Ngn3 high EP,2,Meg3,5.827345,642
+Ngn3 high EP,3,Ptprn2,5.238157,616
+Ngn3 high EP,4,Kcnb2,3.7929265,613
+Ngn3 high EP,5,Cacna2d1,3.7240765,592
+Ngn3 high EP,6,Cadps,2.718318,642
+Ngn3 high EP,7,Actb,-2.7012155,4
+Ngn3 high EP,8,Adgrb3,2.3802843,635
+Ngn3 high EP,9,Rap1gap2,2.1657674,635
+Ngn3 high EP,10,Pde1c,2.0832083,642
+Ngn3 high EP,11,Kcnma1,1.8018603,572
+Ngn3 high EP,12,Setbp1,1.7937219,602
+Ngn3 high EP,13,Maml3,1.7105789,642
+Ngn3 high EP,14,Dach1,1.4929483,640
+Ngn3 high EP,15,Pclo,1.4840958,639
+Ngn3 high EP,16,Cacna1a,1.3580415,464
+Ngn3 high EP,17,Gse1,-1.3409622,231
+Ngn3 high EP,18,Runx1t1,1.2524843,538
+Ngn3 high EP,19,Zbtb20,1.2453017,642
+Ngn3 high EP,20,Rbfox3,1.2074221,593
+Pre-endocrine,1,Ptprn2,9.188314,579
+Pre-endocrine,2,Meg3,5.8353515,582
+Pre-endocrine,3,Gse1,-4.393261,0
+Pre-endocrine,4,Malat1,3.3063483,404
+Pre-endocrine,5,Actb,-3.0859554,0
+Pre-endocrine,6,Gnas,2.2204118,569
+Pre-endocrine,7,Hs6st3,2.210622,565
+Pre-endocrine,8,2610035D17Rik,-2.1716645,9
+Pre-endocrine,9,Rora,-2.1327093,63
+Pre-endocrine,10,Maml3,2.0671728,581
+Pre-endocrine,11,Sdk1,1.7978739,592
+Pre-endocrine,12,Cadps,1.7473899,537
+Pre-endocrine,13,Cacnb2,1.4782088,516
+Pre-endocrine,14,Cacna1a,1.4151951,510
+Pre-endocrine,15,Abcc8,1.3908461,591
+Pre-endocrine,16,Krt8,-1.201633,0
+Pre-endocrine,17,Celf2,-1.1312503,3
+Pre-endocrine,18,Rimbp2,1.0675621,550
+Pre-endocrine,19,Pam,1.0608771,583
+Pre-endocrine,20,Pcsk2,1.0509745,562
+Beta,1,Ins2,7.1506104,545
+Beta,2,Malat1,-7.015474,177
+Beta,3,Ptprn2,3.191215,494
+Beta,4,Gse1,-2.3678045,0
+Beta,5,Actb,-1.8183134,0
+Beta,6,Hs6st3,1.6625569,542
+Beta,7,Gnas,1.6367456,577
+Beta,8,Cacnb2,1.6351315,525
+Beta,9,Park2,1.3904201,582
+Beta,10,Nnat,1.358845,535
+Beta,11,2610035D17Rik,-1.3428696,5
+Beta,12,Maml3,1.1126605,556
+Beta,13,Abcc8,1.0562391,505
+Beta,14,Cacna2d1,-0.9787207,30
+Beta,15,Slc8a1,0.88992447,532
+Beta,16,Gnao1,0.88157374,575
+Beta,17,Zbtb20,0.8021763,520
+Beta,18,Fam155a,0.79274964,537
+Beta,19,Cadps,0.76479733,470
+Beta,20,Macrod2,0.7311352,548
+Alpha,1,Ptprn2,5.8029094,446
+Alpha,2,Auts2,2.9916182,396
+Alpha,3,Cacnb2,2.8605745,467
+Alpha,4,Gse1,-2.648511,0
+Alpha,5,Meg3,2.1319733,424
+Alpha,6,2610035D17Rik,-1.9397751,7
+Alpha,7,Malat1,-1.931298,196
+Alpha,8,Actb,-1.7902607,0
+Alpha,9,Hs6st3,1.7372167,430
+Alpha,10,Park2,1.2864853,449
+Alpha,11,Meis2,1.1995121,362
+Alpha,12,Slc8a1,1.1427515,470
+Alpha,13,Rora,-1.1299201,136
+Alpha,14,Cacna2d1,-1.0663149,47
+Alpha,15,Fam155a,1.0557474,409
+Alpha,16,Zcchc16,0.946206,474
+Alpha,17,Zbtb20,0.87777156,414
+Alpha,18,Ctnna2,0.8406999,475
+Alpha,19,Gnas,-0.84014887,98
+Alpha,20,Kcnma1,0.82860625,458
+Delta,1,Malat1,6.354032,59
+Delta,2,Cacnb2,3.4678512,70
+Delta,3,Gse1,-2.4029405,0
+Delta,4,Rora,2.3855584,54
+Delta,5,Meg3,2.2261431,45
+Delta,6,Auts2,-2.1454406,7
+Delta,7,2610035D17Rik,-1.9030849,0
+Delta,8,Fam155a,1.9028366,70
+Delta,9,Actb,-1.7048594,0
+Delta,10,Hs6st3,1.6565619,70
+Delta,11,Celf2,-1.6300435,0
+Delta,12,Zbtb20,1.457968,70
+Delta,13,Pip5k1b,1.4169139,70
+Delta,14,Abcc8,1.3406789,70
+Delta,15,Cacna1a,1.2242172,68
+Delta,16,Macrod2,1.1954882,70
+Delta,17,Kcnd2,1.1229825,70
+Delta,18,Slc8a1,1.095466,70
+Delta,19,Asic2,1.0657548,70
+Delta,20,Cacna1c,1.0396165,70
+Epsilon,1,Malat1,13.538218,136
+Epsilon,2,Cacnb2,4.38908,142
+Epsilon,3,Meg3,3.9489837,141
+Epsilon,4,Auts2,2.9188597,139
+Epsilon,5,Ptprn2,2.9057782,95
+Epsilon,6,Gse1,-2.3323352,0
+Epsilon,7,Cacna1c,2.2293775,141
+Epsilon,8,2610035D17Rik,-2.1448877,0
+Epsilon,9,Rora,-2.0086424,20
+Epsilon,10,Actb,-1.6189961,0
+Epsilon,11,Maml3,1.6068633,134
+Epsilon,12,Zbtb20,1.4677707,142
+Epsilon,13,Park2,1.4580798,134
+Epsilon,14,Cadps,1.4413314,136
+Epsilon,15,Cacna2d1,-1.3604901,16
+Epsilon,16,9030622O22Rik,1.3321849,113
+Epsilon,17,Fam155a,1.326398,141
+Epsilon,18,Celf2,-1.2647985,10
+Epsilon,19,Meis2,1.080632,122
+Epsilon,20,Rapgef4,1.0730885,142

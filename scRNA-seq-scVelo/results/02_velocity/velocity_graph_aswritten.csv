@@ -1,0 +1,8 @@
+key,value
+graph_nnz,593854
+graph_shape,3696x3696
+nnz_per_cell_mean,160.67478354978354
+nnz_per_cell_median,159.0
+graph_max,0.5682631731033325
+graph_min,0.0
+graph_density,0.043472614596802905

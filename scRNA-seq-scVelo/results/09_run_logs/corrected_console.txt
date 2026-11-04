@@ -1,0 +1,461 @@
+/gpfs1/home/bjx131_pkuhpc/class/scRNA-seq-scVelo/results/scripts/scVelo_py_cells_corrected.py:24: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+
+=== [   0.0s] STEP 0  load endocrinogenesis day 15 (scv.datasets.pancreas, served from the local copy)
+[describe] raw X           (3696, 27998) float32  nnz=9298890    density=  9.0%  max=2286.000  sum=24670872.0
+[describe] raw layer spliced   (3696, 27998) float32  nnz=9298890    density=  9.0%  max=2286.000  sum=24670872.0
+[describe] raw layer unspliced (3696, 27998) float32  nnz=3156504    density=  3.1%  max=1418.000  sum=4801196.0
+AnnData object with n_obs × n_vars = 3696 × 27998
+    obs: 'clusters_coarse', 'clusters', 'S_score', 'G2M_score'
+    var: 'highly_variable_genes'
+    uns: 'clusters_coarse_colors', 'clusters_colors', 'day_colors', 'neighbors', 'pca'
+    obsm: 'X_pca', 'X_umap'
+    layers: 'spliced', 'unspliced'
+    obsp: 'distances', 'connectivities'
+
+[VELO-09] pre-existing var columns: ['highly_variable_genes']
+[VELO-09] dtype of the column students actually see: category
+[VELO-09] its values: {'False': 13338, 'nan': 10656, 'True': 4004}
+
+=== [   0.9s] STEP 1  filter, normalise, log-transform, HVG, moments
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+[describe] filtered+logged X           (3696, 7197) float32  nnz=7441623    density= 28.0%  max=7.306  sum=7621717.5
+[describe] filtered+logged layer spliced   (3696, 7197) float32  nnz=7441623    density= 28.0%  max=1488.748  sum=20272660.0
+[describe] filtered+logged layer unspliced (3696, 7197) float32  nnz=2759067    density= 10.4%  max=573.349  sum=4085253.0
+[VELO-02] X is log-normalised while the velocity layers stay linear: X.max=7.306  spliced.max=1488.7  unspliced.max=573.3
+[VELO-09] after subsetting: n_vars=2000, var['highly_variable'].sum()=2000
+[note] reusing the shipped X_pca (fitted on 27,998 genes) for the neighbour graph, as the tutorial does; the recomputed-PCA variant is measured in STEP 7.
+computing moments based on connectivities
+    finished (0:00:00)
+
+=== [   9.9s] STEP 2  stochastic (steady-state) velocity + velocity graph -- the tutorial's model
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,
+or disable the progress bar using `show_progress_bar=False`.
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000004598c2fb00077c7c'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+    finished (0:00:07)
+[state] velocity genes (stochastic): 1038 / 2000
+ranking velocity genes
+    finished (0:00:02)
+
+=== [  22.1s] STEP 3  dynamical model (the model the theory slides teach) -- VELO-03
+recovering dynamics (using 8/32 cores)
+    finished (0:02:35)
+computing velocities
+    finished (0:00:07)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000004598c2fd00077cb0'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:07)
+computing terminal states
+    identified 2 regions of root cells and 1 region of end points .
+    finished (0:00:00)
+computing latent time using root_cells as prior
+    finished (0:00:01)
+[state] dynamical fit columns: ['fit_alpha', 'fit_beta', 'fit_gamma', 'fit_t_', 'fit_likelihood', 'fit_r2', 'fit_scaling']
+[state] per-gene gamma: n=2000 median=0.263 IQR=[0.181, 0.406]
+        (the stochastic model forces one shared rate; here it is fitted per gene)
+ranking velocity genes
+    finished (0:00:00)
+[state] stochastic vs dynamical top-20 velocity genes: mean Jaccard = 0.132
+
+=== [ 197.8s] STEP 4  overview panels
+[harness] wrote figures_corrected/corrected_01_proportions.png
+computing velocity embedding
+    finished (0:00:00)
+[harness] wrote figures_corrected/corrected_02_velocity_embedding_stream.png
+[harness] wrote figures_corrected/corrected_03_velocity_embedding.png
+[harness] wrote figures_corrected/corrected_04_phaseportrait_markers_stochastic.png
+[harness] wrote figures_corrected/corrected_05_phaseportrait_markers_dynamical.png
+[harness] wrote figures_corrected/corrected_06_cpe_groups_velocity.png
+
+=== [ 208.5s] STEP 5  velocity-gene panels (stochastic ranking, i.e. comparable to the reference)
+   Ductal Ngn3 low EP Ngn3 high EP  ...    Alpha    Delta Epsilon
+0  Notch2       Ptpn3        Pde1c  ...  Zcchc16    Zdbf2   Tmcc3
+1    Sox5       Hacd1        Ptprs  ...    Nlgn1   Spock3    Heg1
+2   Krt19       Hspa8         Pclo  ...    Nell1  Akr1c19  Gpr179
+3   Hspa8      Gm8113     Rap1gap2  ...   Prune2    Ptprt    Ica1
+4    Ano6       Kcnq1        Ttyh2  ...     Ksr2   Snap25   Ncoa7
+
+[5 rows x 8 columns]
+[harness] wrote figures_corrected/corrected_07_top5_ngn3_high_ep.png
+[harness] wrote figures_corrected/corrected_08_top5_pre_endocrine.png
+
+=== [ 211.5s] STEP 6  cell cycle: keep the original scores, rank phase markers without scv.get_df
+calculating cell cycle phase
+[VELO-08] original vs recomputed scores: Pearson S=0.9639 G2M=0.9731
+[harness] wrote figures_corrected/corrected_09_cellcycle_gradients_original_scores.png
+[state] S top5 = ['Mcm6', 'Hells', 'Tyms', 'Pola1', 'Uhrf1'] | G2M top5 = ['Hn1', 'Top2a', 'Kif23', 'Ckap2l', 'Kif2c']
+[harness] wrote figures_corrected/corrected_10_phase_marker_genes.png
+[harness] wrote figures_corrected/corrected_11_phaseportrait_hells_top2a_dynamical.png
+[harness] wrote figures_corrected/corrected_12_latent_time_and_confidence.png
+[harness] wrote figures_corrected/corrected_13_velocity_stream_latent_time.png
+
+=== [ 218.4s] STEP 7  what the unexplained defaults (2000 HVG, k=30, min_corr .3, shipped PCA) cost
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000004598c2fe00077cb4'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:03)
+ranking velocity genes
+    finished (0:00:02)
+[sensitivity] main (2000 HVG, k=30)              genes= 2000 velocity_genes=1038 speed_med= 23.26 top20_J=1.000
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:00)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs00000000545a694e00077cb5'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:02)
+ranking velocity genes
+    finished (0:00:01)
+[sensitivity] 1000 HVG, k=30                     genes= 1000 velocity_genes= 700 speed_med= 11.89 top20_J=0.501
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs0000000062b53a6400077cb7'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:03)
+ranking velocity genes
+    finished (0:00:03)
+[sensitivity] 3000 HVG, k=30                     genes= 3000 velocity_genes=1175 speed_med= 23.94 top20_J=0.988
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs000000007360842400077cb9'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:01)
+ranking velocity genes
+    finished (0:00:02)
+[sensitivity] 2000 HVG, k=15                     genes= 2000 velocity_genes= 834 speed_med= 25.11 top20_J=0.580
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs0000000082d00a7e00077cba'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/optimization.py:184: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gamma[i] = np.linalg.pinv(A.T.dot(A)).dot(A.T.dot(y[:, i]))
+    finished (0:00:05)
+ranking velocity genes
+    finished (0:00:02)
+[sensitivity] 2000 HVG, k=50                     genes= 2000 velocity_genes=1158 speed_med= 22.41 top20_J=0.665
+Filtered out 20801 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:00)
+computing velocities
+    finished (0:00:01)
+computing velocity graph (using 32/32 cores)
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 600, in _run_server
+    server.serve_forever()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/managers.py", line 184, in serve_forever
+    sys.exit(0)
+SystemExit: 0
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 303, in _run_finalizers
+    finalizer()
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 227, in __call__
+    res = self._callback(*self._args, **self._kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/multiprocessing/util.py", line 136, in _remove_temp_dir
+    rmtree(tempdir, onerror=onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 752, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 703, in _rmtree_safe_fd
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/shutil.py", line 701, in _rmtree_safe_fd
+    os.unlink(entry.name, dir_fd=topfd)
+OSError: [Errno 16] Device or resource busy: '.nfs0000000092cb852500077cbc'
+/home/bjx131_pkuhpc/miniconda3/envs/velo/lib/python3.11/site-packages/scvelo/tools/utils.py:463: DeprecationWarning: Please import `rankdata` from the `scipy.stats` namespace; the `scipy.stats.stats` namespace is deprecated and will be removed in SciPy 2.0.0.
+  from scipy.stats.stats import rankdata
+    finished (0:00:03)
+ranking velocity genes
+    finished (0:00:02)
+[sensitivity] 2000 HVG, k=30, PCA recomputed     genes= 2000 velocity_genes=1036 speed_med= 22.86 top20_J=0.780
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] min_corr=0.1  genes passing=1861  rows in table=100  Ductal top3=Notch2 / Adamts16 / Tcf7l2
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] min_corr=0.3  genes passing=1469  rows in table=100  Ductal top3=Notch2 / Adamts16 / Tcf7l2
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] min_corr=0.5  genes passing=973  rows in table=100  Ductal top3=Notch2 / Adamts16 / Tcf7l2
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] min_corr=0.7  genes passing=430  rows in table=100  Ductal top3=Notch2 / Adamts16 / Tcf7l2
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] min_corr=0.9  genes passing=27  rows in table=25  Ductal top3=Adamts16 / Vtcn1 / Tubb3
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] n_genes=10   -> table has 10 rows
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] n_genes=50   -> table has 50 rows
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] n_genes=100  -> table has 100 rows
+ranking velocity genes
+    finished (0:00:00)
+[sensitivity] n_genes=300  -> table has 300 rows
+ranking velocity genes
+    finished (0:00:00)
+
+=== [ 283.2s] STEP 8  persist what the tutorial throws away
+[harness] captured 13 figures (planned 13)
+[harness] object written: corrected_adata.h5ad (3696 x 2000)
+
+=== session ===
+python       3.11.18
+scvelo       0.3.4
+scanpy       1.10.4
+numpy        1.26.4
+pandas       2.2.0
+matplotlib   3.8.2
+
+=== done in 4.7 min ===

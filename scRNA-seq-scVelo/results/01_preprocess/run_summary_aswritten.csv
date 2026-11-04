@@ -1,0 +1,26 @@
+key,value
+label,aswritten
+n_cells,3696
+n_genes,2000
+X_nnz,1740903
+X_max,7.306362152099609
+X_sum,1881017.0
+spliced_nnz,1740903
+spliced_max,1488.7481689453125
+spliced_sum,5787851.0
+unspliced_nnz,844075
+unspliced_max,573.3489379882812
+unspliced_sum,1726929.75
+Ms_sum,5778956.5
+Mu_sum,1728696.75
+n_highly_variable,2000
+n_highly_variable_genes_flag,1187
+n_velocity_genes,1038
+n_clusters,8
+clusters,Ductal|Ngn3 low EP|Ngn3 high EP|Pre-endocrine|Beta|Alpha|Delta|Epsilon
+velocity_params.embeddings,['umap']
+velocity_params.fit_offset,False
+velocity_params.mode,stochastic
+velocity_params.mode_neighbors,distances
+velocity_params.n_recurse_neighbors,2
+velocity_params.perc,[ 5 95]

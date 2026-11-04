@@ -78,6 +78,25 @@
         ├── 08_figure_comparison/            # 与 28 张参考图的机器可读/书面比对
         ├── 09_run_logs/                     # 六次运行的逐单元日志与状态表
         └── scripts/                          # 13 个脚本: 教材单元/驱动器/审计与比对
+└── scRNA-seq-scVelo/                        # RNA velocity 模块 (第六节课, 原样跑 + 矫正跑完成)
+    ├── scRNAseq-scVelo.html                 # 教材原文 (nbconvert 导出, 88 单元含输出)
+    ├── 01_proportions.png … 11_velocity_embedding_stream_repeat.png   # 课程随附 11 张参考图 (未改动)
+    ├── ref/                                  # 教材源文件 + 矫正增强文档 (构建走 WES/ref/build.sh)
+    │   ├── scRNAseq-scVelo.ipynb             # 教材 notebook 源文件 (29 个代码单元)
+    │   ├── scVelo_analysis_corrected{.md,.html,.pdf}     # 矫正增强版: 原样跑 + dynamical 补跑 + 17 条坑位取证
+    │   ├── scVelo_analysis_corrected_zh{.md,.html,.pdf}  # 同一矫正版的中文版
+    │   ├── scVelo_analysis_results_guide{.md,.html,.pdf} # 结果逐目录导读 + 8 个动手练习
+    │   └── figures/                          # 三份文档共用的 21 张图 (对拍拼接图/派生图表/理论图)
+    └── results/                              # 实跑分析产物 (无任何原始数据: h5ad 对象不入库)
+        ├── 01_preprocess/                   # 步骤 1: 占比面板 + 每群计数 + 对象自身审计表
+        ├── 02_velocity/                     # 步骤 2-3: stream/箭头面板 + 每细胞速率 + 速率图统计
+        ├── 03_phase_portraits/              # 步骤 4: 三张相位图面板 + 每基因相位统计
+        ├── 04_gene_dynamics/                # 步骤 5: 两张 top5 面板 + 排名表 + 每基因动力学
+        ├── 05_cellcycle/                    # 步骤 6: 周期渐变面板 + 相位 marker + 分数表
+        ├── 06_corrected/                    # 矫正链: 13 张矫正面板 + 17 张表 (dynamical 拟合/隐时间/参数敏感性)
+        ├── 07_figure_comparison/            # 与 11 张参考图的机器可读比对 (原样版 / 矫正版)
+        ├── 09_run_logs/                     # 三次运行的控制台记录 (原样/矫正/两次审计)
+        └── scripts/                          # 5 个脚本: 原样单元/矫正链/审计/对拍/文档用图
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
@@ -98,6 +117,10 @@
 > **分析结果（TBCR-analysis/results/）**：原样四部分产物（克隆型频率直方图、IGHV/IGHJ top10、V-J 热图、CDR3 nt/aa 长度分布、375 样本多样性 CSV 与三张相关图、全部脚本与日志）+ `05_corrected/` 修正版（raw/L1/L2 三套逐样本指标、TRB 扩展 CSV、全部修正图与 `corrected_summary.txt`）——**不含任何原始数据**（TRUST3 产物在共享只读路径 `/lustre1/share/airr/data/`，未复制）。讲解文档 `TBCR-analysis/ref/TBCR_analysis_results_guide.html/pdf` 逐类导读 + 7 个动手练习（练习 2 五条命令现场复现 raw/L1/L2 三口径差异）。
 
 > **矫正增强版（scRNA_seq_analyze_corrected）**：把第五节课教材（PBMC 3k：R/Seurat 的 Part 1-7 + Python/scanpy 的 Part 8，共 30 个代码单元）在登录节点**原样实跑一轮**（2026-10-26，一次 R 会话 509 s + 一次 Python 命名空间 4 s）后，再**跑一份修正版**对拍写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 20 条问题登记表。两条致命：R 侧从未 `library(ggrepel)`（DEG 单元连带 `saveRDS` 全灭）、Python 侧 `log=True,,save=` 双逗号 `SyntaxError` 抹掉整个单元（PCA/近邻/UMAP 全没跑）；**原样跑只产出 25 张图里的 18 张、2 个对象里的 0 个**。改变结果的几条：教材把 cluster→细胞类型映射写了两份且互相矛盾（cell 39 的表与 cell 43 的向量在 cluster 1/2 上互换，本次运行里向量对、表错）；scanpy 的位置式命名 8 个标签错 2 个（名为 `CD8 T` 的群 78.1% 是 Seurat 的 Naive CD4 T）；两侧 QC 阈值不一致（2500 vs 2000）正是"R 9 群 vs Python 8 群"的主因——把 Python 阈值提到 2500 就得到与 Seurat 完全相同的 2,638 个细胞和 9 个群。另记录：基因全集改动（`min_cells=3`，只有 30/2000 个 HVG 变化）会让同一份固定注释向量标错 957 个细胞（36%）；Part 7 的 UMAP 不可跨运行复现（同输入两次运行结构相关仅 0.563，与对参考图同量级）；参考图 `Marker_Heatmap.png` 是 3000×6000 px，而教材 `ggsave` 只能给 3000×3000。中文版 `_zh` 与英文版结构、数字逐一对拍。**图文并茂（29 张图）**：每张结果图嵌在它解释的那一步之后，图注交代「这是什么 + 关键数字」，紧跟一段「怎么看/说明什么/哪里会误读」；英文版 38 页、中文版 36 页。构建：`WES/ref/build.sh ../../scRNA-seq/ref/scRNA_seq_analyze_corrected.md "Single-cell RNA-seq (PBMC 3k) — Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **矫正增强版（scVelo_analysis_corrected）**：把第六节课教材（小鼠胰腺 E15.5 内分泌发生，3,696 细胞 × 27,998 基因，velocyto 内含子/外显子计数）在登录节点**原样跑一轮**（2026-11-04，`velo` 环境 = scvelo 0.3.4 / scanpy 1.10.4，单核 42.6 s，11 张图）后，再**补跑一份矫正链**（4.7 min，13 图 + 18 表）对拍写成的修复与讲解版，带 17 条问题登记表。核心发现：教材用 9 张幻灯讲 dynamical（EM）模型却**从未调用** `recover_dynamics`，只跑了稳态近似——补跑后同一批数据 stochastic vs dynamical 的 top-20 速率基因 Jaccard 仅 **0.132**，两模型置信度相关 **0.207**，逐基因 γ 的秩相关 **−0.45**；`recover_dynamics` 默认 `var_names="velocity_genes"` 会把 EM 悄悄限制在上一次运行的 1,038 个基因上（改 `var_names="all"` 后 2,000 个，top5 一字未变）；`scv.pl.velocity(mode='dynamical')` 的 `mode` 只控制侧栏、不选模型（两图 md5 相同）；`score_genes_cell_cycle` 静默覆盖数据自带的 S/G2M 分数（Pearson 0.964/0.973）；`scv.pl.proportions` 默认 `use_raw=True` 画的是过滤前文库（16.3%）而非当前 layers（23.0%）；`min_corr=.3` 从未生效（真正的截断是 `n_genes=100`）。预登记的「双重取对数」被**证伪**（0.3.4 的 `filter_and_normalize` 不做 log）。11 张参考图里十张结构相关 0.973–0.993，仅细胞周期那张 0.589——定位为参考侧来自另一构建（其 dpi 分三档 80/96/64）。中文版 `_zh` 与英文版数字逐一对拍（267 个有效数字 token，264 个出现次数完全相同；余 3 个为英文拼写 ten/eleven/100k 对应中文数字/「10 万」的书写差异）。**图文并茂（21 张图）**：每张结果图嵌在它解释的那一步之后，图注交代「这是什么 + 关键数字」；英文版 31 页、中文版 27 页。构建：`WES/ref/build.sh ../../scRNA-seq-scVelo/ref/scVelo_analysis_corrected.md "RNA velocity with scVelo (mouse pancreas, E15.5) — Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **分析结果（scRNA-seq-scVelo/results/）**：原样跑与矫正跑的图（占比、stream/箭头、三张相位图、两张 top5、周期渐变、隐时间与置信度）＋ 教材算了却从未落盘的表（每群速率基因前 50、逐基因动力学与相位统计、逐细胞速率与隐时间、两版周期分数）＋ 参数敏感性扫描（六条完整流水线 × HVG 深度/k/min_corr）＋ 与 11 张参考图的逐图定量比对（结构相关 + 墨迹 IoU）＋ 三次运行的控制台记录 ＋ 五个可重跑脚本——**不含任何原始数据**（`endocrinogenesis_day15.h5ad` 在共享只读路径 `/lustre1/share/scRNA-advancedTopics/data/`，未复制；410 MB 的 `corrected_adata.h5ad` 不入库，一行 `adata.write()` 可重建）。讲解文档 `scRNA-seq-scVelo/ref/scVelo_analysis_results_guide.html/pdf` 逐目录导读 + 8 个动手练习（练习 1 现场重算两套占比口径，练习 3 看隐时间为何排出单一时序会失真）。
 >
 > **分析结果（scRNA-seq/results/）**：原样跑与修正跑的图（质控、HVG/PCA、聚类 UMAP、marker 与注释、火山图与 DEG、harmony 前后 UMAP、scanpy 的 11 张）＋ 教材算了却从未落盘的表（11,986 行 marker、90 行每群 top10、两张 DEG 明细、每群前 200 的 scanpy marker）＋ 两份硬编码映射的审计表与跨工具列联表 ＋ 与 28 张参考图的逐图像素比对（`PCA_heatmap_ALL.png` 结构相关 **1.0000**，即逐像素可复现）＋ 六次运行的逐单元日志 ＋ `pbmc3k.h5ad` 交付对象——**不含任何原始数据**（计数矩阵在共享只读路径 `/lustre1/share/scRNA_seq/hg19`，未复制；331 MiB 的 `pbmc3k_final.rds` 与 120 MiB 的合并对象不入库，各一行 `saveRDS()` 可重建）。讲解文档 `scRNA-seq/ref/scRNA_seq_analyze_results_guide.html/pdf` 逐类导读 + 8 个动手练习（练习 3 一条 awk 命令现场证伪 `CD8 T` 标签）。
 
@@ -150,7 +173,7 @@ mkdir -p "$BASE"/{0_fastq,1_alignment/OC,1_alignment/PBMC,2_variant_call,3_annot
 
 按路线图第 1–10 节顺序执行即可；推荐用 SLURM (`sbatch`) 提交 BWA/GATK 等重计算步骤，不要在登录节点直接跑。
 
-后四节课（RNA-seq、RNA-seq 下游应用、TCR/BCR 组库、单细胞 RNA-seq）都是**登录节点串行直跑**，与 WES 的 sbatch 纪律不同：`conda activate RNA-seq` / `rnaimmune` / `airr` / 直接用教师共享环境 `/lustre1/share/miniconda3/envs/scRNA_seq`（R+Seurat 与 Python+scanpy 同一环境）后，按各自 `ref/` 下的矫正版文档执行即可。
+后五节课（RNA-seq、RNA-seq 下游应用、TCR/BCR 组库、单细胞 RNA-seq、单细胞 RNA velocity）都是**登录节点串行直跑**，与 WES 的 sbatch 纪律不同：`conda activate RNA-seq` / `rnaimmune` / `airr` / 直接用教师共享环境 `/lustre1/share/miniconda3/envs/scRNA_seq`（R+Seurat 与 Python+scanpy 同一环境）/ 新建的 `velo` 环境（scvelo 0.3.4 + scanpy 1.10.4，第五节课的共享环境里没有 scVelo，硬塞会连坐升级 anndata/numba）后，按各自 `ref/` 下的矫正版文档执行即可。
 
 ## 致谢 / Credits
 

@@ -1,0 +1,6 @@
+min_corr,n_genes_passing_threshold,table_capped_by_n_genes,n_rows_median,top3_Ductal,top3_Beta
+0.1,1861,100,100.0,Notch2 / Adamts16 / Tcf7l2,Kctd8 / Nnat / Sphkap
+0.3,1469,100,100.0,Notch2 / Adamts16 / Tcf7l2,Kctd8 / Nnat / Sphkap
+0.5,973,100,100.0,Notch2 / Adamts16 / Tcf7l2,Kctd8 / Nnat / Sphkap
+0.7,430,100,100.0,Notch2 / Adamts16 / Tcf7l2,Kctd8 / Nnat / Sphkap
+0.9,27,100,25.0,Adamts16 / Vtcn1 / Tubb3,Sphkap / Scg3 / Map1b

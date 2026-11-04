@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>scVelo 分析结果讲解</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">scVelo 分析结果讲解</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#scvelo-分析结果讲解" id="toc-scvelo-分析结果讲解">scVelo
+分析结果讲解</a>
+<ul>
+<li><a href="#怎么读这个目录" id="toc-怎么读这个目录">1.
+怎么读这个目录</a></li>
+<li><a href="#preprocess对象本身与占比" id="toc-preprocess对象本身与占比">2.
+01_preprocess：对象本身与占比</a></li>
+<li><a href="#velocity场" id="toc-velocity场">3.
+02_velocity：场</a></li>
+<li><a href="#phase_portraits相位图" id="toc-phase_portraits相位图">4.
+03_phase_portraits：相位图</a></li>
+<li><a href="#gene_dynamics速率基因与每基因动力学" id="toc-gene_dynamics速率基因与每基因动力学">5.
+04_gene_dynamics：速率基因与每基因动力学</a></li>
+<li><a href="#cellcycle细胞周期" id="toc-cellcycle细胞周期">6.
+05_cellcycle：细胞周期</a></li>
+<li><a href="#corrected矫正链做了什么" id="toc-corrected矫正链做了什么">7.
+06_corrected：矫正链做了什么</a></li>
+<li><a href="#figure_comparison和教师的-11-张图对拍" id="toc-figure_comparison和教师的-11-张图对拍">8.
+07_figure_comparison：和教师的 11 张图对拍</a></li>
+<li><a href="#练习" id="toc-练习">9. 练习</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="scvelo-分析结果讲解">scVelo 分析结果讲解</h1>
+<p>本文件导读 <code>scRNA-seq-scVelo/results/</code>
+下的全部产物，并给出可以亲手复现的练习。配套的矫正增强版文档在
+<code>ref/scVelo_analysis_corrected.md</code>（英文）与
+<code>ref/scVelo_analysis_corrected_zh.md</code>（中文）。</p>
+<h2 id="怎么读这个目录">1. 怎么读这个目录</h2>
+<pre><code>results/
+├── 01_preprocess/          步骤 1：占比面板 + 每群细胞数 + 输入对象自身的审计表
+├── 02_velocity/            步骤 2-3：stream/箭头面板、每细胞速率、速率图统计
+├── 03_phase_portraits/     步骤 4：Cpe/Gnao1/Ins2/Adk 面板、Cpe 群面板、Hells/Top2a 面板
+├── 04_gene_dynamics/       步骤 5：两张 top5 面板 + 排名表 + 每基因动力学
+├── 05_cellcycle/           步骤 6：细胞周期渐变面板 + 相位 marker 面板 + 分数表
+├── 06_corrected/           矫正链：13 张矫正面板 + 17 张表（dynamical 拟合、隐时间、
+│                           参数敏感性、两模型排名并置、运行摘要）
+├── 07_figure_comparison/   与课程随附 11 张参考 PNG 的机器可读对拍（原样版 / 矫正版）
+├── 09_run_logs/            三次运行的控制台记录（原样、矫正、两次审计）
+└── scripts/                重新生成以上全部内容的五个脚本</code></pre>
+<p>约定：</p>
+<ul>
+<li><code>01_</code>–<code>05_</code>
+目录里的图<strong>原样跑</strong>产出，文件名就是教材单元编号（<code>02_velocity_embedding_stream.png</code>
+对应第 63 单元）。它们与课程随附的 11 张参考图一一对应，可以直接
+<code>diff</code> 眼睛。</li>
+<li><code>06_corrected/</code> 里带 <code>corrected_</code>
+前缀的是<strong>矫正链</strong>产出；不带前缀的
+<code>sensitivity_*</code>、
+<code>rank_velocity_genes_*</code>、<code>latent_time_*</code>
+是同一链条落下的表。</li>
+<li>每个 <code>09_run_logs/*_console.txt</code>
+里，<code>[describe]</code> 段打印对象形状与非零数，<code>[state]</code>
+段打印该步骤 结束后的关键量，<code>[VELO-nn]</code>
+段是问题清单对应位置的现场取证。</li>
+<li>表格一律 UTF-8
+CSV，索引列优先；<code>proportions_by_cluster.csv</code>
+有两个口径列，<strong>不要</strong>混用（见 §2）。</li>
+</ul>
+<h2 id="preprocess对象本身与占比">2. 01_preprocess：对象本身与占比</h2>
+<p><code>01_proportions.png</code> 是教材第 50
+单元那张饼图/柱图。柱高取自
+<code>obs[&#39;initial_size_*&#39;]</code>，也就是过滤<strong>之前</strong>
+的文库大小：Ductal 12.3%、Ngn3-low 12.4%、Ngn3-high 15.0%、Pre-endocrine
+20.5%、Beta 20.7%、 Alpha 19.5%、Delta 19.3%、Epsilon 17.9%，整体
+16.3%。</p>
+<p><code>proportions_by_cluster.csv</code>
+把两套口径并排放：<code>unspliced_fraction_initial_size</code>（图上的）与
+<code>unspliced_fraction_current_layers</code>（模型实际看到的）。后者整体
+23.0%，逐群 19.9–25.3%。差 3–9 个
+百分点，不是误差，是两个问题：前者说的是”文库里有大多比例是内含子”，后者说的是”速率模型手上有多少
+unspliced 信号”。</p>
+<p><code>obs_cell_metadata.csv</code>（3,696 行）与
+<code>var_gene_annotation.csv</code>（2,000
+行）是<strong>速率计算所用对象</strong>的 逐细胞/逐基因元数据，包含
+<code>velocity_gamma</code>（逐基因稳态斜率）、<code>velocity_r2</code>、<code>spearmans_score</code>、
+<code>fit_*</code> 等。<code>cluster_cell_counts.csv</code>
+是八群的规模（916 / 642 / 592 / 591 / 481 / 262 / 142 / 70）。</p>
+<h2 id="velocity场">3. 02_velocity：场</h2>
+<p><code>02_velocity_embedding_stream.png</code> 与
+<code>03_velocity_embedding.png</code>
+是全课的主图：前者是核平滑后的流线，
+后者是逐细胞箭头。<code>11_velocity_embedding_stream_repeat.png</code>
+与前者<strong>逐字节相同</strong>（同 md5）——教材第 84 单元重复了第 63
+单元的调用，这是问题清单里的 VELO-10，保留它是为了让读者自己验证。</p>
+<p><code>velocity_per_cell.csv</code>（3,696 行）给每个细胞的速率模长
+<code>velocity_norm</code>、所在群、以及
+<code>velocity_confidence</code>；<code>velocity_summary_by_cluster.csv</code>
+是逐群的模长中位数与置信度中位数。
+<code>velocity_graph_aswritten.csv</code>
+记录速率图的非零数（593,854）、密度（4.3%）与 k（30）—— 图本身是 3,696 ×
+3,696 的稀疏矩阵，不入库。</p>
+<p><code>top_abs_velocity_genes_by_cluster.csv</code>
+是按”速率绝对值均值”排的每群前若干基因，与教材的
+<code>rank_velocity_genes</code>（按速率–表达相关排）不是同一个量，放在一起可以看出两种排法的差别。</p>
+<h2 id="phase_portraits相位图">4. 03_phase_portraits：相位图</h2>
+<p>三张面板，对应教材第 69、71、83
+单元：<code>04_phaseportrait_markers.png</code>（Cpe/Gnao1/Ins2/Adk）、
+<code>05_cpe_groups_velocity.png</code>（Cpe
+按群+速率）、<code>10_phaseportrait_hells_top2a.png</code>（Hells/Top2a）。</p>
+<p><code>phase_portrait_gene_stats.csv</code>
+逐基因记录相位图的关键量：<code>spliced_max</code>、<code>unspliced_max</code>、细胞点云的
+相关系数、以及稳态斜率
+<code>velocity_gamma</code>。读法：<code>Ins2</code> 的 spliced 上到
+120、点云近乎一条直线，说明成熟
+转录本主导、相位图信息最少；<code>Cpe</code>
+有干净的环，是教材选它讲”速率方向”的原因。</p>
+<h2 id="gene_dynamics速率基因与每基因动力学">5.
+04_gene_dynamics：速率基因与每基因动力学</h2>
+<p><code>06_top5_ngn3_high_ep.png</code> 与
+<code>07_top5_pre_endocrine.png</code> 是教材第 75 单元的两张 top5
+面板（各 5 个 基因的
+UMAP+速率）。<code>rank_velocity_genes_top50.csv</code> 是每群前 50
+名（列=群，行=名次）， <code>rank_velocity_genes_top5_summary.csv</code>
+是每群前五名的拼接字符串。</p>
+<p>两个必须在正文里说清的事实：<code>min_corr=.3</code> 筛的是
+<code>var[&#39;spearmans_score&#39;]</code>
+而<strong>不是</strong>排名相关性，而 真正的截断是
+<code>n_genes=100</code>（默认值）。实测：阈值 0.1/0.3/0.5/0.7 分别留下
+1,861/1,469/973/430 个 合格基因，而 Ductal 与 Beta 的可见 top-3
+一模一样——阈值在 0.9 之前从未生效。</p>
+<p><code>gene_kinetics_scores.csv</code>（2,000 行）是逐基因的
+<code>velocity_gamma</code>（中位 0.343、IQR [0.090, 0.966]）、
+<code>velocity_r2</code>（中位
+0.052）、<code>velocity_qreg_ratio</code>、<code>spearmans_score</code>。中位
+r² 只有 5%，是所有 “速率基因”结论该被如何看待的前提。</p>
+<h2 id="cellcycle细胞周期">6. 05_cellcycle：细胞周期</h2>
+<p><code>08_cellcycle_gradients.png</code> 是教材第 79 单元的 S/G2M
+渐变图（<strong>唯一</strong>与参考图对不上的那张，结构相关
+0.589），<code>09_phase_marker_genes.png</code> 是第 81 单元的相位
+marker 面板。</p>
+<p><code>cellcycle_scores_per_cell.csv</code>
+是<strong>重算</strong>后的分数（教材的
+<code>score_genes_cell_cycle</code> 覆盖了数据自带的
+那一对）；<code>cellcycle_summary_by_cluster.csv</code>
+是逐群的相位计数（G1 2,537 / S 878 / G2M 281）与均值；
+<code>phase_marker_gene_ranking.csv</code> 与
+<code>phase_marker_top5.csv</code> 是逐群的 S/G2M marker 排名
+（S：Mcm6、Hells、Tyms、Pola1、Uhrf1；G2M：Hn1、Top2a、Kif23、Ckap2l、Kif2c）。</p>
+<h2 id="corrected矫正链做了什么">7. 06_corrected：矫正链做了什么</h2>
+<p>13
+张图里，<code>corrected_01</code>–<code>corrected_03</code>、<code>06</code>–<code>08</code>、<code>10</code>
+与教材同位置的面板同源（用来对拍），
+<code>corrected_04</code>/<code>05</code> 是相位图的两种画法（稳态 /
+只画 dynamical 拟合），<code>corrected_09</code> 用数据自带分数
+重画了细胞周期，<code>corrected_11</code> 用 dynamical 拟合重画了
+Hells/Top2a，<code>corrected_12</code>/<code>13</code> 是教材从来
+没画过的两张（隐时间+置信度、以隐时间上色的 stream）。</p>
+<p>关键表：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+<th>值得注意的数字</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_summary_corrected.csv</code></td>
+<td>矫正对象自检</td>
+<td>3,696 × 2,000，<code>X</code> 非零 1,740,903，<code>Ms</code>
+非零合计 5,778,956.5</td>
+</tr>
+<tr>
+<td><code>latent_time_summary_by_cluster.csv</code></td>
+<td>逐群隐时间</td>
+<td>Ductal 0.157 → Ngn3-high 0.465 → Beta 0.774</td>
+</tr>
+<tr>
+<td><code>latent_time_and_confidence_per_cell.csv</code></td>
+<td>每细胞隐时间+两版置信度</td>
+<td>两模型置信度相关仅 0.207</td>
+</tr>
+<tr>
+<td><code>rank_velocity_genes_top5_dynamical.csv</code></td>
+<td>dynamical 排名</td>
+<td>与 stochastic 的 top-20 Jaccard 0.132</td>
+</tr>
+<tr>
+<td><code>sensitivity_graph_and_hvg.csv</code></td>
+<td>六条完整流水线</td>
+<td>1000 HVG → Jaccard 0.50；k=15 → 0.58；重算 PCA → 0.78</td>
+</tr>
+<tr>
+<td><code>sensitivity_min_corr.csv</code></td>
+<td>min_corr 扫描</td>
+<td>0.1→1,861 个合格、0.9→27 个</td>
+</tr>
+<tr>
+<td><code>sensitivity_n_genes_cap.csv</code></td>
+<td>n_genes 上限</td>
+<td>10/50/100/300 就是表格行数</td>
+</tr>
+<tr>
+<td><code>cellcycle_scores_original_vs_recomputed.csv</code></td>
+<td>两版周期分数</td>
+<td>Pearson 0.964 / 0.973</td>
+</tr>
+<tr>
+<td><code>proportions_by_cluster_corrected.csv</code></td>
+<td>两套占比口径</td>
+<td>16.3% vs 23.0%</td>
+</tr>
+</tbody>
+</table>
+<p><code>corrected_summary.json</code>
+是整条链条的机器可读摘要（版本、耗时 4.72 min、各项统计）。</p>
+<h2 id="figure_comparison和教师的-11-张图对拍">8.
+07_figure_comparison：和教师的 11 张图对拍</h2>
+<p><code>figure_comparison_aswritten.tsv</code> 与
+<code>figure_comparison_corrected.tsv</code> 各 11/13
+行，列包括画布尺寸、 长宽比、结构相关 <code>struct_corr</code>、墨迹 IoU
+<code>ink_iou</code>、色彩分布。</p>
+<p>原样跑：十张
+0.972–0.993，第八张（细胞周期）0.589。矫正链：十张可比面板
+0.904–0.986，细胞周期仍是
+0.579。差异的原因不在数据：那张参考图与我们的画布（1205 ×
+648）和图例文字完全一致，但标记云内部配色 不同，且参考图集里存在三种
+dpi（80 / 96 / 64），说明那 11 张是多次会话拼接的。</p>
+<h2 id="练习">9. 练习</h2>
+<p><strong>练习 1（10 分钟，口径）。</strong> 打开
+<code>proportions_by_cluster.csv</code>，用
+<code>unspliced_sum/(spliced_sum+unspliced_sum)</code>
+自己算一遍逐群占比，然后与 <code>01_proportions.png</code>
+上的柱高比较。差多少？哪一列对应图上的数？再看
+<code>scv.pl.proportions</code> 的签名里 <code>use_raw</code>
+默认值。</p>
+<p><strong>练习 2（15 分钟，模型）。</strong> 用
+<code>corrected_adata.h5ad</code>（或重跑脚本）分别取
+<code>adata.var[&#39;velocity_gamma&#39;]</code> 与
+<code>adata.var[&#39;fit_gamma&#39;]</code>，画散点并算
+Spearman。为什么两者秩相关是 负的（−0.45）？提示：稳态模型把 β 归一为
+1，dynamical 学的是独立 β。</p>
+<p><strong>练习 3（10 分钟，隐时间）。</strong> 用
+<code>latent_time_and_confidence_per_cell.csv</code> 的
+<code>latent_time</code> 列按群画箱线图。Beta 的中位数比 Alpha 早
+（0.742 vs 0.758），但均值更晚（0.774 vs
+0.758）。画出两者的分布，解释为什么”全局隐时间排出单一顺序”
+在这里会失真。</p>
+<p><strong>练习 4（20 分钟，参数）。</strong> 把
+<code>scVelo_audit_run.py</code> 的 <code>run_variant</code>
+复制出来，把 <code>n_top_genes</code> 设成 500，跑一遍，比较 top-20
+Jaccard 与速率基因数。趋势与 <code>sensitivity_graph_and_hvg.csv</code>
+里的 1,000 那一行 一致吗？</p>
+<p><strong>练习 5（15 分钟，图的含义）。</strong> 用
+<code>corrected_04</code>/<code>corrected_05</code>
+两张相位图对照：哪些基因的 dynamical 拟合曲线明显偏离稳态线？结合
+<code>phase_portrait_gene_stats_corrected.csv</code> 里的
+<code>velocity_gamma</code>，说说偏离 大的基因有什么共同点。</p>
+<p><strong>练习 6（10 分钟，细胞周期）。</strong> 用
+<code>cellcycle_scores_original_vs_recomputed.csv</code>
+算两版的绝对差， 找出差最大的 20 个细胞，看它们在 <code>clusters</code>
+里属于哪群。为什么差异集中在某些群？</p>
+<p><strong>练习 7（20 分钟，对拍）。</strong> 打开
+<code>figure_comparison_aswritten.tsv</code>，找出 <code>ref_px</code>
+与 <code>ours_px</code> 比值 正好 0.8 与 1.2 的行。把
+<code>scv.settings.set_figure_params(dpi=64)</code>
+打开，重画其中任意一张，验证画布
+变成与参考一致——然后解释为什么”画布一致”并不等于”分析一致”。</p>
+<p><strong>练习 8（30 分钟，往下走）。</strong> 用
+<code>corrected_adata.h5ad</code> 跑
+<code>ref/scVelo_analysis_corrected.md</code> 附录 B 的 三行
+CellRank，得到每个细胞的命运概率，并与隐时间对照：内分泌终末群的命运概率是否与它们的隐时间排序
+一致？哪一群最不一致？</p>
+</body>
+</html>
