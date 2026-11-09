@@ -608,8 +608,8 @@ dynamo 的一条龙，<strong>不是</strong> <code>sc.pp.*</code> 的封装：<
 依据是 SVR（分箱变异系数），不是 scanpy 的 dispersion 公式。</li>
 <li><code>genes_to_append</code> 把被筛掉的胰腺基因重新标回（本数据 17
 个本来都在，<code>pancreas_genes_absent = 0</code>）。</li>
-<li>它还顺手估了细胞周期相位与打分（本机 17.7 s + 0.6 s），因为 dynamo
-的 recipe 假设这些量存在。</li>
+<li>它还顺手估了细胞周期相位与打分（原样跑 20.4 s + 0.7 s；重复运行时在
+17.7 s + 0.6 s 附近浮动）， 因为 dynamo 的 recipe 假设这些量存在。</li>
 <li>它还做了<strong>标准化 +
 log1p</strong>（日志：<code>size factor normalizing the data, followed by log1p transformation</code>
 / <code>Set &lt;adata.X&gt; to normalized data</code>），并在 4000 个
@@ -2487,10 +2487,13 @@ IoU</strong>；尺寸一致时再加配色直方图。</p>
 </tr>
 </tbody>
 </table>
-<p>与 <strong>2025 HTML
-内嵌图</strong>（两套都存在的那几张）对比：结构相关 0.85–0.999、墨迹 IoU
-0.77–0.99 —— 同样结论； 两张四联图在 HTML 侧是 2066×1223 / 3091×1153，r
-略低。</p>
+<p>与 <strong>2025 HTML 内嵌图</strong>——两套都存在的 6
+张——对比：<strong>结构相关 0.850–0.999、墨迹 IoU 0.752–1.000</strong>，
+结论相同。结构相关最低的仍是四联图（0.850，而同图 IoU 为 1.000：HTML
+侧是 2066×1223，面板布局逐像素相同）。 IoU 最低的是
+Pax4→Ins2（0.752）：那张面板基本是淡蓝，配色映射肩部稍有差别就会让大量像素跨过墨迹阈值——
+同一张图对 2026 参考集是 0.943 /
+0.751，也就是说<strong>两套参考集在这一点上彼此一致</strong>。</p>
 <p>解读：</p>
 <ul>
 <li><strong>教材真正算出来的东西全部复现</strong>。保真度最高的两项（01、02：IoU

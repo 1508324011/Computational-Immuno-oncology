@@ -917,9 +917,13 @@ Method (`results/scripts/compare_dynamo_figs.py`, table in `07_figure_comparison
 | 10 GO barplot | bar | 3091×1153 | 1859×1259 | 0.551 | — | — | **2026 ref is a blank canvas** (DYN-15) |
 | 11 GO dotplot | dot | 2936×1128 | 1980×1499 | 0.507 | — | — | **2026 ref is a blank canvas** (DYN-15) |
 
-Against the **2025 HTML embeds** (where the same picture exists in both sets), the numbers are
-0.85–0.999 structural and 0.77–0.99 IoU — same conclusion, slightly lower r for the two 4-panel
-composites, which the HTML rendered at 2066×1223 / 3091×1153.
+Against the **2025 HTML embeds** — the six captures that exist in both sets — the numbers are
+**0.850–0.999 structural and 0.752–1.000 IoU**, i.e. the same conclusion. The lowest structural
+score is again the four-panel composite (0.850 at IoU 1.000, because the HTML capture is
+2066×1223 and the panel layout is byte-for-byte the same). The lowest IoU is Pax4→Ins2
+(0.752): that panel is mostly pale blue, so a small difference in the shoulder of the colour map
+moves a lot of ink across the mask threshold — the same panel is 0.943/0.751 against the 2026 set,
+so the two reference sets agree with each other about it.
 
 Interpretation:
 
