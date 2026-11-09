@@ -1,0 +1,14 @@
+item	value
+cells_raw	3696.0
+genes_raw	27998.0
+cells_after_filter	3696.0
+genes_kept_in_var	27998.0
+genes_pass_basic_filter	6956.0
+n_top_genes_requested	4000.0
+hvg_use_for_pca	4000.0
+legacy_hvg_true	4004.0
+legacy_hvg_nan	10656.0
+overlap_legacy_vs_dynamo	1339.0
+jaccard_legacy_vs_dynamo	0.2009
+pancreas_genes_requested	17.0
+pancreas_genes_absent	0.0

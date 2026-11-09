@@ -1,0 +1,41 @@
+cluster	quantity	mean	median	n_cells
+Ductal	speed_pca	0.1506	0.1329	916
+Ngn3 low EP	speed_pca	0.1675	0.152	262
+Ngn3 high EP	speed_pca	0.3078	0.3127	642
+Pre-endocrine	speed_pca	0.2261	0.2085	592
+Beta	speed_pca	0.199	0.1777	591
+Alpha	speed_pca	0.0816	0.0763	481
+Delta	speed_pca	0.0968	0.0851	70
+Epsilon	speed_pca	0.2201	0.1823	142
+Ductal	divergence_pca	-0.014	-0.0167	916
+Ngn3 low EP	divergence_pca	-0.017	-0.0185	262
+Ngn3 high EP	divergence_pca	0.0229	0.0203	642
+Pre-endocrine	divergence_pca	-0.0256	-0.0321	592
+Beta	divergence_pca	-0.0682	-0.0602	591
+Alpha	divergence_pca	-0.0502	-0.0512	481
+Delta	divergence_pca	-0.0272	-0.0268	70
+Epsilon	divergence_pca	-0.0131	-0.0151	142
+Ductal	acceleration_pca	0.0061	0.0055	916
+Ngn3 low EP	acceleration_pca	0.0077	0.0072	262
+Ngn3 high EP	acceleration_pca	0.0158	0.0159	642
+Pre-endocrine	acceleration_pca	0.0084	0.0071	592
+Beta	acceleration_pca	0.007	0.0057	591
+Alpha	acceleration_pca	0.0011	0.0008	481
+Delta	acceleration_pca	0.0018	0.0016	70
+Epsilon	acceleration_pca	0.0076	0.0045	142
+Ductal	curl_umap	-0.0662	-0.0477	916
+Ngn3 low EP	curl_umap	-0.0383	0.0136	262
+Ngn3 high EP	curl_umap	0.1	0.0826	642
+Pre-endocrine	curl_umap	0.0918	0.1055	592
+Beta	curl_umap	0.0014	-0.0382	591
+Alpha	curl_umap	-0.0183	-0.0295	481
+Delta	curl_umap	0.1021	0.0957	70
+Epsilon	curl_umap	-0.0725	-0.1702	142
+Ductal	pca_ddhodge_potential	0.2128	0.2286	916
+Ngn3 low EP	pca_ddhodge_potential	0.264	0.2553	262
+Ngn3 high EP	pca_ddhodge_potential	0.9825	1.0517	642
+Pre-endocrine	pca_ddhodge_potential	1.8121	1.8597	592
+Beta	pca_ddhodge_potential	2.2607	2.1885	591
+Alpha	pca_ddhodge_potential	2.1246	2.1271	481
+Delta	pca_ddhodge_potential	2.1163	2.133	70
+Epsilon	pca_ddhodge_potential	1.9847	2.0147	142

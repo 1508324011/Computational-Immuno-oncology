@@ -1,0 +1,52 @@
+{
+  "jacobian_pca_shape": [
+    30,
+    30,
+    3696
+  ],
+  "jacobian_gene_shape": [
+    17,
+    17,
+    3696
+  ],
+  "regulators": [
+    "Neurog3",
+    "Sox9",
+    "Isl1",
+    "Hes1",
+    "Ins1",
+    "Gcg",
+    "Neurod1",
+    "Nkx2-2",
+    "Ptf1a",
+    "Pax6",
+    "Nkx6-1",
+    "Pdx1",
+    "Pax4",
+    "Ghrl",
+    "Iapp",
+    "Ins2",
+    "Arx"
+  ],
+  "effectors": [
+    "Neurog3",
+    "Sox9",
+    "Isl1",
+    "Hes1",
+    "Ins1",
+    "Gcg",
+    "Neurod1",
+    "Nkx2-2",
+    "Ptf1a",
+    "Pax6",
+    "Nkx6-1",
+    "Pdx1",
+    "Pax4",
+    "Ghrl",
+    "Iapp",
+    "Ins2",
+    "Arx"
+  ],
+  "n_cells": 3696,
+  "axis_note": "jacobian_gene[i, j, c] = d(effector i)/d(regulator j) in cell c (dynamo vectorfield/utils.py: subset_jacobian_transformation, Qi=effector loadings, Qj=regulator loadings)"
+}

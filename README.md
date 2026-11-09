@@ -97,6 +97,26 @@
         ├── 07_figure_comparison/            # 与 11 张参考图的机器可读比对 (原样版 / 矫正版)
         ├── 09_run_logs/                     # 三次运行的控制台记录 (原样/矫正/两次审计)
         └── scripts/                          # 5 个脚本: 原样单元/矫正链/审计/对拍/文档用图
+└── scRNA-seq-application-dynamo/            # Dynamo 矢量场模块 (第七节课, 原样跑 + 矫正跑完成)
+    ├── scRNAseq-application_dynamo.html     # 教材原文 (nbconvert 导出, 50 单元 = 16 md + 34 code)
+    ├── ref/                                  # 矫正增强文档 + 教师两套参考图 (构建走本地 build.sh)
+    │   ├── build.sh                          # 从 WES/ref/build.sh 复制 (pandoc+typst, 表格/断行后处理)
+    │   ├── scRNAseq_dynamo_corrected{.md,.html,.pdf}     # 矫正增强版: 原样跑 + C1-C10 + 18 条坑位取证
+    │   ├── scRNAseq_dynamo_corrected_zh{.md,.html,.pdf}  # 同一矫正版的中文版
+    │   ├── dynamo_analysis_results_guide{.md,.html,.pdf} # 结果逐目录导读 + 动手练习
+    │   └── figures/                          # 14 张文档图 + teacher2026/(11) + teacherhtml/(6) 参考图
+    └── results/                              # 实跑分析产物 (无任何原始数据: 3.3 GB h5ad 不入库)
+        ├── 01_preprocess/                   # 对象审计表 (HVG 三标记) + 每群计数 + 逐基因标记
+        ├── 02_velocity/                     # 图 01-02 + γ/β/半衰期 + 投影速度模长
+        ├── 03_vectorfield/                  # 图 03-05 + 逐细胞 speed/div/acc/curl/潜势
+        │                                    #   + 逐群均值与 KW/MWU 检验 + 8x8 状态图矩阵
+        ├── 04_jacobian/                     # 图 06-09 + 基因级 Jacobian 张量/成对表 + 加速度排序
+        ├── 05_enrichment/                   # GO BP 2021 全表 (925 term) + barplot/dotplot + gseapy 报告
+        ├── 06_corrected/                    # 矫正链: 教材只显示不存的 07/08/09 + curl 图 + GO 改标
+        │                                    #   + UMAP 重算对比 + Ductal vs 其余统计
+        ├── 07_figure_comparison/            # 与两套参考图 (2025 HTML 内嵌 / 2026 脚本重跑) 的定量对拍
+        ├── 09_run_logs/                     # 原样跑的完整控制台
+        └── scripts/                          # 6 个脚本: 抽 cell/原样单元/矫正链/场量导出/Jacobian 导出/对拍
 ```
 
 > **矫正增强版（WES_roadmap_corrected）**：把学生版路线图在集群上**原样跑两轮**（0.5× 降采样 demo 轮 + 全量轮）后，对照实测结果写成的修复与讲解版——每个步骤含原理/目的/实跑结果/坑与矫正/结果解读/调优扩展，附录带完整问题清单（12 条，含证据）与一页矫正版命令速查。已知问题速览：VQSR MergeVcfs 每条变异重复两遍（含老师参考产物）、ANNOVAR 富协议库名不存在、CNVkit amplicon 模式用于杂交捕获 panel、无靶区深度度量（实测全量 OC 仅 54.6× 可用）。
@@ -119,6 +139,10 @@
 > **矫正增强版（scRNA_seq_analyze_corrected）**：把第五节课教材（PBMC 3k：R/Seurat 的 Part 1-7 + Python/scanpy 的 Part 8，共 30 个代码单元）在登录节点**原样实跑一轮**（2026-10-26，一次 R 会话 509 s + 一次 Python 命名空间 4 s）后，再**跑一份修正版**对拍写成的修复与讲解版——每 Part 含原理/实跑数字/坑与矫正/调优扩展，带 20 条问题登记表。两条致命：R 侧从未 `library(ggrepel)`（DEG 单元连带 `saveRDS` 全灭）、Python 侧 `log=True,,save=` 双逗号 `SyntaxError` 抹掉整个单元（PCA/近邻/UMAP 全没跑）；**原样跑只产出 25 张图里的 18 张、2 个对象里的 0 个**。改变结果的几条：教材把 cluster→细胞类型映射写了两份且互相矛盾（cell 39 的表与 cell 43 的向量在 cluster 1/2 上互换，本次运行里向量对、表错）；scanpy 的位置式命名 8 个标签错 2 个（名为 `CD8 T` 的群 78.1% 是 Seurat 的 Naive CD4 T）；两侧 QC 阈值不一致（2500 vs 2000）正是"R 9 群 vs Python 8 群"的主因——把 Python 阈值提到 2500 就得到与 Seurat 完全相同的 2,638 个细胞和 9 个群。另记录：基因全集改动（`min_cells=3`，只有 30/2000 个 HVG 变化）会让同一份固定注释向量标错 957 个细胞（36%）；Part 7 的 UMAP 不可跨运行复现（同输入两次运行结构相关仅 0.563，与对参考图同量级）；参考图 `Marker_Heatmap.png` 是 3000×6000 px，而教材 `ggsave` 只能给 3000×3000。中文版 `_zh` 与英文版结构、数字逐一对拍。**图文并茂（29 张图）**：每张结果图嵌在它解释的那一步之后，图注交代「这是什么 + 关键数字」，紧跟一段「怎么看/说明什么/哪里会误读」；英文版 38 页、中文版 36 页。构建：`WES/ref/build.sh ../../scRNA-seq/ref/scRNA_seq_analyze_corrected.md "Single-cell RNA-seq (PBMC 3k) — Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
 >
 > **矫正增强版（scVelo_analysis_corrected）**：把第六节课教材（小鼠胰腺 E15.5 内分泌发生，3,696 细胞 × 27,998 基因，velocyto 内含子/外显子计数）在登录节点**原样跑一轮**（2026-11-04，`velo` 环境 = scvelo 0.3.4 / scanpy 1.10.4，单核 42.6 s，11 张图）后，再**补跑一份矫正链**（4.7 min，13 图 + 18 表）对拍写成的修复与讲解版，带 17 条问题登记表。核心发现：教材用 9 张幻灯讲 dynamical（EM）模型却**从未调用** `recover_dynamics`，只跑了稳态近似——补跑后同一批数据 stochastic vs dynamical 的 top-20 速率基因 Jaccard 仅 **0.132**，两模型置信度相关 **0.207**，逐基因 γ 的秩相关 **−0.45**；`recover_dynamics` 默认 `var_names="velocity_genes"` 会把 EM 悄悄限制在上一次运行的 1,038 个基因上（改 `var_names="all"` 后 2,000 个，top5 一字未变）；`scv.pl.velocity(mode='dynamical')` 的 `mode` 只控制侧栏、不选模型（两图 md5 相同）；`score_genes_cell_cycle` 静默覆盖数据自带的 S/G2M 分数（Pearson 0.964/0.973）；`scv.pl.proportions` 默认 `use_raw=True` 画的是过滤前文库（16.3%）而非当前 layers（23.0%）；`min_corr=.3` 从未生效（真正的截断是 `n_genes=100`）。预登记的「双重取对数」被**证伪**（0.3.4 的 `filter_and_normalize` 不做 log）。11 张参考图里十张结构相关 0.973–0.993，仅细胞周期那张 0.589——定位为参考侧来自另一构建（其 dpi 分三档 80/96/64）。中文版 `_zh` 与英文版数字逐一对拍（267 个有效数字 token，264 个出现次数完全相同；余 3 个为英文拼写 ten/eleven/100k 对应中文数字/「10 万」的书写差异）。**图文并茂（21 张图）**：每张结果图嵌在它解释的那一步之后，图注交代「这是什么 + 关键数字」；英文版 31 页、中文版 27 页。构建：`WES/ref/build.sh ../../scRNA-seq-scVelo/ref/scVelo_analysis_corrected.md "RNA velocity with scVelo (mouse pancreas, E15.5) — Corrected & Annotated Edition"`（中文版传 `_zh.md` 与中文标题）。
+>
+> **矫正增强版（scRNAseq_dynamo_corrected）**：把第七节课教材（Dynamo：小鼠胰腺 E15.5 内分泌发生，3,696 细胞 × 27,998 基因，spliced/unspliced 双层，7 个 Part / 34 个代码单元）在登录节点**原样跑一轮**（2026-11-09，`dynamo` 环境 = dynamo-release 1.3.2 / scanpy 1.10.3 / gsea 1.1.3，单核 **≈12 min**，6 张图）后，再**补跑一份矫正链**（**1,003 s**，10 张图 + 20 余张表）对拍写成的修复与讲解版，带 **18 条问题登记表**。核心发现：① `reduceDimension` 是**静默 no-op**（`[UMAP] completed [0.0012s]`）——文件自带 `X_umap`，所以全讲是**混血管线**：PCA 由 `recipe_monocle` 新算（4,000 个 SVR 基因）、UMAP 是上游带来的、kNN 图文件里根本没有（`indices not in adata.uns.neighbors`，dynamo 现建）；强制重算会把每个细胞挪走 **1.9 倍 UMAP 展布**（成对距离 Spearman 0.939），且能**翻转 Ductal 旋度的符号**（−0.066 → +0.102），故矫正链只在副本上算、不改原嵌入；② 三个"重要基因"标记互不认账：dynamo 的 `use_for_pca`（4,000）与文件自带的 **categorical** `highly_variable_genes`（4,004 True + 10,656 NaN）只重叠 **1,339** 个（Jaccard **0.201**），且该列连 `sum()` 都会报错；③ `model="stochastic"` 把 **β 固定为 1.0**，`half_life` 于是只是 `ln2/γ`（γ 中位 0.382、max 64.6，重尾）；④ 教材 cell 24 注释写"**Pdx1** 激活 Ins2"、代码画的却是 **Pax4**→Ins2，而**数据站在注释这边**：Pdx1→Ins2 在 Beta 群 **+1.5e-3、99.3% 细胞为正**，Pax4→Ins2 在 Beta 是 **−4e-5（46%）**；⑤ Pax4⤙Arx 的"互相抑制"只发生在 **Ngn3 high EP**（两个交叉项同时为负），到 Alpha/Beta 两个交叉项都转正（互相激活）——教材说的是**局部开关**，颜色图却像全局开关；⑥ 四句定性判断里 **"Ductal 是散度意义上的鞍点"不成立**（Ductal −0.0140 显著更不负于其余 −0.0263，MWU p=6.5e-06；它真正的特征是**最慢** 0.151 vs 0.205 且**潜势最低** 0.213），而"Ngn3 high EP 是分叉点"（唯一 div>0、85% 细胞为正、加速度最高 1.58e-2）与"终末群收缩"（Beta −0.0682 / Alpha −0.0502 / Delta −0.0272，正散度细胞比例 **0%**）**完全成立**；⑦ 状态图矩阵**不是行随机**（Ductal 行和 1.76），只能读作通量；⑧ 教师 **2026 参考集里的 GO 两张图是纯白空画布**（墨迹 0、颜色 0、12/15 kB），GO 只能拿 2025 HTML 内嵌图当真值。**可复现性**：两次运行相隔 2.5 h，**6/6 图 md5 逐字节相同**。**图文并茂（14 张图）**：英文版 30 页、中文版 27 页。构建：`scRNA-seq-application-dynamo/ref/build.sh scRNAseq_dynamo_corrected.md "Dynamo 单细胞矢量场 · 矫正增强版"`（中文版传 `_zh.md` 与中文标题；脚本 `cd` 到自己目录，故需在 ref/ 下运行）。
+>
+> **分析结果（scRNA-seq-application-dynamo/results/）**：原样跑与矫正跑的图（流线、逐细胞箭头、四联场图、地形图、状态图、四张 Jacobian 面板、GO bar/dot、旋度、UMAP 重算对比）＋ 教材算了却从未落盘的量（逐细胞 speed/divergence/acceleration/curl/ddhodge 潜势、逐群均值与 KW/MWU 检验、8×8 状态转移通量与平均时间、基因级 Jacobian 张量及 10 条边、加速度排序 top20/top200、925 行 GO 全表）＋ 与**两套**教师参考图的逐图定量对拍（2025 HTML 内嵌 6 张 + 2026 脚本重跑 11 张，结构相关 + 墨迹 IoU）＋ 原样跑完整控制台 ＋ 六个可重跑脚本——**不含任何原始数据**（`endocrinogenesis_day15.h5ad` 在共享只读路径，未复制；3.3 GB 的 `dynamo_pancreas_final.h5ad` 不入库，脚本可重建）。讲解文档 `scRNA-seq-application-dynamo/ref/dynamo_analysis_results_guide.html/pdf` 逐目录导读 + 动手练习（练习：用一条 `groupby` 从 `vf_per_cell.tsv` 复现"潜势恢复发育次序"，以及按 `vs2026_ink_iou` 升序亲手核验"低 IoU ≠ 分析不同"）。
 >
 > **分析结果（scRNA-seq-scVelo/results/）**：原样跑与矫正跑的图（占比、stream/箭头、三张相位图、两张 top5、周期渐变、隐时间与置信度）＋ 教材算了却从未落盘的表（每群速率基因前 50、逐基因动力学与相位统计、逐细胞速率与隐时间、两版周期分数）＋ 参数敏感性扫描（六条完整流水线 × HVG 深度/k/min_corr）＋ 与 11 张参考图的逐图定量比对（结构相关 + 墨迹 IoU）＋ 三次运行的控制台记录 ＋ 五个可重跑脚本——**不含任何原始数据**（`endocrinogenesis_day15.h5ad` 在共享只读路径 `/lustre1/share/scRNA-advancedTopics/data/`，未复制；410 MB 的 `corrected_adata.h5ad` 不入库，一行 `adata.write()` 可重建）。讲解文档 `scRNA-seq-scVelo/ref/scVelo_analysis_results_guide.html/pdf` 逐目录导读 + 8 个动手练习（练习 1 现场重算两套占比口径，练习 3 看隐时间为何排出单一时序会失真）。
 >

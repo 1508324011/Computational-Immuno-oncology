@@ -1,0 +1,81 @@
+regulator	effector	cluster	n_cells	mean	median	frac_positive
+Neurog3	Pax4	Ductal	916	0.00039	0.00033	0.9924
+Neurog3	Pax4	Ngn3 low EP	262	0.00082	0.00085	1.0
+Neurog3	Pax4	Ngn3 high EP	642	0.00043	0.00041	0.933
+Neurog3	Pax4	Pre-endocrine	592	0.0001	1e-05	0.5169
+Neurog3	Pax4	Beta	591	-4e-05	-3e-05	0.2098
+Neurog3	Pax4	Alpha	481	-2e-05	-0.0	0.4324
+Neurog3	Pax4	Delta	70	0.0	2e-05	0.6714
+Neurog3	Pax4	Epsilon	142	-2e-05	-1e-05	0.4648
+Arx	Pax4	Ductal	916	0.00013	0.00013	0.9978
+Arx	Pax4	Ngn3 low EP	262	0.00017	0.00019	0.9695
+Arx	Pax4	Ngn3 high EP	642	-4e-05	-5e-05	0.3972
+Arx	Pax4	Pre-endocrine	592	6e-05	7e-05	0.6993
+Arx	Pax4	Beta	591	8e-05	7e-05	0.9848
+Arx	Pax4	Alpha	481	4e-05	-1e-05	0.4802
+Arx	Pax4	Delta	70	5e-05	4e-05	0.9286
+Arx	Pax4	Epsilon	142	-2e-05	-3e-05	0.3169
+Pax4	Arx	Ductal	916	1e-05	2e-05	0.857
+Pax4	Arx	Ngn3 low EP	262	1e-05	1e-05	0.6832
+Pax4	Arx	Ngn3 high EP	642	-0.00012	-9e-05	0.1698
+Pax4	Arx	Pre-endocrine	592	-9e-05	-7e-05	0.1807
+Pax4	Arx	Beta	591	4e-05	4e-05	0.8714
+Pax4	Arx	Alpha	481	7e-05	7e-05	0.9875
+Pax4	Arx	Delta	70	-3e-05	-3e-05	0.1429
+Pax4	Arx	Epsilon	142	-0.0	0.0	0.5211
+Pax4	Ins2	Ductal	916	-2e-05	-2e-05	0.3319
+Pax4	Ins2	Ngn3 low EP	262	-3e-05	-4e-05	0.2595
+Pax4	Ins2	Ngn3 high EP	642	-1e-05	-0.0	0.4922
+Pax4	Ins2	Pre-endocrine	592	-7e-05	-8e-05	0.2517
+Pax4	Ins2	Beta	591	-4e-05	-1e-05	0.4619
+Pax4	Ins2	Alpha	481	3e-05	3e-05	0.7734
+Pax4	Ins2	Delta	70	2e-05	2e-05	0.7286
+Pax4	Ins2	Epsilon	142	2e-05	2e-05	0.7324
+Pdx1	Ins2	Ductal	916	-5e-05	-5e-05	0.0011
+Pdx1	Ins2	Ngn3 low EP	262	-5e-05	-5e-05	0.0038
+Pdx1	Ins2	Ngn3 high EP	642	2e-05	2e-05	0.5841
+Pdx1	Ins2	Pre-endocrine	592	0.00025	0.00026	0.8361
+Pdx1	Ins2	Beta	591	0.00147	0.00115	0.9932
+Pdx1	Ins2	Alpha	481	0.00049	0.0004	0.9854
+Pdx1	Ins2	Delta	70	0.0005	0.00044	1.0
+Pdx1	Ins2	Epsilon	142	0.00014	0.00011	0.9155
+Neurog3	Neurod1	Ductal	916	0.0	0.0	0.5961
+Neurog3	Neurod1	Ngn3 low EP	262	1e-05	1e-05	0.7519
+Neurog3	Neurod1	Ngn3 high EP	642	-7e-05	-6e-05	0.1246
+Neurog3	Neurod1	Pre-endocrine	592	7e-05	5e-05	0.8446
+Neurog3	Neurod1	Beta	591	0.0	-0.0	0.4585
+Neurog3	Neurod1	Alpha	481	0.0	0.0	0.6195
+Neurog3	Neurod1	Delta	70	1e-05	1e-05	0.9429
+Neurog3	Neurod1	Epsilon	142	4e-05	4e-05	1.0
+Pax4	Pax6	Ductal	916	1e-05	1e-05	0.714
+Pax4	Pax6	Ngn3 low EP	262	2e-05	2e-05	0.9389
+Pax4	Pax6	Ngn3 high EP	642	6e-05	5e-05	0.6854
+Pax4	Pax6	Pre-endocrine	592	7e-05	4e-05	0.6588
+Pax4	Pax6	Beta	591	-2e-05	-3e-05	0.2606
+Pax4	Pax6	Alpha	481	3e-05	4e-05	0.8919
+Pax4	Pax6	Delta	70	2e-05	2e-05	0.8143
+Pax4	Pax6	Epsilon	142	9e-05	7e-05	1.0
+Pdx1	Pax4	Ductal	916	-0.00015	-0.00015	0.0022
+Pdx1	Pax4	Ngn3 low EP	262	-0.00026	-0.00027	0.0076
+Pdx1	Pax4	Ngn3 high EP	642	-0.00013	-0.0001	0.1495
+Pdx1	Pax4	Pre-endocrine	592	-0.00012	-9e-05	0.3007
+Pdx1	Pax4	Beta	591	-0.00013	-0.00014	0.0305
+Pdx1	Pax4	Alpha	481	-6e-05	-4e-05	0.1809
+Pdx1	Pax4	Delta	70	-5e-05	-5e-05	0.0143
+Pdx1	Pax4	Epsilon	142	3e-05	3e-05	0.7746
+Nkx6-1	Ins2	Ductal	916	-0.0	0.0	0.5546
+Nkx6-1	Ins2	Ngn3 low EP	262	-4e-05	-3e-05	0.2786
+Nkx6-1	Ins2	Ngn3 high EP	642	-0.0	-1e-05	0.4673
+Nkx6-1	Ins2	Pre-endocrine	592	0.00011	0.00011	0.7196
+Nkx6-1	Ins2	Beta	591	0.00037	0.0004	0.7073
+Nkx6-1	Ins2	Alpha	481	0.00037	0.00029	0.9522
+Nkx6-1	Ins2	Delta	70	0.00052	0.00046	1.0
+Nkx6-1	Ins2	Epsilon	142	1e-05	-1e-05	0.4789
+Gcg	Arx	Ductal	916	-0.00018	-0.00018	0.0
+Gcg	Arx	Ngn3 low EP	262	-0.00018	-0.00019	0.0
+Gcg	Arx	Ngn3 high EP	642	4e-05	1e-05	0.5093
+Gcg	Arx	Pre-endocrine	592	9e-05	2e-05	0.5372
+Gcg	Arx	Beta	591	-0.0003	-0.00024	0.0728
+Gcg	Arx	Alpha	481	0.00016	0.00014	0.7755
+Gcg	Arx	Delta	70	-5e-05	-5e-05	0.3
+Gcg	Arx	Epsilon	142	-7e-05	-0.00011	0.2887

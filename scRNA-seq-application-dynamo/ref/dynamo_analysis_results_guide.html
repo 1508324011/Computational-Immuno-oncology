@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Dynamo 分析结果导读 (Corrected &amp; Annotated Edition)</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dynamo 分析结果导读 (Corrected &amp; Annotated
+Edition)</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#dynamo-分析结果导读" id="toc-dynamo-分析结果导读">Dynamo
+分析结果导读</a>
+<ul>
+<li><a href="#怎么读这个目录" id="toc-怎么读这个目录">1.
+怎么读这个目录</a></li>
+<li><a href="#preprocess对象本身" id="toc-preprocess对象本身">2.
+01_preprocess：对象本身</a></li>
+<li><a href="#velocity速度与场" id="toc-velocity速度与场">3.
+02_velocity：速度与场</a></li>
+<li><a href="#vectorfield场的三个导数与状态图" id="toc-vectorfield场的三个导数与状态图">4.
+03_vectorfield：场的三个导数与状态图</a></li>
+<li><a href="#jacobian谁调控谁" id="toc-jacobian谁调控谁">5.
+04_jacobian：谁调控谁</a></li>
+<li><a href="#enrichmentgo-富集" id="toc-enrichmentgo-富集">6.
+05_enrichment：GO 富集</a></li>
+<li><a href="#corrected矫正链新增了什么" id="toc-corrected矫正链新增了什么">7.
+06_corrected：矫正链新增了什么</a></li>
+<li><a href="#figure_comparison与教师参考图对拍" id="toc-figure_comparison与教师参考图对拍">8.
+07_figure_comparison：与教师参考图对拍</a></li>
+<li><a href="#run_logs-与-scripts" id="toc-run_logs-与-scripts">9.
+09_run_logs 与 scripts</a></li>
+<li><a href="#一句话记住这一讲" id="toc-一句话记住这一讲">10.
+一句话记住这一讲</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="dynamo-分析结果导读">Dynamo 分析结果导读</h1>
+<p>本文件导读 <code>scRNA-seq-application-dynamo/results/</code>
+下的全部产物，并给出可以亲手复现的练习。 配套的矫正增强版文档在
+<code>ref/scRNAseq_dynamo_corrected.md</code>（英文）与
+<code>ref/scRNAseq_dynamo_corrected_zh.md</code>（中文）；教材原件的
+cell 抽取结果在
+<code>results/scripts/dynamo_cells_aswritten.py</code>。</p>
+<h2 id="怎么读这个目录">1. 怎么读这个目录</h2>
+<pre><code>results/
+├── 01_preprocess/          步骤 1-2：对象自身审计表 + 每群细胞数 + 逐基因标记
+├── 02_velocity/            步骤 3-4：流线图、逐细胞箭头图、γ/β/半衰期、速度模长
+├── 03_vectorfield/         步骤 5：四联图、地形图、状态图；逐细胞场量；逐群统计与检验；
+│                           状态转移矩阵（通量 + 平均时间 + 行和）
+├── 04_jacobian/            步骤 6-7：四个 Jacobian 面板、基因级张量与其成对/逐群表、
+│                           加速度排序 top20/top200
+├── 05_enrichment/          步骤 8：GO BP 2021 全表（925 个 term）、barplot/dotplot、
+│                           gseapy 原始报告（txt/pdf）
+├── 06_corrected/           矫正链：07/08/09 面板（教材只显示不存的三张）、curl 图、
+│                           GO 改标图、UMAP 重算对比、Ductal vs 其余统计
+├── 07_figure_comparison/   与两套教师参考图的机器可读对拍表
+├── 09_run_logs/            原样跑的完整控制台日志
+└── scripts/                重新生成以上全部内容的六个脚本</code></pre>
+<p>约定：</p>
+<ul>
+<li><code>01_</code>–<code>05_</code>
+是<strong>原样跑</strong>（<code>dynamo_cells_aswritten.py</code>）的产物，文件名沿用教材单元里的
+<code>save_kwargs[&quot;prefix&quot;]</code>：<code>01_velocity_streamline_dyn_savefig.png</code>
+对应第 14 单元， <code>06_reg_Ngn3_activate_Pax4_dyn_savefig.png</code>
+对应第 22 单元。凡形如 <code>inline_cellNN_auto_MM.png</code>
+的，是<strong>教材只内联显示、没存盘</strong>的那几张图，由 harness 在
+<code>plt.show()</code> 处截下（第 23 单元两张、第 24 单元一张、第 32
+单元两张）。</li>
+<li><code>06_corrected/</code>
+是<strong>矫正跑</strong>（<code>dynamo_corrected.py</code>）的产物，文件名保留原前缀并加
+<code>_corrected</code> 或独立编号，以免与原样版混淆。</li>
+<li><code>03_vectorfield/*.tsv</code> 与
+<code>04_jacobian/jacobian_*</code>
+来自两次<strong>数值导出</strong>运行
+（<code>dynamo_vf_percell_export.py</code>、<code>dynamo_jacobian_export.py</code>）：它们把教材只画不存的量落成表。</li>
+<li>表格一律 UTF-8、TAB
+分隔；第一列常是索引（细胞名或群名），不要当数据类型混用。</li>
+<li>六张原样图与矫正跑<strong>逐字节相同</strong>（md5
+一致），所以两张目录下的同名图不必比较,本来就是同一份。</li>
+</ul>
+<h2 id="preprocess对象本身">2. 01_preprocess：对象本身</h2>
+<p><code>adata_summary.tsv</code> 是这一讲的”户口本”，14
+行，每行一个数：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cells_raw</code> / <code>genes_raw</code></td>
+<td>3696 / 27998</td>
+<td>读进来时</td>
+</tr>
+<tr>
+<td><code>genes_pass_basic_filter</code></td>
+<td><strong>6956</strong></td>
+<td><code>shared_count=20</code> 后仍被考虑的基因数</td>
+</tr>
+<tr>
+<td><code>hvg_use_for_pca</code></td>
+<td><strong>4000</strong></td>
+<td>dynamo 用 SVR 选出的、真正参与 PCA/速度的基因</td>
+</tr>
+<tr>
+<td><code>legacy_hvg_true</code></td>
+<td>4004</td>
+<td>文件自带的 <code>highly_variable_genes</code> 里 True 的个数</td>
+</tr>
+<tr>
+<td><code>legacy_hvg_nan</code></td>
+<td><strong>10656</strong></td>
+<td>该列里 NaN 的个数（= 27998 −
+17342，即上游另一套过滤丢掉的基因）</td>
+</tr>
+<tr>
+<td><code>overlap_legacy_vs_dynamo</code></td>
+<td>1339</td>
+<td>两个集合的交集</td>
+</tr>
+<tr>
+<td><code>jaccard_legacy_vs_dynamo</code></td>
+<td><strong>0.2009</strong></td>
+<td>1339 / 6665</td>
+</tr>
+<tr>
+<td><code>pancreas_genes_absent</code></td>
+<td>0</td>
+<td>17 个锚基因全部在</td>
+</tr>
+</tbody>
+</table>
+<p><code>jaccard = 0.20</code> 是本目录最重要的一行：dynamo 的 4000
+个特征与”这文件自称的高变基因”只共享三分之一。 任何”dynamo 的速度 vs
+scanpy 的聚类”式比较，都是在两套特征空间之间做。</p>
+<p><code>var_flags.tsv</code>（27998 行 × 5
+列）是逐基因的四个布尔标记：<code>use_for_pca</code>、<code>pass_basic_filter</code>、
+<code>legacy_hvg</code>（文件自带）、<code>pancreas_gene</code>。想查某个基因为什么没进速度模型，grep
+这一行。</p>
+<p><code>cluster_counts.tsv</code> 是八群规模：Ductal 916、Ngn3 high EP
+642、Pre-endocrine 592、Beta 591、 Alpha 481、Ngn3 low EP 262、Epsilon
+142、Delta 70。</p>
+<p><strong>练习</strong>：<code>awk -F&#39;\t&#39; &#39;$2==&quot;False&quot; &amp;&amp; $3==&quot;True&quot;&#39; var_flags.tsv | wc -l</code>
+—— 有多少基因通过了基础过滤却没被选进 PCA？ （答：6956 − 4000 + 17
+的重叠，实际输出会把答案给你。）</p>
+<h2 id="velocity速度与场">3. 02_velocity：速度与场</h2>
+<p>两张图是全课的门面：</p>
+<ul>
+<li><code>01_velocity_streamline_dyn_savefig.png</code>（cell
+14，1464×1023）：核平滑后的<strong>流线</strong>。</li>
+<li><code>02_cell_wise_velocity_dyn_savefig.png</code>（cell
+15，1222×816）：逐细胞<strong>箭头</strong>。</li>
+</ul>
+<p>两者用的是同一个投影速度，差别只在”把箭头平均成场”这一步。对拍时这两张的墨迹
+IoU 是 0.996 与 1.000 ——
+它们也是能证明”速度场本身一致”的那两张：场若有差异，会先在这里暴露。</p>
+<p><code>gamma_summary.tsv</code> 记录动力学拟合：γ 中位
+<strong>0.382</strong>（均值 0.953、q25 0.128、q75 0.908、max 64.58），
+<code>beta</code> 的 min = max =
+<strong>1.0</strong>（<code>model=&quot;stochastic&quot;</code> 固定
+β，不是估计出来的），<code>half_life</code> = <code>ln2/γ</code> （中位
+1.814）。γ 有 3999 个有效值——4000 个基因里有一个拟合失败。</p>
+<p><code>cell_velocity_stats.tsv</code> 是
+<code>velocity_umap_norm</code> 的分布（中位 0.375、q25 0.184、q75
+0.597、max 1.12）。
+模长是投影的结果，没有物理量纲；能解读的只有方向。</p>
+<h2 id="vectorfield场的三个导数与状态图">4.
+03_vectorfield：场的三个导数与状态图</h2>
+<p>三张图：</p>
+<ul>
+<li><code>03_combined_plots.png</code>（cell
+18）：手工拼的四联图（潜势/速度/散度/加速度）。<strong>注意这张没给
+dpi</strong>， 1000×600；教师 2026 重跑版同面板是 3099×1834。</li>
+<li><code>04_cell_state_dyn_savefig.png</code>（cell
+19）：<code>topography</code>，潜势的地形图。</li>
+<li><code>05_cell_state_transition_map_dyn_savefig.png</code>（cell
+20）：<code>pl.state_graph</code>，群间转移画在 UMAP 上。</li>
+</ul>
+<p>四张统计表里，<code>vf_per_cell.tsv</code> 是根：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>列</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>speed_pca</code></td>
+<td>‖f(x)‖，单位 PCA 空间的场速</td>
+</tr>
+<tr>
+<td><code>divergence_pca</code> / <code>divergence_umap</code></td>
+<td>∇·f，<strong>两个基各一份</strong>，量级不同（±0.14 vs
+±1.3），别混用</td>
+</tr>
+<tr>
+<td><code>acceleration_pca</code></td>
+<td>‖(f·∇)f‖</td>
+</tr>
+<tr>
+<td><code>curl_umap</code></td>
+<td>∇×f（教材只算不画，矫正版补了图）</td>
+</tr>
+<tr>
+<td><code>pca_ddhodge_potential</code></td>
+<td>ddhodge 潜势（类伪时间，低=早）</td>
+</tr>
+<tr>
+<td><code>velocity_umap_norm</code></td>
+<td>投影速度模长，可与 §3 的 <code>cell_velocity_stats.tsv</code>
+对照</td>
+</tr>
+</tbody>
+</table>
+<p><code>vf_stats.tsv</code>
+是上表各列的全域分布（min/q25/median/mean/q75/max）；
+<code>vf_by_cluster.tsv</code>（长表：cluster × quantity ×
+mean/median/n）与
+<code>vf_cluster_sign_summary.tsv</code>（宽表：只挑散度/加速度/旋度的均值与”正比例”）是逐群汇总。</p>
+<p><code>vf_cluster_tests.tsv</code>
+是<strong>推断</strong>表，一行一个量：</p>
+<table>
+<thead>
+<tr>
+<th>列</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>kruskal_H</code> / <code>kruskal_p</code></td>
+<td>八群 Kruskal–Wallis</td>
+</tr>
+<tr>
+<td><code>ductal_mean</code> / <code>rest_mean</code></td>
+<td>Ductal(916) vs 其余(2780) 的均值</td>
+</tr>
+<tr>
+<td><code>mannwhitney_p_ductal_vs_rest</code></td>
+<td>两组 Mann–Whitney p</td>
+</tr>
+<tr>
+<td><code>frac_negative_ductal</code> /
+<code>frac_negative_rest</code></td>
+<td>负值细胞比例</td>
+</tr>
+</tbody>
+</table>
+<p>结论速记：五个量的 KW p 全 &lt; 1e-90；但 Ductal
+的散度<strong>显著更不负</strong>（−0.0140 vs −0.0263，p = 6.5e-06），
+所以”Ductal 是鞍点”这个说法只在”7/8
+个群都为负”的平凡意义上成立。真正干净的是 Ngn3 high EP：
+唯一平均散度为正（+0.0229）、85 %
+细胞为正、加速度最高（0.0158）；以及终末群的反面： Beta −0.0682、Alpha
+−0.0502、Delta −0.0272，三者的正散度细胞比例都是 <strong>0
+%</strong>。</p>
+<p>状态图的两张矩阵：</p>
+<ul>
+<li><code>clusters_graph_group_graph.tsv</code>（8×8，行=起点，列=终点）：<strong>不是行随机矩阵</strong>
+（Ductal 行和 1.76、Ngn3 low 0.94、Epsilon
+1.57），对角项是驻留项，读作<strong>通量</strong>而不是转移概率。
+有意义的非对角项：Ductal→Alpha 0.68、Ductal→Ngn3 high
+0.08、Pre-endocrine→Alpha 0.22、 Delta→Pre-endocrine 0.27；Beta/Alpha
+是完全吸收态（自 1.00、零流出）。</li>
+<li><code>clusters_graph_group_avg_time.tsv</code>（8×8）：平均转移时间，单位是积分场上的<strong>伪时间</strong>，
+只能表内比较，不是小时也不是胚胎天数。最短：Delta→Pre-endocrine
+16.0、Ductal→Alpha 24.6。</li>
+<li>两个 <code>*_rowsum_*.tsv</code>
+是行和，用来一眼看出”哪一行的通量溢出了”。</li>
+</ul>
+<p><strong>练习</strong>：把 <code>vf_per_cell.tsv</code> 按
+<code>clusters</code> 分组，算 <code>pca_ddhodge_potential</code>
+的均值并排序， 你会得到 Ductal(0.21) → Ngn3 low(0.26) → Ngn3 high(0.98)
+→ Pre-endocrine(1.81) → Epsilon(1.99) → Delta(2.12) → Alpha(2.13) →
+Beta(2.26)：<strong>不用任何时间信息</strong>恢复出的发育顺序。</p>
+<h2 id="jacobian谁调控谁">5. 04_jacobian：谁调控谁</h2>
+<p>四个面板（<code>06_</code> 存盘，<code>07_/08_/09_</code>
+是教材只内联显示的三张，原样跑时由 harness 截下）：</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>图</th>
+<th>边</th>
+<th>读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>06_reg_Ngn3_activate_Pax4_dyn_savefig.png</code></td>
+<td>Neurog3 → Pax4</td>
+<td>红 = 激活；红色集中在 Ngn3-high/pre-endocrine</td>
+</tr>
+<tr>
+<td><code>inline_cell23_auto_01.png</code></td>
+<td>Arx → Pax4</td>
+<td>与下一张互为镜像</td>
+</tr>
+<tr>
+<td><code>inline_cell23_auto_02.png</code></td>
+<td>Pax4 → Arx</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>inline_cell24_auto_01.png</code></td>
+<td>Pax4 → Ins2</td>
+<td>β 细胞那条边</td>
+</tr>
+</tbody>
+</table>
+<p><code>jacobian_*</code> 系列（矫正链导出）是这些颜色的数字版：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>jacobian_metadata.json</code></td>
+<td>张量形状、17 个 regulator/effector 名单、轴序说明</td>
+</tr>
+<tr>
+<td><code>jacobian_mean_all_cells.tsv</code></td>
+<td>17×17，细胞平均；<strong>行=regulator，列=effector</strong>（表头已转置成人类习惯）</td>
+</tr>
+<tr>
+<td><code>jacobian_mean_ductal_cells.tsv</code></td>
+<td>同上，仅 Ductal 916 细胞</td>
+</tr>
+<tr>
+<td><code>jacobian_pairs.tsv</code></td>
+<td>每条边一行：min/q25/median/mean/q75/max/<code>frac_positive</code></td>
+</tr>
+<tr>
+<td><code>jacobian_pairs_by_cluster.tsv</code></td>
+<td>边 × 群：均值/中位/正比例</td>
+</tr>
+<tr>
+<td><code>jac_&lt;reg&gt;_&lt;eff&gt;.tsv</code></td>
+<td>逐细胞值（cell, clusters, jacobian），可自己画分布或做检验</td>
+</tr>
+</tbody>
+</table>
+<p>这几张表最值得先看的两条结论：</p>
+<ul>
+<li><strong><code>Pdx1 → Ins2</code> 是全表最强的一条边</strong>：在
+Beta 群里均值 <strong>+1.5e-3、99.3 % 细胞为正</strong>，比其它任何边大
+6 倍； 而教材实际画的 <code>Pax4 → Ins2</code> 在 Beta 里是
+<strong>−4e-5（46 % 为正）</strong>。教材 cell 24 的注释写的是 「Pdx1
+激活 Ins2」，代码画的却是
+Pax4——<strong>数据站在注释这边，代码画错了基因</strong>（DYN-07）。
+若要用这张图讲课，建议改画 <code>regulators=[&quot;Pdx1&quot;]</code>。</li>
+<li><strong>Pax4 ⤙ Arx 的互抑只发生在 Ngn3 high
+EP</strong>：两个交叉项同时为负仅在该群 （Arx→Pax4 −4e-5、40 %
+为正；Pax4→Arx −1.2e-4、17 % 为正）；到 Pre-endocrine 已翻回正值， 在
+Alpha/Beta
+两个交叉项都为正（互相激活）。也就是说教材说的「分叉点上的互相抑制」成立，
+但它是<strong>局部</strong>开关，不是全局开关。</li>
+</ul>
+<p><strong>两个必须知道的实现事实</strong>（否则数字会读反）：</p>
+<ol type="1">
+<li>存进 <code>adata.uns[&#39;jacobian_pca&#39;][&#39;jacobian&#39;]</code> 的是
+<strong>PCA 空间的 30×30×3696</strong>。想要基因级结果， 必须用
+<code>jacobian_gene</code>（dynamo 用 <code>Qi·J·Qjᵀ</code>
+反变换得到）。</li>
+<li><code>jacobian_gene</code> 的轴序是 <strong>(effector, regulator,
+cell)</strong> —— 本目录的导出按
+<code>Jg[effector_idx, regulator_idx]</code>
+取值，表格再转置成”行=regulator”以便阅读。</li>
+</ol>
+<p><code>rank_acceleration_*.tsv</code>：<code>top200.tsv</code> 是教材
+<code>adata.uns[&#39;rank_acceleration&#39;]</code> 的原貌（逐群宽表，
+每个群一列、200 行），<code>top20_per_cluster.tsv</code> 是摘要。Ductal
+前 10 是 Hmgb2/Hist1h2bc/Ccnb2/Cdc20/
+Dynll1/Birc5/Cks2/Ccnb1/Cenpf/Hn1（9 个有丝分裂基因），Beta 前二是
+Ins1/Ins2，Ngn3 high EP 是
+Chga/Chgb/Tm4sf4/Akr1c19/Cryba2/Cpe/Hmgn3/Pcsk1n/Cystm1/Glud1。Beta
+第三位是 <code>Xist</code>——这份数据混合性别，
+那一项反映的是雌/雄差异。</p>
+<h2 id="enrichmentgo-富集">6. 05_enrichment：GO 富集</h2>
+<p><code>GO_BP_2021_Ductal_top100.tsv</code> 是 Enrichr 的完整返回：925
+行 × 10 列
+（<code>Gene_set, Term, Overlap, P-value, Adjusted P-value, Old P-value, Old Adjusted P-value, Odds Ratio, Combined Score, Genes</code>）。<strong>107
+行</strong>的 <code>Adjusted P-value &lt; 0.05</code>；最小的校正 p 是
+1.74e-21 （mitotic spindle organization，21/157）。</p>
+<p>两张图：<code>inline_cell32_auto_01.png</code>（barplot）与
+<code>inline_cell32_auto_02.png</code>（dotplot）。
+它们的<strong>标题是错的</strong>：分别写着
+<code>GO_Biological_Process_2018</code> 与
+<code>KEGG_2016</code>，而查询的库是
+<code>GO_Biological_Process_2021</code>，且从未查过
+KEGG——标题是绘图调用里硬编码的字符串。 矫正版
+<code>06_corrected/10_..._corrected.png</code> 把库名从
+<code>res2d[&#39;Gene_set&#39;]</code> 读出，条形像素不变、标签正确。</p>
+<p><code>*.enrichr.reports.txt/pdf</code> 是 gseapy
+自己倒出来的报告（教材用 <code>outdir=&#39;./figure&#39;</code>
+把它们丢进图目录， 这里收进 <code>05_enrichment/</code>）。带
+<code>aswritten_</code>
+前缀的是原样跑那份，不带的是矫正跑那份——两份内容一致，
+留着是为了说明”为什么图目录里会长出 txt 和 pdf”。</p>
+<h2 id="corrected矫正链新增了什么">7.
+06_corrected：矫正链新增了什么</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>修正项</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>07_reg_Arx_Pax4_dyn_savefig.png</code></td>
+<td>C1</td>
+<td>教材只内联显示的第二张 Jacobian 面板，按规矩存盘（1580×1048）</td>
+</tr>
+<tr>
+<td><code>08_reg_Pax4_Arx_dyn_savefig.png</code></td>
+<td>C1</td>
+<td>第三张</td>
+</tr>
+<tr>
+<td><code>09_reg_Pax4_Ins2_dyn_savefig.png</code></td>
+<td>C1</td>
+<td>第四张</td>
+</tr>
+<tr>
+<td><code>12_curl_nullcline_dyn_savefig.png</code></td>
+<td>C6</td>
+<td>旋度图——教材算了 curl 却从没画过</td>
+</tr>
+<tr>
+<td><code>10_Ductal_GO_enrichment_barplot_corrected.png</code></td>
+<td>C2</td>
+<td>标题改成
+<code>GO_Biological_Process_2021</code>，条形与原版像素一致</td>
+</tr>
+<tr>
+<td><code>11_Ductal_GO_enrichment_dotplot_corrected.png</code></td>
+<td>C2</td>
+<td>同上（dotplot）</td>
+</tr>
+<tr>
+<td><code>12_umap_shipped_vs_recomputed.png</code></td>
+<td>C4</td>
+<td>左：文件自带 UMAP；右：<code>reduceDimension(enforce=True)</code>
+的结果</td>
+</tr>
+<tr>
+<td><code>umap_recompute_comparison.tsv</code></td>
+<td>C4</td>
+<td>成对距离 Spearman <strong>0.9393</strong>、平均位移 9.74、展布
+5.11、位移/展布 <strong>1.905</strong></td>
+</tr>
+<tr>
+<td><code>ductal_subset_stats.tsv</code></td>
+<td>C7</td>
+<td>Ductal(916) vs 其余 的场量均值（让教材里死掉的
+<code>progenitor</code> 变量派上用场）</td>
+</tr>
+</tbody>
+</table>
+<p><code>umap_recompute_comparison.tsv</code>
+值得单独说：它是”教材的降维到底算没算”这个问题的答案。
+<code>reduceDimension</code> 因文件自带 <code>X_umap</code>
+而<strong>跳过</strong>（控制台
+<code>[UMAP] completed [0.0012s]</code>）， 而强制重算会把每个细胞挪走
+1.9 个展布单位——所以矫正跑<strong>不</strong>在原对象上改
+<code>X_umap</code>， 只在副本上算、单独出一张对比图，从而保证图 01–09
+逐字节不变。</p>
+<h2 id="figure_comparison与教师参考图对拍">8.
+07_figure_comparison：与教师参考图对拍</h2>
+<p><code>figure_comparison_aswritten.tsv</code>
+一行一张图，列分三组：</p>
+<ul>
+<li><strong>对照 2026
+脚本重跑图</strong>（<code>ref2026_*</code>）：宽高、长宽比、<code>structural_r</code>（墨迹掩膜形状相关，
+对配色不敏感）、<code>ink_iou</code>、双方墨迹占比、配色数与 Top6
+配色；</li>
+<li><strong>对照 2025 HTML
+内嵌图</strong>（<code>vshtml_*</code>）：同上一套指标；</li>
+<li>元信息：该图出自教材哪个单元、用的是什么调用、图类型（stream/quiver/composite/graph/jacobian/bar/dot）。</li>
+</ul>
+<p>两套参考<strong>不能互换</strong>：2025 是 notebook 内联显示的那 6
+张，2026 是升级脚本重跑的 11 张。 结论速记：01/02 几乎完全一致（IoU
+0.996 / 1.000），03–09 在 0.64–0.97 之间且都能解释 （dpi
+差、等高线重涂、积分轨迹），<strong>10/11 的 2026
+版是纯白空画布</strong>（墨迹 0、颜色 0、12–15 kB）， 所以 GO
+那两张只能拿 2025 内嵌图当真值（与本目录的 bar/dot 分别是 IoU 0.892 /
+0.991）。</p>
+<p><strong>练习</strong>：打开表，按 <code>vs2026_ink_iou</code>
+升序看前两行，再去 <code>03_vectorfield/</code> 与
+<code>06_corrected/</code> 找对应图， 亲自确认”低 IoU ≠ 分析不同”。04 的
+0.639 来自填充等高线（色阶挪一档就重涂大片）， 05 的 0.792
+来自积分轨迹的控制点落点。</p>
+<h2 id="run_logs-与-scripts">9. 09_run_logs 与 scripts</h2>
+<p><code>09_run_logs/aswritten_console.txt</code>
+是原样跑的完整控制台（含每一步耗时）。想看证据时优先用它：</p>
+<ul>
+<li><code>6956 genes passed basic filters</code> → §2 的过滤数；</li>
+<li><code>applying PCA … &lt;insert&gt; X_pca to obsm</code> → PCA 是
+recipe 算的（不是 no-op）；</li>
+<li><code>[UMAP] completed [0.0012s]</code> → UMAP
+是<strong>跳过</strong>的（DYN-03）；</li>
+<li><code>incomplete neighbor graph info detected … indices not in adata.uns.neighbors</code>
+→ 文件里没有 kNN 图， 是 dynamo 自己建的；</li>
+<li><code>[ddhodge completed] completed [21.0884s]</code> /
+<code>[VectorField] completed [24.1135s]</code> → 各步成本。</li>
+</ul>
+<p><code>scripts/</code> 六个脚本：</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>脚本</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>extract_dynamo_cells.py</code></td>
+<td>从 HTML 导出里抽出 50 个 cell（标准库
+<code>html.parser</code>，环境无 bs4）</td>
+</tr>
+<tr>
+<td><code>dynamo_cells_aswritten.py</code></td>
+<td>34 个代码单元按序还原并逐格执行（只替换教师硬编码路径）</td>
+</tr>
+<tr>
+<td><code>dynamo_corrected.py</code></td>
+<td>同管线 + C1–C10</td>
+</tr>
+<tr>
+<td><code>dynamo_vf_percell_export.py</code></td>
+<td>导出逐细胞场量、逐群统计、检验、状态图矩阵</td>
+</tr>
+<tr>
+<td><code>dynamo_jacobian_export.py</code></td>
+<td>导出基因级 Jacobian（含 Pdx1→Ins2 等 10 条边）与张量元信息</td>
+</tr>
+<tr>
+<td><code>compare_figs_dynamo.py</code></td>
+<td>与两套参考图对拍，产出 <code>07_figure_comparison/*.tsv</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="一句话记住这一讲">10. 一句话记住这一讲</h2>
+<p>教材给出的四句定性判断里，<strong>三句站得住</strong>（Ngn3 high EP
+是分叉点、早期祖细胞以高加速度出口、终末群散度为负），
+<strong>一句需要改写</strong>（Ductal
+不是散度意义上的鞍点，它是<strong>最慢</strong>且<strong>潜势最低</strong>的根）。
+把颜色变成数字之后，这一讲最有价值的产物不是那五张图，而是
+<code>03_vectorfield/vf_per_cell.tsv</code> —— 3696 行 × 8
+列，任何后续统计离它都只有一个 <code>groupby</code>。</p>
+</body>
+</html>

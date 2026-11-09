@@ -1,0 +1,1525 @@
+3.11.10 | packaged by conda-forge | (main, Oct 16 2024, 01:27:36) [GCC 13.3.0]
+/gpfs1/home/bjx131_pkuhpc/dynamo_run_20261109/data/endocrinogenesis_day15.h5ad
+package umap-learn typing-extensions    tqdm statsmodels setuptools  \
+version      0.5.6            4.12.2  4.66.6      0.14.4     75.1.0   
+
+package session-info seaborn   scipy scikit-learn pynndescent pre-commit  \
+version        1.0.0  0.13.2  1.13.1        1.5.2      0.5.13      4.0.1   
+
+package pandas openpyxl   numpy numdifftools   numba networkx matplotlib  \
+version  2.2.3    3.1.5  1.23.5       0.9.41  0.60.0      3.4      3.7.3   
+
+package loompy get-version dynamo-release colorcet anndata  
+version  3.0.6       3.5.5          1.3.2    3.1.0  0.10.9  
+|-----? dynamo.preprocessing.deprecated is deprecated.
+|-----> recipe_monocle_keep_filtered_cells_key is None. Using default value from DynamoAdataConfig: recipe_monocle_keep_filtered_cells_key=True
+|-----> recipe_monocle_keep_filtered_genes_key is None. Using default value from DynamoAdataConfig: recipe_monocle_keep_filtered_genes_key=True
+|-----> recipe_monocle_keep_raw_layers_key is None. Using default value from DynamoAdataConfig: recipe_monocle_keep_raw_layers_key=True
+|-----> apply Monocole recipe to adata...
+|-----> ensure all cell and variable names unique.
+|-----> ensure all data in different layers in csr sparse matrix format.
+|-----> ensure all labeling data properly collapased
+|-----> filtering cells...
+|-----> 3696 cells passed basic filters.
+|-----> filtering gene...
+|-----> 6956 genes passed basic filters.
+|-----> calculating size factor...
+|-----> selecting genes in layer: X, sort method: SVR...
+|-----> size factor normalizing the data, followed by log1p transformation.
+|-----> Set <adata.X> to normalized data
+|-----> applying PCA ...
+|-----> <insert> X_pca to obsm in AnnData Object.
+|-----> cell cycle scoring...
+|-----> computing cell phase...
+|-----> [Cell Phase Estimation] completed [20.4198s]
+|-----> [Cell Cycle Scores Estimation] completed [0.6767s]
+|-----> [recipe_monocle preprocess] completed [9.2664s]
+|-----> dynamics_del_2nd_moments_key is None. Using default value from DynamoAdataConfig: dynamics_del_2nd_moments_key=False
+|-----------> removing existing M layers:[]...
+|-----------> making adata smooth...
+|-----> calculating first/second moments...
+|-----> [moments calculation] completed [27.3137s]
+
+|-----> retrieve data for non-linear dimension reduction...
+|-----? adata already have basis umap. dimension reduction umap will be skipped! 
+set enforce=True to re-performing dimension reduction.
+|-----> [UMAP] completed [0.0012s]
+
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 1.0011%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 2.0022%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 3.0032%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 4.0043%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 5.0054%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 6.0065%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 7.0076%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 8.0087%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 9.0097%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 10.0108%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 11.0119%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 12.0130%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 13.0141%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 14.0152%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 15.0162%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 16.0173%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 17.0184%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 18.0195%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 19.0206%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 20.0216%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 21.0227%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 22.0238%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 23.0249%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 24.0260%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 25.0271%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 26.0281%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 27.0292%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 28.0303%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 29.0314%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 30.0325%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 31.0335%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 32.0346%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 33.0357%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 34.0368%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 35.0379%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 36.0390%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 37.0400%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 38.0411%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 39.0422%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 40.0433%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 41.0444%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 42.0455%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 43.0465%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 44.0476%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 45.0487%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 46.0498%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 47.0509%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 48.0519%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 49.0530%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 50.0541%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 51.0552%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 52.0563%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 53.0574%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 54.0584%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 55.0595%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 56.0606%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 57.0617%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 58.0628%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 59.0639%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 60.0649%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 61.0660%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 62.0671%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 63.0682%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 64.0693%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 65.0703%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 66.0714%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 67.0725%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 68.0736%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 69.0747%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 70.0758%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 71.0768%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 72.0779%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 73.0790%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 74.0801%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 75.0812%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 76.0823%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 77.0833%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 78.0844%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 79.0855%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 80.0866%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 81.0877%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 82.0887%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 83.0898%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 84.0909%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 85.0920%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 86.0931%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 87.0942%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 88.0952%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 89.0963%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 90.0974%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 91.0985%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 92.0996%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 93.1006%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 94.1017%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 95.1028%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 96.1039%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 97.1050%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 98.1061%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 99.1071%
+|-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 100.0000%|-----> [calculating transition matrix via pearson kernel with sqrt transform.] completed [3.3729s]
+
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 1.0011%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 2.0022%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 3.0032%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 4.0043%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 5.0054%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 6.0065%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 7.0076%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 8.0087%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 9.0097%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 10.0108%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 11.0119%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 12.0130%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 13.0141%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 14.0152%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 15.0162%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 16.0173%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 17.0184%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 18.0195%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 19.0206%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 20.0216%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 21.0227%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 22.0238%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 23.0249%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 24.0260%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 25.0271%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 26.0281%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 27.0292%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 28.0303%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 29.0314%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 30.0325%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 31.0335%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 32.0346%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 33.0357%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 34.0368%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 35.0379%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 36.0390%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 37.0400%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 38.0411%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 39.0422%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 40.0433%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 41.0444%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 42.0455%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 43.0465%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 44.0476%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 45.0487%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 46.0498%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 47.0509%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 48.0519%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 49.0530%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 50.0541%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 51.0552%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 52.0563%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 53.0574%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 54.0584%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 55.0595%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 56.0606%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 57.0617%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 58.0628%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 59.0639%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 60.0649%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 61.0660%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 62.0671%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 63.0682%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 64.0693%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 65.0703%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 66.0714%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 67.0725%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 68.0736%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 69.0747%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 70.0758%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 71.0768%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 72.0779%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 73.0790%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 74.0801%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 75.0812%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 76.0823%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 77.0833%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 78.0844%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 79.0855%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 80.0866%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 81.0877%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 82.0887%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 83.0898%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 84.0909%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 85.0920%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 86.0931%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 87.0942%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 88.0952%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 89.0963%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 90.0974%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 91.0985%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 92.0996%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 93.1006%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 94.1017%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 95.1028%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 96.1039%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 97.1050%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 98.1061%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 99.1071%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [1.0814s]
+Using existing pearson_transition_matrix found in .obsp.
+
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 1.0011%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 2.0022%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 3.0032%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 4.0043%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 5.0054%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 6.0065%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 7.0076%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 8.0087%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 9.0097%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 10.0108%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 11.0119%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 12.0130%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 13.0141%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 14.0152%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 15.0162%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 16.0173%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 17.0184%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 18.0195%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 19.0206%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 20.0216%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 21.0227%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 22.0238%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 23.0249%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 24.0260%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 25.0271%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 26.0281%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 27.0292%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 28.0303%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 29.0314%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 30.0325%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 31.0335%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 32.0346%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 33.0357%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 34.0368%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 35.0379%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 36.0390%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 37.0400%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 38.0411%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 39.0422%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 40.0433%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 41.0444%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 42.0455%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 43.0465%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 44.0476%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 45.0487%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 46.0498%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 47.0509%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 48.0519%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 49.0530%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 50.0541%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 51.0552%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 52.0563%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 53.0574%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 54.0584%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 55.0595%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 56.0606%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 57.0617%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 58.0628%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 59.0639%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 60.0649%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 61.0660%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 62.0671%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 63.0682%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 64.0693%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 65.0703%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 66.0714%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 67.0725%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 68.0736%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 69.0747%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 70.0758%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 71.0768%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 72.0779%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 73.0790%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 74.0801%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 75.0812%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 76.0823%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 77.0833%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 78.0844%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 79.0855%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 80.0866%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 81.0877%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 82.0887%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 83.0898%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 84.0909%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 85.0920%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 86.0931%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 87.0942%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 88.0952%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 89.0963%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 90.0974%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 91.0985%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 92.0996%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 93.1006%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 94.1017%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 95.1028%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 96.1039%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 97.1050%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 98.1061%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 99.1071%
+|-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [1.1617s]
+|-----------> plotting with basis key=X_umap
+|-----------> skip filtering clusters by stack threshold when stacking color because it is not a numeric type
+Saving figure to ./figure/01_velocity_streamline_dyn_savefig.png...
+Done
+|-----> X shape: (3696, 2) V shape: (3696, 2)
+|-----------> plotting with basis key=X_umap
+|-----------> skip filtering clusters by stack threshold when stacking color because it is not a numeric type
+Saving figure to ./figure/02_cell_wise_velocity_dyn_savefig.png...
+Done
+|-----> VectorField reconstruction begins...
+|-----> Retrieve X and V based on basis: PCA. 
+        Vector field will be learned in the PCA space.
+|-----> Learning vector field with method: sparsevfc.
+|-----> [SparseVFC] begins...
+|-----> Sampling control points based on data velocity magnitude...
+|-----> [SparseVFC] completed [2.1180s]
+|-----> Running ddhodge to estimate vector field based pseudotime in pca basis...
+|-----> graphizing vectorfield...
+|-----> incomplete neighbor graph info detected: connectivities and distances do not exist in adata.obsp, indices not in adata.uns.neighbors.
+|-----> Neighbor graph is broken, recomputing....
+|-----> Start computing neighbor graph...
+|-----------> X_data is None, fetching or recomputing...
+|-----> fetching X data from layer:None, basis:pca
+|-----> method arg is None, choosing methods automatically...
+|-----------> method ball_tree selected
+|-----------? nbrs_idx argument is ignored and recomputed because nbrs_idx is not None and return_nbrs=True
+|-----------> calculating neighbor indices...
+|-----> [ddhodge completed] completed [21.0884s]
+|-----> Computing divergence...
+
+Calculating divergence:   0%|          | 0/4 [00:00<?, ?it/s]
+Calculating divergence:  25%|██▌       | 1/4 [00:00<00:00,  5.65it/s]
+Calculating divergence:  50%|█████     | 2/4 [00:00<00:00,  6.22it/s]
+Calculating divergence:  75%|███████▌  | 3/4 [00:00<00:00,  6.43it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00,  7.40it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00,  6.90it/s]
+|-----> [VectorField] completed [24.1135s]
+|-----> VectorField reconstruction begins...
+|-----> Retrieve X and V based on basis: UMAP. 
+        Vector field will be learned in the UMAP space.
+|-----> Generating high dimensional grids and convert into a row matrix.
+|-----> Learning vector field with method: sparsevfc.
+|-----> [SparseVFC] begins...
+|-----> Sampling control points based on data velocity magnitude...
+|-----> [SparseVFC] completed [5.1312s]
+|-----> Running ddhodge to estimate vector field based pseudotime in umap basis...
+|-----> graphizing vectorfield...
+|-----------? nbrs_idx argument is ignored and recomputed because nbrs_idx is not None and return_nbrs=True
+|-----------> calculating neighbor indices...
+|-----> [ddhodge completed] completed [21.3336s]
+|-----> Computing curl...
+
+Calculating 2-D curl:   0%|          | 0/3696 [00:00<?, ?it/s]
+Calculating 2-D curl:  20%|█▉        | 728/3696 [00:00<00:00, 7278.71it/s]
+Calculating 2-D curl:  51%|█████     | 1889/3696 [00:00<00:00, 9823.63it/s]
+Calculating 2-D curl:  83%|████████▎ | 3051/3696 [00:00<00:00, 10642.59it/s]
+Calculating 2-D curl: 100%|██████████| 3696/3696 [00:00<00:00, 10397.93it/s]
+|-----> Computing divergence...
+
+Calculating divergence:   0%|          | 0/4 [00:00<?, ?it/s]
+Calculating divergence:  50%|█████     | 2/4 [00:00<00:00, 12.75it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00, 13.99it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00, 13.78it/s]
+|-----> [VectorField] completed [27.3907s]
+
+Calculating divergence:   0%|          | 0/4 [00:00<?, ?it/s]
+Calculating divergence:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s]
+Calculating divergence:  50%|█████     | 2/4 [00:00<00:00,  6.32it/s]
+Calculating divergence:  75%|███████▌  | 3/4 [00:00<00:00,  6.47it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00,  7.42it/s]
+Calculating divergence: 100%|██████████| 4/4 [00:00<00:00,  6.96it/s]
+
+|-----> [Calculating acceleration] in progress: 1.0011%
+|-----> [Calculating acceleration] in progress: 2.0022%
+|-----> [Calculating acceleration] in progress: 3.0032%
+|-----> [Calculating acceleration] in progress: 4.0043%
+|-----> [Calculating acceleration] in progress: 5.0054%
+|-----> [Calculating acceleration] in progress: 6.0065%
+|-----> [Calculating acceleration] in progress: 7.0076%
+|-----> [Calculating acceleration] in progress: 8.0087%
+|-----> [Calculating acceleration] in progress: 9.0097%
+|-----> [Calculating acceleration] in progress: 10.0108%
+|-----> [Calculating acceleration] in progress: 11.0119%
+|-----> [Calculating acceleration] in progress: 12.0130%
+|-----> [Calculating acceleration] in progress: 13.0141%
+|-----> [Calculating acceleration] in progress: 14.0152%
+|-----> [Calculating acceleration] in progress: 15.0162%
+|-----> [Calculating acceleration] in progress: 16.0173%
+|-----> [Calculating acceleration] in progress: 17.0184%
+|-----> [Calculating acceleration] in progress: 18.0195%
+|-----> [Calculating acceleration] in progress: 19.0206%
+|-----> [Calculating acceleration] in progress: 20.0216%
+|-----> [Calculating acceleration] in progress: 21.0227%
+|-----> [Calculating acceleration] in progress: 22.0238%
+|-----> [Calculating acceleration] in progress: 23.0249%
+|-----> [Calculating acceleration] in progress: 24.0260%
+|-----> [Calculating acceleration] in progress: 25.0271%
+|-----> [Calculating acceleration] in progress: 26.0281%
+|-----> [Calculating acceleration] in progress: 27.0292%
+|-----> [Calculating acceleration] in progress: 28.0303%
+|-----> [Calculating acceleration] in progress: 29.0314%
+|-----> [Calculating acceleration] in progress: 30.0325%
+|-----> [Calculating acceleration] in progress: 31.0335%
+|-----> [Calculating acceleration] in progress: 32.0346%
+|-----> [Calculating acceleration] in progress: 33.0357%
+|-----> [Calculating acceleration] in progress: 34.0368%
+|-----> [Calculating acceleration] in progress: 35.0379%
+|-----> [Calculating acceleration] in progress: 36.0390%
+|-----> [Calculating acceleration] in progress: 37.0400%
+|-----> [Calculating acceleration] in progress: 38.0411%
+|-----> [Calculating acceleration] in progress: 39.0422%
+|-----> [Calculating acceleration] in progress: 40.0433%
+|-----> [Calculating acceleration] in progress: 41.0444%
+|-----> [Calculating acceleration] in progress: 42.0455%
+|-----> [Calculating acceleration] in progress: 43.0465%
+|-----> [Calculating acceleration] in progress: 44.0476%
+|-----> [Calculating acceleration] in progress: 45.0487%
+|-----> [Calculating acceleration] in progress: 46.0498%
+|-----> [Calculating acceleration] in progress: 47.0509%
+|-----> [Calculating acceleration] in progress: 48.0519%
+|-----> [Calculating acceleration] in progress: 49.0530%
+|-----> [Calculating acceleration] in progress: 50.0541%
+|-----> [Calculating acceleration] in progress: 51.0552%
+|-----> [Calculating acceleration] in progress: 52.0563%
+|-----> [Calculating acceleration] in progress: 53.0574%
+|-----> [Calculating acceleration] in progress: 54.0584%
+|-----> [Calculating acceleration] in progress: 55.0595%
+|-----> [Calculating acceleration] in progress: 56.0606%
+|-----> [Calculating acceleration] in progress: 57.0617%
+|-----> [Calculating acceleration] in progress: 58.0628%
+|-----> [Calculating acceleration] in progress: 59.0639%
+|-----> [Calculating acceleration] in progress: 60.0649%
+|-----> [Calculating acceleration] in progress: 61.0660%
+|-----> [Calculating acceleration] in progress: 62.0671%
+|-----> [Calculating acceleration] in progress: 63.0682%
+|-----> [Calculating acceleration] in progress: 64.0693%
+|-----> [Calculating acceleration] in progress: 65.0703%
+|-----> [Calculating acceleration] in progress: 66.0714%
+|-----> [Calculating acceleration] in progress: 67.0725%
+|-----> [Calculating acceleration] in progress: 68.0736%
+|-----> [Calculating acceleration] in progress: 69.0747%
+|-----> [Calculating acceleration] in progress: 70.0758%
+|-----> [Calculating acceleration] in progress: 71.0768%
+|-----> [Calculating acceleration] in progress: 72.0779%
+|-----> [Calculating acceleration] in progress: 73.0790%
+|-----> [Calculating acceleration] in progress: 74.0801%
+|-----> [Calculating acceleration] in progress: 75.0812%
+|-----> [Calculating acceleration] in progress: 76.0823%
+|-----> [Calculating acceleration] in progress: 77.0833%
+|-----> [Calculating acceleration] in progress: 78.0844%
+|-----> [Calculating acceleration] in progress: 79.0855%
+|-----> [Calculating acceleration] in progress: 80.0866%
+|-----> [Calculating acceleration] in progress: 81.0877%
+|-----> [Calculating acceleration] in progress: 82.0887%
+|-----> [Calculating acceleration] in progress: 83.0898%
+|-----> [Calculating acceleration] in progress: 84.0909%
+|-----> [Calculating acceleration] in progress: 85.0920%
+|-----> [Calculating acceleration] in progress: 86.0931%
+|-----> [Calculating acceleration] in progress: 87.0942%
+|-----> [Calculating acceleration] in progress: 88.0952%
+|-----> [Calculating acceleration] in progress: 89.0963%
+|-----> [Calculating acceleration] in progress: 90.0974%
+|-----> [Calculating acceleration] in progress: 91.0985%
+|-----> [Calculating acceleration] in progress: 92.0996%
+|-----> [Calculating acceleration] in progress: 93.1006%
+|-----> [Calculating acceleration] in progress: 94.1017%
+|-----> [Calculating acceleration] in progress: 95.1028%
+|-----> [Calculating acceleration] in progress: 96.1039%
+|-----> [Calculating acceleration] in progress: 97.1050%
+|-----> [Calculating acceleration] in progress: 98.1061%
+|-----> [Calculating acceleration] in progress: 99.1071%
+|-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.0955s]
+
+Calculating 2-D curl:   0%|          | 0/3696 [00:00<?, ?it/s]
+Calculating 2-D curl:  31%|███▏      | 1161/3696 [00:00<00:00, 11602.24it/s]
+Calculating 2-D curl:  63%|██████▎   | 2322/3696 [00:00<00:00, 11599.00it/s]
+Calculating 2-D curl:  94%|█████████▍| 3490/3696 [00:00<00:00, 11633.76it/s]
+Calculating 2-D curl: 100%|██████████| 3696/3696 [00:00<00:00, 11622.62it/s]
+|-----> X shape: (3696, 2) V shape: (3696, 2)
+|-----------> plotting with basis key=X_umap
+|-----------> plotting with basis key=X_umap
+|-----------> plotting with basis key=X_umap
+|-----------> plotting with basis key=X_umap
+[harness] wrote figure/inline_cell18_auto_01.png
+|-----> Vector field for umap is but its topography is not mapped. Mapping topography now ...
+|-----------> plotting with basis key=X_umap
+|-----------> skip filtering clusters by stack threshold when stacking color because it is not a numeric type
+Saving figure to ./figure/04_cell_state_dyn_savefig.png...
+Done
+|-----> Estimating the transition probability between cell types...
+|-----> Applying vector field
+
+|-----> [KDTree parameter preparation computation] in progress: 0.0000%|-----> [KDTree computation] completed [0.0662s]
+
+|-----> [iterate groups] in progress: 12.5000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:11,  8.32it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.40it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.39it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.36it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.39it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:11,  8.34it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:11,  8.40it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:10,  8.42it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.42it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.41it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.45it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.49it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.45it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:10,  8.43it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:09,  8.73it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:02<00:09,  8.67it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.60it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.55it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.52it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.51it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.53it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:09,  8.53it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:08,  8.48it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.49it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.48it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.48it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.49it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.45it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:08,  8.42it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:08,  8.42it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:08,  8.45it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.47it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:04<00:07,  8.48it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.44it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  8.45it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.45it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.49it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:07,  8.50it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:07,  8.50it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.54it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:04<00:06,  8.53it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:05<00:06,  8.50it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.45it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.44it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.47it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.49it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.48it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:06,  8.49it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.51it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:06<00:05,  8.50it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.47it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.48it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.46it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.47it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.48it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:05,  8.44it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:04,  8.43it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:06<00:04,  8.48it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:07<00:04,  8.51it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.46it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.44it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.48it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.49it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.50it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:03,  8.52it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.50it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:08<00:03,  8.52it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:08<00:03,  8.50it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.49it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.45it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.48it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.49it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:03,  8.48it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:02,  8.50it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:08<00:02,  8.50it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:09<00:02,  8.49it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.89it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.78it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.70it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.66it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:01,  8.62it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.59it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:09<00:01,  8.60it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:10<00:01,  8.58it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.56it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.53it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.54it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.56it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.53it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.52it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:10<00:00,  8.54it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:11<00:00,  8.54it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.56it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.54it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.49it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.50it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.51it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.52it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.51it/s]
+
+
+|-----> [iterate groups] in progress: 25.0000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:10,  9.68it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.66it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.57it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.47it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.55it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:11,  8.54it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:11,  8.43it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:10,  8.46it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.48it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.39it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.52it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.50it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.56it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:10,  8.60it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:10,  8.50it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:09,  8.74it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:01<00:09,  8.70it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.55it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.57it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.49it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.69it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.61it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:09,  8.47it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:08,  8.52it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.48it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.49it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.51it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.52it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.52it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:07,  8.84it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:07,  8.80it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:07,  8.93it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.83it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:03<00:07,  8.68it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  9.11it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.98it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.83it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:06,  8.76it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:06,  8.61it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.62it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:04<00:06,  8.54it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:04<00:06,  8.54it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.57it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.55it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.56it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.59it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.61it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:05,  8.55it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.44it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:05<00:05,  8.49it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.52it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.43it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.48it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.74it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.57it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:05,  8.57it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:04,  8.60it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:06<00:04,  8.61it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:06<00:04,  8.50it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.52it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.58it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.60it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.63it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.61it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:03,  8.59it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.53it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:07<00:03,  9.03it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.91it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.85it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.71it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.67it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:02,  8.74it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:02,  8.69it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:08<00:02,  8.79it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:08<00:02,  8.63it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.62it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.48it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.34it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.40it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.45it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:02,  8.38it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.42it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:09<00:01,  8.45it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:09<00:01,  8.48it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.49it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.49it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.44it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.50it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.43it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.50it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:10<00:00,  8.55it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:10<00:00,  8.44it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.41it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.34it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.32it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.44it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.51it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.39it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.58it/s]
+
+
+|-----> [iterate groups] in progress: 37.5000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:11,  8.64it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.57it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.59it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.68it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:10,  8.74it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:10,  8.74it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:10,  8.77it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:10,  8.67it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.72it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.67it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.70it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.66it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:09,  8.99it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:09,  8.93it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:09,  8.85it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:09,  8.81it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:01<00:09,  8.73it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.69it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.71it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.76it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.77it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:08,  8.77it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:08,  8.71it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:08,  8.71it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.72it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:02<00:08,  8.77it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.73it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.72it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.73it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:07,  8.76it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:07,  8.75it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:07,  8.74it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.75it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:03<00:07,  8.70it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.74it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  8.76it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:10,  5.79it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:09,  6.44it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:08,  6.97it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:08,  7.44it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:07,  7.77it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:05<00:07,  8.01it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:05<00:07,  8.12it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:07,  7.13it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:07,  7.49it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  7.82it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.04it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.24it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:06,  8.36it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.44it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:06<00:05,  8.46it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.55it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.54it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.52it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.54it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.52it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:05,  8.60it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:04,  8.64it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:07<00:04,  8.68it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:07<00:04,  8.70it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.74it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.74it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.75it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.64it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.66it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:03,  8.64it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.67it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:08<00:03,  8.61it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:08<00:03,  8.65it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.66it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.62it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.67it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.64it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:03,  8.49it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:03,  7.80it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:09<00:02,  8.07it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:09<00:02,  8.26it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.39it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.49it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.52it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.58it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.65it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:01,  8.66it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.64it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:10<00:01,  8.69it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:10<00:01,  8.73it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.77it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.76it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.74it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.73it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.70it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.71it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:10<00:00,  8.73it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:11<00:00,  8.75it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.77it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.77it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.77it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.70it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.65it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.63it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.47it/s]
+
+
+|-----> [iterate groups] in progress: 50.0000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:12,  8.23it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.35it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.53it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.49it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.34it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:11,  8.26it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:11,  8.23it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:11,  8.20it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:11,  8.16it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.22it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.29it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.36it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.28it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:10,  8.23it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:10,  8.24it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:10,  8.16it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:02<00:10,  8.10it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:10,  8.15it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.25it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.27it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.31it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.24it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:09,  8.28it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:09,  8.31it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:03<00:08,  8.38it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.41it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.42it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.44it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.45it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:08,  8.51it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:08,  8.50it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:08,  8.46it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.47it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:04<00:07,  8.47it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.45it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.86it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.74it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:07,  8.66it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:07,  8.56it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.48it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:05<00:06,  8.48it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:05<00:06,  8.47it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.46it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.47it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.46it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.41it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.38it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:06,  8.38it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.34it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:06<00:05,  8.36it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.42it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.40it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.33it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.32it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.27it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:05,  8.25it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:05,  8.19it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:07<00:04,  8.23it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:07<00:04,  8.20it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.26it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.24it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.24it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.26it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.28it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:04,  8.25it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:08<00:03,  8.31it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:08<00:03,  8.36it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:08<00:03,  8.34it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.34it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.32it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.19it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.15it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:03,  8.07it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:03,  8.06it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:09<00:02,  8.12it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:09<00:02,  8.16it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.14it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.17it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.13it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.15it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.10it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:02,  8.06it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:10<00:01,  8.08it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:10<00:01,  8.14it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:10<00:01,  8.17it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.17it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.11it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.13it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.13it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.20it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:11<00:00,  8.23it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:11<00:00,  8.53it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:11<00:00,  8.47it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.50it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.48it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.49it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.46it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.41it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:12<00:00,  8.42it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:12<00:00,  8.32it/s]
+
+
+|-----> [iterate groups] in progress: 62.5000%
+integration with ivp solver:   0%|          | 0/70 [00:00<?, ?it/s]
+integration with ivp solver:   3%|▎         | 2/70 [00:00<00:06, 10.17it/s]
+integration with ivp solver:   6%|▌         | 4/70 [00:00<00:07,  9.17it/s]
+integration with ivp solver:   7%|▋         | 5/70 [00:00<00:07,  8.93it/s]
+integration with ivp solver:  10%|█         | 7/70 [00:00<00:06, 10.08it/s]
+integration with ivp solver:  13%|█▎        | 9/70 [00:00<00:06,  9.45it/s]
+integration with ivp solver:  14%|█▍        | 10/70 [00:01<00:06,  9.24it/s]
+integration with ivp solver:  16%|█▌        | 11/70 [00:01<00:06,  9.10it/s]
+integration with ivp solver:  17%|█▋        | 12/70 [00:01<00:06,  8.98it/s]
+integration with ivp solver:  19%|█▊        | 13/70 [00:01<00:06,  8.88it/s]
+integration with ivp solver:  20%|██        | 14/70 [00:01<00:06,  8.81it/s]
+integration with ivp solver:  21%|██▏       | 15/70 [00:01<00:06,  8.74it/s]
+integration with ivp solver:  23%|██▎       | 16/70 [00:01<00:06,  8.70it/s]
+integration with ivp solver:  24%|██▍       | 17/70 [00:01<00:06,  8.67it/s]
+integration with ivp solver:  26%|██▌       | 18/70 [00:01<00:06,  8.63it/s]
+integration with ivp solver:  27%|██▋       | 19/70 [00:02<00:05,  8.64it/s]
+integration with ivp solver:  29%|██▊       | 20/70 [00:02<00:05,  8.61it/s]
+integration with ivp solver:  30%|███       | 21/70 [00:02<00:05,  8.61it/s]
+integration with ivp solver:  31%|███▏      | 22/70 [00:02<00:05,  8.57it/s]
+integration with ivp solver:  33%|███▎      | 23/70 [00:02<00:05,  8.58it/s]
+integration with ivp solver:  34%|███▍      | 24/70 [00:02<00:05,  8.59it/s]
+integration with ivp solver:  36%|███▌      | 25/70 [00:02<00:05,  8.58it/s]
+integration with ivp solver:  37%|███▋      | 26/70 [00:02<00:05,  8.56it/s]
+integration with ivp solver:  39%|███▊      | 27/70 [00:03<00:05,  8.60it/s]
+integration with ivp solver:  40%|████      | 28/70 [00:03<00:04,  8.85it/s]
+integration with ivp solver:  41%|████▏     | 29/70 [00:03<00:04,  8.74it/s]
+integration with ivp solver:  43%|████▎     | 30/70 [00:03<00:04,  8.68it/s]
+integration with ivp solver:  44%|████▍     | 31/70 [00:03<00:04,  8.65it/s]
+integration with ivp solver:  46%|████▌     | 32/70 [00:03<00:04,  8.64it/s]
+integration with ivp solver:  47%|████▋     | 33/70 [00:03<00:04,  8.63it/s]
+integration with ivp solver:  49%|████▊     | 34/70 [00:03<00:04,  8.62it/s]
+integration with ivp solver:  50%|█████     | 35/70 [00:03<00:04,  8.61it/s]
+integration with ivp solver:  51%|█████▏    | 36/70 [00:04<00:03,  8.60it/s]
+integration with ivp solver:  53%|█████▎    | 37/70 [00:04<00:03,  8.61it/s]
+integration with ivp solver:  54%|█████▍    | 38/70 [00:04<00:03,  8.61it/s]
+integration with ivp solver:  56%|█████▌    | 39/70 [00:04<00:03,  8.56it/s]
+integration with ivp solver:  57%|█████▋    | 40/70 [00:04<00:03,  8.56it/s]
+integration with ivp solver:  59%|█████▊    | 41/70 [00:04<00:03,  8.56it/s]
+integration with ivp solver:  60%|██████    | 42/70 [00:04<00:03,  8.55it/s]
+integration with ivp solver:  61%|██████▏   | 43/70 [00:04<00:03,  8.57it/s]
+integration with ivp solver:  63%|██████▎   | 44/70 [00:05<00:03,  8.56it/s]
+integration with ivp solver:  64%|██████▍   | 45/70 [00:05<00:02,  8.56it/s]
+integration with ivp solver:  66%|██████▌   | 46/70 [00:05<00:02,  8.56it/s]
+integration with ivp solver:  67%|██████▋   | 47/70 [00:05<00:02,  8.58it/s]
+integration with ivp solver:  69%|██████▊   | 48/70 [00:05<00:02,  8.56it/s]
+integration with ivp solver:  70%|███████   | 49/70 [00:05<00:02,  8.57it/s]
+integration with ivp solver:  71%|███████▏  | 50/70 [00:05<00:02,  8.56it/s]
+integration with ivp solver:  73%|███████▎  | 51/70 [00:05<00:02,  8.57it/s]
+integration with ivp solver:  76%|███████▌  | 53/70 [00:06<00:01,  9.26it/s]
+integration with ivp solver:  77%|███████▋  | 54/70 [00:06<00:01,  9.05it/s]
+integration with ivp solver:  79%|███████▊  | 55/70 [00:06<00:01,  8.88it/s]
+integration with ivp solver:  81%|████████▏ | 57/70 [00:06<00:01,  9.50it/s]
+integration with ivp solver:  83%|████████▎ | 58/70 [00:06<00:01,  9.25it/s]
+integration with ivp solver:  84%|████████▍ | 59/70 [00:06<00:01,  9.04it/s]
+integration with ivp solver:  86%|████████▌ | 60/70 [00:06<00:01,  8.92it/s]
+integration with ivp solver:  89%|████████▊ | 62/70 [00:07<00:00,  9.31it/s]
+integration with ivp solver:  90%|█████████ | 63/70 [00:07<00:00,  9.11it/s]
+integration with ivp solver:  91%|█████████▏| 64/70 [00:07<00:00,  8.98it/s]
+integration with ivp solver:  93%|█████████▎| 65/70 [00:07<00:00,  8.89it/s]
+integration with ivp solver:  94%|█████████▍| 66/70 [00:07<00:00,  8.81it/s]
+integration with ivp solver:  96%|█████████▌| 67/70 [00:07<00:00,  8.75it/s]
+integration with ivp solver:  99%|█████████▊| 69/70 [00:07<00:00,  9.49it/s]
+integration with ivp solver: 100%|██████████| 70/70 [00:07<00:00,  9.25it/s]
+integration with ivp solver: 100%|██████████| 70/70 [00:07<00:00,  8.86it/s]
+
+
+|-----> [iterate groups] in progress: 75.0000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:11,  8.37it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:12,  8.09it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:12,  8.04it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.12it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.15it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:11,  8.24it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:11,  8.27it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:11,  8.29it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.32it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.36it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.36it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.40it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.40it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:10,  8.39it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:10,  8.36it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:10,  8.38it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:02<00:09,  8.34it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.31it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.35it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.44it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.45it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.51it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:09,  8.55it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:08,  8.56it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.55it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.59it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.62it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.61it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.60it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:08,  8.58it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:08,  8.55it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:07,  8.57it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.54it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:04<00:07,  8.51it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.55it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  8.54it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.53it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.51it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:07,  8.55it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:07,  8.56it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.54it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:04<00:06,  8.54it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:05<00:06,  8.56it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.60it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.63it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.60it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.65it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.64it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:05,  8.65it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.66it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:06<00:05,  8.64it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.66it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.67it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.66it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.63it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.64it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:04,  8.67it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:04,  8.64it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:06<00:04,  8.66it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:07<00:04,  8.67it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.70it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.69it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.68it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.62it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.64it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:03,  8.65it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.66it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:07<00:03,  8.63it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:08<00:03,  8.61it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.65it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.64it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.64it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.65it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:03,  8.65it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:02,  8.64it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:08<00:02,  8.65it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:09<00:02,  8.66it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.62it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.65it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.68it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.69it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.66it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:01,  8.67it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.67it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:09<00:01,  8.69it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:10<00:01,  8.66it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.67it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.68it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.70it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.64it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.65it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.61it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:10<00:00,  8.61it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:10<00:00,  8.63it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.62it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.61it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.60it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.60it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.60it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.60it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.56it/s]
+
+
+|-----> [iterate groups] in progress: 87.5000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:11,  8.57it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.55it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.61it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.45it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.39it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:11,  8.28it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:10,  8.72it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:10,  8.58it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.47it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.53it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.51it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.52it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.53it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:10,  8.55it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:09,  8.54it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:09,  8.53it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:01<00:09,  8.49it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.44it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.39it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.37it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.48it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.44it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:09,  8.38it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:09,  8.35it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.36it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.31it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.39it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.37it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.39it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:08,  8.36it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:08,  8.35it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:08,  8.44it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.42it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:04<00:07,  8.42it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.35it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  8.35it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.34it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.33it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:07,  8.34it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:07,  8.45it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.55it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:04<00:06,  8.49it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:05<00:06,  8.42it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.42it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.50it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.47it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.42it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.50it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:05,  8.55it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.48it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:06<00:05,  8.42it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.46it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.48it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.45it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.39it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.36it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:05,  8.34it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:05,  8.32it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:06<00:04,  8.41it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:07<00:04,  8.30it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.75it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.63it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.55it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.46it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:04,  8.49it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.43it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:08<00:03,  8.51it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:08<00:03,  8.45it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.49it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.47it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.53it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.54it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:03,  8.46it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:02,  8.50it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:08<00:02,  8.52it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:09<00:02,  8.42it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.48it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.34it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.34it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.33it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.44it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:02,  8.41it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.37it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:10<00:01,  8.44it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:10<00:01,  8.33it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.26it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.29it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.29it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.27it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.30it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.28it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:11<00:00,  8.42it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:11<00:00,  8.35it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:11<00:00,  8.32it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.35it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.64it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.51it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.46it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.53it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.44it/s]
+
+
+|-----> [iterate groups] in progress: 100.0000%
+integration with ivp solver:   0%|          | 0/100 [00:00<?, ?it/s]
+integration with ivp solver:   1%|          | 1/100 [00:00<00:11,  8.59it/s]
+integration with ivp solver:   2%|▏         | 2/100 [00:00<00:11,  8.58it/s]
+integration with ivp solver:   3%|▎         | 3/100 [00:00<00:11,  8.60it/s]
+integration with ivp solver:   4%|▍         | 4/100 [00:00<00:11,  8.59it/s]
+integration with ivp solver:   5%|▌         | 5/100 [00:00<00:11,  8.61it/s]
+integration with ivp solver:   6%|▌         | 6/100 [00:00<00:10,  8.63it/s]
+integration with ivp solver:   7%|▋         | 7/100 [00:00<00:10,  8.70it/s]
+integration with ivp solver:   8%|▊         | 8/100 [00:00<00:10,  8.65it/s]
+integration with ivp solver:   9%|▉         | 9/100 [00:01<00:10,  8.63it/s]
+integration with ivp solver:  10%|█         | 10/100 [00:01<00:10,  8.65it/s]
+integration with ivp solver:  11%|█         | 11/100 [00:01<00:10,  8.64it/s]
+integration with ivp solver:  12%|█▏        | 12/100 [00:01<00:10,  8.65it/s]
+integration with ivp solver:  13%|█▎        | 13/100 [00:01<00:10,  8.63it/s]
+integration with ivp solver:  14%|█▍        | 14/100 [00:01<00:09,  8.63it/s]
+integration with ivp solver:  15%|█▌        | 15/100 [00:01<00:09,  8.61it/s]
+integration with ivp solver:  16%|█▌        | 16/100 [00:01<00:09,  8.62it/s]
+integration with ivp solver:  17%|█▋        | 17/100 [00:01<00:09,  8.59it/s]
+integration with ivp solver:  18%|█▊        | 18/100 [00:02<00:09,  8.63it/s]
+integration with ivp solver:  19%|█▉        | 19/100 [00:02<00:09,  8.64it/s]
+integration with ivp solver:  20%|██        | 20/100 [00:02<00:09,  8.65it/s]
+integration with ivp solver:  21%|██        | 21/100 [00:02<00:09,  8.56it/s]
+integration with ivp solver:  22%|██▏       | 22/100 [00:02<00:09,  8.56it/s]
+integration with ivp solver:  23%|██▎       | 23/100 [00:02<00:08,  8.58it/s]
+integration with ivp solver:  24%|██▍       | 24/100 [00:02<00:08,  8.59it/s]
+integration with ivp solver:  25%|██▌       | 25/100 [00:02<00:08,  8.60it/s]
+integration with ivp solver:  26%|██▌       | 26/100 [00:03<00:08,  8.60it/s]
+integration with ivp solver:  27%|██▋       | 27/100 [00:03<00:08,  8.65it/s]
+integration with ivp solver:  28%|██▊       | 28/100 [00:03<00:08,  8.67it/s]
+integration with ivp solver:  29%|██▉       | 29/100 [00:03<00:08,  8.68it/s]
+integration with ivp solver:  30%|███       | 30/100 [00:03<00:08,  8.66it/s]
+integration with ivp solver:  31%|███       | 31/100 [00:03<00:07,  8.67it/s]
+integration with ivp solver:  32%|███▏      | 32/100 [00:03<00:07,  8.64it/s]
+integration with ivp solver:  33%|███▎      | 33/100 [00:03<00:07,  8.66it/s]
+integration with ivp solver:  34%|███▍      | 34/100 [00:03<00:07,  8.65it/s]
+integration with ivp solver:  35%|███▌      | 35/100 [00:04<00:07,  8.66it/s]
+integration with ivp solver:  36%|███▌      | 36/100 [00:04<00:07,  8.61it/s]
+integration with ivp solver:  37%|███▋      | 37/100 [00:04<00:07,  8.61it/s]
+integration with ivp solver:  38%|███▊      | 38/100 [00:04<00:07,  8.58it/s]
+integration with ivp solver:  39%|███▉      | 39/100 [00:04<00:07,  8.57it/s]
+integration with ivp solver:  40%|████      | 40/100 [00:04<00:07,  8.55it/s]
+integration with ivp solver:  41%|████      | 41/100 [00:04<00:06,  8.59it/s]
+integration with ivp solver:  42%|████▏     | 42/100 [00:04<00:06,  8.61it/s]
+integration with ivp solver:  43%|████▎     | 43/100 [00:04<00:06,  8.61it/s]
+integration with ivp solver:  44%|████▍     | 44/100 [00:05<00:06,  8.63it/s]
+integration with ivp solver:  45%|████▌     | 45/100 [00:05<00:06,  8.64it/s]
+integration with ivp solver:  46%|████▌     | 46/100 [00:05<00:06,  8.65it/s]
+integration with ivp solver:  47%|████▋     | 47/100 [00:05<00:06,  8.64it/s]
+integration with ivp solver:  48%|████▊     | 48/100 [00:05<00:06,  8.61it/s]
+integration with ivp solver:  49%|████▉     | 49/100 [00:05<00:05,  8.64it/s]
+integration with ivp solver:  50%|█████     | 50/100 [00:05<00:05,  8.62it/s]
+integration with ivp solver:  51%|█████     | 51/100 [00:05<00:05,  8.58it/s]
+integration with ivp solver:  52%|█████▏    | 52/100 [00:06<00:05,  8.60it/s]
+integration with ivp solver:  53%|█████▎    | 53/100 [00:06<00:05,  8.64it/s]
+integration with ivp solver:  54%|█████▍    | 54/100 [00:06<00:05,  8.60it/s]
+integration with ivp solver:  55%|█████▌    | 55/100 [00:06<00:05,  8.60it/s]
+integration with ivp solver:  56%|█████▌    | 56/100 [00:06<00:05,  8.57it/s]
+integration with ivp solver:  57%|█████▋    | 57/100 [00:06<00:04,  8.62it/s]
+integration with ivp solver:  58%|█████▊    | 58/100 [00:06<00:04,  8.63it/s]
+integration with ivp solver:  59%|█████▉    | 59/100 [00:06<00:04,  8.60it/s]
+integration with ivp solver:  60%|██████    | 60/100 [00:06<00:04,  8.57it/s]
+integration with ivp solver:  61%|██████    | 61/100 [00:07<00:04,  8.60it/s]
+integration with ivp solver:  62%|██████▏   | 62/100 [00:07<00:04,  8.62it/s]
+integration with ivp solver:  63%|██████▎   | 63/100 [00:07<00:04,  8.62it/s]
+integration with ivp solver:  64%|██████▍   | 64/100 [00:07<00:04,  8.76it/s]
+integration with ivp solver:  65%|██████▌   | 65/100 [00:07<00:04,  8.66it/s]
+integration with ivp solver:  66%|██████▌   | 66/100 [00:07<00:03,  8.91it/s]
+integration with ivp solver:  67%|██████▋   | 67/100 [00:07<00:03,  8.82it/s]
+integration with ivp solver:  68%|██████▊   | 68/100 [00:07<00:03,  8.79it/s]
+integration with ivp solver:  69%|██████▉   | 69/100 [00:07<00:03,  8.72it/s]
+integration with ivp solver:  70%|███████   | 70/100 [00:08<00:03,  8.71it/s]
+integration with ivp solver:  71%|███████   | 71/100 [00:08<00:03,  8.70it/s]
+integration with ivp solver:  72%|███████▏  | 72/100 [00:08<00:03,  8.67it/s]
+integration with ivp solver:  73%|███████▎  | 73/100 [00:08<00:03,  8.89it/s]
+integration with ivp solver:  74%|███████▍  | 74/100 [00:08<00:02,  8.82it/s]
+integration with ivp solver:  75%|███████▌  | 75/100 [00:08<00:02,  8.78it/s]
+integration with ivp solver:  76%|███████▌  | 76/100 [00:08<00:02,  8.76it/s]
+integration with ivp solver:  77%|███████▋  | 77/100 [00:08<00:02,  8.73it/s]
+integration with ivp solver:  78%|███████▊  | 78/100 [00:09<00:02,  8.68it/s]
+integration with ivp solver:  79%|███████▉  | 79/100 [00:09<00:02,  8.96it/s]
+integration with ivp solver:  80%|████████  | 80/100 [00:09<00:02,  8.84it/s]
+integration with ivp solver:  81%|████████  | 81/100 [00:09<00:02,  8.78it/s]
+integration with ivp solver:  82%|████████▏ | 82/100 [00:09<00:02,  8.72it/s]
+integration with ivp solver:  83%|████████▎ | 83/100 [00:09<00:01,  8.81it/s]
+integration with ivp solver:  84%|████████▍ | 84/100 [00:09<00:01,  8.77it/s]
+integration with ivp solver:  85%|████████▌ | 85/100 [00:09<00:01,  8.75it/s]
+integration with ivp solver:  86%|████████▌ | 86/100 [00:09<00:01,  8.66it/s]
+integration with ivp solver:  87%|████████▋ | 87/100 [00:10<00:01,  8.66it/s]
+integration with ivp solver:  88%|████████▊ | 88/100 [00:10<00:01,  8.68it/s]
+integration with ivp solver:  89%|████████▉ | 89/100 [00:10<00:01,  8.68it/s]
+integration with ivp solver:  90%|█████████ | 90/100 [00:10<00:01,  8.65it/s]
+integration with ivp solver:  91%|█████████ | 91/100 [00:10<00:01,  8.63it/s]
+integration with ivp solver:  92%|█████████▏| 92/100 [00:10<00:00,  8.66it/s]
+integration with ivp solver:  93%|█████████▎| 93/100 [00:10<00:00,  8.66it/s]
+integration with ivp solver:  94%|█████████▍| 94/100 [00:10<00:00,  8.65it/s]
+integration with ivp solver:  95%|█████████▌| 95/100 [00:10<00:00,  8.65it/s]
+integration with ivp solver:  96%|█████████▌| 96/100 [00:11<00:00,  8.64it/s]
+integration with ivp solver:  97%|█████████▋| 97/100 [00:11<00:00,  8.62it/s]
+integration with ivp solver:  98%|█████████▊| 98/100 [00:11<00:00,  8.65it/s]
+integration with ivp solver:  99%|█████████▉| 99/100 [00:11<00:00,  8.63it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.57it/s]
+integration with ivp solver: 100%|██████████| 100/100 [00:11<00:00,  8.66it/s]
+
+|-----> [iterate groups] completed [122.8303s]
+|-----> [State graph estimation] completed [0.0002s]
+|-----------> plotting with basis key=X_umap
+|-----------> skip filtering clusters by stack threshold when stacking color because it is not a numeric type
+Saving figure to ./figure/05_cell_state_transition_map_dyn_savefig.png...
+Done
+
+Transforming subset Jacobian:   0%|          | 0/3696 [00:00<?, ?it/s]
+Transforming subset Jacobian:  80%|███████▉  | 2941/3696 [00:00<00:00, 29406.38it/s]
+Transforming subset Jacobian: 100%|██████████| 3696/3696 [00:00<00:00, 29428.01it/s]
+Saving figure to ./figure/06_reg_Ngn3_activate_Pax4_dyn_savefig.png...
+Done
+[harness] wrote figure/inline_cell23_auto_01.png
+[harness] wrote figure/inline_cell23_auto_02.png
+[harness] wrote figure/inline_cell24_auto_01.png
+
+|-----> [Calculating acceleration] in progress: 1.0011%
+|-----> [Calculating acceleration] in progress: 2.0022%
+|-----> [Calculating acceleration] in progress: 3.0032%
+|-----> [Calculating acceleration] in progress: 4.0043%
+|-----> [Calculating acceleration] in progress: 5.0054%
+|-----> [Calculating acceleration] in progress: 6.0065%
+|-----> [Calculating acceleration] in progress: 7.0076%
+|-----> [Calculating acceleration] in progress: 8.0087%
+|-----> [Calculating acceleration] in progress: 9.0097%
+|-----> [Calculating acceleration] in progress: 10.0108%
+|-----> [Calculating acceleration] in progress: 11.0119%
+|-----> [Calculating acceleration] in progress: 12.0130%
+|-----> [Calculating acceleration] in progress: 13.0141%
+|-----> [Calculating acceleration] in progress: 14.0152%
+|-----> [Calculating acceleration] in progress: 15.0162%
+|-----> [Calculating acceleration] in progress: 16.0173%
+|-----> [Calculating acceleration] in progress: 17.0184%
+|-----> [Calculating acceleration] in progress: 18.0195%
+|-----> [Calculating acceleration] in progress: 19.0206%
+|-----> [Calculating acceleration] in progress: 20.0216%
+|-----> [Calculating acceleration] in progress: 21.0227%
+|-----> [Calculating acceleration] in progress: 22.0238%
+|-----> [Calculating acceleration] in progress: 23.0249%
+|-----> [Calculating acceleration] in progress: 24.0260%
+|-----> [Calculating acceleration] in progress: 25.0271%
+|-----> [Calculating acceleration] in progress: 26.0281%
+|-----> [Calculating acceleration] in progress: 27.0292%
+|-----> [Calculating acceleration] in progress: 28.0303%
+|-----> [Calculating acceleration] in progress: 29.0314%
+|-----> [Calculating acceleration] in progress: 30.0325%
+|-----> [Calculating acceleration] in progress: 31.0335%
+|-----> [Calculating acceleration] in progress: 32.0346%
+|-----> [Calculating acceleration] in progress: 33.0357%
+|-----> [Calculating acceleration] in progress: 34.0368%
+|-----> [Calculating acceleration] in progress: 35.0379%
+|-----> [Calculating acceleration] in progress: 36.0390%
+|-----> [Calculating acceleration] in progress: 37.0400%
+|-----> [Calculating acceleration] in progress: 38.0411%
+|-----> [Calculating acceleration] in progress: 39.0422%
+|-----> [Calculating acceleration] in progress: 40.0433%
+|-----> [Calculating acceleration] in progress: 41.0444%
+|-----> [Calculating acceleration] in progress: 42.0455%
+|-----> [Calculating acceleration] in progress: 43.0465%
+|-----> [Calculating acceleration] in progress: 44.0476%
+|-----> [Calculating acceleration] in progress: 45.0487%
+|-----> [Calculating acceleration] in progress: 46.0498%
+|-----> [Calculating acceleration] in progress: 47.0509%
+|-----> [Calculating acceleration] in progress: 48.0519%
+|-----> [Calculating acceleration] in progress: 49.0530%
+|-----> [Calculating acceleration] in progress: 50.0541%
+|-----> [Calculating acceleration] in progress: 51.0552%
+|-----> [Calculating acceleration] in progress: 52.0563%
+|-----> [Calculating acceleration] in progress: 53.0574%
+|-----> [Calculating acceleration] in progress: 54.0584%
+|-----> [Calculating acceleration] in progress: 55.0595%
+|-----> [Calculating acceleration] in progress: 56.0606%
+|-----> [Calculating acceleration] in progress: 57.0617%
+|-----> [Calculating acceleration] in progress: 58.0628%
+|-----> [Calculating acceleration] in progress: 59.0639%
+|-----> [Calculating acceleration] in progress: 60.0649%
+|-----> [Calculating acceleration] in progress: 61.0660%
+|-----> [Calculating acceleration] in progress: 62.0671%
+|-----> [Calculating acceleration] in progress: 63.0682%
+|-----> [Calculating acceleration] in progress: 64.0693%
+|-----> [Calculating acceleration] in progress: 65.0703%
+|-----> [Calculating acceleration] in progress: 66.0714%
+|-----> [Calculating acceleration] in progress: 67.0725%
+|-----> [Calculating acceleration] in progress: 68.0736%
+|-----> [Calculating acceleration] in progress: 69.0747%
+|-----> [Calculating acceleration] in progress: 70.0758%
+|-----> [Calculating acceleration] in progress: 71.0768%
+|-----> [Calculating acceleration] in progress: 72.0779%
+|-----> [Calculating acceleration] in progress: 73.0790%
+|-----> [Calculating acceleration] in progress: 74.0801%
+|-----> [Calculating acceleration] in progress: 75.0812%
+|-----> [Calculating acceleration] in progress: 76.0823%
+|-----> [Calculating acceleration] in progress: 77.0833%
+|-----> [Calculating acceleration] in progress: 78.0844%
+|-----> [Calculating acceleration] in progress: 79.0855%
+|-----> [Calculating acceleration] in progress: 80.0866%
+|-----> [Calculating acceleration] in progress: 81.0877%
+|-----> [Calculating acceleration] in progress: 82.0887%
+|-----> [Calculating acceleration] in progress: 83.0898%
+|-----> [Calculating acceleration] in progress: 84.0909%
+|-----> [Calculating acceleration] in progress: 85.0920%
+|-----> [Calculating acceleration] in progress: 86.0931%
+|-----> [Calculating acceleration] in progress: 87.0942%
+|-----> [Calculating acceleration] in progress: 88.0952%
+|-----> [Calculating acceleration] in progress: 89.0963%
+|-----> [Calculating acceleration] in progress: 90.0974%
+|-----> [Calculating acceleration] in progress: 91.0985%
+|-----> [Calculating acceleration] in progress: 92.0996%
+|-----> [Calculating acceleration] in progress: 93.1006%
+|-----> [Calculating acceleration] in progress: 94.1017%
+|-----> [Calculating acceleration] in progress: 95.1028%
+|-----> [Calculating acceleration] in progress: 96.1039%
+|-----> [Calculating acceleration] in progress: 97.1050%
+|-----> [Calculating acceleration] in progress: 98.1061%
+|-----> [Calculating acceleration] in progress: 99.1071%
+|-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.0839s]
+/gpfs1/home/bjx131_pkuhpc/dynamo_run_20261109
+[harness] wrote figure/inline_cell32_auto_01.png
+[harness] wrote figure/inline_cell32_auto_02.png
+### Session Info ###
+
+IPython         v8.29.0
+anndata         v0.10.9
+asttokens       v2.4.1
+certifi         v2024.8.30
+cffi            v1.17.1
+charset_normalizer v3.4.0
+colorama        v0.4.6
+colorcet        v3.1.0
+cycler          v0.12.1
+decorator       v5.1.1
+executing       v2.1.0
+fontTools       v4.54.1
+gseapy          v1.1.3
+h5py            v3.12.1
+idna            v3.10
+igraph          v0.11.6
+jedi            v0.19.1
+joblib          v1.4.2
+kiwisolver      v1.4.7
+legacy_api_wrap v1.4
+llvmlite        v0.43.0
+louvain         v0.8.0
+matplotlib      v3.7.3
+matplotlib_inline v0.1.7
+more_itertools  v10.5.0
+natsort         v8.4.0
+networkx        v3.4
+numba           v0.60.0
+numdifftools    v0.9.41
+numpy           v1.23.5
+packaging       v24.1
+pandas          v2.2.3
+parso           v0.8.4
+patsy           v0.5.6
+pickleshare     v0.7.5
+platformdirs    v4.3.6
+prompt_toolkit  v3.0.48
+psutil          v6.1.0
+pure_eval       v0.2.3
+pycparser       v2.22
+pygments        v2.18.0
+pynndescent     v0.5.13
+pyparsing       v3.2.0
+pytz            v2024.1
+requests        v2.32.3
+scanpy          v1.10.3
+scipy           v1.13.1
+seaborn         v0.13.2
+six             v1.16.0
+stack_data      v0.6.2
+statsmodels     v0.14.4
+texttable       v1.7.0
+threadpoolctl   v3.5.0
+tqdm            v4.66.6
+traitlets       v5.14.3
+typing_extensions v4.12.2
+urllib3         v2.2.3
+wcwidth         v0.2.13
+[harness] inline figures captured: 6
+[harness]   inline_cell18_auto_01.png
+[harness]   inline_cell23_auto_01.png
+[harness]   inline_cell23_auto_02.png
+[harness]   inline_cell24_auto_01.png
+[harness]   inline_cell32_auto_01.png
+[harness]   inline_cell32_auto_02.png

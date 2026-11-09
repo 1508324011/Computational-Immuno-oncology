@@ -1,0 +1,6 @@
+what	value
+pairwise_distance_spearman	0.9393
+mean_displacement	9.7416
+umap_spread	5.1134
+displacement_over_spread	1.9051
+n_cells_sampled	600.0

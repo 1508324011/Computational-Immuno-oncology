@@ -1,0 +1,8 @@
+quantity	value
+n_cells	916.0
+mean_speed_pca	0.1506396368455117
+mean_divergence_pca	-0.014016256674858348
+mean_acceleration_pca	0.006113765292635307
+mean_curl_umap	-0.06621152230839678
+mean_ddhodge_potential	0.21281418229830873
+mean_speed_pca_other_cells	0.20512010538724243

@@ -1,0 +1,9 @@
+cluster	top20_accelerating_genes
+Alpha	Ghrl, Cck, Mdk, Serpina1c, Maged2, Rbp4, Cd63, Igfbpl1, Fxyd3, Calr, Ccnd2, Arg1, Emb, Anpep, Bsg, Ins1, Hspa5, Pdia6, Ctsl, Bex2
+Beta	Ins1, Ins2, Xist, Krt8, Gpx3, Krt7, Nnat, Krt18, Tm4sf4, Chga, Hspa5, Cpa2, Pdia3, Pdia4, Ctrb1, Guk1, Dnajc3, Cct5, Arhgap36, Lurap1l
+Delta	Cck, Ins1, Cdkn1a, Krt7, Ins2, Krt8, Mdk, Tm4sf4, Rgs17, BC023829, Glud1, Hnrnpa1, Tox3, Runx1t1, Btg2, Neurog3, Btbd17, Pax4, Serpina1c, Emb
+Ductal	Hmgb2, Hist1h2bc, Ccnb2, Cdc20, Dynll1, Birc5, Cks2, Ccnb1, Cenpf, Hn1, Cdca8, Arl6ip1, Tuba1c, Ptms, Hmgb1, Calm2, Tpx2, Hmgn2, Cenpe, Lockd
+Epsilon	Tmsb4x, Gcg, Nkx6-1, Rps19, Tmsb10, Rps12, Ypel3, Rps20, Iapp, Rps4x, Rpl39, Rpl35, Rpl17, Rps9, Rps17, Rps15a, Rpl32, Rpl18a, Rps5, Hadh
+Ngn3 high EP	Chga, Chgb, Tm4sf4, Akr1c19, Cryba2, Cpe, Hmgn3, Pcsk1n, Cystm1, Glud1, Spp1, Krt18, Peg3, Rap1b, Pax6, Emb, Fam183b, Grb10, Gch1, Atp1b1
+Ngn3 low EP	Neurog3, Tmsb4x, Btbd17, Mdk, Btg2, Ppp1r14a, Lrpap1, Pkm, Syt13, Smarcd2, Hn1, Cdc14b, Hist1h2bc, Cbfa2t3, Tpst2, Marcks, Gtf2a2, Aldh1b1, Selm, Gfra3
+Pre-endocrine	Tmsb4x, Pyy, Iapp, Calr, Ppp1r14a, Btbd17, Lrpap1, Ttc28, Hspa5, S100a11, Clu, Cdc14b, Cotl1, Pdia6, Ranbp1, Nnat, Ifitm2, Sult2b1, Selm, Tmem27
