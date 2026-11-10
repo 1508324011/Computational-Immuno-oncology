@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.11" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CellphoneDB 分析结果导读</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CellphoneDB 分析结果导读</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#cellphonedb-分析结果导读" id="toc-cellphonedb-分析结果导读">CellphoneDB 分析结果导读</a>
+<ul>
+<li><a href="#怎么读这个目录" id="toc-怎么读这个目录">1.
+怎么读这个目录</a></li>
+<li><a href="#input数据侧的全部事实" id="toc-input数据侧的全部事实">2.
+01_input：数据侧的全部事实</a></li>
+<li><a href="#simple不算统计的那四张表" id="toc-simple不算统计的那四张表">3.
+02_simple：不算统计的那四张表</a></li>
+<li><a href="#statistical1000-次置换之后的-8-张表" id="toc-statistical1000-次置换之后的-8-张表">4. 03_statistical：1000
+次置换之后的 8 张表</a></li>
+<li><a href="#figures教程画出来的三张图" id="toc-figures教程画出来的三张图">5.
+04_figures：教程画出来的三张图</a></li>
+<li><a href="#corrected矫正链新增了什么" id="toc-corrected矫正链新增了什么">6.
+05_corrected：矫正链新增了什么</a></li>
+<li><a href="#figure_comparison与教师参考图对拍" id="toc-figure_comparison与教师参考图对拍">7.
+06_figure_comparison：与教师参考图对拍</a></li>
+<li><a href="#degs教程关掉的那一支" id="toc-degs教程关掉的那一支">8.
+07_degs：教程关掉的那一支</a></li>
+<li><a href="#run_logs-与-scripts" id="toc-run_logs-与-scripts">9.
+09_run_logs 与 scripts</a></li>
+<li><a href="#一句话记住这一讲" id="toc-一句话记住这一讲">10.
+一句话记住这一讲</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="cellphonedb-分析结果导读">CellphoneDB 分析结果导读</h1>
+<p>本文件导读 <code>scRNA-seq-cellchat/results/</code>
+下的全部产物，并给出可以亲手复现的练习。 配套的矫正增强版文档在
+<code>ref/scRNAseq_cellphonedb_corrected.md</code>（英文）与
+<code>ref/scRNAseq_cellphonedb_corrected_zh.md</code>（中文）；教材原件的
+cell 抽取结果在
+<code>results/scripts/cellchat_cells_aswritten.py</code>。</p>
+<h2 id="怎么读这个目录">1. 怎么读这个目录</h2>
+<pre><code>results/
+├── 01_input/               数据侧事实：细胞计数、微环境、9x9 矩阵、每对/每互作汇总、
+│                           四张统计表的行序审计
+├── 02_simple/              cpdb_analysis_method 的 4 张表（不算统计）
+├── 03_statistical/         cpdb_statistical_analysis_method 的 8 张表（1000 次置换）
+├── 04_figures/             教程自己画出来的 3 张图（热图 + 2 张点图）
+├── 05_corrected/           矫正链：24 列 vs 36 列面板、x 轴对数、检索结果、阈值扫描表
+├── 06_figure_comparison/   与两套教师参考图的机器可读对拍表
+├── 07_degs/                DEG 分支：8 张表 + 2 张点图 + 输入 DEG 表
+├── 09_run_logs/            每条执行线的完整控制台、确定性核对、session info
+└── scripts/                重新生成以上全部内容的脚本</code></pre>
+<p>约定：</p>
+<ul>
+<li><code>02_</code>–<code>04_</code>
+是<strong>原样跑</strong>（<code>cellchat_cells_aswritten.py</code>）的产物，文件名沿用
+CellphoneDB 写盘时的 <code>statistical_analysis_*.txt</code>
+原名，只去掉了时间戳后缀，因此 <code>03_statistical/means.tsv</code>
+就是那次调用的
+<code>statistical_analysis_means_&lt;时间戳&gt;.txt</code>。</li>
+<li><code>05_</code>–<code>07_</code> 是矫正/取证/DEG
+三线的产物，<strong>不与原样跑混放</strong>，因为它们的口径不同（C1
+改了拼写、 C2 换了线程、C10 换了判据）。</li>
+<li>一切表都是 <strong>tab 分隔</strong>，带表头，第一列是
+<code>id_cp_interaction</code>（<code>deconvoluted*</code> 是
+<code>id_cp_interaction</code> + <code>gene_name</code>），可直接
+<code>pd.read_csv(..., sep=&#39;\t&#39;)</code>。</li>
+<li>教程给的”417 个显著互作”在
+<code>03_statistical/significant_means.tsv</code> 里体现为 4248 个非 NaN
+格； 数”行”会得到 2440，数”列”会得到 95——<strong>都对，但都不是
+417</strong>。</li>
+</ul>
+<h2 id="input数据侧的全部事实">2. 01_input：数据侧的全部事实</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>内容</th>
+<th>怎么用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cell_type_counts.tsv</code></td>
+<td>42 个标注的细胞数（<code>dS2</code> 588 … <code>eEVT</code>
+28）</td>
+<td>看清”矩阵里 42 个类型”这一事实</td>
+</tr>
+<tr>
+<td><code>microenvironments.tsv</code></td>
+<td>9 个类型 → 微环境的对应</td>
+<td>与上一行对照，就是 §2.6 的 33 个被丢弃类型</td>
+</tr>
+<tr>
+<td><code>sig_matrix_9x9.tsv</code></td>
+<td>81 个有序对的显著互作数（行和 411–565，列和 230–783）</td>
+<td>本文 §4.1 的全部内容</td>
+</tr>
+<tr>
+<td><code>sig_per_cell_pair.tsv</code></td>
+<td>每对的显著互作数（降序）</td>
+<td>排序与矩阵行和一致，用于核对</td>
+</tr>
+<tr>
+<td><code>sig_top_interactions.tsv</code></td>
+<td>每互作的显著对数（前 200）</td>
+<td>§4.2 的榜单，<strong>必须按 id 合并生成</strong>（见下）</td>
+</tr>
+<tr>
+<td><code>table_row_order.tsv</code></td>
+<td>四张统计表”同行是否同 id”的比例</td>
+<td>CPB-19 的证据：<code>significant_means</code> 只有 0.0004</td>
+</tr>
+</tbody>
+</table>
+<p><code>table_row_order.tsv</code> 是这一讲最该先看的文件。它说明
+<code>pvalues</code> / <code>means</code> /
+<code>interaction_scores</code> 三张表 行序一致（比例 1.000），而
+<code>significant_means</code>
+与它们<strong>完全不同</strong>（0.0004）。于是</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 错：按位置对齐，结果看起来像样</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> sm[PAIR_COLS].notna().<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> pd.DataFrame({<span class="st">&#39;interaction&#39;</span>: means[<span class="st">&#39;interacting_pair&#39;</span>], <span class="st">&#39;n&#39;</span>: n})   <span class="co"># 名字与计数错位</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 对：按 id 合并</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> sm[[<span class="st">&#39;id_cp_interaction&#39;</span>]].assign(n<span class="op">=</span>n).merge(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        means[[<span class="st">&#39;id_cp_interaction&#39;</span>, <span class="st">&#39;interacting_pair&#39;</span>]], on<span class="op">=</span><span class="st">&#39;id_cp_interaction&#39;</span>)</span></code></pre></div>
+<p>我的第一版 Top 表就踩了这个坑：把
+<code>COL4A1_integrin_a1b1_complex</code> 的 76 挂到了
+<code>IAPP_AMY3_receptor</code> 头上（后者真实值是
+0）。<code>scripts/evidence_recheck_order.py</code> 是修正版，
+<code>09_run_logs/evidence_log.txt</code> 里有当时的运行记录。</p>
+<h2 id="simple不算统计的那四张表">3. 02_simple：不算统计的那四张表</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>形状</th>
+<th>读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>means_result.tsv</code></td>
+<td>2440 × 94</td>
+<td>13 列元信息 + 81 对；<strong>NaN = 没过 10 % 掩码</strong></td>
+</tr>
+<tr>
+<td><code>deconvoluted.tsv</code></td>
+<td>6825 × 49</td>
+<td>长表：一（互作，基因）一行，复合物占多行</td>
+</tr>
+<tr>
+<td><code>deconvoluted_percents.tsv</code></td>
+<td>6825 × 49</td>
+<td>该基因在该簇的表达细胞比例</td>
+</tr>
+<tr>
+<td><code>interaction_scores.tsv</code></td>
+<td>2440 × 94</td>
+<td>参与者表达乘积打分，点图的透明度来源</td>
+</tr>
+</tbody>
+</table>
+<p>练习：在 <code>deconvoluted_percents</code> 里查
+<code>IAPP</code>、<code>AMY3</code>、<code>PTPRS</code> 三行，你会看到
+<code>IAPP</code> 只在 eEVT 有 7 % 细胞表达、其余簇 0 %；而
+<code>PTPRS</code> 在 iEVT 54 %、GC 58 %、eEVT 57 %。
+这解释了为什么”胰腺激素”类互作在这份蜕膜数据里能”显著”（0
+对）或不能——<strong>掩码是逐基因的</strong>。</p>
+<h2 id="statistical1000-次置换之后的-8-张表">4. 03_statistical：1000
+次置换之后的 8 张表</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>形状</th>
+<th>关键事实</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>means.tsv</code></td>
+<td>2440 × 94</td>
+<td>与 <code>02_simple/means_result.tsv</code> 同内容</td>
+</tr>
+<tr>
+<td><code>pvalues.tsv</code></td>
+<td>2440 × 94</td>
+<td><strong>96 % 的格是 1.0</strong>（= 没测）；最小非零 p 是 0.004</td>
+</tr>
+<tr>
+<td><code>significant_means.tsv</code></td>
+<td>2440 × 95</td>
+<td>4248 个非 NaN 格；行序与其他表不同（CPB-19）</td>
+</tr>
+<tr>
+<td><code>deconvoluted.tsv</code> / <code>_percents.tsv</code></td>
+<td>6825 × 49</td>
+<td>长表重算</td>
+</tr>
+<tr>
+<td><code>interaction_scores.tsv</code></td>
+<td>2440 × 94</td>
+<td></td>
+</tr>
+<tr>
+<td><code>CellSign_active_interactions.tsv</code></td>
+<td>6 × 95</td>
+<td>6
+个互作：BTC_EGFR、LGALS3_MERTK、DLK1/JAG1/JAG2_NOTCH3、EPO_EPOR</td>
+</tr>
+<tr>
+<td><code>CellSign_active_interactions_deconvoluted.tsv</code></td>
+<td>28 × 9</td>
+<td>长表形式</td>
+</tr>
+</tbody>
+</table>
+<p>练习（三分钟，能改写你对这一讲的理解）：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pv <span class="op">=</span> pd.read_csv(<span class="st">&#39;03_statistical/pvalues.tsv&#39;</span>, sep<span class="op">=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>P  <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> pv.columns <span class="cf">if</span> <span class="st">&#39;|&#39;</span> <span class="kw">in</span> c]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>v  <span class="op">=</span> pv[P].values.ravel()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((v <span class="op">==</span> <span class="dv">1</span>).mean())        <span class="co"># 0.96 -&gt; 96% 没测</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((v <span class="op">==</span> <span class="dv">0</span>).<span class="bu">sum</span>())         <span class="co"># 2946 -&gt; 被截断在 1/1000</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((v <span class="op">&lt;=</span> <span class="fl">0.05</span>).<span class="bu">sum</span>())      <span class="co"># 4248 -&gt; 教程的&quot;显著&quot;</span></span></code></pre></div>
+<h2 id="figures教程画出来的三张图">5.
+04_figures：教程画出来的三张图</h2>
+<ul>
+<li><code>inline_cell30_auto_01.png</code> —
+<code>plot_cpdb_heatmap</code> 的 “Sum of significant interactions”，
+实为 81 列 p 值表在 0.05 下的<strong>行和</strong>（9
+个数），丢掉了方向。</li>
+<li><code>inline_cell31_gg.png</code> — 两基因点图，<strong>24
+列</strong>：<code>&quot;PV MMPP11&quot;</code> 拼错被静默丢弃（CPB-04）。</li>
+<li><code>inline_cell32_gg.png</code> — 同一张点图按
+<code>classification</code> 分面。</li>
+</ul>
+<p>三张图对 2026 教师重跑的对拍是 r = 0.999 / 0.997 / 0.999，墨迹 IoU
+0.987 / 0.899 / 0.937（见第 7 节）。</p>
+<h2 id="corrected矫正链新增了什么">6.
+05_corrected：矫正链新增了什么</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>文件</th>
+<th>是什么</th>
+<th>一句话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>31_PV_trophoblast_aswritten_typo.png</code></td>
+<td>原样（拼错）面板</td>
+<td><strong>24 列</strong></td>
+</tr>
+<tr>
+<td><code>31_PV_trophoblast_corrected.png</code></td>
+<td>C1 矫正面板</td>
+<td><strong>36 列</strong>，第三个 PV 类型回来了</td>
+</tr>
+<tr>
+<td><code>31_xaxis_pairs_*.tsv</code></td>
+<td>两张面板的 x 轴对数</td>
+<td>24 vs 36，可机器核</td>
+</tr>
+<tr>
+<td><code>search_results.tsv</code></td>
+<td>第 28 格检索的 58 行</td>
+<td>全是 TGF-β；<code>CSF1_CSF1R</code> 被分类过滤删掉（CPB-12）</td>
+</tr>
+<tr>
+<td><code>threshold_sensitivity.tsv</code></td>
+<td>0.05 / 0.10 / 0.20 三档</td>
+<td>7007/708、4251/417、2413/218</td>
+</tr>
+<tr>
+<td><code>table_stat_significant_means.tsv</code></td>
+<td>单线程参考运行的显著表</td>
+<td>md5 <code>fcf4c9dc…</code>，与第二次单线程跑逐字节相同</td>
+</tr>
+</tbody>
+</table>
+<p>注意 <code>search_results.tsv</code>
+的行数（58）<strong>不是</strong>”检索到 58 个显著互作”：它是 5 个互作 ×
+若干细胞对的 长表。要数互作用有多少个，得 <code>nunique</code>。</p>
+<h2 id="figure_comparison与教师参考图对拍">7.
+06_figure_comparison：与教师参考图对拍</h2>
+<p><code>results_figcmp.tsv</code> 每行一张图，两套参考集各一列组：</p>
+<table>
+<thead>
+<tr>
+<th>图</th>
+<th>vs 2026 重跑 (r / IoU)</th>
+<th>vs 2025 HTML (r / IoU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第 30 格热图</td>
+<td>0.999 / 0.987</td>
+<td>0.999 / 0.979</td>
+</tr>
+<tr>
+<td>第 31 格点图</td>
+<td>0.997 / 0.899</td>
+<td>0.882 / 0.521</td>
+</tr>
+<tr>
+<td>第 32 格分面图</td>
+<td>0.999 / 0.937</td>
+<td>0.861 / 0.462</td>
+</tr>
+<tr>
+<td>C1 矫正面板</td>
+<td>0.977 / 0.835</td>
+<td>0.880 / 0.545</td>
+</tr>
+</tbody>
+</table>
+<p>2025 HTML 一列的 IoU
+偏低不是”图画错了”，而是<strong>渲染不同</strong>：内嵌图的包围盒与 dpi
+与我们不同 （2200×800 vs 2160×760；2600×1800 vs 2552×1751）。表里另有
+<code>*_wh</code>、<code>*_aspect_ratio</code> 两列可自行核对。 把 IoU
+当”相似度”读会误判；它是”渲染相似度”。</p>
+<h2 id="degs教程关掉的那一支">8. 07_degs：教程关掉的那一支</h2>
+<p><code>degs_summary.tsv</code> 是总表，<code>degs_A_asis_*.tsv</code>
+是 8 张标准表，<code>A_asis/degs_used.tsv</code> 是实际喂进去的
+<code>cluster / gene</code> 两列表。</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>数字</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>附带 DEG 表</td>
+<td>13 809 行、<strong>6 个簇</strong>、100 % 的行
+<code>adj.P.Val &lt; 0.05</code>（已是显著清单，再过滤是空操作）</td>
+</tr>
+<tr>
+<td>覆盖的微环境类型</td>
+<td><strong>6 / 9</strong>——三个 PV 类型一个都没有</td>
+</tr>
+<tr>
+<td>DEG 分支结果</td>
+<td>4191 格 / 419 互作 / 81 对</td>
+</tr>
+<tr>
+<td>与置换法的重合</td>
+<td>格 Jaccard <strong>0.469</strong>、互作 Jaccard
+<strong>0.742</strong></td>
+</tr>
+</tbody>
+</table>
+<p>反直觉但重要：DEG
+分支<strong>不是</strong>更严格的过滤器。<code>permutation only</code>
+有 1552 格，<code>DEG only</code> 有 1495 格，
+两者差不多大——它们问的是不同问题。</p>
+<h2 id="run_logs-与-scripts">9. 09_run_logs 与 scripts</h2>
+<ul>
+<li><code>aswritten_console.txt</code>：原样跑全文。里面能看到 1000
+次置换的进度条（26 次/秒，41 s）、 <code>Time taken</code>
+之外的每个阶段起止时间戳。</li>
+<li><code>corrected_console.txt</code> /
+<code>corrected_summary.json</code>：矫正跑的控制台与机器可读汇总
+（阈值扫描、<code>active_TFs</code> 有无、100 次迭代、DEG
+失败原因）。</li>
+<li><code>determinism.json</code> / <code>determinism_console.txt</code>
+/ <code>determinism.tsv</code>：单线程两次 + 5 线程一次的 md5 对拍。
+读法：<code>a</code>、<code>b</code> 两行 md5 相同 →
+单线程可复现；<code>c</code> 行不同 → <code>threads=5</code>
+不可复现。</li>
+<li><code>evidence_log.txt</code>：矩阵、行序审计、p
+值结构、检索复算的完整输出。</li>
+<li><code>degs_console.txt</code>：DEG 分支；第一版把附带 limma
+表直接喂进去抛的 <code>AttributeError: id_cp_interaction</code>
+原文就在里面。</li>
+<li><code>session_info.txt</code>：cellphonedb 5.0.1 / ktplotspy 0.3.3 /
+plotnine 0.14.5 / pandas 2.2.0 等。</li>
+<li><code>patches_applied.txt</code>：原样跑施加的三处偏离（P1、P2、H1）及其理由。</li>
+</ul>
+<p><code>scripts/</code>
+与本文各节一一对应：<code>cellchat_cells_aswritten.py</code>（原样）、<code>cellchat_corrected.py</code>（矫正）、
+<code>cellchat_evidence.py</code>（取证）、<code>cellchat_degs.py</code>（DEG）、<code>cellchat_plots.py</code>（五张分析图）、
+<code>compare_figs_cellphonedb.py</code>（对拍），以及生成原样脚本的
+<code>make_driver.py</code>、<code>extract_cellchat_cells.py</code>
+和修正行序 bug 的 <code>evidence_recheck_order.py</code>。</p>
+<h2 id="一句话记住这一讲">10. 一句话记住这一讲</h2>
+<p><strong>4248 个”显著互作”里，96 %
+的矩阵根本没被检验；被检验的部分没有做多重校正；把阈值从 0.1 改到 0.05
+或 0.2，这个数字就在 7007 和 2413 之间；把线程从 5 改成
+1，它又是另一个数。这一讲真正的价值不是 “417
+个互作”，而是”如何把一个通讯推断结果读到可以写进论文的程度”。</strong></p>
+<p>练习题（都能在本目录内完成，不需要重跑）：</p>
+<ol type="1">
+<li>用 <code>03_statistical/pvalues.tsv</code> 对 81 列做 BH 校正，报告
+q ≤ 0.05 的格数；再与 4248 对比。 （答案在
+<code>05_corrected/bh_fdr.tsv</code>：<strong>2946 格 / 311
+互作</strong>——而且正好是 p = 0 的那些格。）</li>
+<li>用 <code>01_input/sig_matrix_9x9.tsv</code>
+算”发出−接收”的对角化程度，找出最不对称的一对细胞类型。</li>
+<li>用 <code>07_degs/degs_A_asis_significant_means.tsv</code> 与
+<code>03_statistical/significant_means.tsv</code> 按
+<code>id_cp_interaction</code>（<strong>不是</strong>按行位置）求交集，验证
+2696 与 356 两个数。</li>
+<li>在 <code>05_corrected/search_results.tsv</code> 里加回
+<code>CSF1_CSF1R</code>：把 <code>query_classifications</code> 去掉重跑
+<code>search_utils</code>（30 秒），看 6 行长表长什么样。</li>
+</ol>
+</body>
+</html>

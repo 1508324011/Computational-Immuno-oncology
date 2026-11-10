@@ -1,0 +1,10 @@
+{
+  "n_cell_pairs": 81,
+  "n_interactions": 2440,
+  "n_sig_cells": 4248,
+  "n_sig_interactions": 417,
+  "n_types_microenv": 9,
+  "n_types_metadata": 42,
+  "n_cells": 3312,
+  "n_cells_in_microenv": 230
+}

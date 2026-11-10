@@ -1,0 +1,66 @@
+[   3.5s] loaded (3312, 30800) | obs cols ['n_genes', 'n_counts', 'cell_labels']
+[   3.5s] 
+[   3.5s] == C4: the barcode check of cell 9 ==
+[   3.5s] tutorial expression  list(obs.index).sort() == list(barcode).sort()  ->  True
+[   3.5s]   (list.sort() returns None, so the cell compares None == None: it is True for ANY input)
+[   3.5s] control: with the barcode column shuffled, the tutorial expression is still True
+[   3.5s] real check  set(obs.index) == set(barcode_sample)  ->  True
+[   3.5s]   obs=3312  metadata=3312  shared=3312
+[   3.5s] 
+[   3.5s] == C2: re-run the two analyses with output_suffix so the artefacts have stable names ==
+[   3.5s]   (reusing the persisted simple-analysis tables)
+[   3.6s] simple done (threshold 0.1): ['means_result', 'deconvoluted', 'deconvoluted_percents', 'interaction_scores']
+[   3.6s] 
+[   3.6s] == C3: persist the display-only tables ==
+[   3.7s]   means_result           (2440, 94)   -> table_simple_means_result.tsv
+[   3.9s]   deconvoluted           (6825, 49)   -> table_simple_deconvoluted.tsv
+[   4.0s]   deconvoluted_percents  (6825, 49)   -> table_simple_deconvoluted_percents.tsv
+[   4.1s]   interaction_scores     (2440, 94)   -> table_simple_interaction_scores.tsv
+[   4.1s]   (reusing the persisted statistical tables)
+[   4.3s] statistical done (0.1 / 1000 it): ['deconvoluted', 'deconvoluted_percents', 'means', 'pvalues', 'significant_means', 'CellSign_active_interactions', 'CellSign_active_interactions_deconvoluted', 'interaction_scores']
+[   4.4s]   deconvoluted                     (6825, 49)   -> table_stat_deconvoluted.tsv
+[   4.6s]   deconvoluted_percents            (6825, 49)   -> table_stat_deconvoluted_percents.tsv
+[   4.7s]   means                            (2440, 94)   -> table_stat_means.tsv
+[   4.8s]   pvalues                          (2440, 94)   -> table_stat_pvalues.tsv
+[   4.8s]   significant_means                (2440, 95)   -> table_stat_significant_means.tsv
+[   4.8s]   CellSign_active_interactions     (6, 95)      -> table_stat_CellSign_active_interactions.tsv
+[   4.8s]   CellSign_active_interactions_deconvoluted (28, 9)      -> table_stat_CellSign_active_interactions_deconvoluted.tsv
+[   4.9s]   interaction_scores               (2440, 94)   -> table_stat_interaction_scores.tsv
+[   4.9s] baseline significant: 4251 (interaction,pair) cells | 417 interactions | 81 pairs
+[   4.9s] 
+[   4.9s] == C1: "PV MMPP11" -> "PV MMP11" and re-draw the PV-vs-trophoblast panel ==
+[  29.6s]   aswritten_typo PV MYH11|PV STEAP4|PV MMPP11       pairs drawn: 24   silently dropped: ['PV MMPP11|EVT_1', 'PV MMPP11|EVT_2', 'PV MMPP11|GC', 'PV MMPP11|iEVT', 'PV MMPP11|eEVT', 'PV MMPP11|VCT_CCC', 'EVT_1|PV MMPP11', 'EVT_2|PV MMPP11', 'GC|PV MMPP11', 'iEVT|PV MMPP11', 'eEVT|PV MMPP11', 'VCT_CCC|PV MMPP11']
+[  54.9s]   corrected      PV MYH11|PV STEAP4|PV MMP11        pairs drawn: 36   silently dropped: []
+[  54.9s]   labels in matrix starting with PV: ['PV MMP11', 'PV MYH11', 'PV STEAP4']
+[  54.9s]   "PV MMPP11" in matrix: False   "PV MMP11" in matrix: True
+[  54.9s] 
+[  54.9s] == C5: threshold sensitivity ==
+[ 123.2s]   threshold 0.05 -> 7007 (interaction,pair) cells, 708 interactions
+[ 189.7s]   threshold 0.20 -> 2413 (interaction,pair) cells, 218 interactions
+[ 189.7s] 
+[ 189.7s] == C6: degs_analysis=True with the shipped DEGs table (the dead input) ==
+[ 189.8s]   degs file: (13809, 5) columns=['cluster', 'gene', 'logFC', 'P.Value', 'adj.P.Val']
+[ 189.8s]   -> FAILED: AttributeError: 'DataFrame' object has no attribute 'id_cp_interaction'
+[ 189.8s]   (expected: plot_cpdb wants `meandf` in CellphoneDB DEG layout -- one row per cell_type/gene with mean+pval columns; the shipped table is cluster/gene/logFC/P.Value)
+[ 189.8s] 
+[ 189.8s] == C7: statistical analysis without active_TFs.tsv ==
+[ 256.2s]   keys: ['deconvoluted', 'deconvoluted_percents', 'means', 'pvalues', 'significant_means', 'CellSign_active_interactions', 'CellSign_active_interactions_deconvoluted', 'interaction_scores']
+[ 256.2s]   significant: 4248 cells / 417 interactions  (with active TFs: 4251 / 417)
+[ 256.2s] 
+[ 256.2s] == C8: iterations 1000 -> 100 ==
+[ 289.5s]   100 it: 4602 cells / 454 interactions (1000 it: 4251 / 417)  Jaccard 0.102
+[ 289.5s]   p-value agreement: both <0.05 in 3824 cells; 1000<0.05 & 100>=0.05 in 364; vice versa in 169
+[ 289.5s] 
+[ 289.5s] == C9: search_analysis_results on the in-memory frames ==
+[ 289.6s]   shape (58, 9)  columns ['interacting_pair', 'partner_a', 'partner_b', 'gene_a', 'gene_b', 'directionality', 'classification', 'interacting_cells']
+[ 289.6s]            interacting_pair      partner_a                  partner_b gene_a  gene_b   directionality                              classification interacting_cells  significant_mean
+0          GDF11_TGFR_AVR2B  simple:O95390         complex:TGFR_AVR2B  GDF11     NaN  Ligand-Receptor  Signaling by Growth differentiation factor    PV MMP11|EVT_2             0.105
+4              TGFB1_TGFBR3  simple:P01137              simple:Q03167  TGFB1  TGFBR3  Ligand-Receptor     Signaling by Transforming growth factor    PV MMP11|EVT_2             0.590
+5          GDF11_TGFR_AVR2B  simple:O95390         complex:TGFR_AVR2B  GDF11     NaN  Ligand-Receptor  Signaling by Growth differentiation factor     PV MMP11|iEVT             0.105
+8   TGFB1_TGFbeta_receptor1  simple:P01137  complex:TGFbeta_receptor1  TGFB1     NaN  Ligand-Receptor     Signaling by Transforming growth factor     PV MMP11|iEVT             0.446
+9              TGFB1_TGFBR3  simple:P01137              simple:Q03167  TGFB1  TGFBR3  Ligand-Receptor     Signaling by Transforming growth factor     PV MMP11|iEVT             0.771
+10         GDF11_TGFR_AVR2B  simple:O95390         complex:TGFR_AVR2B  GDF11     NaN  Ligand-Receptor  Signaling by Growth differentiation factor       PV MMP11|GC             0.107
+13  TGFB1_TGFbeta_receptor1  simple:P01137  complex:TGFbeta_receptor1  TGFB1     NaN  Ligand-Receptor     Signaling by Transforming growth factor       PV MMP11|GC             0.401
+14             TGFB1_TGFBR3  simple:P01137              simple:Q03167  TGFB1  TGFBR3  Ligand-Receptor     Signaling by Transforming growth factor       PV MMP11|GC             0.877
+19             TGFB1_TGFBR3  simple:P01137              simple:Q03167  TGFB1  TGFBR3  Ligand-Receptor     Signaling by Transforming growth factor     PV MMP11|eEVT             0.639
+20         GDF11_TGFR_AVR2B  simple:O95390         complex:TGFR_AVR2B  GDF11     NaN  Ligand-Receptor  Signaling by Growth differentiation factor    PV MYH11|EVT_2             0.109

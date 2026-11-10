@@ -1,0 +1,74 @@
+{
+  "baseline": {
+    "sig_cells": 4251,
+    "sig_interactions": 417,
+    "n_pairs": 81
+  },
+  "no_active_tfs": {
+    "sig_cells": 4248,
+    "sig_interactions": 417
+  },
+  "iterations_100": {
+    "sig_cells": 4602,
+    "sig_interactions": 454,
+    "jaccard_vs_1000": 0.1018
+  },
+  "degs_analysis": {
+    "ok": false,
+    "error": "AttributeError: 'DataFrame' object has no attribute 'id_cp_interaction'"
+  },
+  "barcode_check": {
+    "tutorial_expr": true,
+    "real_check": true
+  },
+  "tables": {
+    "simple_means_result": [
+      2440,
+      94
+    ],
+    "simple_deconvoluted": [
+      6825,
+      49
+    ],
+    "simple_deconvoluted_percents": [
+      6825,
+      49
+    ],
+    "simple_interaction_scores": [
+      2440,
+      94
+    ],
+    "stat_deconvoluted": [
+      6825,
+      49
+    ],
+    "stat_deconvoluted_percents": [
+      6825,
+      49
+    ],
+    "stat_means": [
+      2440,
+      94
+    ],
+    "stat_pvalues": [
+      2440,
+      94
+    ],
+    "stat_significant_means": [
+      2440,
+      95
+    ],
+    "stat_CellSign_active_interactions": [
+      6,
+      95
+    ],
+    "stat_CellSign_active_interactions_deconvoluted": [
+      28,
+      9
+    ],
+    "stat_interaction_scores": [
+      2440,
+      94
+    ]
+  }
+}

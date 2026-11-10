@@ -1,0 +1,43 @@
+cell_type	n_cells
+dS2	588
+dS1	318
+SCT	282
+VCT	235
+uSMC	170
+dEpi_secretory	168
+dM1	141
+dS3	130
+dNK2	125
+HOFB	107
+dNK1	104
+fF1	104
+dT_cells	97
+dM2	92
+Endo_M	69
+VCT_p	67
+EVT_1	53
+NK	52
+iEVT	37
+VCT_CCC	34
+MO	30
+dNK3	30
+eEVT	28
+ILC3	25
+EVT_2	24
+T_cells	21
+VCT_fusing	20
+dT_regs	19
+GC	19
+Endo_L	18
+PV STEAP4	15
+Endo_F	15
+fF2	14
+PV MMP11	13
+M3	13
+B_cells	8
+dDC	7
+DC	7
+PV MYH11	7
+Plasma	3
+Granulocytes	2
+dEpi_lumenal	1

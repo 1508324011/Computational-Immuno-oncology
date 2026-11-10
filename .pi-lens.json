@@ -6,6 +6,7 @@
     "RNA-seq/results/**",
     "WES/results/**",
     "scRNA-seq/results/**",
-    "scRNA-seq-application-dynamo/results/**"
+    "scRNA-seq-application-dynamo/results/**",
+    "scRNA-seq-cellchat/results/**"
   ]
 }

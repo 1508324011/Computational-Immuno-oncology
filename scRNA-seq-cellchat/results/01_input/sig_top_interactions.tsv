@@ -1,0 +1,201 @@
+interacting_pair	classification	n_sig_pairs
+COL4A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	76
+COL4A2_integrin_a1b1_complex	Adhesion by Collagen/Integrin	73
+COL4A1_ADGRG6	Adhesion by Collagen/Integrin	61
+MPZL1_MPZL1		60
+COL21A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	59
+COL4A2_ADGRG6	Adhesion by Collagen/Integrin	58
+COL27A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	57
+IL1RAP_PTPRF	Signaling by Interleukin	57
+SEMA4C_PLXNB2	Signaling by Semaphorin	57
+PGF_FLT1	Signaling by Placenta growth factor	57
+FN1_integrin_a5b1_complex	Adhesion by Fibronectin	54
+FN1_integrin_aVb1_complex	Adhesion by Fibronectin	54
+PGF_NRP1	Signaling by Placenta growth factor	48
+Dehydroepiandrosterone_bySTS_PPARA	Signaling by Dehydroepiandrosterone	48
+FBN1_integrin_a5b1_complex		47
+COL6A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	43
+TGFB1_TGFBR3	Signaling by Transforming growth factor	42
+TENM3_ADGRL3	Signaling by Teneurin	37
+SEMA7A_integrin_a1b1_complex	Signaling by Semaphorin	37
+EFNB1_EPHB3	Signaling by Ephrin	36
+TGFB1_TGFbeta_receptor1	Signaling by Transforming growth factor	36
+FN1_integrin_aVb5_complex	Adhesion by Fibronectin	36
+DSC2_DSG2	Adhesion by Desmosome	36
+GJA5_GJA5	Adhesion by GAP junction	36
+COL3A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	34
+TGFB2_TGFbeta_receptor1	Signaling by Transforming growth factor	34
+ERVH48-1_SLC1A5		34
+COL1A2_integrin_a1b1_complex	Adhesion by Collagen/Integrin	33
+COL1A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	33
+JAG1_NOTCH2	Signaling by Notch	33
+TGFB2_TGFBR3	Signaling by Transforming growth factor	32
+COL5A2_integrin_a1b1_complex	Adhesion by Collagen/Integrin	32
+ESAM_ESAM		32
+COL5A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	32
+COL6A2_integrin_a1b1_complex	Adhesion by Collagen/Integrin	31
+JAG1_CD46		31
+COL14A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	31
+FN1_integrin_a3b1_complex	Adhesion by Fibronectin	30
+COL16A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	30
+AGRN_PTPRS	Signaling by Agrin	30
+WNT7A_SFRP1	Signaling by WNT inhibition	30
+COL6A3_integrin_a1b1_complex	Adhesion by Collagen/Integrin	28
+TGFB2_TGFbeta_receptor2	Signaling by Transforming growth factor	28
+TGFB1_TGFbeta_receptor2	Signaling by Transforming growth factor	28
+COL18A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	27
+REN_ATP6AP2		27
+EFNB1_EPHB2	Signaling by Ephrin	27
+VEGFB_FLT1	Signaling by Vascular endothelial growth factor	26
+COL15A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	26
+PPIA_BSG		25
+COL9A3_integrin_a1b1_complex	Adhesion by Collagen/Integrin	24
+COL12A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	23
+VEGFA_FLT1	Signaling by Vascular endothelial growth factor	22
+GJC1_GJA5	Adhesion by GAP junction	22
+IGFBP3_TMEM219	Signaling by Insulin-like growth factor	22
+DAG1_NRXN3		22
+JAM3_JAM3	Adhesion by JAM	21
+DLK1_NOTCH2	Signaling by Notch	21
+TENM3_ADGRL2	Signaling by Teneurin	20
+WNT2B_SFRP1	Signaling by WNT inhibition	20
+ProstaglandinE2_byPTGES_PTGER3	Signaling by Prostaglandin	20
+WNT6_SFRP1	Signaling by WNT inhibition	20
+JAG1_NOTCH3	Signaling by Notch	20
+TNFSF10_TNFRSF10B	Signaling by Tumor necrosis factor	20
+KISS1_KISS1R		20
+COL17A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	20
+GDF11_TGFR_AVR2B	Signaling by Growth differentiation factor	19
+LAMC1_integrin_a7b1_complex	Adhesion by Laminin	18
+EFNA1_EPHA2	Signaling by Ephrin	18
+TNFSF12_TNFRSF25	Signaling by Tumor necrosis factor	18
+INHA_ACVR_1A2B_receptor	Signaling by Inhibin/Activin	18
+PTPRD_IL1RAP		18
+COL7A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	18
+RARRES2_GPR1	Signaling by Retinoid acid	18
+DLK1_NOTCH3	Signaling by Notch	18
+JAG1_VASN		17
+COL4A5_integrin_a1b1_complex	Adhesion by Collagen/Integrin	17
+TNFSF12_TNFRSF12A	Signaling by Tumor necrosis factor	17
+WNT6_FZD6_LRP6	Signaling by WNT	16
+Dehydroepiandrosterone_bySTS_ESR1	Signaling by Dehydroepiandrosterone	16
+EFNA5_EPHB2	Signaling by Ephrin	16
+TGFB3_TGFBR3	Signaling by Transforming growth factor	16
+COL5A3_integrin_a1b1_complex	Adhesion by Collagen/Integrin	15
+SDC1_ADGRA2	Signaling by Syndecan	15
+GJC1_GJC1	Adhesion by GAP junction	15
+EFNB1_EPHA2	Signaling by Ephrin	15
+ProstaglandinE2_byPTGES2_PTGER3	Signaling by Prostaglandin	15
+WNT7A_FZD6_LRP6	Signaling by WNT	15
+ProstaglandinE2_byPTGES3_PTGER3	Signaling by Prostaglandin	14
+NGF_SORT1	Signaling by Beta-nerve growth factor	14
+EFNA4_EPHA2	Signaling by Ephrin	14
+EFNB1_EPHB6	Signaling by Ephrin	14
+APP_TNFRSF21	Signaling by Amyloid-beta precursor protein	14
+JAM2_JAM3	Adhesion by JAM	14
+THBS1_integrin_a3b1_complex	Adhesion by Thrombospondin	13
+COL26A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	13
+COL3A1_ADGRG1	Adhesion by Collagen/Integrin	13
+WNT7A_FRZB	Signaling by WNT inhibition	12
+EFNB2_EPHB2	Signaling by Ephrin	12
+JAG1_NOTCH1	Signaling by Notch	12
+PSAP_GPR37	Signaling by Prosaposin	12
+COL19A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	12
+LPAR2_ADGRE5	Signaling by Lysophosphatidic acid receptor	12
+CDH5_CDH5	Adhesion by Cadherin	12
+TGFB3_TGFbeta_receptor1	Signaling by Transforming growth factor	12
+PGF_NRP2	Signaling by Placenta growth factor	12
+LAMC1_integrin_a6b1_complex	Adhesion by Laminin	12
+DSG2_DSC3	Adhesion by Desmosome	12
+PDGFB_PDGFRB	Signaling by Platelet-derived growth factor	12
+PTPRS_NTRK3		12
+EFNA1_EPHA3	Signaling by Ephrin	12
+GAS6_AXL	Signaling by Growth arrest	11
+THY1_ADGRE5	Adhesion by antigen THY1	11
+INHA_ACVR_1A2A_receptor	Signaling by Inhibin/Activin	11
+VEGFB_NRP1	Signaling by Vascular endothelial growth factor	11
+EFNB2_EPHB3	Signaling by Ephrin	11
+LEP_LEPR		11
+WNT7A_FZD3_LRP6	Signaling by WNT	11
+PRNP_ADGRG6		11
+GDF11_TGFR_AVR2A	Signaling by Growth differentiation factor	10
+NTN4_UNC5D	Signaling by Netrin	10
+WNT2B_FRZB	Signaling by WNT inhibition	10
+LAMA2_ADGRG6		10
+WNT6_FZD3_LRP6	Signaling by WNT	10
+CSPG4_integrin_a3b1_complex		10
+Glutamate_byGLS_and_SLC1A3_GRM8	Signaling by Glutamate	10
+FGF2_FGFR1	Signaling by Fibroblast growth factor	10
+JAG2_NOTCH2	Signaling by Notch	10
+CLSTN3_NRXN3	Signaling by Calsyntenin	10
+LAMC1_integrin_a2b1_complex	Adhesion by Laminin	9
+EFNB1_EPHB4	Signaling by Ephrin	9
+COL4A2_integrin_a2b1_complex	Adhesion by Collagen/Integrin	9
+CDH6_CDH6	Adhesion by Cadherin	9
+COL4A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	9
+Dihydrotestosterone_bySRD5A3_AR	Signaling by Steroids	9
+Inhibin_ligand_A_ACVR_1A2B_receptor	Signaling by Inhibin/Activin	9
+COL4A2_integrin_a11b1_complex	Adhesion by Collagen/Integrin	9
+SDC2_ADGRA2	Signaling by Syndecan	9
+VEGFC_FLT4	Signaling by Vascular endothelial growth factor	9
+COL5A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	9
+COL4A1_integrin_a11b1_complex	Adhesion by Collagen/Integrin	8
+NECTIN3_PVR	Signaling by Nectin	8
+COL6A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	8
+CLSTN1_NRXN3	Signaling by Calsyntenin	8
+COL4A5_ADGRG6	Adhesion by Collagen/Integrin	8
+TGFB1_integrin_aVb6_complex	Signaling by Transforming growth factor	8
+WNT2B_FZD6_LRP6	Signaling by WNT	8
+COL21A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	8
+DHEAsulfate_bySULT2B_PPARA	Signaling by Dehydroepiandrosterone	8
+WNT6_FRZB	Signaling by WNT inhibition	8
+TAC3_TACR3	Signaling by Tachykinins	8
+NCAM1_FGFR1	Signaling by Fibroblast growth factor	8
+JAG2_NOTCH3	Signaling by Notch	7
+TGFB3_TGFbeta_receptor2	Signaling by Transforming growth factor	7
+LIF_LIFR		7
+CCL2_ACKR2	Signaling by Chemokines	7
+2arachidonoylglycerol_byDAGLB_CNR1	Signaling by Arachidonoylglycerol	7
+SEMA4D_PLXNB2	Signaling by Semaphorin	7
+TNFSF15_TNFRSF25	Signaling by Tumor necrosis factor	7
+BMP7_BMR1A_AVR2B	Signaling by BMP	7
+FGF1_FGFR1	Signaling by Fibroblast growth factor	7
+CLSTN2_NRXN3	Signaling by Calsyntenin	7
+EFNA4_EPHA3	Signaling by Ephrin	7
+EPO_EPOR		7
+LAMA3_integrin_a3b1_complex	Adhesion by Laminin	7
+NLGN2_NRXN3	Signaling by Neuroligin	7
+COL27A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	7
+CDH1_integrin_a2b1_complex	Adhesion by Cadherin	7
+DHEAsulfate_bySULT2B_PPARG	Signaling by Dehydroepiandrosterone	6
+NTN4_NTRK2	Signaling by Netrin	6
+ENTPD1_ADORA1	Signaling by Ectonucleoside	6
+Glutamate_byGLS_and_SLC1A3_GRM7	Signaling by Glutamate	6
+COL24A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	6
+COL11A1_integrin_a1b1_complex	Adhesion by Collagen/Integrin	6
+Testosterone_byHSD17B12_AR	Signaling by Steroids	6
+DHEAsulfate_bySULT2B_PPARD	Signaling by Dehydroepiandrosterone	6
+WNT7A_FZD7_LRP6	Signaling by WNT	6
+COL4A4_integrin_a1b1_complex	Adhesion by Collagen/Integrin	6
+FN1_integrin_a2b1_complex	Adhesion by Fibronectin	6
+Progesterone_byHSD3B1_PGR	Signaling by Progesterone	6
+GJA1_GJA5	Adhesion by GAP junction	6
+FN1_integrin_a4b1_complex	Adhesion by Fibronectin	6
+EFNA1_EPHA1	Signaling by Ephrin	6
+LRRTM4_PTPRS	Signaling by Leucine-Rich Repeat Transmembrane Neuronal Protein	6
+LRFN5_PTPRF	Signaling by Leucine Rich Repeat And Fibronectin	6
+LRFN4_PTPRS	Signaling by Leucine Rich Repeat And Fibronectin	6
+CSF1_CSF1R	Signaling by Colony-Stimulating factor	6
+LRFN5_PTPRS	Signaling by Leucine Rich Repeat And Fibronectin	6
+NLGN1_NRXN3	Signaling by Neuroligin	6
+BTC_ERBB3	Signaling by Betacellulin	6
+FGF2_FGFR3	Signaling by Fibroblast growth factor	6
+SLITRK4_PTPRS	Signaling by SLIT and NTRK-like protein	6
+LGALS9_P4HB	Signaling by Galectin	6
+ALB_FcRn_complex		6
+LRRC4C_PTPRF	Signaling by Leucine Rich Repeat And Fibronectin	6
+NRXN1_DAG1	Signaling by Neurexin	6
+EFNB2_EPHB6	Signaling by Ephrin	6
+VEGFA_NRP1	Signaling by Vascular endothelial growth factor	6
+COL14A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	6
+COL15A1_integrin_a2b1_complex	Adhesion by Collagen/Integrin	6

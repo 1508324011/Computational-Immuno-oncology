@@ -1,0 +1,2 @@
+	deconvoluted	deconvoluted_percents	means	relevant_interactions	significant_means	CellSign_active_interactions	CellSign_active_interactions_deconvoluted	interaction_scores	sig_cells	sig_interactions	n_pairs
+A_asis	[6825, 49]	[6825, 49]	[2440, 94]	[419, 85]	[2440, 95]	[9, 85]	[306, 9]	[2440, 94]	4191	419	81

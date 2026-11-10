@@ -397,3 +397,31 @@ scRNA-seq-application-dynamo/results/**/*.fastq.gz
 scRNA-seq-application-dynamo/results/**/*.fq
 scRNA-seq-application-dynamo/results/**/*.fq.gz
 scRNA-seq-application-dynamo/results/**/*.vcf
+
+# -----------------------------------------------------------------------------
+# 15. scRNA-seq-cellchat/results — curated analysis results (EXPLICIT exception, 2026-11-10)
+# -----------------------------------------------------------------------------
+# Same deliberate policy as sections 8-14: the Lesson-8 (CellphoneDB) outputs ARE versioned
+# (the tutorial's 4 simple-scoring tables and 8 statistical tables, the 3 analysis figures it
+# renders, the C1 PV panel in both the 24-column typo form and the 36-column corrected form, the
+# threshold sweep, the query results, the 9x9 significant-interaction matrix and the row-order
+# audit that catches the id/position join trap, the DEG-branch tables and dot plots the tutorial
+# switches off, the figure-comparison TSV against BOTH teacher reference sets, and every console
+# log). NO raw data and NO AnnData object: normalised_log_counts.h5ad stays on the shared
+# read-only /lustre1 path.
+!scRNA-seq-cellchat/results/**
+
+# Safety net (mirrors sections 8-14): no raw data, no big binary objects.
+scRNA-seq-cellchat/results/**/*.h5ad
+scRNA-seq-cellchat/results/**/*.h5
+scRNA-seq-cellchat/results/**/*.loom
+scRNA-seq-cellchat/results/**/*.bam
+scRNA-seq-cellchat/results/**/*.bai
+scRNA-seq-cellchat/results/**/*.sam
+scRNA-seq-cellchat/results/**/*.cram
+scRNA-seq-cellchat/results/**/*.fastq
+scRNA-seq-cellchat/results/**/*.fastq.gz
+scRNA-seq-cellchat/results/**/*.fq
+scRNA-seq-cellchat/results/**/*.fq.gz
+scRNA-seq-cellchat/results/**/*.vcf
+scRNA-seq-cellchat/results/**/*.zip

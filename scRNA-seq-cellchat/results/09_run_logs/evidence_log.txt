@@ -1,0 +1,79 @@
+== input files ==
+metadata.tsv            (3312, 2)  columns=['barcode_sample', 'cell_type']
+microenvironment.tsv    (9, 2)  columns=['cell_type', 'microenvironment']
+active_TFs.tsv          (39, 2)  columns=['cluster', 'TF']
+DEGs_inv_trophoblast.tsv (13809, 5) columns=['cluster', 'gene', 'logFC', 'P.Value', 'adj.P.Val']
+
+== who is in which microenvironment ==
+Env1               9 types  PV MMP11|PV MYH11|PV STEAP4|EVT_1|EVT_2|iEVT|VCT_CCC|GC|eEVT 230 cells
+
+matrix obs cell_labels: 42 distinct; microenvironment cell_types: 9 distinct
+cell types present in the matrix but NOT in any microenvironment: 33
+  -> those cells are still in the count matrix; CellphoneDB scores their means but, with microenvs given, never pairs them.
+cells inside the microenvironment types: 230 of 3312 (6.9%)
+
+== simple (non-statistical) scoring ==
+means_result             (2440, 94) from simple_analysis_means_result_11_09_2026_211608.txt
+deconvoluted             (6825, 49) from simple_analysis_deconvoluted_11_09_2026_211608.txt
+deconvoluted_percents    (6825, 49) from simple_analysis_deconvoluted_percents_11_09_2026_211608.txt
+interaction_scores       (2440, 94) from simple_analysis_interaction_scores_11_09_2026_211608.txt
+cell-pair columns: 81  (per microenvironment: 9 types -> 81 ordered pairs)
+
+== statistical analysis (1000 permutations, p<=0.05) ==
+pvalues            (2440, 94)
+means              (2440, 94)
+significant_means  (2440, 95)
+interaction_scores (2440, 94)
+CellSign_active_interactions (6, 95)
+
+interactions scored          2440
+cell pairs                   81
+significant (interaction,pair) cells: 4248 of 197640 (2.1%)
+interactions with >=1 significant pair: 417 / 2440
+cell pairs with >=1 significant interaction: 81 / 81
+
+top 10 cell pairs by number of significant interactions:
+  eEVT|eEVT                       104
+  iEVT|eEVT                       104
+  GC|eEVT                         100
+  PV STEAP4|eEVT                   88
+  PV MYH11|eEVT                    86
+  EVT_2|eEVT                       86
+  eEVT|PV STEAP4                   76
+  VCT_CCC|eEVT                     76
+  PV MMP11|eEVT                    72
+  PV STEAP4|PV STEAP4              71
+top 10 interactions by number of significant cell pairs:
+  IAPP_AMY3_receptor                       Signaling by Amylin                         76
+  IAPP_AMY2_receptor                       Signaling by Amylin                         73
+  IAPP_AMY1_receptor                       Signaling by Amylin                         61
+  CALCB_CALCR                              Signaling by Calcitonin                     60
+  CALCA_CALCR                              Signaling by Calcitonin                     59
+  IAPP_CALCR                               Signaling by Amylin                         58
+  SLITRK6_PTPRS                            Signaling by SLIT and NTRK-like protein     57
+  LRRTM4_PTPRS                             Signaling by Leucine-Rich Repeat Transme    57
+  SLITRK5_PTPRS                            Signaling by SLIT and NTRK-like protein     57
+  SLITRK4_PTPRS                            Signaling by SLIT and NTRK-like protein     57
+
+== CellSign_active_interactions (the active_TFs.tsv input) ==
+  id_cp_interaction interacting_pair      partner_a      partner_b  gene_a  gene_b  secreted  receptor_a  receptor_b annotation_strategy  is_integrin   directionality                        classification   rank  PV MMP11|PV MMP11  PV MMP11|PV MYH11  PV MMP11|PV STEAP4  PV MMP11|EVT_1  PV MMP11|EVT_2  PV MMP11|iEVT  PV MMP11|VCT_CCC  PV MMP11|GC  PV MMP11|eEVT  PV MYH11|PV MMP11  PV MYH11|PV MYH11  PV MYH11|PV STEAP4  PV MYH11|EVT_1  PV MYH11|EVT_2  PV MYH11|iEVT  PV MYH11|VCT_CCC  PV MYH11|GC  PV MYH11|eEVT  PV STEAP4|PV MMP11  PV STEAP4|PV MYH11  PV STEAP4|PV STEAP4  PV STEAP4|EVT_1  PV STEAP4|EVT_2  PV STEAP4|iEVT  PV STEAP4|VCT_CCC  PV STEAP4|GC  PV STEAP4|eEVT  EVT_1|PV MMP11  EVT_1|PV MYH11  EVT_1|PV STEAP4  EVT_1|EVT_1  EVT_1|EVT_2  EVT_1|iEVT  EVT_1|VCT_CCC  EVT_1|GC  EVT_1|eEVT  EVT_2|PV MMP11  EVT_2|PV MYH11  EVT_2|PV STEAP4  EVT_2|EVT_1  EVT_2|EVT_2  EVT_2|iEVT  EVT_2|VCT_CCC  EVT_2|GC  EVT_2|eEVT  iEVT|PV MMP11  iEVT|PV MYH11  iEVT|PV STEAP4  iEVT|EVT_1  iEVT|EVT_2  iEVT|iEVT  iEVT|VCT_CCC  iEVT|GC  iEVT|eEVT  VCT_CCC|PV MMP11  VCT_CCC|PV MYH11  VCT_CCC|PV STEAP4  VCT_CCC|EVT_1  VCT_CCC|EVT_2  VCT_CCC|iEVT  VCT_CCC|VCT_CCC  VCT_CCC|GC  VCT_CCC|eEVT  GC|PV MMP11  GC|PV MYH11  GC|PV STEAP4  GC|EVT_1  GC|EVT_2  GC|iEVT  GC|VCT_CCC  GC|GC  GC|eEVT  eEVT|PV MMP11  eEVT|PV MYH11  eEVT|PV STEAP4  eEVT|EVT_1  eEVT|EVT_2  eEVT|iEVT  eEVT|VCT_CCC  eEVT|GC  eEVT|eEVT
+0   CPI-SS0CC966B71         BTC_EGFR  simple:P35070  simple:P00533     BTC    EGFR      True       False        True             curated        False  Ligand-Receptor  Signaling by Epidermal growth factor  0.062                  0                  0                   0               0               0              0                 0            0              0                  0                  0                   0               0               1              0                 0            0              0                   0                   0                    0                0                0               0                  0             0               0               0               0                0            0            0           0              0         0           0               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              0              0               0           0           0          0             0        0          0
+1   CPI-SS076940BCD     LGALS3_MERTK  simple:P17931  simple:Q12866  LGALS3   MERTK      True       False        True             curated        False  Ligand-Receptor                 Signaling by Galectin  0.012                  0                  0                   0               0               0              0                 0            0              0                  0                  0                   0               0               0              0                 0            0              0                   0                   0                    0                0                0               0                  0             0               0               0               0                0            0            0           0              0         0           1               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              0              0               0           0           0          0             0        0          0
+2   CPI-SS007AA9FDE      DLK1_NOTCH3  simple:P80370  simple:Q9UM47    DLK1  NOTCH3     False       False        True             curated        False  Ligand-Receptor                    Signaling by Notch  0.222                  0                  0                   0               0               0              0                 0            0              0                  0                  0                   0               0               0              0                 0            0              0                   0                   0                    0                0                0               0                  0             0               0               1               1                1            0            0           0              0         0           0               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              1              1               1           0           0          0             0        0          0
+3   CPI-SS0B99F22A2      JAG1_NOTCH3  simple:P78504  simple:Q9UM47    JAG1  NOTCH3     False       False        True             curated        False  Ligand-Receptor                    Signaling by Notch  0.247                  0                  0                   0               0               0              0                 0            0              1                  0                  0                   0               0               0              0                 0            0              1                   0                   0                    0                0                0               0                  0             0               1               0               0                0            0            0           0              0         0           0               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              1              1               1           0           0          0             1        0          1
+4   CPI-SS0263EFDDF      JAG2_NOTCH3  simple:Q9Y219  simple:Q9UM47    JAG2  NOTCH3     False       False        True             curated        False  Ligand-Receptor                    Signaling by Notch  0.086                  0                  0                   0               0               0              0                 0            0              0                  0                  0                   0               0               0              0                 0            0              0                   0                   0                    0                0                0               0                  0             0               0               0               0                0            0            0           0              0         0           0               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              1              1               1           0           0          0             1        0          0
+5   CPI-SS087A17AD6         EPO_EPOR  simple:P01588  simple:P19235     EPO    EPOR      True       False        True             curated        False  Ligand-Receptor                                   NaN  0.086                  0                  0                   0               0               0              0                 0            0              0                  0                  0                   0               0               0              0                 0            0              0                   0                   0                    0                0                0               0                  0             0               0               0               1                1            1            1           1              0         1           1               0               0                0            0            0           0              0         0           0              0              0               0           0           0          0             0        0          0                 0                 0                  0              0              0             0                0           0             0            0            0             0         0         0        0           0      0        0              0              0               0           0           0          0             0        0          0
+
+== search_analysis_results (tutorial cell 28) ==
+Cannot be replayed from the saved files: search_utils.search_analysis_results() needs the
+LONG-format `deconvoluted` frame (it indexes deconvoluted["gene_name"]), while the file
+cellphonedb writes (statistical_analysis_deconvoluted_*.txt, 49 columns) has no gene_name --
+it carries gene_a/gene_b instead.  In the notebook the call works because it is handed the
+IN-MEMORY frame; the tutorial never writes that frame to disk, so cell 28's table is
+unrecoverable from the artefacts (CPB-06).  Reproduced by re-running the analysis in memory:
+see cellchat_corrected.py step C9 -> search_results.tsv.
+
+== DEGs_inv_trophoblast.tsv (shipped, never used: degs_analysis=False in every plot) ==
+shape (13809, 5)
+first 3 columns: ['cluster', 'gene', 'logFC']
+deprecated pct.1/pct.2 style columns present: []

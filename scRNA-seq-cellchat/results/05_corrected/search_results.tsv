@@ -1,0 +1,59 @@
+interacting_pair	partner_a	partner_b	gene_a	gene_b	directionality	classification	interacting_cells	significant_mean
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MMP11|EVT_2	0.105
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|EVT_2	0.59
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MMP11|iEVT	0.105
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|iEVT	0.446
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|iEVT	0.771
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MMP11|GC	0.107
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|GC	0.401
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|GC	0.877
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MMP11|eEVT	0.639
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MYH11|EVT_2	0.109
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MYH11|iEVT	0.109
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MYH11|iEVT	0.603
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV MYH11|GC	0.111
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV MYH11|GC	0.708
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|EVT_1	0.332
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|EVT_1	0.361
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|EVT_1	0.509
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|EVT_2	0.437
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|EVT_2	0.677
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV STEAP4|iEVT	0.064
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|iEVT	0.348
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|iEVT	0.533
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|iEVT	0.858
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	PV STEAP4|GC	0.066
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|GC	0.488
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|GC	0.964
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|eEVT	0.358
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|eEVT	0.392
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	PV STEAP4|eEVT	0.726
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV MMP11	0.499
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV MMP11	0.512
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV MYH11	0.485
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV STEAP4	0.502
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV STEAP4	0.539
+TGFB1_TGFBR3	simple:P01137	simple:Q03167	TGFB1	TGFBR3	Ligand-Receptor	Signaling by Transforming growth factor	EVT_1|PV STEAP4	0.631
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV MMP11	0.418
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV MMP11	0.311
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV MMP11	0.43
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV MYH11	0.404
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV MYH11	0.297
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV STEAP4	0.42
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV STEAP4	0.314
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	EVT_2|PV STEAP4	0.458
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV MMP11	0.376
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV MMP11	0.353
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV MMP11	0.388
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV MYH11	0.362
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV MYH11	0.338
+TGFB1_TGFbeta_receptor2	simple:P01137	complex:TGFbeta_receptor2	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV STEAP4	0.378
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV STEAP4	0.355
+TGFB1_TGFbeta_receptor1	simple:P01137	complex:TGFbeta_receptor1	TGFB1		Ligand-Receptor	Signaling by Transforming growth factor	iEVT|PV STEAP4	0.416
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	GC|PV MMP11	0.28
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	GC|PV MYH11	0.266
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	GC|PV STEAP4	0.283
+GDF11_TGFR_AVR2B	simple:O95390	complex:TGFR_AVR2B	GDF11		Ligand-Receptor	Signaling by Growth differentiation factor	eEVT|PV MMP11	0.087
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	eEVT|PV MMP11	0.304
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	eEVT|PV MYH11	0.29
+TGFB2_TGFbeta_receptor2	simple:P61812	complex:TGFbeta_receptor2	TGFB2		Ligand-Receptor	Signaling by Transforming growth factor	eEVT|PV STEAP4	0.307

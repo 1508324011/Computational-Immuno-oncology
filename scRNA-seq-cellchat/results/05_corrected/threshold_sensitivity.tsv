@@ -1,0 +1,4 @@
+threshold	sig_cells	sig_interactions	n_pairs
+0.1	4251	417	81
+0.05	7007	708	81
+0.2	2413	218	81

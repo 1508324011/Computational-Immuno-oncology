@@ -1,0 +1,26 @@
+{
+  "threads1_reproducible": true,
+  "rows": [
+    {
+      "tag": "a",
+      "threads": 1,
+      "sig_cells": 4246,
+      "md5_sig": "fcf4c9dc41d6a53f09b93801fcc8c6a2",
+      "md5_pval": "9838804bbb5f18fbab7b76b1f1b729ff"
+    },
+    {
+      "tag": "b",
+      "threads": 1,
+      "sig_cells": 4246,
+      "md5_sig": "fcf4c9dc41d6a53f09b93801fcc8c6a2",
+      "md5_pval": "9838804bbb5f18fbab7b76b1f1b729ff"
+    },
+    {
+      "tag": "c",
+      "threads": 5,
+      "sig_cells": 4251,
+      "md5_sig": "57ebc5bbb35ec09372bd75bb46c08dff",
+      "md5_pval": "f6f6cbaea597e1d8c2280c5cb3fe7c2c"
+    }
+  ]
+}
